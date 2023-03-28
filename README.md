@@ -1,38 +1,92 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Hotel Realta Backend
 
-## Getting Started
+List nama username **Github** di Trello untuk diundang sebagai collaborator di project ini.
 
-First, run the development server:
+## Clone Project
+
+Clone project ini dengan menggunakan perintah:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+git clone https://github.com/juliansyahrifqi/hotel-realta-frontend.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Setelah clone project ini, buka di VS Code.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Instalasi dan Jalankan Project
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```bash
+npm install
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Buat Branch Baru
 
-## Learn More
+Setelah itu buat branch baru dengan perintah
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+git checkout -b  namamodule_namakamu
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Contoh**: `
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
+git checkout -b payment_rustam
+```
 
-## Deploy on Vercel
+Buat kodingan untuk frontend kalian.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+> Semua perubahan kode untuk masing-masing module di `commit` dan di `push` ke `branch` masing-masing (jangan ke `branch master`).
+> Setelah itu kalau ada keperluan untuk menyatukan project bisa melakukan `pull request` atau menghubungi Tama atau yang lain.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+---
+
+## Aturan-aturan
+
+### Penamaan
+
+> **Jangan menggunakan nama yang kurang memberikan gambaran tentang variabel, nama method/function, isi file atau folder yang dikerjakan agar mudah dikenali atau dibaca oleh orang lain. Contoh:** `let terserah = 'terserah` atau `folderPunyaJajang`.
+
+1. Penamaan variabel menggunakan bahasa inggris dan menggunakan format **camelCase**.
+   Contoh: `const hotelName: string`
+
+2. Penamaan method/function menggunakan bahasa inggris dan menggunakan format **camelCase**.
+   Contoh: `const getAllUsers() {}`;
+
+3. Penamaan folder menggunakan nama bahasa inggris dan menggunakan format **camelCase**.
+   Contoh: `usersSchema`
+
+4.
+
+### Struktur Folder Models
+
+1. Struktur folder untuk redux:
+
+```
+redux/
+  ├── namaSchema (contoh: users)
+    ├── action
+      ├── actionType.ts
+      ├── namaAction (contoh: userProfileActionReducer.ts)
+    ├── namaSchemaSaga (contoh: usersSaga)
+      ├── index.ts
+      ├── namaSaga (contoh: userProfileSaga.ts)
+    ├── reducer
+      ├── namaReducer (contoh: userReducer)
+  ├── saga
+    ├── index.ts
+  ├── store
+    ├── index.ts
+```
+
+### Struktur Folder Api
+
+```
+api/
+  ├── namaSchema (contoh: users)
+    ├── namaApiMethod (contoh: apiMethodUsers)
+```
+
+### Penggunaan File .env
+
+Untuk file `.env` bisa buat file dengan nama `.env` dan bisa copy isinya dari file `.env.example`
