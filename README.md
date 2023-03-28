@@ -54,7 +54,7 @@ Buat kodingan untuk frontend kalian.
    Contoh: `const getAllUsers() {}`;
 
 3. Penamaan folder menggunakan nama bahasa inggris dan menggunakan format **camelCase**.
-   Contoh: `usersSchema`
+   Contoh: `users` atau `humanResources`
 
 4.
 
@@ -85,6 +85,19 @@ redux/
 api/
   ├── namaSchema (contoh: users)
     ├── namaApiMethod (contoh: apiMethodUsers)
+```
+
+### Struktur Folder Pages
+
+Folder `pages` disesuaikan dengan url di mockup
+Contoh: Mockup URL: /users/signpEmployee
+
+Maka struktur foldernya adalah:
+
+```
+pages/
+  ├── nama_module (contoh: users)
+    ├── signupEmployee
 ```
 
 ### Penggunaan File .env
