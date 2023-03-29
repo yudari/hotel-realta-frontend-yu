@@ -1,6 +1,8 @@
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
+import Sidebar from "@/components/shared/Sidebar";
+import Navbar from "@/components/shared/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +20,9 @@ export default function Home() {
       </Head>
       <main className="grid place-content-center h-screen">
         <div className="text-center text-4xl font-bold">Hotel Realta</div>
+
+        <Navbar />
+        <Sidebar />
       </main>
     </>
   );
