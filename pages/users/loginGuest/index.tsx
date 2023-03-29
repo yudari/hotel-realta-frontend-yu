@@ -31,6 +31,7 @@ export default function LoginGuest() {
               width={450}
               height={250}
               className="mx-auto mt-10"
+              priority
             />
           </Link>
 
@@ -67,6 +68,20 @@ export default function LoginGuest() {
               Click This For Login
             </Link>
           </p>
+
+          <div className="w-3/4 mx-auto flex items-center gap-2 mt-7">
+            <hr className="w-full border border-gray-300" />
+            <span className="font-medium uppercase text-gray-700">Signup</span>
+            <hr className="w-full border border-gray-300" />
+          </div>
+
+          <div className="w-3/4 mx-auto">
+            <Link href="/users/signupGuest">
+              <button className="w-full p-3 mt-4 bg-gray-600 font-medium text-lg uppercase text-white hover:bg-gray-700 transition-colors duration-200 ease-out">
+                Sign Up As Guest
+              </button>
+            </Link>
+          </div>
         </div>
       </main>
     </>

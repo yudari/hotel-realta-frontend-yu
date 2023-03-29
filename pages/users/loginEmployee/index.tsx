@@ -8,7 +8,7 @@ export default function LoginEmployee() {
   return (
     <>
       <Head>
-        <title>Hotel Realta - Login Guest</title>
+        <title>Hotel Realta - Login Employee</title>
       </Head>
       <main className="grid grid-cols-2 h-screen items-center">
         <div className="w-3/4 mx-auto">
@@ -18,7 +18,8 @@ export default function LoginEmployee() {
               alt="hotel logo"
               width={450}
               height={250}
-              className="mx-auto mt-10"
+              className="mx-auto"
+              priority
             />
           </Link>
 
@@ -73,6 +74,30 @@ export default function LoginEmployee() {
               Signin
             </button>
           </form>
+
+          <p className="font-medium text-center mt-4">
+            Are you Guest?{" "}
+            <Link
+              href="/users/loginGuest"
+              className="text-blue-600 hover:text-blue-700"
+            >
+              Login as Guest
+            </Link>
+          </p>
+
+          <div className="w-3/4 mx-auto flex items-center gap-2 mt-7">
+            <hr className="w-full border border-gray-300" />
+            <span className="font-medium uppercase text-gray-700">Signup</span>
+            <hr className="w-full border border-gray-300" />
+          </div>
+
+          <div className="w-3/4 mx-auto">
+            <Link href="/users/signupEmployee">
+              <button className="w-full p-3 mt-4 bg-gray-600 font-medium text-lg uppercase text-white hover:bg-gray-700 transition-colors duration-200 ease-out">
+                Sign Up AS Employee
+              </button>
+            </Link>
+          </div>
         </div>
 
         <Image
