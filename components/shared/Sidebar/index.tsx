@@ -1,17 +1,25 @@
+import Image from "next/image";
 import React from "react";
+import Logo from "@/public/logo-realta.png";
 
-export default function Sidebar() {
+export default function Sidebar({ showSidebar, setShowSidebar }: any) {
   return (
     <>
       <aside
         id="sidebar"
-        className="fixed top-0 left-0 z-50 flex-col flex-shrink-0 hidden w-64 h-full font-normal duration-75 lg:flex transition-width"
+        className={`fixed top-0 left-0 z-50 flex-col flex-shrink-0 hidden h-full w-72 font-normal lg:flex transform transition duration-500 ease-in-out ${
+          showSidebar ? "translate-x-0" : "-translate-x-full"
+        }`}
         aria-label="Sidebar"
       >
         <div className="relative flex flex-col flex-1 min-h-0 pt-0 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
           <div className="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
             <div className="flex-1 px-3 space-y-1 bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
               <ul className="pb-2 space-y-2">
+                <Image src={Logo} alt="Hotel Realta Logo" />
+
+                <hr className="mt-9" />
+
                 <li>
                   <a
                     href=""

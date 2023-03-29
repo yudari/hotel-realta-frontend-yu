@@ -1,20 +1,21 @@
 import React, { useState } from "react";
+import { HiMenuAlt1 } from "react-icons/hi";
 
-export default function Navbar() {
-  const [showNav, setShowNav] = useState(true);
+export default function Navbar({ showSidebar, setShowSidebar }: any) {
   return (
     <nav
-      className={`fixed z-20 w-full bg-white border-b border-gray-200 sm:py-2 dark:bg-gray-800 dark:border-gray-700 ${
-        showNav ? "pl-72" : ""
+      className={`fixed z-20 w-full bg-white border-b border-gray-200 sm:py-2 dark:bg-gray-800 dark:border-gray-700 transform transition duration-500 ease-in-out px-4 ${
+        showSidebar ? "translate-x-72" : ""
       }`}
     >
       <div className="container py-3 mx-auto">
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-start">
             <a href="#" className="flex mr-4">
-              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                Flowbite
-              </span>
+              <HiMenuAlt1
+                className="text-2xl"
+                onClick={() => setShowSidebar(!showSidebar)}
+              />
             </a>
             <div className="hidden sm:flex sm:ml-6">
               <ul className="flex space-x-8">
