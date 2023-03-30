@@ -10,8 +10,8 @@ import { BsClipboardDataFill } from "react-icons/bs";
 
 const listMenu = [
   {
-    to: "/",
-    path: "/",
+    to: "/dashboard",
+    path: "/dashboard",
     icon: MdDashboard,
     name: "Dashboard",
   },

@@ -35,7 +35,7 @@ export default function Layout({ children }: any) {
           showSidebar && !isMobile ? "pl-56" : ""
         }`}
       >
-        <div className="px-4 md:px-16">{children}</div>
+        <div className="mx-4 px-4 md:px-16">{children}</div>
       </main>
     </>
   );
