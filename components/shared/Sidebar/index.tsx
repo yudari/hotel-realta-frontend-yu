@@ -2,9 +2,9 @@ import Image from "next/image";
 import React, { useState } from "react";
 import Logo from "@/public/logo-realta.png";
 import listMenu from "./listMenu";
-import Link from "next/link";
 import { GoChevronRight } from "react-icons/go";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function Sidebar({ showSidebar, setShowSidebar }: any) {
   const router = useRouter();
@@ -110,6 +110,10 @@ export default function Sidebar({ showSidebar, setShowSidebar }: any) {
               </ul>
             </div>
           </div>
+
+          {/* <div className="absolute bottom-0 left-0 justify-center w-full p-4 space-x-4 bg-gray-200 lg:flex">
+            Icon
+          </div> */}
 
           {/* <div className="absolute bottom-0 left-0 justify-center w-full p-4 space-x-4 bg-gray-200 lg:flex">
             Icon
