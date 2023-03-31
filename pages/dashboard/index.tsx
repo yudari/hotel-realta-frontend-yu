@@ -1,3 +1,4 @@
+import InputText from "@/components/Input/InputText";
 import Head from "next/head";
 import React from "react";
 
