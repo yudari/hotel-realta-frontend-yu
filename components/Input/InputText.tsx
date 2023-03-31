@@ -9,8 +9,9 @@ interface InputTextProps {
   className?: string;
   errors?: any;
   required?: boolean;
-  register: any;
+  register?: any;
   registerOptions?: any;
+  type: string;
 }
 
 export default function InputText(props: InputTextProps) {
@@ -24,13 +25,14 @@ export default function InputText(props: InputTextProps) {
     required,
     register,
     registerOptions,
+    type,
   } = props;
 
   const inputTextClass = classNames(
-    "outline-none border border-spacing-2 border-primary block w-full px-3 py-2 mt-2 active:border-blue-700 focus:border-blue-700 active:bg-blue-200 focus:bg-blue-200",
+    "outline-none border border-spacing-2 border-primary block px-3 py-2 mt-2 active:border-blue-700 focus:border-blue-700 active:bg-blue-200 focus:bg-blue-200",
     {
       "active:border-red-700 focus:border-red-700 active:bg-red-200 focus:bg-red-200":
-        errors[name],
+        errors?.[name],
     },
     className
   );
@@ -43,16 +45,16 @@ export default function InputText(props: InputTextProps) {
       </label>
       <input
         id={name}
-        type="text"
+        type={type}
         name={name}
         placeholder={placeholder}
         defaultValue={defaultValue}
         className={inputTextClass}
-        {...register(name, registerOptions[name])}
+        {...register(name, registerOptions?.[name])}
         required
       />
       <small className="text-red-600">
-        {errors[name] && errors[name]?.message}
+        {errors?.[name] && errors?.[name]?.message}
       </small>
     </div>
   );
