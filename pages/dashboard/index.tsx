@@ -1,7 +1,5 @@
-import Button from "@/components/Button/button";
 import Head from "next/head";
-import React, { useState } from "react";
-import { MdDashboard } from "react-icons/md";
+import React from "react";
 
 export default function Dashboard() {
   return (
