@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Logo from "@/public/logo-realta.png";
+import InputText from "@/components/Input/InputText";
 
 export default function LoginEmployee() {
   return (
