@@ -1,5 +1,15 @@
-import React from "react";
+import Button from "@/components/Button/button";
+import Head from "next/head";
+import React, { useState } from "react";
+import { MdDashboard } from "react-icons/md";
 
 export default function Dashboard() {
-  return <div>Dashboard</div>;
+  return (
+    <>
+      <Head>
+        <title>Hotel Realta - Dashboard</title>
+      </Head>
+      <div>Dashboard</div>
+    </>
+  );
 }
