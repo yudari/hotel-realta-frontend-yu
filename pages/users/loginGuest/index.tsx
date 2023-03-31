@@ -3,8 +3,29 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Logo from "@/public/logo-realta.png";
+import Button from "@/components/Button/button";
+import { useForm } from "react-hook-form";
 
 export default function LoginGuest() {
+  type FormValues = {
+    phone_number_code: string;
+    phone_number: string;
+  };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
+
+  const registerOptions = {
+    phone_number_code: { required: "Phone Number Code is required" },
+    phone_number: { required: "Phone Number is required" },
+  };
   return (
     <>
       <Head>
@@ -37,26 +58,46 @@ export default function LoginGuest() {
 
           <hr className="w-3/4 mx-auto mt-5" />
 
-          <form className="w-3/4 mx-auto mt-7">
+          <form className="w-3/4 mx-auto mt-7" onClick={handleSubmit(onSubmit)}>
             <label htmlFor="phone_number" className="text-lg font-medium">
               Phone Number
             </label>
             <div className="grid grid-cols-4 gap-3 mt-2">
               <input
                 type="text"
-                className="w-full p-3 border-2 border-gray-500 outline-none active:border-blue-600 focus:border-blue-800"
+                {...register(
+                  "phone_number_code",
+                  registerOptions.phone_number_code
+                )}
+                className="w-full rounded p-3 border-2 border-variant outline-none active:border-blue-600 focus:border-blue-800"
                 placeholder="+62"
               />
               <input
                 type="text"
-                className=" w-full p-3 col-span-3 border-2 border-gray-500 outline-none active:border-blue-600 focus:border-blue-800 "
+                {...register("phone_number", registerOptions.phone_number)}
+                className=" w-full rounded p-3 col-span-3 border-2 border-variant outline-none active:border-blue-600 focus:border-blue-800 "
                 placeholder="Your Phone Number"
               />
             </div>
 
-            <button className="w-full p-3 mt-6 bg-blue-600 font-medium text-lg uppercase text-white hover:bg-blue-700 transition-colors duration-200 ease-out">
+            <small className="text-red-600 block mt-2">
+              {errors?.phone_number_code && errors.phone_number_code.message}
+            </small>
+
+            <small className="text-red-600 block mt-2">
+              {errors?.phone_number && errors.phone_number.message}
+            </small>
+
+            {/* <button className="w-full p-3 mt-6 bg-blue-600 font-medium text-lg uppercase text-white hover:bg-blue-700 transition-colors duration-200 ease-out">
               Signin
-            </button>
+            </button> */}
+            <Button
+              label="Signup"
+              size="large"
+              type="main"
+              variant="primary"
+              className="w-full mt-6"
+            />
           </form>
 
           <p className="font-medium text-center mt-4">
@@ -77,9 +118,13 @@ export default function LoginGuest() {
 
           <div className="w-3/4 mx-auto">
             <Link href="/users/signupGuest">
-              <button className="w-full p-3 mt-4 bg-gray-600 font-medium text-lg uppercase text-white hover:bg-gray-700 transition-colors duration-200 ease-out">
-                Sign Up As Guest
-              </button>
+              <Button
+                label="Signup as guest"
+                size="large"
+                type="main"
+                variant="variant"
+                className="w-full mt-4"
+              />
             </Link>
           </div>
         </div>

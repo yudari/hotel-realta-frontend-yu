@@ -3,8 +3,39 @@ import React from "react";
 import Logo from "@/public/logo-realta.png";
 import Image from "next/image";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import InputText from "@/components/Input/InputText";
+import Button from "@/components/Button/button";
 
 export default function SignupEmployee() {
+  type FormValues = {
+    username: string;
+    email: string;
+    password: string;
+    confirm_password: string;
+    phone_number_code: string;
+    phone_number: string;
+  };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
+
+  const registerOptions = {
+    username: { required: "Username is required" },
+    email: { required: "Email is required" },
+    password: { required: "Password is required" },
+    confirm_password: { required: "Confirm Password is required" },
+    phone_number_code: { required: "Phone Number Code is required" },
+    phone_number: { required: "Phone Number is required" },
+  };
+
   return (
     <>
       <Head>
@@ -28,8 +59,11 @@ export default function SignupEmployee() {
             Employee Signup
           </h1>
 
-          <form className="w-3/4 mx-auto mt-7">
-            <div className="form-group mb-3">
+          <form
+            className="w-3/4 mx-auto mt-7"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            {/* <div className="form-group mb-3">
               <label htmlFor="username" className="text-lg font-medium">
                 Username
               </label>
@@ -38,8 +72,89 @@ export default function SignupEmployee() {
                 className="w-full p-3 mt-2 border-2 border-gray-500 outline-none active:border-blue-600 focus:border-blue-800"
                 placeholder="Full Name"
               />
+            </div> */}
+            <InputText
+              name="username"
+              label="Username"
+              placeholder="Your username"
+              type="text"
+              errors={errors}
+              register={register}
+              registerOptions={registerOptions}
+              className="w-full"
+              required={true}
+            />
+
+            <InputText
+              name="email"
+              label="Email"
+              placeholder="Your Email"
+              type="email"
+              errors={errors}
+              register={register}
+              registerOptions={registerOptions}
+              className="w-full"
+              required={true}
+            />
+
+            <InputText
+              name="password"
+              label="Password"
+              placeholder="Your Password"
+              type="password"
+              errors={errors}
+              register={register}
+              registerOptions={registerOptions}
+              className="w-full"
+              required={true}
+            />
+
+            <InputText
+              name="confirm_password"
+              label="Confirm Password"
+              placeholder="Your Confirm Password"
+              type="password"
+              errors={errors}
+              register={register}
+              registerOptions={registerOptions}
+              className="w-full"
+              required={true}
+            />
+
+            <div className="form-group mt-3">
+              <label htmlFor="phone_number" className="text-lg font-medium">
+                Phone Number<span className="text-danger">*</span>
+              </label>
+
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  {...register(
+                    "phone_number_code",
+                    registerOptions.phone_number_code
+                  )}
+                  className="w-1/4 p-3 mt-2 border-2 border-variant outline-none active:border-blue-600 focus:border-blue-800 rounded mr-3"
+                  placeholder="+62"
+                />
+
+                <input
+                  type="text"
+                  {...register("phone_number", registerOptions.phone_number)}
+                  className="w-full p-3 mt-2 border-2 border-gray-500 outline-none active:border-blue-600 focus:border-blue-800 rounded"
+                  placeholder="Phone Number"
+                />
+              </div>
+
+              <small className="text-red-600 block">
+                {errors?.phone_number_code && errors.phone_number_code.message}
+              </small>
+
+              <small className="text-red-600">
+                {errors?.phone_number && errors.phone_number.message}
+              </small>
             </div>
 
+            {/* 
             <div className="form-group mb-3">
               <label htmlFor="email" className="text-lg font-medium">
                 Email
@@ -49,8 +164,8 @@ export default function SignupEmployee() {
                 className="w-full p-3 mt-2 border-2 border-gray-500 outline-none active:border-blue-600 focus:border-blue-800"
                 placeholder="Your Email (eg. mail@gmail.com)"
               />
-            </div>
-
+            </div> */}
+            {/* 
             <div className="form-group mb-3">
               <label htmlFor="password" className="text-lg font-medium">
                 Password
@@ -60,8 +175,8 @@ export default function SignupEmployee() {
                 className="w-full p-3 mt-2 border-2 border-gray-500 outline-none active:border-blue-600 focus:border-blue-800"
                 placeholder="Password"
               />
-            </div>
-
+            </div> */}
+            {/* 
             <div className="form-group mb-3">
               <label htmlFor="confirm_password" className="text-lg font-medium">
                 Confirm Password
@@ -71,8 +186,9 @@ export default function SignupEmployee() {
                 className="w-full p-3 mt-2 border-2 border-gray-500 outline-none active:border-blue-600 focus:border-blue-800"
                 placeholder="Confirm Password"
               />
-            </div>
+            </div> */}
 
+            {/* 
             <div className="form-group mb-3">
               <label htmlFor="phone_number" className="text-lg font-medium">
                 Phone Number
@@ -91,11 +207,18 @@ export default function SignupEmployee() {
                   placeholder="Phone Number"
                 />
               </div>
-            </div>
+            </div> */}
 
-            <button className="w-full p-3 mt-6 bg-blue-600 font-medium text-lg uppercase text-white hover:bg-blue-700 transition-colors duration-200 ease-out">
+            {/* <button className="w-full p-3 mt-6 bg-blue-600 font-medium text-lg uppercase text-white hover:bg-blue-700 transition-colors duration-200 ease-out">
               Signup
-            </button>
+            </button> */}
+            <Button
+              label="Signup"
+              size="large"
+              type="main"
+              variant="primary"
+              className="w-full mt-6"
+            />
           </form>
 
           <p className="font-medium text-center mt-4">

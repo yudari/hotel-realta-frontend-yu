@@ -4,8 +4,30 @@ import Link from "next/link";
 import React from "react";
 import Logo from "@/public/logo-realta.png";
 import InputText from "@/components/Input/InputText";
+import { useForm } from "react-hook-form";
+import Button from "@/components/Button/button";
 
 export default function LoginEmployee() {
+  type FormValues = {
+    email: string;
+    password: string;
+  };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
+
+  const registerOptions = {
+    email: { required: "Username is required" },
+    password: { required: "Password is required" },
+  };
+
   return (
     <>
       <Head>
@@ -26,8 +48,11 @@ export default function LoginEmployee() {
 
           <hr className="w-3/4 mx-auto mt-5" />
 
-          <form className="w-3/4 mx-auto mt-7">
-            <div className="form-group mt-4">
+          <form
+            className="w-3/4 mx-auto mt-7"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            {/* <div className="form-group mt-4">
               <label htmlFor="email" className="text-lg font-medium">
                 Email
               </label>
@@ -36,9 +61,32 @@ export default function LoginEmployee() {
                 className="w-full p-3 mt-2 border-2 border-gray-500 outline-none active:border-blue-600 focus:border-blue-800"
                 placeholder="Your Email (eg. mail@gmail.com)"
               />
-            </div>
+            </div> */}
+            <InputText
+              name="email"
+              label="Email"
+              placeholder="Your Email"
+              type="email"
+              errors={errors}
+              register={register}
+              registerOptions={registerOptions}
+              // required
+              className="w-full"
+            />
 
-            <div className="form-group mt-4">
+            <InputText
+              name="password"
+              label="Password"
+              placeholder="Your Password"
+              type="password"
+              errors={errors}
+              register={register}
+              registerOptions={registerOptions}
+              // required
+              className="w-full "
+            />
+
+            {/* <div className="form-group mt-4">
               <label htmlFor="password" className="text-lg font-medium">
                 Password
               </label>
@@ -47,7 +95,7 @@ export default function LoginEmployee() {
                 className="w-full p-3 mt-2 border-2 border-gray-500 outline-none active:border-blue-600 focus:border-blue-800"
                 placeholder="Your password"
               />
-            </div>
+            </div> */}
 
             <div className="flex justify-between mt-4">
               <div className="flex items-center gap-1">
@@ -71,9 +119,16 @@ export default function LoginEmployee() {
               </Link>
             </div>
 
-            <button className="w-full p-3 mt-6 bg-blue-600 font-medium text-lg uppercase text-white hover:bg-blue-700 transition-colors duration-200 ease-out">
+            {/* <button className="w-full p-3 mt-6 bg-blue-600 font-medium text-lg uppercase text-white hover:bg-blue-700 transition-colors duration-200 ease-out">
               Signin
-            </button>
+            </button> */}
+            <Button
+              label="signin"
+              size="large"
+              type="main"
+              variant="primary"
+              className="w-full mt-4"
+            />
           </form>
 
           <p className="font-medium text-center mt-4">
@@ -94,9 +149,16 @@ export default function LoginEmployee() {
 
           <div className="w-3/4 mx-auto">
             <Link href="/users/signupEmployee">
-              <button className="w-full p-3 mt-4 bg-gray-600 font-medium text-lg uppercase text-white hover:bg-gray-700 transition-colors duration-200 ease-out">
+              {/* <button className="w-full p-3 mt-4 bg-gray-600 font-medium text-lg uppercase text-white hover:bg-gray-700 transition-colors duration-200 ease-out">
                 Sign Up AS Employee
-              </button>
+              </button> */}
+              <Button
+                label="Signup as employee"
+                size="large"
+                type="main"
+                variant="variant"
+                className="w-full mt-4"
+              />
             </Link>
           </div>
         </div>

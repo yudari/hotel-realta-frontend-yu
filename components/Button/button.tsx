@@ -55,7 +55,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
   const variants = classNames(
     btnClass.variant,
     btnClass.size,
-    "rounded transition-colors ease-in duration-150 flex gap-3 items-center",
+    "rounded transition-colors ease-in duration-150 flex gap-3 items-center justify-center uppercase font-medium",
     className
   );
 
