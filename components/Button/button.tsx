@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import React from "react";
-import { IconType } from "react-icons/lib";
 
 type ButtonProps = {
   variant: "primary" | "secondary" | "variant" | "danger" | "danger-secondary";

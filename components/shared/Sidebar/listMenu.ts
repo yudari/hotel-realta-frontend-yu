@@ -20,12 +20,36 @@ const listMenu = [
     path: "/hotel",
     icon: MdOutlineHotel,
     name: "Hotel",
+    submenu: [
+      {
+        to: "",
+        path: "",
+        title: "Hotel",
+      },
+      {
+        to: "",
+        path: "",
+        title: "Facilities",
+      },
+      {
+        to: "",
+        path: "",
+        title: "Reviews",
+      },
+    ],
   },
   {
     to: "",
     path: "",
     icon: MdRestaurant,
     name: "Resto",
+    submenu: [
+      {
+        to: "",
+        path: "",
+        title: "Resto Menu",
+      },
+    ],
   },
   {
     to: "#",
