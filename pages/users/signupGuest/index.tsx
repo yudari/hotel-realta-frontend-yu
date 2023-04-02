@@ -5,8 +5,21 @@ import React from "react";
 import Logo from "@/public/logo-realta.png";
 import Button from "@/components/Button/button";
 import { useForm } from "react-hook-form";
+import { Fragment, useState } from "react";
+import { Listbox, Transition } from "@headlessui/react";
+import { MdArrowDropDown, MdError } from "react-icons/md";
+import phoneNumberCode from "@/utils/phoneNumberCode";
+import { useDispatch, useSelector } from "react-redux";
+import { doRegisterGuest } from "@/redux/users/action/registerActionReducers";
+import { BsCheckCircleFill } from "react-icons/bs";
 
 export default function SignupGuest() {
+  const [selected, setSelected] = useState(phoneNumberCode[0].value);
+  const dispatch = useDispatch();
+  const { message, payload } = useSelector(
+    (state: any) => state.registerReducers
+  );
+
   type FormValues = {
     phone_number_code: string;
     phone_number: string;
@@ -19,7 +32,8 @@ export default function SignupGuest() {
   } = useForm<FormValues>();
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    const phoneNumber = selected + data.phone_number;
+    dispatch(doRegisterGuest({ ...data, phone_number: phoneNumber }));
   };
 
   const registerOptions = {
@@ -63,10 +77,30 @@ export default function SignupGuest() {
             className="w-3/4 mx-auto mt-7"
             onSubmit={handleSubmit(onSubmit)}
           >
+            {message && payload?.statusCode >= 400 && (
+              <div
+                className="p-4 mb-4 text-sm text-danger-secondary rounded bg-danger font-medium bg-opacity-10 flex items-center gap-2 border-2 border-danger"
+                role="alert"
+              >
+                <MdError className="text-xl" />
+                {message}
+              </div>
+            )}
+
+            {message && payload?.statusCode === 200 && (
+              <div
+                className="p-4 mb-4 text-sm text-secondary rounded bg-secondary font-medium bg-opacity-10 flex items-center gap-2 border-2 border-secondary"
+                role="alert"
+              >
+                <BsCheckCircleFill className="text-xl" />
+                {message.errors ? message.errors[0].message : message}
+              </div>
+            )}
+
             <label htmlFor="phone_number" className="text-lg font-medium">
               Phone Number
             </label>
-            <div className="grid grid-cols-4 gap-3 mt-2">
+            {/* <div className="grid grid-cols-4 gap-3 mt-2">
               <input
                 type="text"
                 {...register(
@@ -81,6 +115,61 @@ export default function SignupGuest() {
                 {...register("phone_number", registerOptions.phone_number)}
                 className=" w-full rounded p-3 col-span-3 border-2 border-variant outline-none active:border-blue-600 focus:border-blue-800 "
                 placeholder="Your Phone Number"
+              />
+            </div> */}
+
+            <div className="flex gap-2 items-center">
+              <Listbox value={selected} onChange={setSelected}>
+                <div className="relative w-1/2">
+                  <Listbox.Button className="w-full relative p-3 mt-2 border-2 border-gray-500 outline-none active:border-blue-600 focus:border-blue-800 rounded text-left">
+                    <span className="block truncate">{selected}</span>
+                    <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                      <MdArrowDropDown
+                        className="h-5 w-5 text-variant"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </Listbox.Button>
+                  <Transition
+                    as={Fragment}
+                    leave="transition ease-in duration-100"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                      {phoneNumberCode.map((code, index) => (
+                        <Listbox.Option
+                          key={index}
+                          className={({ active }) =>
+                            `relative cursor-default select-none p-3 ${
+                              active ? "bg-primary text-white" : "text-black"
+                            }`
+                          }
+                          value={code.value}
+                        >
+                          {({ selected }) => (
+                            <>
+                              <span
+                                className={`block truncate ${
+                                  selected ? "font-medium" : "font-normal"
+                                }`}
+                              >
+                                {code.label}
+                              </span>
+                            </>
+                          )}
+                        </Listbox.Option>
+                      ))}
+                    </Listbox.Options>
+                  </Transition>
+                </div>
+              </Listbox>
+
+              <input
+                type="text"
+                {...register("phone_number", registerOptions.phone_number)}
+                className="w-full p-3 mt-2 border-2 border-gray-500 outline-none active:border-blue-600 focus:border-blue-800 rounded"
+                placeholder="Phone Number"
               />
             </div>
             <small className="text-red-600 block mt-2">

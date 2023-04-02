@@ -26,4 +26,25 @@ function* handleRegisterEmployee(action: any): Generator {
   }
 }
 
-export { handleRegisterEmployee };
+function* handleRegisterGuest(action: any): Generator {
+  try {
+    const result: any = yield call(
+      apiMethodUsers.registerGuest,
+      action.payload
+    );
+
+    if (result.data.statusCode >= 400) {
+      return yield put(doRegisterFailed(result.data));
+    }
+
+    yield put(doRegisterSuccess(result.data));
+  } catch (e) {
+    yield put(
+      doRegisterFailed({
+        message: e,
+      })
+    );
+  }
+}
+
+export { handleRegisterEmployee, handleRegisterGuest };

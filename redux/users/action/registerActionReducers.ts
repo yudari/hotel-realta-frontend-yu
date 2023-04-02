@@ -7,6 +7,13 @@ export const doRegister = (payload: any) => {
   };
 };
 
+export const doRegisterGuest = (payload: any) => {
+  return {
+    type: ActionTypesUsers.REQ_REGISTER_GUEST,
+    payload,
+  };
+};
+
 export const doRegisterSuccess = (payload: any) => {
   return {
     type: ActionTypesUsers.REGISTER_SUCCESS,

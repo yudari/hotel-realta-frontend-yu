@@ -17,10 +17,10 @@ function usersReducers(state = initialState, action: any) {
         payload,
         refresh: true,
         message: payload?.message,
-        isLogin: true,
+        isRegister: true,
       };
     case ActionTypesUsers.REGISTER_FAILED:
-      return { message: payload.message, payload, isLogin: false };
+      return { message: payload.message, payload, isRegister: false };
     default:
       return state;
   }

@@ -9,13 +9,18 @@ import Button from "@/components/Button/button";
 import phoneNumberCode from "@/utils/phoneNumberCode";
 import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import { MdArrowDropDown } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { doRegister } from "@/redux/users/action/registerActionReducers";
+
+import { MdArrowDropDown, MdError } from "react-icons/md";
+import { BsCheckCircleFill } from "react-icons/bs";
 
 export default function SignupEmployee() {
   const [selected, setSelected] = useState(phoneNumberCode[0].value);
   const dispatch = useDispatch();
+  const { message, payload } = useSelector(
+    (state: any) => state.registerReducers
+  );
 
   type FormValues = {
     username: string;
@@ -74,6 +79,25 @@ export default function SignupEmployee() {
             className="w-3/4 mx-auto mt-7"
             onSubmit={handleSubmit(onSubmit)}
           >
+            {message && payload?.statusCode >= 400 && (
+              <div
+                className="p-4 mb-4 text-sm text-danger-secondary rounded bg-danger font-medium bg-opacity-10 flex items-center gap-2 border-2 border-danger"
+                role="alert"
+              >
+                <MdError className="text-xl" />
+                {message}
+              </div>
+            )}
+
+            {message && payload?.statusCode === 200 && (
+              <div
+                className="p-4 mb-4 text-sm text-secondary rounded bg-secondary font-medium bg-opacity-10 flex items-center gap-2 border-2 border-secondary"
+                role="alert"
+              >
+                <BsCheckCircleFill className="text-xl" />
+                {message.errors ? message.errors[0].message : message}
+              </div>
+            )}
             <InputText
               name="username"
               label="Username"

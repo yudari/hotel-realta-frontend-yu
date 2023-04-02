@@ -5,7 +5,7 @@ import {
   handleLoginGuest,
   handleLogoutEmployee,
 } from "./loginSaga";
-import { handleRegisterEmployee } from "./registerSaga";
+import { handleRegisterEmployee, handleRegisterGuest } from "./registerSaga";
 
 function* watchAll() {
   yield all([
@@ -13,6 +13,7 @@ function* watchAll() {
     takeEvery(ActionTypesUsers.REQ_LOGIN_GUEST, handleLoginGuest),
     takeEvery(ActionTypesUsers.REQ_LOGOUT, handleLogoutEmployee),
     takeEvery(ActionTypesUsers.REQ_REGISTER, handleRegisterEmployee),
+    takeEvery(ActionTypesUsers.REQ_REGISTER_GUEST, handleRegisterGuest),
   ]);
 }
 
