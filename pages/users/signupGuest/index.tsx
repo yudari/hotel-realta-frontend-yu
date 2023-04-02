@@ -7,10 +7,11 @@ import Button from "@/components/Button/button";
 import { useForm } from "react-hook-form";
 import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import { MdArrowDropDown, MdError } from "react-icons/md";
 import phoneNumberCode from "@/utils/phoneNumberCode";
 import { useDispatch, useSelector } from "react-redux";
 import { doRegisterGuest } from "@/redux/users/action/registerActionReducers";
+
+import { MdArrowDropDown, MdError } from "react-icons/md";
 import { BsCheckCircleFill } from "react-icons/bs";
 
 export default function SignupGuest() {
