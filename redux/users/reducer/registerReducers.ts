@@ -1,0 +1,29 @@
+import ActionTypesUsers from "../action/actionTypeUsers";
+
+const initialState = {
+  users: [],
+  message: "",
+  isRegister: "",
+  refresh: "",
+  status: "",
+};
+
+function usersReducers(state = initialState, action: any) {
+  const { type, payload } = action;
+
+  switch (type) {
+    case ActionTypesUsers.REGISTER_SUCCESS:
+      return {
+        payload,
+        refresh: true,
+        message: payload?.message,
+        isLogin: true,
+      };
+    case ActionTypesUsers.REGISTER_FAILED:
+      return { message: payload.message, payload, isLogin: false };
+    default:
+      return state;
+  }
+}
+
+export default usersReducers;

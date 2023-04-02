@@ -6,8 +6,17 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import InputText from "@/components/Input/InputText";
 import Button from "@/components/Button/button";
+import phoneNumberCode from "@/utils/phoneNumberCode";
+import { Fragment, useState } from "react";
+import { Listbox, Transition } from "@headlessui/react";
+import { MdArrowDropDown } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { doRegister } from "@/redux/users/action/registerActionReducers";
 
 export default function SignupEmployee() {
+  const [selected, setSelected] = useState(phoneNumberCode[0].value);
+  const dispatch = useDispatch();
+
   type FormValues = {
     username: string;
     email: string;
@@ -24,11 +33,13 @@ export default function SignupEmployee() {
   } = useForm<FormValues>();
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    const phoneNumber = selected + data.phone_number;
+
+    dispatch(doRegister({ ...data, phone_number: phoneNumber }));
   };
 
   const registerOptions = {
-    username: { required: "Username is required" },
+    username: { required: "Username or Full Name is required" },
     email: { required: "Email is required" },
     password: { required: "Password is required" },
     confirm_password: { required: "Confirm Password is required" },
@@ -63,20 +74,10 @@ export default function SignupEmployee() {
             className="w-3/4 mx-auto mt-7"
             onSubmit={handleSubmit(onSubmit)}
           >
-            {/* <div className="form-group mb-3">
-              <label htmlFor="username" className="text-lg font-medium">
-                Username
-              </label>
-              <input
-                type="text"
-                className="w-full p-3 mt-2 border-2 border-gray-500 outline-none active:border-blue-600 focus:border-blue-800"
-                placeholder="Full Name"
-              />
-            </div> */}
             <InputText
               name="username"
               label="Username"
-              placeholder="Your username"
+              placeholder="Your Full Name"
               type="text"
               errors={errors}
               register={register}
@@ -126,16 +127,52 @@ export default function SignupEmployee() {
                 Phone Number<span className="text-danger">*</span>
               </label>
 
-              <div className="flex items-center">
-                <input
-                  type="text"
-                  {...register(
-                    "phone_number_code",
-                    registerOptions.phone_number_code
-                  )}
-                  className="w-1/4 p-3 mt-2 border-2 border-variant outline-none active:border-blue-600 focus:border-blue-800 rounded mr-3"
-                  placeholder="+62"
-                />
+              <div className="flex gap-2 items-center">
+                <Listbox value={selected} onChange={setSelected}>
+                  <div className="relative w-1/2">
+                    <Listbox.Button className="w-full relative p-3 mt-2 border-2 border-gray-500 outline-none active:border-blue-600 focus:border-blue-800 rounded text-left">
+                      <span className="block truncate">{selected}</span>
+                      <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                        <MdArrowDropDown
+                          className="h-5 w-5 text-variant"
+                          aria-hidden="true"
+                        />
+                      </span>
+                    </Listbox.Button>
+                    <Transition
+                      as={Fragment}
+                      leave="transition ease-in duration-100"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0"
+                    >
+                      <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                        {phoneNumberCode.map((code, index) => (
+                          <Listbox.Option
+                            key={index}
+                            className={({ active }) =>
+                              `relative cursor-default select-none p-3 ${
+                                active ? "bg-primary text-white" : "text-black"
+                              }`
+                            }
+                            value={code.value}
+                          >
+                            {({ selected }) => (
+                              <>
+                                <span
+                                  className={`block truncate ${
+                                    selected ? "font-medium" : "font-normal"
+                                  }`}
+                                >
+                                  {code.label}
+                                </span>
+                              </>
+                            )}
+                          </Listbox.Option>
+                        ))}
+                      </Listbox.Options>
+                    </Transition>
+                  </div>
+                </Listbox>
 
                 <input
                   type="text"
@@ -154,64 +191,6 @@ export default function SignupEmployee() {
               </small>
             </div>
 
-            {/* 
-            <div className="form-group mb-3">
-              <label htmlFor="email" className="text-lg font-medium">
-                Email
-              </label>
-              <input
-                type="email"
-                className="w-full p-3 mt-2 border-2 border-gray-500 outline-none active:border-blue-600 focus:border-blue-800"
-                placeholder="Your Email (eg. mail@gmail.com)"
-              />
-            </div> */}
-            {/* 
-            <div className="form-group mb-3">
-              <label htmlFor="password" className="text-lg font-medium">
-                Password
-              </label>
-              <input
-                type="password"
-                className="w-full p-3 mt-2 border-2 border-gray-500 outline-none active:border-blue-600 focus:border-blue-800"
-                placeholder="Password"
-              />
-            </div> */}
-            {/* 
-            <div className="form-group mb-3">
-              <label htmlFor="confirm_password" className="text-lg font-medium">
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                className="w-full p-3 mt-2 border-2 border-gray-500 outline-none active:border-blue-600 focus:border-blue-800"
-                placeholder="Confirm Password"
-              />
-            </div> */}
-
-            {/* 
-            <div className="form-group mb-3">
-              <label htmlFor="phone_number" className="text-lg font-medium">
-                Phone Number
-              </label>
-
-              <div className="flex gap-2 items-center">
-                <input
-                  type="password"
-                  className="w-1/4 p-3 mt-2 border-2 border-gray-500 outline-none active:border-blue-600 focus:border-blue-800"
-                  placeholder="+62"
-                />
-
-                <input
-                  type="password"
-                  className="w-3/4 p-3 mt-2 border-2 border-gray-500 outline-none active:border-blue-600 focus:border-blue-800"
-                  placeholder="Phone Number"
-                />
-              </div>
-            </div> */}
-
-            {/* <button className="w-full p-3 mt-6 bg-blue-600 font-medium text-lg uppercase text-white hover:bg-blue-700 transition-colors duration-200 ease-out">
-              Signup
-            </button> */}
             <Button
               label="Signup"
               size="large"

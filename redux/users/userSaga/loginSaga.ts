@@ -1,10 +1,8 @@
 import apiMethodUsers from "@/api/users/apiMethodUsers";
 import { call, put } from "redux-saga/effects";
 import {
-  doLoginEmployee,
   doLoginFailed,
   doLoginSuccess,
-  doLogout,
   doLogoutSuccess,
 } from "../action/loginActionReducers";
 
