@@ -21,6 +21,13 @@ export const doLoginFailed = (payload: any) => {
   };
 };
 
+export const doLoginGuest = (payload: any) => {
+  return {
+    type: ActionTypesUsers.REQ_LOGIN_GUEST,
+    payload,
+  };
+};
+
 export const doLogout = () => {
   return {
     type: ActionTypesUsers.REQ_LOGOUT,

@@ -21,9 +21,14 @@ const registerEmployee = (data: RegisterEmployeeType) => {
   return axios.post("/users/signupEmployee", data);
 };
 
+const loginGuest = (data: LoginEmployeeType) => {
+  return axios.post("/auth/loginGuest", data);
+};
+
 const apiMethodUsers = {
   loginEmployee,
   registerEmployee,
+  loginGuest,
 };
 
 export default apiMethodUsers;

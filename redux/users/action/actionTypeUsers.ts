@@ -7,6 +7,7 @@ const ActionTypesUsers = {
   REQ_REGISTER: "REQ_REGISTER",
   REGISTER_FAILED: "REGISTER_FAILED",
   REGISTER_SUCCESS: "REGISTER_SUCCESS",
+  REQ_LOGIN_GUEST: "REQ_LOGIN_GUEST",
 };
 
 export default ActionTypesUsers;

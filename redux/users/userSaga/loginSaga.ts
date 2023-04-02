@@ -27,6 +27,24 @@ function* handleLoginEmployee(action: any): Generator {
   }
 }
 
+function* handleLoginGuest(action: any): Generator {
+  try {
+    const result: any = yield call(apiMethodUsers.loginGuest, action.payload);
+
+    if (result.data.statusCode >= 400) {
+      return yield put(doLoginFailed(result.data));
+    }
+
+    yield put(doLoginSuccess(result.data));
+  } catch (e: any) {
+    yield put(
+      doLoginFailed({
+        message: e,
+      })
+    );
+  }
+}
+
 function* handleLogoutEmployee(action: any): Generator {
   try {
     yield put(doLogoutSuccess());
@@ -35,4 +53,4 @@ function* handleLogoutEmployee(action: any): Generator {
   }
 }
 
-export { handleLoginEmployee, handleLogoutEmployee };
+export { handleLoginEmployee, handleLogoutEmployee, handleLoginGuest };
