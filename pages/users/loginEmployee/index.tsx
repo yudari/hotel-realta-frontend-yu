@@ -1,13 +1,25 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "@/public/logo-realta.png";
 import InputText from "@/components/Input/InputText";
 import { useForm } from "react-hook-form";
 import Button from "@/components/Button/button";
+import { useDispatch, useSelector } from "react-redux";
+import { doLoginEmployee } from "@/redux/users/action/loginActionReducers";
+import { MdError } from "react-icons/md";
+import { useRouter } from "next/router";
+import Loader from "@/components/Loader";
 
 export default function LoginEmployee() {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const dispatch = useDispatch();
+  const { payload, message, refresh, isLogin } = useSelector(
+    (state: any) => state.loginReducers
+  );
+  const router = useRouter();
+
   type FormValues = {
     email: string;
     password: string;
@@ -20,13 +32,33 @@ export default function LoginEmployee() {
   } = useForm<FormValues>();
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    dispatch(doLoginEmployee(data));
   };
 
   const registerOptions = {
     email: { required: "Username is required" },
     password: { required: "Password is required" },
   };
+
+  useEffect(() => {
+    const loginStorage = localStorage.getItem("login");
+
+    if (loginStorage === "true") {
+      dispatch({ type: "LOGIN_SUCCESS" });
+    }
+    setIsLoading(false);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isLogin) {
+      localStorage.setItem("login", "true");
+      router.push("/dashboard");
+    }
+  }, [isLogin, router]);
+
+  if (isLoading || isLogin) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -52,6 +84,15 @@ export default function LoginEmployee() {
             className="w-3/4 mx-auto mt-7"
             onSubmit={handleSubmit(onSubmit)}
           >
+            {message && payload?.statusCode >= 400 && (
+              <div
+                className="p-4 mb-4 text-sm text-danger-secondary rounded bg-danger font-medium bg-opacity-10 flex items-center gap-2 border-2 border-danger"
+                role="alert"
+              >
+                <MdError className="text-xl" />
+                {message}
+              </div>
+            )}
             {/* <div className="form-group mt-4">
               <label htmlFor="email" className="text-lg font-medium">
                 Email

@@ -1,15 +1,16 @@
 import { combineReducers } from "redux";
-
 import { configureStore } from "@reduxjs/toolkit";
-
 import createSagaMiddleware from "@redux-saga/core";
-
 import { createLogger } from "redux-logger";
+import loginReducers from "../users/reducer/loginReducers";
+import rootSaga from "../saga";
 
 const logger = createLogger();
 const saga = createSagaMiddleware();
 
-const reducer = combineReducers({});
+const reducer = combineReducers({
+  loginReducers,
+});
 
 const store = configureStore({
   reducer,
@@ -18,5 +19,7 @@ const store = configureStore({
       .concat(logger)
       .concat(saga),
 });
+
+saga.run(rootSaga);
 
 export default store;

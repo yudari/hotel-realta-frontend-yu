@@ -1,0 +1,9 @@
+const ActionTypesUsers = {
+  REQ_GET_LOGIN: "REQ_GET_LOGIN",
+  LOGIN_FAILED: "LOGIN_FAILED",
+  LOGIN_SUCCESS: "LOGIN_SUCCESS",
+  REQ_LOGOUT: "REQ_LOGOUT",
+  LOGOUT_SUCCESS: "LOGOUT_SUCCESS",
+};
+
+export default ActionTypesUsers;
