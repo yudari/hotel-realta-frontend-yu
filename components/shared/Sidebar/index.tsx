@@ -47,10 +47,10 @@ export default function Sidebar({ showSidebar, setShowSidebar }: any) {
                       <li key={index} onClick={() => showDropdown(index)}>
                         {menu.submenu ? (
                           <div
-                            className={`flex items-center p-4 text-base text-gray-900 rounded-lg  group hover:bg-[#5D5145] hover:bg-opacity-20 hover:border-2 hover:border-[#5D5145] justify-between ${
+                            className={`flex items-center p-4 text-base text-gray-900 rounded-lg  group hover:bg-primary hover:text-white justify-between ${
                               router.pathname === menu.path
-                                ? "bg-[#5D5145] bg-opacity-20 border-2 border-[#5D5145]"
-                                : "hover:bg-[#5D5145] hover:bg-opacity-20 hover:border-2 hover:border-[#5D5145]"
+                                ? "bg-primary text-white"
+                                : "hover:bg-bg-primary hover:border-2 hover:border-primary"
                             }`}
                           >
                             <div className="flex items-center">
@@ -62,7 +62,7 @@ export default function Sidebar({ showSidebar, setShowSidebar }: any) {
 
                             {menu.submenu && (
                               <GoChevronRight
-                                className={`hover:bg-[#5D5145] hover:bg-opacity-20 hover:border-2 hover:border-[#5D5145] ${
+                                className={`hover:bg-primary hover:text-white ${
                                   dropdown.status && dropdown.index === index
                                     ? "rotate-90"
                                     : ""
@@ -75,8 +75,8 @@ export default function Sidebar({ showSidebar, setShowSidebar }: any) {
                             href={menu.to}
                             className={`flex items-center p-4 text-base text-gray-900 rounded-lg group dark:text-gray-200 justify-between my-2 ${
                               router.pathname === menu.path
-                                ? "bg-[#5D5145] bg-opacity-20 border-2 border-[#5D5145]"
-                                : "hover:bg-[#5D5145] hover:bg-opacity-20 hover:border-2 hover:border-[#5D5145]"
+                                ? "bg-primary text-white"
+                                : "hover:bg-primary text-white"
                             }`}
                           >
                             <div className="flex items-center">
@@ -97,7 +97,7 @@ export default function Sidebar({ showSidebar, setShowSidebar }: any) {
                               <Link
                                 href={submenu.to}
                                 key={index}
-                                className="flex items-center gap-3 py-2 pl-12 rounded-md hover:bg-[#5D5145] hover:bg-opacity-20 hover:border-2 hover:border-[#5D5145]"
+                                className="flex items-center gap-3 py-2 pl-12 rounded-md hover:bg-primary hover:text-white"
                               >
                                 <span>{submenu.title}</span>
                               </Link>

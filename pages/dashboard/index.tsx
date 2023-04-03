@@ -1,4 +1,5 @@
-import InputText from "@/components/Input/InputText";
+import InputSelect from "@/components/Input/InputSelect";
+import Modal from "@/components/Modal/Modal";
 import Head from "next/head";
 import React from "react";
 import { Alert } from "flowbite-react";
