@@ -13,6 +13,7 @@ import { doRegisterGuest } from "@/redux/users/action/registerActionReducers";
 
 import { MdArrowDropDown, MdError } from "react-icons/md";
 import { BsCheckCircleFill } from "react-icons/bs";
+import { useRouter } from "next/router";
 
 export default function SignupGuest() {
   const [selected, setSelected] = useState(phoneNumberCode[0].value);
@@ -20,6 +21,15 @@ export default function SignupGuest() {
   const { message, payload } = useSelector(
     (state: any) => state.registerReducers
   );
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const {
+    payload: loginPayload,
+    message: loginMessage,
+    refresh,
+    isLogin,
+  } = useSelector((state: any) => state.loginReducers);
+  const router = useRouter();
 
   type FormValues = {
     phone_number_code: string;

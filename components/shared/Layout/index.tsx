@@ -15,15 +15,6 @@ export default function Layout({ children }: any) {
   const { isLogin } = useSelector((state: any) => state.loginReducers);
   const router = useRouter();
 
-  useEffect(() => {
-    if (!isLogin || !localStorage.getItem("login")) {
-      localStorage.removeItem("login");
-      router.push("/users/loginEmployee");
-    }
-
-    setIsLoading(false);
-  }, [isLogin, router]);
-
   function handleResize() {
     if (innerWidth <= 640) {
       setShowSidebar(false);
@@ -33,6 +24,16 @@ export default function Layout({ children }: any) {
       setIsMobile(false);
     }
   }
+
+  useEffect(() => {
+    if (!isLogin || !localStorage.getItem("token")) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("login");
+      router.push("/users/loginEmployee");
+    }
+
+    setIsLoading(false);
+  }, [isLogin, router]);
 
   const handleLogout = () => {
     dispatch(doLogout());

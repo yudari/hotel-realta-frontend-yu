@@ -5,17 +5,23 @@ import React from "react";
 import Logo from "@/public/logo-realta.png";
 import Button from "@/components/Button/button";
 import { useForm } from "react-hook-form";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { MdArrowDropDown, MdError } from "react-icons/md";
 import phoneNumberCode from "@/utils/phoneNumberCode";
 import { useDispatch, useSelector } from "react-redux";
 import { doLoginGuest } from "@/redux/users/action/loginActionReducers";
+import Loader from "@/components/Loader";
+import { useRouter } from "next/router";
 
 export default function LoginGuest() {
   const [selected, setSelected] = useState(phoneNumberCode[0].value);
+  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
-  const { payload, message } = useSelector((state: any) => state.loginReducers);
+  const { payload, message, isLogin } = useSelector(
+    (state: any) => state.loginReducers
+  );
+  const router = useRouter();
 
   type FormValues = {
     phone_number_code: string;
@@ -38,6 +44,29 @@ export default function LoginGuest() {
     phone_number_code: { required: "Phone Number Code is required" },
     phone_number: { required: "Phone Number is required" },
   };
+
+  useEffect(() => {
+    const loginStorage = localStorage.getItem("login");
+    const token = localStorage.getItem("token");
+
+    if (loginStorage && token) {
+      dispatch({ type: "LOGIN_SUCCESS", payload: { token } });
+    } else {
+      setIsLoading(false);
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isLogin && payload && payload.token) {
+      localStorage.setItem("token", payload.token);
+      localStorage.setItem("login", "true");
+      router.push("/dashboard");
+    }
+  }, [isLogin, payload, router]);
+
+  if (isLoading || isLogin) {
+    return <Loader />;
+  }
 
   return (
     <>

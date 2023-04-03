@@ -7,20 +7,30 @@ import { useForm } from "react-hook-form";
 import InputText from "@/components/Input/InputText";
 import Button from "@/components/Button/button";
 import phoneNumberCode from "@/utils/phoneNumberCode";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { doRegister } from "@/redux/users/action/registerActionReducers";
 
 import { MdArrowDropDown, MdError } from "react-icons/md";
 import { BsCheckCircleFill } from "react-icons/bs";
+import { useRouter } from "next/router";
+import Loader from "@/components/Loader";
 
 export default function SignupEmployee() {
   const [selected, setSelected] = useState(phoneNumberCode[0].value);
   const dispatch = useDispatch();
-  const { message, payload } = useSelector(
+  const { message: registerMessage, payload: registerPayload } = useSelector(
     (state: any) => state.registerReducers
   );
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const {
+    payload: loginPayload,
+    message: loginMessage,
+    refresh,
+    isLogin,
+  } = useSelector((state: any) => state.loginReducers);
+  const router = useRouter();
 
   type FormValues = {
     username: string;
@@ -52,6 +62,29 @@ export default function SignupEmployee() {
     phone_number: { required: "Phone Number is required" },
   };
 
+  useEffect(() => {
+    const loginStorage = localStorage.getItem("login");
+    const token = localStorage.getItem("token");
+
+    if (loginStorage && token) {
+      dispatch({ type: "LOGIN_SUCCESS", payload: { token } });
+    } else {
+      setIsLoading(false);
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isLogin && loginPayload && loginPayload.token) {
+      localStorage.setItem("token", loginPayload.token);
+      localStorage.setItem("login", "true");
+      router.push("/dashboard");
+    }
+  }, [isLogin, loginPayload, router]);
+
+  if (isLoading || isLogin) {
+    return <Loader />;
+  }
+
   return (
     <>
       <Head>
@@ -79,23 +112,45 @@ export default function SignupEmployee() {
             className="w-3/4 mx-auto mt-7"
             onSubmit={handleSubmit(onSubmit)}
           >
-            {message && payload?.statusCode >= 400 && (
-              <div
-                className="p-4 mb-4 text-sm text-danger-secondary rounded bg-danger font-medium bg-opacity-10 flex items-center gap-2 border-2 border-danger"
-                role="alert"
-              >
-                <MdError className="text-xl" />
-                {message}
-              </div>
-            )}
+            {registerMessage &&
+              (registerPayload?.statusCode >= 400 ||
+                registerMessage?.response?.data?.statusCode >= 400) && (
+                <div
+                  className="p-4 mb-4 text-sm text-danger-secondary rounded bg-danger font-medium bg-opacity-10 border-2 border-danger"
+                  role="alert"
+                >
+                  {registerMessage?.response?.data ? (
+                    registerMessage?.response?.data?.message.map(
+                      (m: string, index: number) => {
+                        return (
+                          <ul
+                            key={index}
+                            className="flex flex-1 items-center gap-2 my-2"
+                          >
+                            <MdError className="text-xl" />
+                            <li className="flex-1">{m}</li>
+                          </ul>
+                        );
+                      }
+                    )
+                  ) : (
+                    <div className="flex flex-1 items-center gap-2 my-2">
+                      <MdError className="text-xl" />
+                      <p>{registerMessage}</p>
+                    </div>
+                  )}
+                </div>
+              )}
 
-            {message && payload?.statusCode === 200 && (
+            {registerMessage && registerPayload?.statusCode === 200 && (
               <div
                 className="p-4 mb-4 text-sm text-secondary rounded bg-secondary font-medium bg-opacity-10 flex items-center gap-2 border-2 border-secondary"
                 role="alert"
               >
                 <BsCheckCircleFill className="text-xl" />
-                {message.errors ? message.errors[0].message : message}
+                {registerMessage.errors
+                  ? registerMessage.errors[0].message
+                  : registerMessage}
               </div>
             )}
             <InputText

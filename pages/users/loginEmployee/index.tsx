@@ -42,19 +42,22 @@ export default function LoginEmployee() {
 
   useEffect(() => {
     const loginStorage = localStorage.getItem("login");
+    const token = localStorage.getItem("token");
 
-    if (loginStorage === "true") {
-      dispatch({ type: "LOGIN_SUCCESS" });
+    if (loginStorage && token) {
+      dispatch({ type: "LOGIN_SUCCESS", payload: { token } });
+    } else {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, [dispatch]);
 
   useEffect(() => {
-    if (isLogin) {
+    if (isLogin && payload && payload.token) {
+      localStorage.setItem("token", payload.token);
       localStorage.setItem("login", "true");
       router.push("/dashboard");
     }
-  }, [isLogin, router]);
+  }, [isLogin, payload, router]);
 
   if (isLoading || isLogin) {
     return <Loader />;
@@ -93,6 +96,7 @@ export default function LoginEmployee() {
                 {message}
               </div>
             )}
+
             {/* <div className="form-group mt-4">
               <label htmlFor="email" className="text-lg font-medium">
                 Email
