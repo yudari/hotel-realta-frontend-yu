@@ -17,7 +17,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
     variant: {
       "bg-primary hover:bg-primary-hover text-white":
         variant === "primary" && type === "main",
-      "border-2 border-primary text-primary hover:bg-primary hover:text-white":
+      "border-2 border-primary text-primary hover:bg-primary hover:text-white outline-none":
         variant === "primary" && type === "secondary",
 
       "bg-secondary hover:bg-secondary-hover text-white":
@@ -46,7 +46,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
     },
 
     size: {
-      "px-8 py-3": size === "small",
+      "px-8 py-2": size === "small",
       "px-10 py-4": size === "medium",
       "px-12 py-4": size === "large",
     },

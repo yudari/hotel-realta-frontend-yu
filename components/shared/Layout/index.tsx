@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { doLogout } from "@/redux/users/action/loginActionReducers";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
+import { ImHome } from "react-icons/im";
+import Link from "next/link";
+import Breadcrumb from "@/components/Breadcrumbs";
 
 export default function Layout({ children }: any) {
   const [showSidebar, setShowSidebar] = useState(true);
@@ -66,7 +69,11 @@ export default function Layout({ children }: any) {
           showSidebar && !isMobile ? "pl-56" : ""
         }`}
       >
-        <div className="mx-4 px-4 md:px-16">{children}</div>
+        <div className="mx-4 px-4 py-4 md:px-16">
+          <Breadcrumb />
+
+          {children}
+        </div>
       </main>
     </>
   );
