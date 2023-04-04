@@ -16,14 +16,70 @@ const listMenu = [
     name: "Dashboard",
   },
   {
+    to: "",
+    path: "",
+    icon: FaUser,
+    name: "User",
+    submenu: [
+      {
+        to: "/user/profile/:id",
+        path: "/user/profile/:id",
+        title: "Profile",
+      },
+      {
+        to: "",
+        path: "",
+        title: "My Booking",
+      },
+      {
+        to: "",
+        path: "",
+        title: "My Account",
+      },
+    ],
+  },
+  {
+    to: "",
+    path: "",
+    icon: BsClipboardDataFill,
+    name: "Master",
+    submenu: [
+      {
+        to: "/master/locations",
+        path: "/master/locations",
+        title: "Locations",
+      },
+      {
+        to: "/master/policy",
+        path: "/master/policy",
+        title: "Policy",
+      },
+      {
+        to: "/master/category",
+        path: "/master/category",
+        title: "Category Group",
+      },
+      {
+        to: "/master/priceitems",
+        path: "/master/priceitems",
+        title: "Price Items",
+      },
+      {
+        to: "/master/servicetask",
+        path: "/master/servicetask",
+        title: "Service Task",
+      },
+    ],
+  },
+  {
     to: "/hotel",
     path: "/hotel",
     icon: MdOutlineHotel,
     name: "Hotel",
     submenu: [
       {
-        to: "",
-        path: "",
+        to: "/hotel/hotels",
+        path: "/hotel/hotels",
         title: "Hotel",
       },
       {
@@ -52,29 +108,6 @@ const listMenu = [
     ],
   },
   {
-    to: "#",
-    path: "#",
-    icon: RiShoppingCartFill,
-    name: "Purchasing",
-    submenu: [
-      {
-        to: "",
-        path: "",
-        title: "Vendor",
-      },
-      {
-        to: "",
-        path: "",
-        title: "Stock",
-      },
-      {
-        to: "",
-        path: "",
-        title: "Purchasing Order",
-      },
-    ],
-  },
-  {
     to: "",
     path: "",
     icon: MdPayment,
@@ -93,12 +126,12 @@ const listMenu = [
       {
         to: "",
         path: "",
-        title: "Top Up",
+        title: "Accounts",
       },
       {
         to: "",
         path: "",
-        title: "Account",
+        title: "Top Up",
       },
       {
         to: "",
@@ -131,58 +164,25 @@ const listMenu = [
     ],
   },
   {
-    to: "",
-    path: "",
-    icon: BsClipboardDataFill,
-    name: "Master",
+    to: "#",
+    path: "#",
+    icon: RiShoppingCartFill,
+    name: "Purchasing",
     submenu: [
       {
         to: "",
         path: "",
-        title: "Location",
+        title: "Vendor",
       },
       {
         to: "",
         path: "",
-        title: "Policy",
+        title: "Stock",
       },
       {
         to: "",
         path: "",
-        title: "Category",
-      },
-      {
-        to: "",
-        path: "",
-        title: "Price",
-      },
-      {
-        to: "",
-        path: "",
-        title: "Service",
-      },
-    ],
-  },
-  {
-    to: "",
-    path: "",
-    icon: FaUser,
-    name: "User",
-    submenu: [
-      {
-        to: "",
-        path: "",
-        title: "Profil",
-      },
-      {
-        to: "",
-        path: "",
-        title: "Booking",
-      },
-      {
-        to: "",
-        path: "",
-        title: "Accaount",
+        title: "Purchasing Order",
       },
     ],
   },

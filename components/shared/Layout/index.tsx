@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../Navbar";
 import Sidebar from "../Sidebar";
+import { ImHome } from "react-icons/im";
+import Link from "next/link";
+import Breadcrumb from "@/components/Breadcrumbs";
 
 export default function Layout({ children }: any) {
   const [showSidebar, setShowSidebar] = useState(true);
@@ -35,7 +38,11 @@ export default function Layout({ children }: any) {
           showSidebar && !isMobile ? "pl-56" : ""
         }`}
       >
-        <div className="mx-4 px-4 md:px-16">{children}</div>
+        <div className="mx-4 px-4 py-4 md:px-16">
+          <Breadcrumb />
+
+          {children}
+        </div>
       </main>
     </>
   );
