@@ -111,23 +111,6 @@ export default function SignupGuest() {
             <label htmlFor="phone_number" className="text-lg font-medium">
               Phone Number
             </label>
-            {/* <div className="grid grid-cols-4 gap-3 mt-2">
-              <input
-                type="text"
-                {...register(
-                  "phone_number_code",
-                  registerOptions.phone_number_code
-                )}
-                className="w-full rounded p-3 border-2 border-variant outline-none active:border-blue-600 focus:border-blue-800"
-                placeholder="+62"
-              />
-              <input
-                type="text"
-                {...register("phone_number", registerOptions.phone_number)}
-                className=" w-full rounded p-3 col-span-3 border-2 border-variant outline-none active:border-blue-600 focus:border-blue-800 "
-                placeholder="Your Phone Number"
-              />
-            </div> */}
 
             <div className="flex gap-2 items-center">
               <Listbox value={selected} onChange={setSelected}>
@@ -190,10 +173,7 @@ export default function SignupGuest() {
             <small className="text-red-600 block mt-2">
               {errors?.phone_number && errors.phone_number.message}
             </small>
-            {/* 
-            <button className="w-full p-3 mt-6 bg-blue-600 font-medium text-lg uppercase text-white hover:bg-blue-700 transition-colors duration-200 ease-out">
-              Signup
-            </button> */}
+
             <Button
               label="Signup"
               size="large"

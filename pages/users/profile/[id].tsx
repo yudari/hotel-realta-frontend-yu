@@ -5,7 +5,6 @@ import Button from "@/components/Button/button";
 import TabUser from "@/components/TabUser";
 import { useRouter } from "next/router";
 import axios from "axios";
-import Cookies from "js-cookie";
 
 export default function UserProfile({ userData, bonus, members }: any) {
   const router = useRouter();
@@ -119,7 +118,6 @@ export async function getServerSideProps(context: any) {
   }
 
   const loginData = JSON.parse(req.cookies["loginData"]);
-  // console.log(JSON.parse(req.cookies["loginData"]));
 
   if (Number(loginData.user_id) !== Number(id)) {
     return {

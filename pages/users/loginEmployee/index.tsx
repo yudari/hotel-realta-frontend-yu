@@ -106,16 +106,6 @@ export default function LoginEmployee() {
               </div>
             )}
 
-            {/* <div className="form-group mt-4">
-              <label htmlFor="email" className="text-lg font-medium">
-                Email
-              </label>
-              <input
-                type="email"
-                className="w-full p-3 mt-2 border-2 border-gray-500 outline-none active:border-blue-600 focus:border-blue-800"
-                placeholder="Your Email (eg. mail@gmail.com)"
-              />
-            </div> */}
             <InputText
               name="email"
               label="Email"
@@ -140,17 +130,6 @@ export default function LoginEmployee() {
               className="w-full "
             />
 
-            {/* <div className="form-group mt-4">
-              <label htmlFor="password" className="text-lg font-medium">
-                Password
-              </label>
-              <input
-                type="password"
-                className="w-full p-3 mt-2 border-2 border-gray-500 outline-none active:border-blue-600 focus:border-blue-800"
-                placeholder="Your password"
-              />
-            </div> */}
-
             <div className="flex justify-between mt-4">
               <div className="flex items-center gap-1">
                 <input
@@ -173,9 +152,6 @@ export default function LoginEmployee() {
               </Link>
             </div>
 
-            {/* <button className="w-full p-3 mt-6 bg-blue-600 font-medium text-lg uppercase text-white hover:bg-blue-700 transition-colors duration-200 ease-out">
-              Signin
-            </button> */}
             <Button
               label="Sign In"
               size="large"

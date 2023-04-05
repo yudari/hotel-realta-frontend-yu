@@ -153,6 +153,7 @@ export default function SignupEmployee() {
                   : registerMessage}
               </div>
             )}
+
             <InputText
               name="username"
               label="Username"
