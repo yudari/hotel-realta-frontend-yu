@@ -77,23 +77,23 @@ export default function LoginEmployee() {
       <Head>
         <title>Hotel Realta - Login Employee</title>
       </Head>
-      <main className="grid grid-cols-2 h-screen items-center">
-        <div className="w-3/4 mx-auto">
+      <main className="grid grid-cols-1 md:grid-cols-2 h-screen items-center px-4 md:px-0 bg-[url(https://images.unsplash.com/photo-1678982762066-e62979ee5251?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY4MDA3ODY4Nw&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080)] md:bg-none bg-no-repeat bg-center">
+        <div className="w-full px-6 py-6 md:px-0 md:py-0 md:w-3/4 mx-auto bg-white md:bg-transparent rounded-md md:rounded-none">
           <Link href="/">
             <Image
               src={Logo}
               alt="hotel logo"
               width={450}
               height={250}
-              className="mx-auto"
+              className="mx-auto md:mt-1"
               priority
             />
           </Link>
 
-          <hr className="w-3/4 mx-auto mt-5" />
+          <hr className="w-full md:w-3/4 mx-auto mt-5" />
 
           <form
-            className="w-3/4 mx-auto mt-7"
+            className="w-full md:w-3/4 mx-auto mt-7"
             onSubmit={handleSubmit(onSubmit)}
           >
             {message && payload?.statusCode >= 400 && (
@@ -135,18 +135,20 @@ export default function LoginEmployee() {
                 <input
                   type="checkbox"
                   name="remember-me"
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  className="w-4 h-4 text-primary bg-gray-100 border-gray-300 focus:ring-primary focus:ring-2"
                 />
                 <label htmlFor="remember-me" className="sr-only">
                   Remember Me
                 </label>
 
-                <label htmlFor="remember-me">Remember Me</label>
+                <label htmlFor="remember-me" className="text-sm md:text-base">
+                  Remember Me
+                </label>
               </div>
 
               <Link
                 href="/users/forgotPassword"
-                className="text-blue-700 hover:text-blue-800 font-medium"
+                className="text-blue-700 hover:text-blue-800 font-medium text-sm md:text-base"
               >
                 Forgot Your Password
               </Link>
@@ -161,7 +163,7 @@ export default function LoginEmployee() {
             />
           </form>
 
-          <p className="font-medium text-center mt-4">
+          <p className="font-medium text-center mt-4 text-sm md:text-base">
             Are you Guest?{" "}
             <Link
               href="/users/loginGuest"
@@ -171,13 +173,13 @@ export default function LoginEmployee() {
             </Link>
           </p>
 
-          <div className="w-3/4 mx-auto flex items-center gap-2 mt-7">
+          <div className="w-full md:w-3/4 mx-auto flex items-center gap-2 mt-7">
             <hr className="w-full border border-gray-300" />
             <span className="font-medium uppercase text-gray-700">Signup</span>
             <hr className="w-full border border-gray-300" />
           </div>
 
-          <div className="w-3/4 mx-auto">
+          <div className="w-full md:w-3/4 mx-auto">
             <Link href="/users/signupEmployee">
               <Button
                 label="Signup as employee"
@@ -195,7 +197,7 @@ export default function LoginEmployee() {
           width={1024}
           height={1024}
           alt="hotel-realta"
-          className="h-screen w-full object-cover"
+          className="h-screen w-full object-cover hidden md:block"
         />
       </main>
     </>

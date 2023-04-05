@@ -57,35 +57,35 @@ export default function SignupGuest() {
       <Head>
         <title>Hotel Realta - Login Guest</title>
       </Head>
-      <main className="grid grid-cols-2 h-screen items-center">
+      <main className="grid grid-cols-1 md:grid-cols-2 h-screen items-center px-4 md:px-0 bg-[url(https://images.unsplash.com/photo-1629140727571-9b5c6f6267b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY4MDA5NzMwNg&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080)] md:bg-none bg-no-repeat bg-center">
         <Image
           src="https://images.unsplash.com/photo-1629140727571-9b5c6f6267b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY4MDA5NzMwNg&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080"
           width={1024}
           height={1024}
           alt="hotel-realta"
-          className="h-screen w-full object-cover"
+          className="h-screen w-full object-cover hidden md:block"
         />
 
-        <div className="w-3/4 mx-auto">
+        <div className="w-full md:w-3/4 mx-auto px-6 md:px-0 py-6 md:py-0 bg-white md:bg-transparent rounded-md md:rounded-none">
           <Link href="/">
             <Image
               src={Logo}
               alt="hotel logo"
               width={450}
               height={250}
-              className="mx-auto mt-10"
+              className="mx-auto mt-0 md:mt-10"
               priority
             />
           </Link>
 
-          <hr className="w-3/4 mx-auto mt-5" />
+          <hr className="w-full md:w-3/4 mx-auto mt-5" />
 
           <h1 className="text-3xl text-center uppercase font-medium mt-7">
             Guest Signup
           </h1>
 
           <form
-            className="w-3/4 mx-auto mt-7"
+            className="w-full md:w-3/4 mx-auto mt-7"
             onSubmit={handleSubmit(onSubmit)}
           >
             {message && payload?.statusCode >= 400 && (
@@ -130,7 +130,7 @@ export default function SignupGuest() {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                   >
-                    <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                    <Listbox.Options className="absolute mt-1 max-h-60 w-44 md:w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                       {phoneNumberCode.map((code, index) => (
                         <Listbox.Option
                           key={index}
@@ -183,7 +183,7 @@ export default function SignupGuest() {
             />
           </form>
 
-          <p className="font-medium text-center mt-4">
+          <p className="font-medium text-center mt-4 text-sm md:text-base">
             If You are Realta Hotel,{" "}
             <Link
               href="/users/signupEmployee"

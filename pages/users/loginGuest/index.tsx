@@ -82,16 +82,16 @@ export default function LoginGuest() {
       <Head>
         <title>Hotel Realta - Login Guest</title>
       </Head>
-      <main className="grid grid-cols-2 h-screen items-center">
+      <main className="grid grid-cols-1 md:grid-cols-2 h-screen items-center px-4 md:px-0 bg-[url(https://images.unsplash.com/photo-1563911302283-d2bc129e7570?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY3Mzk1Njk4MA&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080)] md:bg-none bg-no-repeat bg-center">
         <Image
           src="https://images.unsplash.com/photo-1563911302283-d2bc129e7570?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY3Mzk1Njk4MA&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080"
           width={1024}
           height={1024}
           alt="hotel-realta"
-          className="h-screen w-full object-cover"
+          className="h-screen w-full object-cover hidden md:block"
         />
 
-        <div className="w-3/4 mx-auto">
+        <div className="w-full px-6 py-6 md:px-0 md:py-0 md:w-3/4 mx-auto bg-white md:bg-transparent rounded-md md:rounded-none">
           <h1 className="uppercase text-center text-4xl font-medium text-gray-600">
             Welcome To
           </h1>
@@ -107,10 +107,10 @@ export default function LoginGuest() {
             />
           </Link>
 
-          <hr className="w-3/4 mx-auto mt-5" />
+          <hr className="w-full md:w-3/4 mx-auto mt-5" />
 
           <form
-            className="w-3/4 mx-auto mt-7"
+            className="w-full md:w-3/4 mx-auto mt-7"
             onSubmit={handleSubmit(onSubmit)}
           >
             {message && payload?.statusCode >= 400 && (
@@ -200,7 +200,7 @@ export default function LoginGuest() {
             />
           </form>
 
-          <p className="font-medium text-center mt-4">
+          <p className="font-medium text-center mt-4 text-sm md:text-base">
             If You are Realta Hotel,{" "}
             <Link
               href="/users/loginEmployee"
@@ -210,13 +210,13 @@ export default function LoginGuest() {
             </Link>
           </p>
 
-          <div className="w-3/4 mx-auto flex items-center gap-2 mt-7">
+          <div className="w-full md:w-3/4 mx-auto flex items-center gap-2 mt-7">
             <hr className="w-full border border-gray-300" />
             <span className="font-medium uppercase text-gray-700">Signup</span>
             <hr className="w-full border border-gray-300" />
           </div>
 
-          <div className="w-3/4 mx-auto">
+          <div className="w-full md:w-3/4 mx-auto">
             <Link href="/users/signupGuest">
               <Button
                 label="Signup as guest"

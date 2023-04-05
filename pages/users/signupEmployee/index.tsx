@@ -90,8 +90,8 @@ export default function SignupEmployee() {
       <Head>
         <title>Hotel Realta - Signup Employee</title>
       </Head>
-      <main className="h-full grid grid-cols-2 place-content-center">
-        <div className="w-3/4 mx-auto py-10">
+      <main className="h-full grid grid-cols-1 md:grid-cols-2 place-content-center px-4 md:px-0 py-4 md:py-0 bg-[url(https://images.unsplash.com/photo-1678982762066-e62979ee5251?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY4MDA3ODY4Nw&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080)] md:bg-none bg-no-repeat bg-center">
+        <div className="w-full md:w-3/4 mx-auto py-6 md:py-10 px-6 md:px-0 bg-white md:bg-transparent rounded-md md:rounded-none">
           <Link href="/">
             <Image
               src={Logo}
@@ -102,14 +102,14 @@ export default function SignupEmployee() {
             />
           </Link>
 
-          <hr className="w-3/4 mx-auto mt-6" />
+          <hr className="w-full md:w-3/4 mx-auto mt-6" />
 
           <h1 className="text-3xl text-center uppercase font-medium mt-7">
             Employee Signup
           </h1>
 
           <form
-            className="w-3/4 mx-auto mt-7"
+            className="w-full md:w-3/4 mx-auto mt-7"
             onSubmit={handleSubmit(onSubmit)}
           >
             {registerMessage &&
@@ -280,7 +280,7 @@ export default function SignupEmployee() {
             />
           </form>
 
-          <p className="font-medium text-center mt-4">
+          <p className="font-medium text-center mt-4 text-sm md:text-base">
             Already Have Account?{" "}
             <Link
               href="/users/loginEmployee"
@@ -296,7 +296,7 @@ export default function SignupEmployee() {
           width={1024}
           height={1024}
           alt="hotel-realta"
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover hidden md:block"
         />
       </main>
     </>
