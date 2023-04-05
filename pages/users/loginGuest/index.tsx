@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { doLoginGuest } from "@/redux/users/action/loginActionReducers";
 import Loader from "@/components/Loader";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 export default function LoginGuest() {
   const [selected, setSelected] = useState(phoneNumberCode[0].value);
@@ -48,9 +49,10 @@ export default function LoginGuest() {
   useEffect(() => {
     const loginStorage = localStorage.getItem("login");
     const token = localStorage.getItem("token");
+    const loginData = JSON.parse(localStorage.getItem("loginData") || "{}");
 
     if (loginStorage && token) {
-      dispatch({ type: "LOGIN_SUCCESS", payload: { token } });
+      dispatch({ type: "LOGIN_SUCCESS", payload: { token, loginData } });
     } else {
       setIsLoading(false);
     }
@@ -60,7 +62,14 @@ export default function LoginGuest() {
     if (isLogin && payload && payload.token) {
       localStorage.setItem("token", payload.token);
       localStorage.setItem("login", "true");
-      router.push("/dashboard");
+      localStorage.setItem("loginData", JSON.stringify(payload.loginData));
+      Cookies.set("loginData", JSON.stringify(payload.loginData), {
+        expires: 1,
+        path: "/",
+      });
+      Cookies.set("token", payload.token, { expires: 1, path: "/" });
+
+      router.push(`/users/profile/${payload.loginData.user_id}`);
     }
   }, [isLogin, payload, router]);
 
@@ -183,7 +192,7 @@ export default function LoginGuest() {
             </div>
 
             <Button
-              label="Signup"
+              label="Sign In"
               size="large"
               type="main"
               variant="primary"
@@ -213,7 +222,7 @@ export default function LoginGuest() {
                 label="Signup as guest"
                 size="large"
                 type="main"
-                variant="variant"
+                variant="danger-secondary"
                 className="w-full mt-4"
               />
             </Link>

@@ -15,20 +15,12 @@ const poppins = Poppins({
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-
-  if (
-    router.pathname.startsWith("/users/loginEmployee") ||
-    router.pathname.startsWith("/users/signupEmployee") ||
-    router.pathname.startsWith("/users/loginGuest") ||
-    router.pathname.startsWith("/users/signupGuest") ||
-    router.pathname === "_error"
-  ) {
-    return (
-      <Provider store={store}>
-        <Component {...pageProps} />
-      </Provider>
-    );
-  }
+  const hasLayout =
+    !router.pathname.startsWith("/users/loginEmployee") &&
+    !router.pathname.startsWith("/users/signupEmployee") &&
+    !router.pathname.startsWith("/users/loginGuest") &&
+    !router.pathname.startsWith("/users/signupGuest") &&
+    router.pathname !== "/_error";
 
   return (
     <Provider store={store}>
@@ -42,9 +34,13 @@ export default function App({ Component, pageProps }: AppProps) {
 
       <NextNProgress color="black" />
 
-      <Layout>
+      {hasLayout ? (
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      ) : (
         <Component {...pageProps} />
-      </Layout>
+      )}
     </Provider>
   );
 }

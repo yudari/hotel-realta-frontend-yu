@@ -22,8 +22,8 @@ const listMenu = [
     name: "User",
     submenu: [
       {
-        to: "/user/profile/:id",
-        path: "/user/profile/:id",
+        to: "/users/profile/1",
+        path: "/users/profile/1",
         title: "Profile",
       },
       {

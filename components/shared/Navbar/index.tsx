@@ -12,7 +12,10 @@ export default function Navbar({
   showSidebar,
   setShowSidebar,
   handleLogout,
+  loginData,
 }: any) {
+  const { user_role_id, user_full_name } = loginData;
+
   return (
     <nav
       className={`fixed z-20 w-full bg-white shadow-md sm:py-2 dark:bg-gray-800 dark:border-gray-700 px-4`}
@@ -35,11 +38,21 @@ export default function Navbar({
           <div className="flex items-center ml-3">
             <Menu as="div" className="relative inline-block text-left">
               <div>
-                <Menu.Button className="inline-flex w-full justify-center rounded-full items-center gap-3">
+                <Menu.Button className="inline-flex text-right w-full justify-center rounded-full items-center gap-3">
                   <div className="flex flex-col gap-1">
-                    <span className="font-medium text-sm">James Brown</span>
+                    <span className="font-medium text-sm">
+                      {user_full_name}
+                    </span>
                     <span className="font-light text-sm text-variant">
-                      Administrator
+                      {Number(user_role_id) === 1
+                        ? "Guest"
+                        : Number(user_role_id) === 2
+                        ? "Manager"
+                        : Number(user_role_id) === 3
+                        ? "Office Boy"
+                        : Number(user_role_id) === 4
+                        ? "Admin"
+                        : "User"}
                     </span>
                   </div>
                   <picture>

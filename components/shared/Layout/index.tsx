@@ -8,11 +8,16 @@ import Loader from "@/components/Loader";
 import { ImHome } from "react-icons/im";
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumbs";
+import Cookies from "js-cookie";
 
 export default function Layout({ children }: any) {
   const [showSidebar, setShowSidebar] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [loginData, setLoginData] = useState({
+    user_role_id: 0,
+    user_full_name: "",
+  });
 
   const dispatch = useDispatch();
   const { isLogin } = useSelector((state: any) => state.loginReducers);
@@ -29,20 +34,6 @@ export default function Layout({ children }: any) {
   }
 
   useEffect(() => {
-    if (!isLogin || !localStorage.getItem("token")) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("login");
-      router.push("/users/loginEmployee");
-    }
-
-    setIsLoading(false);
-  }, [isLogin, router]);
-
-  const handleLogout = () => {
-    dispatch(doLogout());
-  };
-
-  useEffect(() => {
     if (typeof window != undefined) {
       addEventListener("resize", handleResize);
     }
@@ -52,7 +43,51 @@ export default function Layout({ children }: any) {
     };
   }, []);
 
-  if (isLoading || !isLogin) {
+  useEffect(() => {
+    if (!isLogin && !localStorage.getItem("token")) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("login");
+      localStorage.removeItem("loginData");
+      Cookies.remove("loginData");
+      Cookies.remove("token");
+
+      const user = JSON.parse(localStorage.getItem("loginData") || "{}");
+
+      if (user.usro_role_id === 1) {
+        router.push("/users/loginEmployee");
+      } else {
+        router.push("/users/loginGuest");
+      }
+    }
+
+    setLoginData(JSON.parse(localStorage.getItem("loginData") || "{}"));
+    setIsLoading(false);
+  }, [isLogin, router]);
+
+  const handleLogout = () => {
+    try {
+      dispatch(doLogout());
+      localStorage.removeItem("login");
+      localStorage.removeItem("token");
+      localStorage.removeItem("loginData");
+      Cookies.remove("loginData");
+      Cookies.remove("token");
+
+      if (
+        Number(loginData.user_role_id) === 2 ||
+        Number(loginData.user_role_id) === 3 ||
+        Number(loginData.user_role_id) === 4
+      ) {
+        router.push("/users/loginEmployee");
+      } else {
+        router.push("/users/loginGuest");
+      }
+    } catch (e) {
+      return e;
+    }
+  };
+
+  if (isLoading) {
     return <Loader />;
   }
 
@@ -62,6 +97,7 @@ export default function Layout({ children }: any) {
         showSidebar={showSidebar}
         setShowSidebar={setShowSidebar}
         handleLogout={handleLogout}
+        loginData={loginData}
       />
       <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       <main
@@ -77,4 +113,16 @@ export default function Layout({ children }: any) {
       </main>
     </>
   );
+}
+
+export async function getServerSideProps(context: any) {
+  const { req } = context;
+
+  if (!req.cookies["loginData"] || !req.cookies["token"]) {
+    return {
+      redirect: {
+        destination: "/users/loginGuest",
+      },
+    };
+  }
 }

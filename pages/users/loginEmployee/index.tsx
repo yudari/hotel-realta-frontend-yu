@@ -11,6 +11,7 @@ import { doLoginEmployee } from "@/redux/users/action/loginActionReducers";
 import { MdError } from "react-icons/md";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
+import Cookies from "js-cookie";
 
 export default function LoginEmployee() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -43,9 +44,10 @@ export default function LoginEmployee() {
   useEffect(() => {
     const loginStorage = localStorage.getItem("login");
     const token = localStorage.getItem("token");
+    const loginData = JSON.parse(localStorage.getItem("loginData") || "{}");
 
     if (loginStorage && token) {
-      dispatch({ type: "LOGIN_SUCCESS", payload: { token } });
+      dispatch({ type: "LOGIN_SUCCESS", payload: { token, loginData } });
     } else {
       setIsLoading(false);
     }
@@ -55,7 +57,14 @@ export default function LoginEmployee() {
     if (isLogin && payload && payload.token) {
       localStorage.setItem("token", payload.token);
       localStorage.setItem("login", "true");
-      router.push("/dashboard");
+      localStorage.setItem("loginData", JSON.stringify(payload.loginData));
+      Cookies.set("loginData", JSON.stringify(payload.loginData), {
+        expires: 1,
+        path: "/",
+      });
+      Cookies.set("token", payload.token, { expires: 1, path: "/" });
+
+      router.push(`/users/profile/${payload.loginData.user_id}`);
     }
   }, [isLogin, payload, router]);
 
@@ -168,7 +177,7 @@ export default function LoginEmployee() {
               Signin
             </button> */}
             <Button
-              label="signin"
+              label="Sign In"
               size="large"
               type="main"
               variant="primary"
@@ -194,14 +203,11 @@ export default function LoginEmployee() {
 
           <div className="w-3/4 mx-auto">
             <Link href="/users/signupEmployee">
-              {/* <button className="w-full p-3 mt-4 bg-gray-600 font-medium text-lg uppercase text-white hover:bg-gray-700 transition-colors duration-200 ease-out">
-                Sign Up AS Employee
-              </button> */}
               <Button
                 label="Signup as employee"
                 size="large"
                 type="main"
-                variant="variant"
+                variant="danger-secondary"
                 className="w-full mt-4"
               />
             </Link>
