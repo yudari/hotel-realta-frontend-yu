@@ -27,13 +27,13 @@ const listMenu = [
         title: "Profile",
       },
       {
-        to: "",
-        path: "",
+        to: "/users/myBooking",
+        path: "/users/myBooking",
         title: "My Booking",
       },
       {
-        to: "",
-        path: "",
+        to: "/users/myAccount",
+        path: "/users/myAccount",
         title: "My Account",
       },
     ],

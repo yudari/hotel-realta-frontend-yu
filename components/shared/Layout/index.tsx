@@ -15,7 +15,7 @@ export default function Layout({ children }: any) {
   const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loginData, setLoginData] = useState({
-    user_role_id: 0,
+    usro_role_id: 0,
     user_full_name: "",
   });
 
@@ -74,9 +74,9 @@ export default function Layout({ children }: any) {
       Cookies.remove("token");
 
       if (
-        Number(loginData.user_role_id) === 2 ||
-        Number(loginData.user_role_id) === 3 ||
-        Number(loginData.user_role_id) === 4
+        Number(loginData.usro_role_id) === 2 ||
+        Number(loginData.usro_role_id) === 3 ||
+        Number(loginData.usro_role_id) === 4
       ) {
         router.push("/users/loginEmployee");
       } else {

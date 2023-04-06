@@ -13,8 +13,28 @@ type RegisterEmployeeType = {
   phone_number: string;
 };
 
-type RegisterOrLoginGuest = {
+type RegisterOrLoginGuestType = {
   phone_number: string;
+};
+
+type UpdateProfileType = {
+  user_full_name?: string;
+  user_type?: "T" | "I" | "C";
+  user_phone_number?: string;
+  user_photo_profile?: string;
+  user_email?: string;
+  user_company_name?: string;
+  uspro_nationa_id?: string;
+  uspro_job_title?: string;
+  uspro_gender?: "M" | "F";
+  uspro_birt_date?: Date | string;
+  uspro_marital_status?: "M" | "S";
+};
+
+type UpdatePasswordType = {
+  current_password: string;
+  new_password: string;
+  retype_password: string;
 };
 
 const loginEmployee = (data: LoginEmployeeType) => {
@@ -25,12 +45,20 @@ const registerEmployee = (data: RegisterEmployeeType) => {
   return axios.post("/users/signupEmployee", data);
 };
 
-const loginGuest = (data: RegisterOrLoginGuest) => {
+const loginGuest = (data: RegisterOrLoginGuestType) => {
   return axios.post("/auth/loginGuest", data);
 };
 
-const registerGuest = (data: RegisterOrLoginGuest) => {
+const registerGuest = (data: RegisterOrLoginGuestType) => {
   return axios.post("/users/signupGuest", data);
+};
+
+const updateProfile = (id: number, data: UpdateProfileType) => {
+  return axios.put(`/users/update/${id}`, data);
+};
+
+const updatePassword = (id: number, data: UpdatePasswordType) => {
+  return axios.put(`/users/password/${id}`, data);
 };
 
 const apiMethodUsers = {
@@ -38,6 +66,8 @@ const apiMethodUsers = {
   registerEmployee,
   loginGuest,
   registerGuest,
+  updateProfile,
+  updatePassword,
 };
 
 export default apiMethodUsers;
