@@ -29,7 +29,7 @@ export default function InputText(props: InputTextProps) {
   } = props;
 
   const inputTextClass = classNames(
-    "outline-none border border-spacing-2 border-primary block px-3 py-2 mt-2 active:border-blue-700 focus:border-blue-700 active:bg-blue-200 focus:bg-blue-200",
+    "outline-none border border-spacing-2 border-2 border-variant block p-3 mt-2 active:border-blue-700 focus:border-blue-700 active:bg-blue-200 focus:bg-blue-200 rounded",
     {
       "active:border-red-700 focus:border-red-700 active:bg-red-200 focus:bg-red-200":
         errors?.[name],
@@ -38,8 +38,8 @@ export default function InputText(props: InputTextProps) {
   );
 
   return (
-    <div className="form-group">
-      <label htmlFor={label} className="block">
+    <div className="form-group mt-4">
+      <label htmlFor={label} className="block text-lg font-medium">
         {label}
         {required && <span className="text-danger">*</span>}
       </label>
@@ -51,7 +51,7 @@ export default function InputText(props: InputTextProps) {
         defaultValue={defaultValue}
         className={inputTextClass}
         {...register(name, registerOptions?.[name])}
-        required
+        required={required}
       />
       <small className="text-red-600">
         {errors?.[name] && errors?.[name]?.message}

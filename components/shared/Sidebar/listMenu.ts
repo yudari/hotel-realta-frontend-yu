@@ -22,18 +22,18 @@ const listMenu = [
     name: "User",
     submenu: [
       {
-        to: "/user/profile/:id",
-        path: "/user/profile/:id",
+        to: "/users/profile/1",
+        path: "/users/profile/1",
         title: "Profile",
       },
       {
-        to: "",
-        path: "",
+        to: "/users/myBooking",
+        path: "/users/myBooking",
         title: "My Booking",
       },
       {
-        to: "",
-        path: "",
+        to: "/users/myAccount",
+        path: "/users/myAccount",
         title: "My Account",
       },
     ],
