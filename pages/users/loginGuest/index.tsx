@@ -151,8 +151,7 @@ export default function LoginGuest() {
                           <Listbox.Option
                             key={index}
                             className={({ active }) =>
-                              `relative cursor-default select-none p-3 ${
-                                active ? "bg-primary text-white" : "text-black"
+                              `relative cursor-default select-none p-3 ${active ? "bg-primary text-white" : "text-black"
                               }`
                             }
                             value={code.value}
@@ -160,9 +159,8 @@ export default function LoginGuest() {
                             {({ selected }) => (
                               <>
                                 <span
-                                  className={`block truncate ${
-                                    selected ? "font-medium" : "font-normal"
-                                  }`}
+                                  className={`block truncate ${selected ? "font-medium" : "font-normal"
+                                    }`}
                                 >
                                   {code.label}
                                 </span>
