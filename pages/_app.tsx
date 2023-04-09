@@ -16,11 +16,15 @@ const poppins = Poppins({
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const hasLayout =
+    router.pathname !== "/" &&
     !router.pathname.startsWith("/users/loginEmployee") &&
     !router.pathname.startsWith("/users/signupEmployee") &&
     !router.pathname.startsWith("/users/loginGuest") &&
     !router.pathname.startsWith("/users/signupGuest") &&
-    router.pathname !== "/_error";
+    !router.pathname.startsWith("/users/forgotPassword") &&
+    !router.pathname.startsWith("/users/resetPassword") &&
+    router.pathname !== "/_error" &&
+    router.pathname !== "/404";
 
   return (
     <Provider store={store}>

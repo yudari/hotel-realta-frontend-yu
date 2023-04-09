@@ -69,7 +69,7 @@ export default function LoginGuest() {
       });
       Cookies.set("token", payload.token, { expires: 1, path: "/" });
 
-      router.push(`/users/profile/${payload.loginData.user_id}`);
+      router.push(`/`);
     }
   }, [isLogin, payload, router]);
 

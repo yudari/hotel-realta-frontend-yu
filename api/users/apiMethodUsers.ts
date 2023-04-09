@@ -54,7 +54,11 @@ const registerGuest = (data: RegisterOrLoginGuestType) => {
 };
 
 const updateProfile = (id: number, data: UpdateProfileType) => {
-  return axios.put(`/users/update/${id}`, data);
+  return axios.put(`/users/update/${id}`, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 
 const updatePassword = (id: number, data: UpdatePasswordType) => {
