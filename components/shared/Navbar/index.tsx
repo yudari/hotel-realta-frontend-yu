@@ -4,6 +4,8 @@ import { Menu, Transition } from "@headlessui/react";
 import { HiMenuAlt1 } from "react-icons/hi";
 import Avatar from "@/public/avatar.svg";
 import { BiLogOut } from "react-icons/bi";
+import { useDispatch } from "react-redux";
+import { doLogout } from "@/redux/users/action/loginActionReducers";
 
 export default function Navbar({
   showSidebar,
@@ -11,9 +13,8 @@ export default function Navbar({
   handleLogout,
   loginData,
 }: any) {
-  const { user_role_id, user_full_name, user_photo_profile } = loginData;
+  const { user_role_id, user_full_name } = loginData;
 
-  const imageUrl = `${process.env.BACKEND_URL}/image/users`;
 
   return (
     <nav
@@ -22,9 +23,8 @@ export default function Navbar({
       <div className="container py-3 mx-auto">
         <div className="flex items-center justify-between">
           <div
-            className={`flex items-center justify-start transform transition duration-500 ease-in-out ${
-              showSidebar ? "translate-x-72" : "-translate-x-0"
-            }`}
+            className={`flex items-center justify-start transform transition duration-500 ease-in-out ${showSidebar ? "translate-x-72" : "-translate-x-0"
+              }`}
           >
             <a href="#" className="flex mr-4">
               <HiMenuAlt1
@@ -46,32 +46,22 @@ export default function Navbar({
                       {Number(user_role_id) === 1
                         ? "Guest"
                         : Number(user_role_id) === 2
-                        ? "Manager"
-                        : Number(user_role_id) === 3
-                        ? "Office Boy"
-                        : Number(user_role_id) === 4
-                        ? "Admin"
-                        : "User"}
+                          ? "Manager"
+                          : Number(user_role_id) === 3
+                            ? "Office Boy"
+                            : Number(user_role_id) === 4
+                              ? "Admin"
+                              : "User"}
                     </span>
                   </div>
                   <picture>
-                    {user_photo_profile ? (
-                      <Image
-                        src={`${imageUrl}/${user_photo_profile}`}
-                        alt="Picsum"
-                        width={50}
-                        height={50}
-                        className="rounded-full"
-                      />
-                    ) : (
-                      <Image
-                        src={Avatar}
-                        alt="Picsum"
-                        width={50}
-                        height={50}
-                        className="rounded-full"
-                      />
-                    )}
+                    <Image
+                      src={Avatar}
+                      alt="Picsum"
+                      width={50}
+                      height={50}
+                      className="rounded-full"
+                    />
                   </picture>
                 </Menu.Button>
               </div>
@@ -106,3 +96,4 @@ export default function Navbar({
     </nav>
   );
 }
+
