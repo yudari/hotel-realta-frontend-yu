@@ -1,20 +1,17 @@
-import { combineReducers } from "redux";
-import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "@redux-saga/core";
-
+import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers } from "redux";
 import { createLogger } from "redux-logger";
 import bookingReducers from "../booking/reducer/bookingReducer";
 import facilitiesSupportBookingReducers from "../booking/reducer/facilitiesSupportReducer";
 import rootSaga from "../saga";
-
-import otherRoomsReducers from "../booking/reducer/OtherRoomsReducer";
-
-
-
 import loginReducers from "../users/reducer/loginReducers";
 import registerReducers from "../users/reducer/registerReducers";
-
+import otherRoomsReducers from "../booking/reducer/OtherRoomsReducer";
 import usersReducers from "../users/reducer/userReducers";
+
+
+
 
 const logger = createLogger();
 const saga = createSagaMiddleware();
@@ -37,7 +34,5 @@ const store = configureStore({
 });
 
 saga.run(rootSaga);
-
-
 
 export default store;

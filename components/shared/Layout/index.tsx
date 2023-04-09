@@ -91,6 +91,7 @@ export default function Layout({ children }: any) {
     return <Loader />;
   }
 
+  console.log(showSidebar)
   return (
     <>
       <Navbar
