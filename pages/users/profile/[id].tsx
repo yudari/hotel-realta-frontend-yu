@@ -115,8 +115,8 @@ export default function UserProfile({ userData, bonus, members }: any) {
                     {userData.user_type === "T"
                       ? "Travel Agent"
                       : userData.user_type === "C"
-                      ? "Corporate"
-                      : "Individual"}
+                        ? "Corporate"
+                        : "Individual"}
                   </p>
                 </div>
 

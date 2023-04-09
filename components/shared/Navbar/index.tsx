@@ -15,6 +15,7 @@ export default function Navbar({
 
   const imageUrl = `${process.env.BACKEND_URL}/image/users`;
 
+
   return (
     <nav
       className={`fixed z-20 w-full bg-white shadow-md sm:py-2 dark:bg-gray-800 dark:border-gray-700 px-4`}
@@ -22,9 +23,8 @@ export default function Navbar({
       <div className="container py-3 mx-auto">
         <div className="flex items-center justify-between">
           <div
-            className={`flex items-center justify-start transform transition duration-500 ease-in-out ${
-              showSidebar ? "translate-x-72" : "-translate-x-0"
-            }`}
+            className={`flex items-center justify-start transform transition duration-500 ease-in-out ${showSidebar ? "translate-x-72" : "-translate-x-0"
+              }`}
           >
             <a href="#" className="flex mr-4">
               <HiMenuAlt1
@@ -46,12 +46,12 @@ export default function Navbar({
                       {Number(user_role_id) === 1
                         ? "Guest"
                         : Number(user_role_id) === 2
-                        ? "Manager"
-                        : Number(user_role_id) === 3
-                        ? "Office Boy"
-                        : Number(user_role_id) === 4
-                        ? "Admin"
-                        : "User"}
+                          ? "Manager"
+                          : Number(user_role_id) === 3
+                            ? "Office Boy"
+                            : Number(user_role_id) === 4
+                              ? "Admin"
+                              : "User"}
                     </span>
                   </div>
                   <picture>
@@ -106,3 +106,4 @@ export default function Navbar({
     </nav>
   );
 }
+
