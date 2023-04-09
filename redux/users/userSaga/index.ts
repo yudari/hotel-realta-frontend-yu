@@ -6,6 +6,7 @@ import {
   handleLogoutEmployee,
 } from "./loginSaga";
 import { handleRegisterEmployee, handleRegisterGuest } from "./registerSaga";
+import { handleUpdatePassword, handleUpdateProfile } from "./usersSaga";
 
 function* watchAll() {
   yield all([
@@ -14,6 +15,8 @@ function* watchAll() {
     takeEvery(ActionTypesUsers.REQ_LOGOUT, handleLogoutEmployee),
     takeEvery(ActionTypesUsers.REQ_REGISTER, handleRegisterEmployee),
     takeEvery(ActionTypesUsers.REQ_REGISTER_GUEST, handleRegisterGuest),
+    takeEvery(ActionTypesUsers.UPDATE_PROFILE, handleUpdateProfile),
+    takeEvery(ActionTypesUsers.UPDATE_PASSWORD, handleUpdatePassword),
   ]);
 }
 

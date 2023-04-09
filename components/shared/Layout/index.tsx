@@ -53,7 +53,7 @@ export default function Layout({ children }: any) {
 
       const user = JSON.parse(localStorage.getItem("loginData") || "{}");
 
-      if (user.usro_role_id === 1) {
+      if (!(user.usro_role_id === 1)) {
         router.push("/users/loginEmployee");
       } else {
         router.push("/users/loginGuest");
@@ -99,11 +99,14 @@ export default function Layout({ children }: any) {
         handleLogout={handleLogout}
         loginData={loginData}
       />
-      <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+      <Sidebar
+        showSidebar={showSidebar}
+        setShowSidebar={setShowSidebar}
+        loginData={loginData}
+      />
       <main
-        className={`pt-24 transition-all duration-[400ms] ${
-          showSidebar && !isMobile ? "pl-56" : ""
-        }`}
+        className={`pt-24 transition-all duration-[400ms] ${showSidebar && !isMobile ? "pl-56" : ""
+          }`}
       >
         <div className="mx-4 px-4 py-4 md:px-16">
           <Breadcrumb />

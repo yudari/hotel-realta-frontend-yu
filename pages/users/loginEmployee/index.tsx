@@ -14,6 +14,12 @@ import Loader from "@/components/Loader";
 import Cookies from "js-cookie";
 
 export default function LoginEmployee() {
+  const [rememberMe, setRememberMe] = useState({
+    email: "",
+    password: "",
+    isChecked: false,
+  });
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const dispatch = useDispatch();
   const { payload, message, refresh, isLogin } = useSelector(
@@ -34,6 +40,21 @@ export default function LoginEmployee() {
 
   const onSubmit = (data: any) => {
     dispatch(doLoginEmployee(data));
+
+    const { isChecked, email, password } = rememberMe;
+
+    if (isChecked && (email !== "" || email !== undefined)) {
+      localStorage.setItem(
+        "rememberMe",
+        JSON.stringify({
+          email: data.email,
+          password: data.password,
+          isChecked: isChecked,
+        })
+      );
+    } else {
+      localStorage.removeItem("rememberMe");
+    }
   };
 
   const registerOptions = {
@@ -67,6 +88,31 @@ export default function LoginEmployee() {
       router.push(`/users/profile/${payload.loginData.user_id}`);
     }
   }, [isLogin, payload, router]);
+
+  const handleChangeRememberMe = (event: any) => {
+    setRememberMe((prev) => {
+      return { ...prev, isChecked: event.target.checked };
+    });
+  };
+
+  useEffect(() => {
+    const rememberValue = JSON.parse(
+      localStorage.getItem("rememberMe") || "{}"
+    );
+
+    if (
+      rememberValue &&
+      rememberValue.isChecked &&
+      rememberValue.email &&
+      rememberValue.password
+    ) {
+      setRememberMe({
+        isChecked: true,
+        email: rememberValue.email,
+        password: rememberValue.password,
+      });
+    }
+  }, []);
 
   if (isLoading || isLogin) {
     return <Loader />;
@@ -114,6 +160,7 @@ export default function LoginEmployee() {
               errors={errors}
               register={register}
               registerOptions={registerOptions}
+              defaultValue={rememberMe.email}
               // required
               className="w-full"
             />
@@ -127,6 +174,7 @@ export default function LoginEmployee() {
               register={register}
               registerOptions={registerOptions}
               // required
+              defaultValue={rememberMe.password}
               className="w-full "
             />
 
@@ -135,7 +183,9 @@ export default function LoginEmployee() {
                 <input
                   type="checkbox"
                   name="remember-me"
+                  checked={rememberMe.isChecked}
                   className="w-4 h-4 text-primary bg-gray-100 border-gray-300 focus:ring-primary focus:ring-2"
+                  onChange={handleChangeRememberMe}
                 />
                 <label htmlFor="remember-me" className="sr-only">
                   Remember Me

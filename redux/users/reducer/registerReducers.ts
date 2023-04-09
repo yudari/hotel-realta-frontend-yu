@@ -8,7 +8,7 @@ const initialState = {
   status: "",
 };
 
-function usersReducers(state = initialState, action: any) {
+function registerReducers(state = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {
@@ -26,4 +26,4 @@ function usersReducers(state = initialState, action: any) {
   }
 }
 
-export default usersReducers;
+export default registerReducers;

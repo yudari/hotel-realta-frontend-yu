@@ -69,7 +69,7 @@ export default function LoginGuest() {
       });
       Cookies.set("token", payload.token, { expires: 1, path: "/" });
 
-      router.push(`/users/profile/${payload.loginData.user_id}`);
+      router.push(`/`);
     }
   }, [isLogin, payload, router]);
 
@@ -81,6 +81,12 @@ export default function LoginGuest() {
     <>
       <Head>
         <title>Hotel Realta - Login Guest</title>
+        <meta
+          name="description"
+          content="Log in to your Hotel Realtà account to manage your reservations, view your booking history, and access exclusive member benefits. Enter your email address and password to access your account."
+        />
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <main className="grid grid-cols-1 md:grid-cols-2 h-screen items-center px-4 md:px-0 bg-[url(https://images.unsplash.com/photo-1563911302283-d2bc129e7570?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY3Mzk1Njk4MA&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080)] md:bg-none bg-no-repeat bg-center">
         <Image

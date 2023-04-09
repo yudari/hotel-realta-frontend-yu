@@ -1,9 +1,8 @@
-import React, { useState, Fragment } from "react";
+import React, { Fragment } from "react";
 import Image from "next/image";
 import { Menu, Transition } from "@headlessui/react";
 import { HiMenuAlt1 } from "react-icons/hi";
 import Avatar from "@/public/avatar.svg";
-import { RiArrowDropDownLine } from "react-icons/ri";
 import { BiLogOut } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { doLogout } from "@/redux/users/action/loginActionReducers";
@@ -16,6 +15,7 @@ export default function Navbar({
 }: any) {
   const { user_role_id, user_full_name } = loginData;
 
+
   return (
     <nav
       className={`fixed z-20 w-full bg-white shadow-md sm:py-2 dark:bg-gray-800 dark:border-gray-700 px-4`}
@@ -23,9 +23,8 @@ export default function Navbar({
       <div className="container py-3 mx-auto">
         <div className="flex items-center justify-between">
           <div
-            className={`flex items-center justify-start transform transition duration-500 ease-in-out ${
-              showSidebar ? "translate-x-72" : "-translate-x-0"
-            }`}
+            className={`flex items-center justify-start transform transition duration-500 ease-in-out ${showSidebar ? "translate-x-72" : "-translate-x-0"
+              }`}
           >
             <a href="#" className="flex mr-4">
               <HiMenuAlt1
@@ -47,12 +46,12 @@ export default function Navbar({
                       {Number(user_role_id) === 1
                         ? "Guest"
                         : Number(user_role_id) === 2
-                        ? "Manager"
-                        : Number(user_role_id) === 3
-                        ? "Office Boy"
-                        : Number(user_role_id) === 4
-                        ? "Admin"
-                        : "User"}
+                          ? "Manager"
+                          : Number(user_role_id) === 3
+                            ? "Office Boy"
+                            : Number(user_role_id) === 4
+                              ? "Admin"
+                              : "User"}
                     </span>
                   </div>
                   <picture>
@@ -97,3 +96,4 @@ export default function Navbar({
     </nav>
   );
 }
+
