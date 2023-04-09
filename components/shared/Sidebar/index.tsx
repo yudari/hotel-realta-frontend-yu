@@ -6,7 +6,11 @@ import { GoChevronRight } from "react-icons/go";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-export default function Sidebar({ showSidebar, setShowSidebar }: any) {
+export default function Sidebar({
+  showSidebar,
+  setShowSidebar,
+  loginData,
+}: any) {
   const router = useRouter();
   const [dropdown, setDropdown] = useState({
     status: false,
@@ -44,50 +48,52 @@ export default function Sidebar({ showSidebar, setShowSidebar }: any) {
 
                   return (
                     <>
-                      <li key={index} onClick={() => showDropdown(index)}>
-                        {menu.submenu ? (
-                          <div
-                            className={`flex items-center p-4 text-base text-primary rounded-lg  group hover:bg-primary hover:text-white justify-between ${
-                              router.pathname === menu.path
-                                ? "bg-primary text-white"
-                                : "hover:bg-bg-primary hover:text-white"
-                            }`}
-                          >
-                            <div className="flex items-center">
-                              <Icon className="text-xl" />
-                              <span className="ml-3 text-md font-medium">
-                                {menu.name}
-                              </span>
-                            </div>
+                      {menu.role.includes(loginData.user_role_id) ? (
+                        <li key={index} onClick={() => showDropdown(index)}>
+                          {menu.submenu ? (
+                            <div
+                              className={`flex items-center p-4 text-base text-primary rounded-lg  group hover:bg-primary hover:text-white justify-between ${
+                                router.pathname.startsWith(menu.path)
+                                  ? "bg-primary text-white"
+                                  : "hover:bg-bg-primary hover:text-white"
+                              }`}
+                            >
+                              <div className="flex items-center">
+                                <Icon className="text-xl" />
+                                <span className="ml-3 text-md font-medium">
+                                  {menu.name}
+                                </span>
+                              </div>
 
-                            {menu.submenu && (
-                              <GoChevronRight
-                                className={`hover:bg-primary hover:text-white ${
-                                  dropdown.status && dropdown.index === index
-                                    ? "rotate-90"
-                                    : ""
-                                }`}
-                              />
-                            )}
-                          </div>
-                        ) : (
-                          <Link
-                            href={menu.to}
-                            className={`flex items-center p-4 text-base text-primary rounded-lg group dark:text-white justify-between my-2 ${
-                              router.pathname === menu.path
-                                ? "bg-primary text-white"
-                                : "hover:bg-primary hover:text-white"
-                            }`}
-                          >
-                            <div className="flex items-center">
-                              <Icon className="text-xl" />
-                              <span className="ml-3 text-md font-medium">
-                                {menu.name}
-                              </span>
+                              {menu.submenu && (
+                                <GoChevronRight
+                                  className={`hover:bg-primary hover:text-white ${
+                                    dropdown.status && dropdown.index === index
+                                      ? "rotate-90"
+                                      : ""
+                                  }`}
+                                />
+                              )}
                             </div>
-                          </Link>
-                        )}
-                      </li>
+                          ) : (
+                            <Link
+                              href={menu.to}
+                              className={`flex items-center p-4 text-base text-primary rounded-lg group dark:text-white justify-between my-2 ${
+                                router.pathname.startsWith(menu.path)
+                                  ? "bg-primary text-white"
+                                  : "hover:bg-primary hover:text-white"
+                              }`}
+                            >
+                              <div className="flex items-center">
+                                <Icon className="text-xl" />
+                                <span className="ml-3 text-md font-medium">
+                                  {menu.name}
+                                </span>
+                              </div>
+                            </Link>
+                          )}
+                        </li>
+                      ) : null}
 
                       {menu.submenu &&
                         dropdown.status &&

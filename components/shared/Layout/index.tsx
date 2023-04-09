@@ -15,7 +15,7 @@ export default function Layout({ children }: any) {
   const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loginData, setLoginData] = useState({
-    usro_role_id: 0,
+    user_role_id: 0,
     user_full_name: "",
   });
 
@@ -53,7 +53,7 @@ export default function Layout({ children }: any) {
 
       const user = JSON.parse(localStorage.getItem("loginData") || "{}");
 
-      if (user.usro_role_id === 1) {
+      if (!(user.usro_role_id === 1)) {
         router.push("/users/loginEmployee");
       } else {
         router.push("/users/loginGuest");
@@ -74,9 +74,9 @@ export default function Layout({ children }: any) {
       Cookies.remove("token");
 
       if (
-        Number(loginData.usro_role_id) === 2 ||
-        Number(loginData.usro_role_id) === 3 ||
-        Number(loginData.usro_role_id) === 4
+        Number(loginData.user_role_id) === 2 ||
+        Number(loginData.user_role_id) === 3 ||
+        Number(loginData.user_role_id) === 4
       ) {
         router.push("/users/loginEmployee");
       } else {
@@ -99,7 +99,11 @@ export default function Layout({ children }: any) {
         handleLogout={handleLogout}
         loginData={loginData}
       />
-      <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+      <Sidebar
+        showSidebar={showSidebar}
+        setShowSidebar={setShowSidebar}
+        loginData={loginData}
+      />
       <main
         className={`pt-24 transition-all duration-[400ms] ${
           showSidebar && !isMobile ? "pl-56" : ""
@@ -113,16 +117,4 @@ export default function Layout({ children }: any) {
       </main>
     </>
   );
-}
-
-export async function getServerSideProps(context: any) {
-  const { req } = context;
-
-  if (!req.cookies["loginData"] || !req.cookies["token"]) {
-    return {
-      redirect: {
-        destination: "/users/loginGuest",
-      },
-    };
-  }
 }

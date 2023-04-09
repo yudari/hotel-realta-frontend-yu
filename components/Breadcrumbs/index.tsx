@@ -8,6 +8,10 @@ export default function Breadcrumb() {
   const router = useRouter();
   const pathnames = router.pathname.split("/").filter((path) => path);
 
+  if (pathnames.length && /\[.+\]/.test(pathnames[pathnames.length - 1])) {
+    pathnames.pop();
+  }
+
   return (
     <nav className="flex mb-7" aria-label="Breadcrumb">
       <ol className="inline-flex items-center space-x-1 md:space-x-3 my-2">

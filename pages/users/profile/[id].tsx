@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import HotelLogo from "@/public/realta-hotel-logo.svg";
+import Avatar from "@/public/avatar.svg";
 import Button from "@/components/Button/button";
 import TabUser from "@/components/TabUser";
 import { useRouter } from "next/router";
@@ -10,6 +10,7 @@ import EditPassword from "./editPassword";
 import Head from "next/head";
 
 export default function UserProfile({ userData, bonus, members }: any) {
+  const imageUrl = `${process.env.BACKEND_URL}/image/users`;
   const router = useRouter();
   const [redirected, setRedirected] = useState(false);
   const [isEditProfile, setIsEditProfile] = useState({
@@ -44,8 +45,6 @@ export default function UserProfile({ userData, bonus, members }: any) {
     setIsRefreshing(true);
   };
 
-  console.log(userData);
-
   return (
     <>
       <Head>
@@ -53,19 +52,29 @@ export default function UserProfile({ userData, bonus, members }: any) {
       </Head>
       <div className="w-full">
         <section className="relative general shadow-md overflow-auto">
-          <div className="h-60 w-full bg-[url('https://images.unsplash.com/photo-1620121478247-ec786b9be2fa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY3NDYzNjQ0Mg&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080')] bg-no-repeat bg-center bg-cover rounded-tl rounded-tr"></div>
+          <div className="h-60 w-full bg-[url('https://source.unsplash.com/random/900%C3%97700/?abstract')] bg-no-repeat bg-center bg-cover rounded-tl rounded-tr"></div>
 
           <div className="p-4">
             <div className="relative grid grid-cols-1 md:grid-rows-2 md:grid-cols-4 p-6">
               <div className="relative md:row-span-2">
                 <div className="absolute -top-48 md:left-0 left-1/2 transform md:translate-x-0 -translate-x-1/2 bg-white p-4 rounded-lg shadow-md">
-                  <Image
-                    src={HotelLogo}
-                    alt="Hotel Realta Logo"
-                    width={150}
-                    height={150}
-                    className="rounded-sm mx-auto "
-                  />
+                  {userData.user_photo_profile ? (
+                    <Image
+                      src={`${imageUrl}/${userData.user_photo_profile}`}
+                      alt="Hotel Realta Logo"
+                      width={150}
+                      height={150}
+                      className="rounded-sm w-36 h-36 object-cover mx-auto"
+                    />
+                  ) : (
+                    <Image
+                      src={Avatar}
+                      alt="Hotel Realta Logo"
+                      width={150}
+                      height={150}
+                      className="rounded-sm w-36 h-36 object-cover mx-auto"
+                    />
+                  )}
 
                   <div className="my-4">
                     <p className="text-sm text-gray-400">Email</p>

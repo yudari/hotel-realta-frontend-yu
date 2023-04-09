@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { doUpdateProfile } from "@/redux/users/action/usersActionReducer";
 import { useRouter } from "next/router";
+import Image from "next/image";
+import Avatar from "@/public/avatar.svg";
 
 export default function EditProfile({
   data,
@@ -15,6 +17,10 @@ export default function EditProfile({
   closeModal,
   refreshData,
 }: any) {
+  const imageUrl = `${process.env.BACKEND_URL}/image/users`;
+
+  const [selectedImage, setSelectedImage] = useState<any>(null);
+
   const router = useRouter();
   const dispatch = useDispatch();
   const [userType, setUserType] = useState({
@@ -134,12 +140,12 @@ export default function EditProfile({
 
   const onSubmit = (data: any) => {
     const { id } = router.query;
-
     const profileData = {
       ...data,
       user_type: userType.value,
       uspro_gender: userGender.value,
       uspro_marital_status: userMaritalStatus.value,
+      user_photo_profile: data.user_photo_profile[0],
     };
 
     console.log(profileData);
@@ -184,17 +190,58 @@ export default function EditProfile({
                     as="h3"
                     className="text-lg font-medium leading-6 text-white bg-primary p-5"
                   >
-                    Edit General
+                    User Profile
                   </Dialog.Title>
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="mt-2 p-6">
-                      <h2 className="text-2xl font-bold text-primary">
-                        General
-                      </h2>
+                      <div className="mx-auto mt-4">
+                        <Image
+                          src={
+                            selectedImage
+                              ? URL.createObjectURL(selectedImage)
+                              : data.user_photo_profile
+                              ? `${imageUrl}/${data.user_photo_profile}`
+                              : Avatar
+                          }
+                          alt={
+                            selectedImage
+                              ? selectedImage.name
+                              : data.user_photo_profile
+                          }
+                          className="w-full h-full object-cover object-center lg:h-44 lg:w-44 mx-auto rounded-full"
+                          height={80}
+                          width={80}
+                        />
 
-                      <hr className="mt-2" />
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4 items-center">
+                        <div id="fileUpload">
+                          <div className="flex items-center justify-center w-1/2 mx-auto">
+                            <label
+                              htmlFor="dropzone-file"
+                              className="cursor-pointer"
+                            >
+                              <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                <p className="mb-2 text-md text-gray-500 hover:text-primary font-semibold">
+                                  Click to upload
+                                </p>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                  SVG, PNG, JPG or GIF{" "}
+                                  <span className="font-bold">(Max. 2 MB)</span>
+                                </p>
+                              </div>
+                              <input
+                                id="dropzone-file"
+                                type="file"
+                                className="hidden"
+                                {...register("user_photo_profile")}
+                                onInput={(e: any) =>
+                                  setSelectedImage(e.target.files[0])
+                                }
+                              />
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 items-center">
                         <div className="form-group">
                           <InputText
                             name="user_full_name"
@@ -206,18 +253,9 @@ export default function EditProfile({
                             className="w-full"
                             defaultValue={data.user_full_name}
                           />
-                          {/* <input
-                            type="text"
-                            className="outline-none border border-spacing-2 border-variant block p-3 mt-2 active:border-blue-700 focus:border-blue-700 active:bg-blue-200 focus:bg-blue-200 rounded w-full"
-                            value={data.user_full_name}
-                          /> */}
                         </div>
 
                         <div className="form-group">
-                          {/* <label htmlFor="password" className="block text-lg">
-                            Email
-                          </label> */}
-
                           <InputText
                             name="user_email"
                             label="Email"
@@ -228,17 +266,8 @@ export default function EditProfile({
                             className="w-full"
                             defaultValue={data.user_email}
                           />
-
-                          {/* 
-                          <input
-                            type="text"
-                            className="outline-none border border-spacing-2 border-variant block p-3 mt-2 active:border-blue-700 focus:border-blue-700 active:bg-blue-200 focus:bg-blue-200 rounded w-full"
-                            value={data.user_email}
-                          /> */}
                         </div>
-                      </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4 items-center">
                         <div className="form-group mt-5">
                           <label
                             htmlFor="password"
@@ -252,18 +281,9 @@ export default function EditProfile({
                             selectedValue={userType}
                             handleChangeUserType={handleChangeUserType}
                           />
-                          {/* <input
-                          type="text"
-                          className="outline-none border border-spacing-2 border-variant block p-3 mt-2 active:border-blue-700 focus:border-blue-700 active:bg-blue-200 focus:bg-blue-200 rounded w-full"
-                          value={data.user_full_name}
-                        /> */}
                         </div>
 
                         <div className="form-group">
-                          {/* <label htmlFor="password" className="block text-lg">
-                            Company
-                          </label> */}
-
                           <InputText
                             name="user_company_name"
                             label="Company Name"
@@ -274,19 +294,9 @@ export default function EditProfile({
                             className="w-full"
                             defaultValue={data.user_company_name}
                           />
-                          {/* <input
-                            type="text"
-                            className="outline-none border border-spacing-2 border-variant block p-3 mt-2 active:border-blue-700 focus:border-blue-700 active:bg-blue-200 focus:bg-blue-200 rounded w-full"
-                            value={data.user_company_name}
-                          /> */}
                         </div>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                        <div className="form-group">
-                          {/* <label htmlFor="password" className="block text-lg">
-                            No. Handphone
-                          </label> */}
 
+                        <div className="form-group">
                           <InputText
                             name="user_phone_number"
                             label="Phone Number"
@@ -297,12 +307,6 @@ export default function EditProfile({
                             className="w-full"
                             defaultValue={data.user_phone_number}
                           />
-
-                          {/* <input
-                            type="text"
-                            className="outline-none border border-spacing-2 border-variant block p-3 mt-2 active:border-blue-700 focus:border-blue-700 active:bg-blue-200 focus:bg-blue-200 rounded w-full"
-                            value={data.user_phone_number}
-                          /> */}
                         </div>
 
                         {Number(data.usro_role_id) === 4 ? (
@@ -334,12 +338,8 @@ export default function EditProfile({
 
                       <hr className="mt-2" />
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6 items-center">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 items-center">
                         <div className="form-group">
-                          {/* <label htmlFor="password" className="block text-lg">
-                            National ID
-                          </label> */}
-
                           <InputText
                             name="uspro_national_id"
                             label="National ID"
@@ -350,38 +350,20 @@ export default function EditProfile({
                             className="w-full"
                             defaultValue={data.uspro_national_id}
                           />
-                          {/* <input
-                            type="text"
-                            className="outline-none border border-spacing-2 border-variant block p-3 mt-2 active:border-blue-700 focus:border-blue-700 active:bg-blue-200 focus:bg-blue-200 rounded w-full"
-                            value={data.user_national_id}
-                          /> */}
                         </div>
 
-                        <div className="form-group">
-                          {/* <label htmlFor="password" className="block text-lg">
-                            Email
-                          </label> */}
-
-                          {/* <InputText
-                            name="user_email"
-                            label="Email"
-                            placeholder="Your Email"
-                            type="text"
-                            errors={errors}
-                            register={register}
-                            className="w-full"
-                            defaultValue={data.user_email}
-                          /> */}
-
-                          {/* <input
-                            type="text"
-                            className="outline-none border border-spacing-2 border-variant block p-3 mt-2 active:border-blue-700 focus:border-blue-700 active:bg-blue-200 focus:bg-blue-200 rounded w-full"
-                            value={data.user_email}
-                          /> */}
+                        <div className="form-group mt-4">
+                          <label htmlFor="birt_date" className="block">
+                            Birth Date
+                          </label>
+                          <input
+                            type="date"
+                            className="mt-2 p-3 border-2 rounded w-full"
+                            defaultValue={data.uspro_birt_date}
+                            {...register("uspro_birt_date")}
+                          />
                         </div>
-                      </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6 items-center">
                         <div className="form-group">
                           {/* <label htmlFor="password" className="block text-lg">
                             Job Title
@@ -424,9 +406,6 @@ export default function EditProfile({
                           value={data.user_company_name}
                         /> */}
                         </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
                         <div className="form-group">
                           <label htmlFor="password" className="block text-lg">
                             Gender
@@ -449,7 +428,9 @@ export default function EditProfile({
                       </div>
                     </div>
 
-                    <div className="flex justify-end p-6 mt-2 gap-4">
+                    <hr className="mt-4 mx-6" />
+
+                    <div className="flex justify-end p-6 gap-4">
                       <Button
                         label="Cancel"
                         size="small"
