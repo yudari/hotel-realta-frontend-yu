@@ -81,28 +81,28 @@ const listMenu = [
     name: "Payment",
     submenu: [
       {
-        to: "",
-        path: "",
+        to: "/payment/bank",
+        path: "/payment/bank",
         title: "Bank",
       },
       {
-        to: "",
-        path: "",
+        to: "/payment/fintech",
+        path: "/payment/fintech",
         title: "Fintech",
       },
       {
-        to: "",
-        path: "",
+        to: "/payment/topup",
+        path: "/payment/topup",
         title: "Top Up",
       },
       {
-        to: "",
-        path: "",
+        to: "/payment/userAccount",
+        path: "/payment/user-accounts",
         title: "Account",
       },
       {
-        to: "",
-        path: "",
+        to: "/payment/paymentTransaction",
+        path: "/payment/payment-transaction",
         title: "Transaction",
       },
     ],
