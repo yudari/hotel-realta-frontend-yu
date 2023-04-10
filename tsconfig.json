@@ -18,6 +18,14 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+
+    "**/*.ts",
+
+    "**/*.tsx",
+    "components/Breadcrumb/index",
+    "pages/resto/orderMenuDetail"
+  ],
   "exclude": ["node_modules"]
 }

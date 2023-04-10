@@ -3,189 +3,202 @@ import {
   MdOutlineHotel,
   MdRestaurant,
   MdPayment,
-} from "react-icons/md";
-import { RiShoppingCartFill } from "react-icons/ri";
-import { FaUser, FaUsers } from "react-icons/fa";
-import { BsClipboardDataFill } from "react-icons/bs";
+} from 'react-icons/md'
+import { RiShoppingCartFill } from 'react-icons/ri'
+import { FaUser, FaUsers } from 'react-icons/fa'
+import { BsClipboardDataFill } from 'react-icons/bs'
 
 const listMenu = [
   {
-    to: "/dashboard",
-    path: "/dashboard",
+    to: '/dashboard',
+    path: '/dashboard',
     icon: MdDashboard,
-    name: "Dashboard",
+    name: 'Dashboard',
+    role: [4],
   },
   {
-    to: "/hotel",
-    path: "/hotel",
-    icon: MdOutlineHotel,
-    name: "Hotel",
-    submenu: [
-      {
-        to: "",
-        path: "",
-        title: "Hotel",
-      },
-      {
-        to: "",
-        path: "",
-        title: "Facilities",
-      },
-      {
-        to: "",
-        path: "",
-        title: "Reviews",
-      },
-    ],
-  },
-  {
-    to: "",
-    path: "",
-    icon: MdRestaurant,
-    name: "Resto",
-    submenu: [
-      {
-        to: "",
-        path: "",
-        title: "Resto Menu",
-      },
-    ],
-  },
-  {
-    to: "#",
-    path: "#",
-    icon: RiShoppingCartFill,
-    name: "Purchasing",
-    submenu: [
-      {
-        to: "",
-        path: "",
-        title: "Vendor",
-      },
-      {
-        to: "",
-        path: "",
-        title: "Stock",
-      },
-      {
-        to: "",
-        path: "",
-        title: "Purchasing Order",
-      },
-    ],
-  },
-  {
-    to: "",
-    path: "",
-    icon: MdPayment,
-    name: "Payment",
-    submenu: [
-      {
-        to: "/payment/bank",
-        path: "/payment/bank",
-        title: "Bank",
-      },
-      {
-        to: "/payment/fintech",
-        path: "/payment/fintech",
-        title: "Fintech",
-      },
-      {
-        to: "/payment/topup",
-        path: "/payment/topup",
-        title: "Top Up",
-      },
-      {
-        to: "/payment/userAccount",
-        path: "/payment/user-accounts",
-        title: "Account",
-      },
-      {
-        to: "/payment/paymentTransaction",
-        path: "/payment/payment-transaction",
-        title: "Transaction",
-      },
-    ],
-  },
-  {
-    to: "",
-    path: "#",
-    icon: FaUsers,
-    name: "Human Resources",
-    submenu: [
-      {
-        to: "/hr/department",
-        path: "/hr/department",
-        title: "Department",
-      },
-      {
-        to: "/hr/employee",
-        path: "/hr/employee",
-        title: "Employee",
-      },
-      {
-        to: "/hr/workorder",
-        path: "/hr/workorder",
-        title: "Work Order",
-      },
-    ],
-  },
-  {
-    to: "",
-    path: "",
-    icon: BsClipboardDataFill,
-    name: "Master",
-    submenu: [
-      {
-        to: "",
-        path: "",
-        title: "Location",
-      },
-      {
-        to: "",
-        path: "",
-        title: "Policy",
-      },
-      {
-        to: "",
-        path: "",
-        title: "Category",
-      },
-      {
-        to: "",
-        path: "",
-        title: "Price",
-      },
-      {
-        to: "",
-        path: "",
-        title: "Service",
-      },
-    ],
-  },
-  {
-    to: "",
-    path: "",
+    to: '/users',
+    path: '/users',
     icon: FaUser,
-    name: "User",
+    name: 'User',
+    role: [1, 4],
     submenu: [
       {
-        to: "",
-        path: "",
-        title: "Profil",
+        to: '/users/profile/*',
+        path: '/users/profile/*',
+        title: 'Profile',
       },
       {
-        to: "",
-        path: "",
-        title: "Booking",
+        to: '/users/myBooking',
+        path: '/users/myBooking',
+        title: 'My Booking',
       },
       {
-        to: "",
-        path: "",
-        title: "Accaount",
+        to: '/users/myAccount',
+        path: '/users/myAccount',
+        title: 'My Account',
       },
     ],
   },
-];
+  {
+    to: '/master',
+    path: '/master',
+    icon: BsClipboardDataFill,
+    name: 'Master',
+    role: [4],
+    submenu: [
+      {
+        to: '/master/locations',
+        path: '/master/locations',
+        title: 'Locations',
+      },
+      {
+        to: '/master/policy',
+        path: '/master/policy',
+        title: 'Policy',
+      },
+      {
+        to: '/master/category',
+        path: '/master/category',
+        title: 'Category Group',
+      },
+      {
+        to: '/master/priceitems',
+        path: '/master/priceitems',
+        title: 'Price Items',
+      },
+      {
+        to: '/master/servicetask',
+        path: '/master/servicetask',
+        title: 'Service Task',
+      },
+    ],
+  },
+  {
+    to: '/hotel',
+    path: '/hotel',
+    icon: MdOutlineHotel,
+    name: 'Hotel',
+    role: [4],
+    submenu: [
+      {
+        to: '/hotel/hotels',
+        path: '/hotel/hotels',
+        title: 'Hotel',
+      },
+      {
+        to: '/hotel/facilities-support',
+        path: '/hotel/facilities-support',
+        title: 'Facility Support',
+      },
+    ],
+  },
+  {
+    to: '/resto',
+    path: '/resto',
+    icon: MdRestaurant,
+    name: 'Resto',
+    role: [4],
+    submenu: [
+      {
+        to: '/resto/restoMenu',
+        path: 'restoMenu',
+        title: 'Resto Menu',
+      },
+      {
+        to: '/resto/restoMenuPhotos',
+        path: 'restoPhoto',
+        title: 'Resto Photo',
+      },
+      {
+        to: '/resto/orderMenu',
+        path: 'orderMenu',
+        title: 'Bill',
+      },
+    ],
+  },
+  {
+    to: '/payment',
+    path: '/payment',
+    icon: MdPayment,
+    name: 'Payment',
+    role: [4],
+    submenu: [
+      {
+        to: '/payment/bank',
+        path: '/payment/bank',
+        title: 'Bank',
+      },
+      {
+        to: '/payment/fintech',
+        path: '/payment/fintech',
+        title: 'Fintech',
+      },
+      {
+        to: '/payment/accounts',
+        path: '/payment/accounts',
+        title: 'Accounts',
+      },
+      {
+        to: '/payment/topup',
+        path: '/payment/topup',
+        title: 'Top Up',
+      },
+      {
+        to: '/payment/transaction',
+        path: '/payment/transaction',
+        title: 'Transaction',
+      },
+    ],
+  },
+  {
+    to: '/hr',
+    path: '/hr',
+    icon: FaUsers,
+    name: 'Human Resources',
+    role: [4],
+    submenu: [
+      {
+        to: '/hr/department',
+        path: '/hr/department',
+        title: 'Department',
+      },
+      {
+        to: '/hr/employee',
+        path: '/hr/employee',
+        title: 'Employee',
+      },
+      {
+        to: '/hr/workorder',
+        path: '/hr/workorder',
+        title: 'Work Order',
+      },
+    ],
+  },
+  {
+    to: '/purchasing',
+    path: '/purchasing',
+    icon: RiShoppingCartFill,
+    name: 'Purchasing',
+    role: [4],
+    submenu: [
+      {
+        to: '/purchasing/vendor',
+        path: '/purchasing/vendor',
+        title: 'Vendor',
+      },
+      {
+        to: '/purchasing/stock',
+        path: '/purchasing/stock',
+        title: 'Stock',
+      },
+      {
+        to: '/purchasing/purchasingOrder',
+        path: '/purchasing/purchasingOrder',
+        title: 'Purchasing Order',
+      },
+    ],
+  },
+]
 
-export default listMenu;
+export default listMenu

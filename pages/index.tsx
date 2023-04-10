@@ -1,14 +1,22 @@
+import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import Sidebar from "@/components/shared/Sidebar";
-import Navbar from "@/components/shared/Navbar";
-import { useState } from "react";
-
-const inter = Inter({ subsets: ["latin"] });
+import { useCallback } from "react";
+import { useRouter } from "next/router";
+import HeaderNavbar from "../components/ComponentsYudha/header-navbar";
+import JumbotronSection from "../components/ComponentsYudha/jumbotron-section";
+import ExploreSection from "../components/ComponentsYudha/explore-section";
+import SectionLiburan from "../components/ComponentsYudha/section-liburan";
+import HotelFavoritesSection from "../components/ComponentsYudha/hotel-favorites-section";
+import HotelSubscribeSection from "../components/ComponentsYudha/hotel-subscribe-section";
+import SectionFooter from "../components/ComponentsYudha/section-footer";
 
 export default function Home() {
-  const [showSidebar, setShowSidebar] = useState(true);
+
+  const router = useRouter();
+
+  const onFrameButtonClick = useCallback(() => {
+    router.push("/booking/list-booking-final");
+  }, [router]);
   return (
     <>
       <Head>
@@ -21,7 +29,27 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="text-center text-4xl font-bold">Hotel Realta</div>
+      <div className="relative bg-neutrals w-full flex flex-col py-2.5 px-0 box-border items-start justify-start gap-[10px] lg:h-auto lg:gap-[22px]">
+        <HeaderNavbar
+          vector="/vector17.svg"
+          vector1="/vector18.svg"
+          vector2="/vector19.svg"
+          vector3="/vector20.svg"
+          vector4="/vector21.svg"
+          vector5="/vector22.svg"
+          vector6="/vector23.svg"
+          vector7="/vector24.svg"
+          vector8="/vector25.svg"
+          vector9="/vector26.svg"
+          onFrameButtonClick={onFrameButtonClick}
+        />
+        <JumbotronSection />
+        <ExploreSection />
+        <SectionLiburan />
+        <HotelFavoritesSection />
+        <HotelSubscribeSection />
+        <SectionFooter />
+      </div>
     </>
   );
 }

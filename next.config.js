@@ -4,6 +4,9 @@ const nextConfig = {
   env: {
     BACKEND_URL: process.env.BACKEND_URL,
   },
+  images: {
+    domains: ["images.unsplash.com", "assets.stickpng.com", "localhost"],
+  },
 };
 
-module.exports = nextConfig;
+module.exports = nextConfig
