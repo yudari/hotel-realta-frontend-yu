@@ -135,8 +135,8 @@ const listMenu = [
         title: "Fintech",
       },
       {
-        to: "/payment/accounts",
-        path: "/payment/accounts",
+        to: "/payment/userAccount",
+        path: "/payment/userAccount",
         title: "Accounts",
       },
       {
@@ -145,8 +145,8 @@ const listMenu = [
         title: "Top Up",
       },
       {
-        to: "/payment/transaction",
-        path: "/payment/transaction",
+        to: "/payment/paymentTransaction",
+        path: "/payment/paymentTransaction",
         title: "Transaction",
       },
     ],
