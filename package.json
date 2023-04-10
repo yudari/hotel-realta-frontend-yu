@@ -41,7 +41,9 @@
     "react-spinners": "^0.13.8",
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.2.3",
+    "sucrase": "^3.32.0",
     "swiper": "^9.2.0",
+    "tiny-warning": "^1.0.3",
     "typescript": "5.0.2"
   },
   "devDependencies": {
