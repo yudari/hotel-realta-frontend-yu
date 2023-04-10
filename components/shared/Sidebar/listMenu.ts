@@ -1,4 +1,9 @@
-import { MdDashboard, MdOutlineHotel, MdRestaurant, MdPayment } from "react-icons/md";
+import {
+  MdDashboard,
+  MdOutlineHotel,
+  MdRestaurant,
+  MdPayment,
+} from "react-icons/md";
 import { RiShoppingCartFill } from "react-icons/ri";
 import { FaUser, FaUsers } from "react-icons/fa";
 import { BsClipboardDataFill } from "react-icons/bs";
@@ -101,19 +106,14 @@ const listMenu = [
         title: "Resto Menu",
       },
       {
-        to: "/purchasing/vendor/resto/restoMenuPhotos",
-        path: "IndexrestoPhoto",
+        to: "/resto/restoMenuPhotos",
+        path: "restoPhoto",
         title: "Resto Photo",
       },
       {
-        to: "/purchasing/stock",
-        path: "Index",
-        title: "Stock",
-      },
-      {
-        to: "/purchasing/order",
-        path: "Index",
-        title: "Purchasing Order",
+        to: "/resto/orderMenu",
+        path: "orderMenu",
+        title: "Bill",
       },
     ],
   },
@@ -193,8 +193,8 @@ const listMenu = [
         title: "Stock",
       },
       {
-        to: "/purchasing/purchasingOrder",
-        path: "/purchasing/purchasingOrder",
+        to: "/purchasing/order",
+        path: "/purchasing/order",
         title: "Purchasing Order",
       },
     ],
