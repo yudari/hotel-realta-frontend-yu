@@ -87,14 +87,9 @@ const listMenu = [
         title: 'Hotel',
       },
       {
-        to: '/hotel/facilities',
-        path: '/hotel/facilities',
-        title: 'Facilities',
-      },
-      {
-        to: '/hotel/reviews',
-        path: '/hotel/reviews',
-        title: 'Reviews',
+        to: '/hotel/facilities-support',
+        path: '/hotel/facilities-support',
+        title: 'Facility Support',
       },
     ],
   },

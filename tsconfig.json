@@ -24,6 +24,7 @@
     "**/*.ts",
 
     "**/*.tsx",
+    "components/Breadcrumb/index",
     "pages/resto/orderMenuDetail"
   ],
   "exclude": ["node_modules"]
