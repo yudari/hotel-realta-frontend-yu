@@ -2,8 +2,13 @@ import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "@redux-saga/core";
 import { createLogger } from "redux-logger";
+
+import rootSaga from '../saga'
+import { bankReducers } from "../payment/reducer/bankReducer";
+import { fintechReducers } from "../payment/reducer/fintechReducer";
+import { paymentTransactionReducers } from "../payment/reducer/paymentTransactionReducer";
+import { userAccountReducers } from "../payment/reducer/userAccountReducer";
 import regionReducer from "../masterSchema/reducer/regionReducer";
-import rootSaga from "../masterSchema/saga";
 import servicetaskReducer from "../masterSchema/reducer/servicetaskReducer";
 import countryReducer from "../masterSchema/reducer/countryReducer";
 import provinceReducer from "../masterSchema/reducer/provinceReducer";
@@ -36,10 +41,17 @@ import workOrdersReducers from "../human_resources/reducer/workOrdersReducer";
 import workOrderDetailReducers from "../human_resources/reducer/workOrderDetailReducer";
 import employeePayHistoryReducers from "../human_resources/reducer/employeePayHistoryReducer";
 import departmentHistoryReducers from "../human_resources/reducer/employeeDepartmentHistoryReducer";
+
 const logger = createLogger();
 const saga = createSagaMiddleware();
 
+
 const reducer = combineReducers({
+  bankReducers,
+  fintechReducers,
+  paymentTransactionReducers,
+  userAccountReducers,
+
   regionReducer,
   servicetaskReducer,
   countryReducer,

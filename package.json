@@ -40,6 +40,7 @@
     "react-gallery-carousel": "^0.4.0",
     "react-hook-form": "^7.43.8",
     "react-icons": "^4.8.0",
+    "react-paginate": "^8.1.5",
     "react-redux": "^8.0.5",
     "react-responsive-carousel": "^3.2.23",
     "react-select": "^5.7.2",
