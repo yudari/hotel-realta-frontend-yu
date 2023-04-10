@@ -6,7 +6,7 @@ interface ReviewUsersProps {
 
 const ContainerReviewsUsers: NextPage<ReviewUsersProps> = (props) => {
   return (
-    <div className="self-stretch flex flex-col items-start justify-start gap-[24px] text-left text-sm text-blackish-green font-body-txt-body-s-regular">
+    <div className="self-stretch flex flex-col items-start justify-start gap-[24px] mt-6 text-left text-sm text-blackish-green font-body-txt-body-s-regular">
       {props.dataReviews.hotel_reviews.map((data: any) => {
         return <div className="self-stretch flex flex-row items-start justify-start gap-[16px]">
           <img
@@ -23,7 +23,7 @@ const ContainerReviewsUsers: NextPage<ReviewUsersProps> = (props) => {
                 |
               </div>
 
-              <div className="flex-1 relative"> {new Date(data.hore_created_on).toLocaleDateString("en-US", {
+              <div className="flex-1 relative text-darkslategray-300"> {new Date(data.hore_created_on).toLocaleDateString("en-US", {
                 month: "2-digit",
                 day: "2-digit",
                 year: "numeric"

@@ -16,10 +16,13 @@ const getAllFacilitiesSupport = () => {
 const getListOtherRooms = ({ IdRoomNow, NotRoomName, IdCagro }: any) => {
     return axios.get(`/booking/hotel/${IdRoomNow}/room/?NotRoomName=${NotRoomName}&IdCagro=${IdCagro}`)
 }
-
+const getListSameRoom = ({ IdHotel, IdRooms, nameRoom }: any) => {
+    return axios.get(`/booking/hotel/${IdHotel}/room/${IdRooms}/${nameRoom}`)
+}
 export default {
     getAllBookingApi,
     getAllFacilitiesSupport,
     getBookingByQuery,
-    getListOtherRooms
+    getListOtherRooms,
+    getListSameRoom
 }

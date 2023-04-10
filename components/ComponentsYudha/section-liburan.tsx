@@ -60,7 +60,7 @@ const SectionLiburan: NextPage = () => {
             <img className="absolute inset-0 w-full h-full object-cover" src="/frame-78@3x.png" alt="background image" />
             <div className="absolute inset-0 bg-black opacity-50 transition duration-300 hover:opacity-0"></div>
             <div className="absolute bottom-0 left-0 w-full h-full flex flex-col justify-end">
-              <div className="py-3 px-4 bg-gray-900 bg-opacity-90 rounded-b-xl transition duration-300 hover:bg-opacity-0 cursor-pointer">
+              <div className="py-3 px-4 bg-gray-900 bg-opacity-0 rounded-b-xl transition duration-300 hover:bg-opacity-90  cursor-pointer">
                 <h3 className="text-white text-lg font-semibold mb-1 transition duration-300 hover:text-gray-900">Samarinda</h3>
                 <span className="text-white text-sm font-medium transition duration-300 hover:text-gray-900">Rp 500.000,00</span>
               </div>
@@ -70,7 +70,7 @@ const SectionLiburan: NextPage = () => {
             <img className="absolute inset-0 w-full h-full object-cover" src="/frame-79@3x.png" alt="background image" />
             <div className="absolute inset-0 bg-black opacity-50 transition duration-300 hover:opacity-0"></div>
             <div className="absolute bottom-0 left-0 w-full h-full flex flex-col justify-end">
-              <div className="py-3 px-4 bg-gray-900 bg-opacity-0   rounded-b-xl transition duration-300 hover:bg-opacity-90  cursor-pointer">
+              <div className="py-3 px-4 bg-gray-900 bg-opacity-0 rounded-b-xl transition duration-300 hover:bg-opacity-90  cursor-pointer">
                 <h3 className="text-white text-lg font-semibold mb-1 transition duration-300 ">Balikpapan</h3>
                 <span className="text-white text-sm font-medium transition duration-300 hover:text-gray-900">Rp 300.000,00</span>
               </div>
@@ -80,7 +80,7 @@ const SectionLiburan: NextPage = () => {
             <img className="absolute inset-0 w-full h-full object-cover" src="/frame-80@3x.png" alt="background image" />
             <div className="absolute inset-0 bg-black opacity-50 transition duration-300 hover:opacity-0"></div>
             <div className="absolute bottom-0 left-0 w-full h-full flex flex-col justify-end">
-              <div className="py-3 px-4 bg-gray-900 bg-opacity-90 rounded-b-xl transition duration-300 hover:bg-opacity-0 cursor-pointer">
+              <div className="py-3 px-4 bg-gray-900 bg-opacity-0 rounded-b-xl transition duration-300 hover:bg-opacity-90  cursor-pointer">
                 <h3 className="text-white text-lg font-semibold mb-1 transition duration-300 hover:text-gray-900">Yogyakarta</h3>
                 <span className="text-white text-sm font-medium transition duration-300 hover:text-gray-900">Rp 600.000,00</span>
               </div>
@@ -90,7 +90,7 @@ const SectionLiburan: NextPage = () => {
             <img className="absolute inset-0 w-full h-full object-cover" src="/frame-78@3x.png" alt="background image" />
             <div className="absolute inset-0 bg-black opacity-50 transition duration-300 hover:opacity-0"></div>
             <div className="absolute bottom-0 left-0 w-full h-full flex flex-col justify-end">
-              <div className="py-3 px-4 bg-gray-900 bg-opacity-90 rounded-b-xl transition duration-300 hover:bg-opacity-0 cursor-pointer">
+              <div className="py-3 px-4 bg-gray-900 bg-opacity-0 rounded-b-xl transition duration-300 hover:bg-opacity-90  cursor-pointer">
                 <h3 className="text-white text-lg font-semibold mb-1 transition duration-300 hover:text-gray-900">Semarang</h3>
                 <span className="text-white text-sm font-medium transition duration-300 hover:text-gray-900">Rp 400.000,00</span>
               </div>

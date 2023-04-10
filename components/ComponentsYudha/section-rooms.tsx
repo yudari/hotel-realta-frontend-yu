@@ -37,7 +37,7 @@ const SectionRooms: NextPage<InterfaceSectionRooms> = (props) => {
                     {data.faci_name}
                   </div>
                 </div>
-                <div className="flex flex-row items-center justify-between text-right text-5xl">
+                <div className="flex flex-row items-center justify-between text-right text-3xl">
                   <div className="relative font-semibold mr-3">
                     {new Intl.NumberFormat('id-ID', {
                       style: 'currency',
@@ -46,7 +46,7 @@ const SectionRooms: NextPage<InterfaceSectionRooms> = (props) => {
                   </div>
                   <button className="cursor-pointer py-3 px-9 bg-neutrals rounded flex flex-row items-center justify-center border-[1px] border-solid border-darkslategray-300">
                     <div className="relative text-sm leading-[132%] font-semibold font-body-txt-body-s-regular text-darkslategray-300 text-center">
-                      Book now
+                      Lihat Dulu
                     </div>
                   </button>
                 </div>

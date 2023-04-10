@@ -12,7 +12,8 @@ type InputPickDateCheckOpenProps = {
 };
 
 interface SearchBookingInterfaceProps {
-  changeSearchData: any
+  changeSearchData: any;
+  classNames: any;
 }
 const SectionCardSearchBook: NextPage<SearchBookingInterfaceProps> = (props) => {
   const today = new Date();
@@ -133,7 +134,7 @@ const SectionCardSearchBook: NextPage<SearchBookingInterfaceProps> = (props) => 
     },
   })
   return (
-    <div className="self-stretch flex flex-col pt-12 px-16 pb-0 items-start justify-start text-left text-xl text-darkslategray-300 font-montserrat-semibold-14 lg:pl-3 lg:pr-3 lg:box-border">
+    <div className={`self-stretch flex flex-col pt-12 px-16 pb-0 items-start justify-start text-left text-xl text-darkslategray-300 font-montserrat-semibold-14 lg:pl-3 lg:pr-3 lg:box-border ${props.classNames}`}>
       <form onSubmit={formik.handleSubmit}
         className="self-stretch rounded-2xl bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col py-8 px-6 box-border items-start justify-start gap-[32px] [&.animate]:animate-[1s_ease-in_0s_1_normal_forwards_fade-in] opacity-[0] min-w-full lg:self-stretch lg:w-auto md:self-stretch md:w-auto md:h-auto sm:self-stretch sm:w-auto sm:items-center sm:justify-center"
         data-animate-on-scroll

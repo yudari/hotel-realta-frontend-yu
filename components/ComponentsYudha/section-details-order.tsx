@@ -1,7 +1,10 @@
 import type { NextPage } from "next";
-import { forwardRef, useCallback, useState } from "react";
+import { forwardRef, useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import ReactDatePicker from "react-datepicker";
+import apiMethodBooking from "@/api/booking/apiMethodBooking";
+import { useDispatch } from "react-redux";
+import { doRequestGetBookingByQuery } from "@/redux/booking/action/bookingActionReducer";
 
 interface SectionDetailsOrderInterface {
   dataBookings: any;
@@ -12,15 +15,37 @@ interface SectionDetailsOrderInterface {
 const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
   const [startDateOpen, setStartDateOpen] = useState<Date>(new Date());
   const [startDateClose, setStartDateClose] = useState<Date>(new Date());
-
+  const [isOpen, setIsOpen] = useState(false);
+  const [users, setUsers] = useState<any>({})
+  const [dataPickRooms, setDataPickRooms] = useState([])
+  const [getDataAllRooms, setGetDataAllRooms] = useState([props.dataBookings.data.data_rooms[0]])
+  const [selectedRooms, setSelectedRooms] = useState<any>([props.dataBookings.data.data_rooms[0]]);
   const router = useRouter();
-
+  const dispatch = useDispatch()
   const onButtonLanjutBookingClick = useCallback(() => {
-    router.push("/detail-booking-pembayaran-fina");
+    // const dataBookingRooms = selectedRooms.map((room: any) => {
+    //   return {
+    //     borde_checkin: new Date(startDateOpen.toISOString().substring(0, 10)).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', timeZone: 'Asia/Jakarta' }),
+    //     borde_checkout: new Date(startDateClose.toISOString().substring(0, 10)).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', timeZone: 'Asia/Jakarta' }),
+    //     borde_adults: 
+    //   }
+    // })
+
+    // const dataInsertTemporaryBooking = {
+    //   booking_orders: {
+    //     boor_hotel_id: props.dataBookings?.data?.data_rooms[0]?.hotel?.hotel_id,
+    //     boor_user_id: users.user_id
+    //   }
+    // }
+
+
+
+    // console.log(dataInsertTemporaryBooking)
+    router.push("/booking/detail-booking-pembayaran-fina");
   }, [router]);
 
   const ButtonPickDateCheckIn = forwardRef<HTMLButtonElement, { value: string; onClick: () => void }>((props, ref) => (
-    <button onClick={props.onClick} ref={ref} className="cursor-pointer border-none py-1 px-0.5 bg-seagreen rounded w-95 shrink-0 flex flex-row box-border items-center justify-center gap-2">
+    <button onClick={props.onClick} ref={ref} className="cursor-pointer border-none py-1 px-0.5 bg-seagreen rounded w-full shrink-0 flex flex-row box-border items-center justify-center gap-[2px]">
       <img
         className="relative w-5 h-19 shrink-0 overflow-hidden"
         alt=""
@@ -33,7 +58,7 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
   ));
 
   const ButtonPickDateCheckOut = forwardRef<HTMLButtonElement, { value: string; onClick: () => void }>((props, ref) => (
-    <div onClick={props.onClick} className="rounded bg-crimson cursor-pointer w-[95px] shrink-0 flex flex-row py-1 px-0.5 box-border items-center justify-center gap-[2px]">
+    <div onClick={props.onClick} className="rounded bg-crimson cursor-pointer w-full shrink-0 flex flex-row py-1 px-0.5 box-border items-center justify-center gap-[2px]">
       <img
         className="relative w-5 h-[19px] shrink-0 overflow-hidden"
         alt=""
@@ -64,12 +89,66 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
     day: "2-digit",
     year: "numeric",
   });
+
+
+  const toggleDropdown = async () => {
+
+    const dataAllRooms = {
+      hotel_id: props.dataBookings.data?.data_rooms[0]?.hotel.hotel_id,
+      room_id: props.dataBookings.data?.data_rooms[0]?.faci_id,
+      room_name: props.dataBookings.data?.data_rooms[0]?.faci_name
+    }
+    try {
+      const response = await apiMethodBooking.getListSameRoom({ IdHotel: dataAllRooms.hotel_id, IdRooms: dataAllRooms.room_id, nameRoom: dataAllRooms.room_name });
+      const newData = response.data.data.filter((room: any) => {
+        return !getDataAllRooms.some((existingRoom) => existingRoom.faci_id === room.faci_id);
+      });
+      setGetDataAllRooms((prevValue) => [...prevValue, ...newData]);
+      setIsOpen(!isOpen);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedRoom = getDataAllRooms.find((room) => room.faci_id === parseInt(event.target.id));
+    if (event.target.checked) {
+      setSelectedRooms((prev: any) => [...prev, selectedRoom]);
+    } else {
+      setSelectedRooms((prev: any) => prev.filter((room: any) => room.faci_id !== selectedRoom.faci_id));
+    }
+  };
   const totalPrice: number = parseInt(props.dataBookings.data.total_price.replace(/[^\d]/g, '').slice(0, -2));
   const totalPriceReal: number = parseInt(props.dataBookings.data.total_price_real.replace(/[^\d]/g, '').slice(0, -2));
   const JumlahPenguranganPrice = totalPriceReal - totalPrice
   const finalTotalPrice = totalPriceReal - JumlahPenguranganPrice
 
+  const dataPickPiihOpsiBooking = () => {
+    const AllRoomsFinal = {
+      IdRooms: selectedRooms[0].faci_id,
+      IdHotel: selectedRooms[0].hotel.hotel_id,
+      startDate: new Date(startDateOpen.toISOString().substring(0, 10)).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', timeZone: 'Asia/Jakarta' }),
+      endDate: new Date(startDateClose.toISOString().substring(0, 10)).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', timeZone: 'Asia/Jakarta' }),
+      dataRooms: `[${selectedRooms.map((data: any) => data.faci_id).join(', ')}]`,
+      guestRooms: `[${selectedRooms.map((data: any) => data.faci_max_number).join(', ')}]`,
+    }
+    console.log(AllRoomsFinal)
+    dispatch(doRequestGetBookingByQuery(AllRoomsFinal.IdRooms, AllRoomsFinal.IdHotel, AllRoomsFinal.startDate, AllRoomsFinal.endDate, AllRoomsFinal.dataRooms, AllRoomsFinal.guestRooms))
+    setIsOpen(false)
+  }
+
+
+
   // Output: Hasil pengurangan uang dalam bentuk number
+
+  useEffect(() => {
+    const userLogin = JSON.parse(localStorage.getItem("loginData") || "{}");
+
+    setUsers(userLogin)
+  }, [])
+
+
+  console.log(users)
   return (
     <div className="self-stretch body-txt-body-s-regular flex flex-col py-[42px] px-[92px] items-start justify-start text-left text-xl text-darkslategray-300 font-body-txt-body-s-regular">
       <div className="rounded-t rounded-b-none w-[1232px] flex flex-row py-1 pr-4 pl-0 box-border items-center justify-start gap-[30px]">
@@ -91,11 +170,11 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
             <div className="self-stretch flex flex-row items-center justify-start gap-[4px] text-xs text-darkslategray-300 font-montserrat-semibold-14">
               <div className="w-10 shrink-0 flex flex-col items-start justify-start">
                 <div className="self-stretch rounded box-border h-8 shrink-0 flex flex-row py-2 px-4 items-center justify-center border-[1px] border-solid border-darkslategray-300">
-                  <div className="relative font-medium">{props.dataBookings.data.data_rooms[0].hotel.hotel_rating_star}</div>
+                  <div className="relative font-medium">{props.dataBookings.data.data_rooms[0].hotel.hotel_rating_final_star}</div>
                 </div>
               </div>
               <div className="relative font-medium text-darkslategray-100 opacity-[0.75]">
-                Very Good {props.dataBookings.data.data_rooms[0].hotel.hotel_reviews.length} reviews
+                {props.dataBookings.data.data_rooms[0].hotel.hotel_rating_status} {props.dataBookings.data.data_rooms[0].hotel.hotel_reviews.length} reviews
               </div>
             </div>
             <div className="rounded-sm bg-slamon shadow-[0px_1px_4px_rgba(0,_0,_0,_0.25)] w-[88px] flex flex-col py-1 px-3 box-border items-center justify-center text-5xs text-neutrals">
@@ -112,7 +191,7 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
           </div>
           <div className="self-stretch overflow-hidden flex flex-col pt-0 px-0 pb-[25px] items-start justify-start text-blackish-green">
             <div className="self-stretch flex flex-col items-start justify-start gap-[32px]">
-              <b className="self-stretch relative">Fasilitas</b>
+              <b className="self-stretch relative text-darkslategray-300">Fasilitas</b>
               <div className="self-stretch flex flex-row items-start justify-between text-base font-montserrat-semibold-14">
                 <div className="w-[229px] shrink-0 flex flex-col items-start justify-start gap-[24px]">
                   {props.dataBookings.data.data_rooms[0].hotel.facilities_support.map((dataFaciSupport: any) => {
@@ -170,17 +249,17 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
             </div>
           </div>
         </div>
-        <div className="rounded-2xl bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] w-[391px] shrink-0 flex flex-col py-8 px-6 box-border items-center justify-start text-center text-xs">
+        <div className="rounded-2xl bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] w-[410px] shrink-0 flex flex-col py-8 px-6 box-border items-center justify-start text-center text-xs">
           <div className="self-stretch flex flex-col items-start justify-start gap-[10px]">
             <div className="self-stretch flex flex-row items-center justify-start gap-[32px] text-left text-base">
               <div className="flex-1 relative font-semibold">
-                Login untuk booking
+                {users.user_id ? users.user_full_name : 'Login untuk booking'}
               </div>
-              <button className="cursor-pointer [border:none] py-2 px-7 bg-darkslategray-300 rounded w-[110px] h-10 shrink-0 flex flex-row box-border items-center justify-center">
+              {!users && <button className="cursor-pointer [border:none] py-2 px-7 bg-darkslategray-300 rounded w-[110px] h-10 shrink-0 flex flex-row box-border items-center justify-center">
                 <div className="relative text-base leading-[148%] font-body-txt-body-s-regular text-neutrals text-center">
                   Login
                 </div>
-              </button>
+              </button>}
             </div>
             <div className="self-stretch relative bg-darkslategray-300 h-[0.5px] shrink-0 opacity-[0.25]" />
             <div className="self-stretch flex flex-row items-start justify-start gap-[14px] text-neutrals font-montserrat-semibold-14">
@@ -208,11 +287,57 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
                 customInput={<ButtonPickDateCheckOut value={startDateClose.toLocaleDateString()} onClick={function (): void {
                 }} />}
               />
-              <div className="self-stretch rounded bg-slamon w-[125px] shrink-0 flex flex-row py-1 px-0.5 box-border items-center justify-center">
-                <div className="flex-1 relative font-semibold">
-                  {props.dataBookings.data.data_rooms[0].faci_room_number} Room, 2 Guest
-                </div>
+              <div className="relative">
+                <button
+                  className="self-stretch rounded bg-slamon w-[140px] shrink-0 flex flex-row py-1 px-0.5 box-border items-center justify-center"
+                  onClick={toggleDropdown}
+                >
+                  <div className="flex-1 relative font-semibold">
+                    {props.dataBookings.data.data_rooms[0].faci_room_number} Room, 2 Guest
+                  </div>
+                  <svg
+                    className="h-4 w-4 fill-current text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 12a1 1 0 01-.707-.293l-4-4a1 1 0 111.414-1.414L10 9.586l3.293-3.293a1 1 0 111.414 1.414l-4 4A1 1 0 0110 12z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+                {isOpen && (
+                  <div className="absolute z-10 right-0 mt-2 w-48 bg-white rounded-md shadow-lg overflow-hidden">
+                    <ul className="border border-gray-200 divide-y divide-gray-200">
+                      {getDataAllRooms.map((room) => {
+                        return (
+                          <li key={room.faci_id} className="px-4 py-2 flex items-center">
+                            <input
+                              type="checkbox"
+                              checked={room.faci_id === props.dataBookings.data.data_rooms[0].faci_id || selectedRooms.some((selectedRoom: any) => selectedRoom.faci_id === room.faci_id)}
+                              disabled={room.faci_id === props.dataBookings.data.data_rooms[0].faci_id}
+                              id={room.faci_id}
+                              name="checkbox1"
+                              value={room}
+                              className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
+                              onChange={handleCheckboxChange}
+                            />
+                            <label htmlFor="checkbox1" className="ml-3 text-sm font-semibold text-slamon">
+                              {room.faci_room_number} Room, {room.faci_max_number} Guest
+                            </label>
+                          </li>
+                        );
+                      })}
+                      <button
+                        className="self-stretch rounded bg-slamon w-full hover:cursor-pointer hover:bg-red-700  shrink-0 flex flex-row py-1 px-0.5 box-border items-center justify-center"
+                        onClick={dataPickPiihOpsiBooking}
+                      >Pilih</button>
+                    </ul>
+                  </div>
+                )}
               </div>
+
             </div>
             <div className="self-stretch relative bg-darkslategray-300 h-[0.5px] shrink-0 opacity-[0.25]" />
             <div className="self-stretch flex flex-col items-start justify-start gap-[8px]">
@@ -241,19 +366,7 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
                   </div>
                 </div>
               </div>
-              <button className="cursor-pointer py-3 px-[52px] bg-neutrals flex-1 rounded box-border w-[343px] flex flex-row items-center justify-center border-[1px] border-solid border-darkslategray-300">
-                <div className="flex-1 relative text-lg leading-[132%] font-body-txt-body-s-regular text-darkslategray-300 text-center">
-                  Pilih Kupon
-                </div>
-              </button>
-              <div className="self-stretch rounded bg-darkslategray-300 flex flex-row py-2.5 px-1.5 items-center justify-start gap-[16px] text-left text-neutrals">
-                <div className="flex-1 relative leading-[132%] font-semibold">
-                  Pilih Membership Gold Poin
-                </div>
-                <div className="relative leading-[132%] text-right hidden w-[78px] shrink-0">
-                  Rp 20.000,00
-                </div>
-              </div>
+
               <div className="self-stretch flex flex-col pt-3 px-0 pb-0 items-start justify-start gap-[16px]">
                 <div className="self-stretch relative bg-darkslategray-300 h-[0.5px] shrink-0 opacity-[0.25]" />
                 <div className="self-stretch flex flex-row items-start justify-between">

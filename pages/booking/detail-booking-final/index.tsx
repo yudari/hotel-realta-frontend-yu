@@ -50,7 +50,7 @@ const DetailBookingFinal: NextPage = (props) => {
     }, []);
 
     useEffect(() => {
-        if (router.isReady) {
+        if (router) {
             dispatch(doRequestGetBookingByQuery(router.query.idRooms, router.query.idHotel, router.query.startDate, router.query.endDate, router.query.dataRooms, router.query.guestRooms))
         }
     }, [router.isReady]);
@@ -96,7 +96,7 @@ const DetailBookingFinal: NextPage = (props) => {
                     aria-label="Loading"
                     data-testid="loader"
                 /> : <>
-                    <SectionCardSearchBook changeSearchData={setSearchData} />
+                    <SectionCardSearchBook classNames={`hidden`} changeSearchData={setSearchData} />
 
                     <div className="self-stretch flex flex-col pt-[45px] px-[92px] pb-0 items-start justify-start">
 

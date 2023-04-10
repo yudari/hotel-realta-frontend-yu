@@ -6,7 +6,7 @@ const CardDetailsOrderPayment: NextPage = () => {
   const router = useRouter();
 
   const onButton3Click = useCallback(() => {
-    router.push("/detail-pembayaran-invoice-fina");
+    router.push("/booking/detail-pembayaran-invoice-fina");
   }, [router]);
 
   return (
@@ -39,6 +39,7 @@ const CardDetailsOrderPayment: NextPage = () => {
           </div>
         </div>
       </div>
+
       <div className="self-stretch flex flex-row py-4 px-0 items-start justify-between text-center text-seagreen border-t-[1px] border-solid border-beige border-b-[1px]">
         <div className="rounded bg-neutrals w-[95px] shrink-0 flex flex-row py-1 px-0.5 box-border items-center justify-center gap-[2px]">
           <img
@@ -58,6 +59,22 @@ const CardDetailsOrderPayment: NextPage = () => {
         </div>
         <div className="self-stretch rounded bg-neutrals w-[115px] shrink-0 flex flex-row py-1 px-0.5 box-border items-center justify-center text-slamon">
           <div className="flex-1 relative font-semibold">20 Room, 2 Guest</div>
+        </div>
+      </div>
+
+      <div className="self-stretch flex flex-col gap-3 py-4 px-0 items-start justify-between border-beige border-b-[1px]">
+        <button className="cursor-pointer py-2.5 hover:bg-darkslategray-300 group px-1.5 bg-neutrals flex-1 rounded box-border w-full flex flex-row items-center justify-center border-[1px] border-solid border-darkslategray-300">
+          <div className="flex-1 relative text-md font-semibold leading-[132%] group-hover:text-white font-body-txt-body-s-regular text-darkslategray-300 text-left">
+            Pilih Kupon
+          </div>
+        </button>
+        <div className="self-stretch rounded cursor-pointer bg-darkslategray-300 flex flex-row py-2.5 px-1.5 items-center justify-start gap-[16px] text-left text-neutrals">
+          <div className="flex-1 relative leading-[132%] font-semibold">
+            Pilih Membership Gold Poin
+          </div>
+          <div className="relative leading-[132%] text-right hidden w-[78px] shrink-0">
+            Rp 20.000,00
+          </div>
         </div>
       </div>
       <div className="self-stretch flex flex-col items-start justify-start gap-[16px] text-base">

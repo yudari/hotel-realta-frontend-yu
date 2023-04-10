@@ -1,8 +1,9 @@
 import type { NextPage } from "next";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import CSS, { Property } from "csstype";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
+import { Menu } from "@headlessui/react";
 
 type HeaderNavbarType = {
   vector?: string;
@@ -49,6 +50,7 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
   vectorLeft2,
   onFrameButtonClick,
 }) => {
+  const [users, setUsers] = useState<any>({})
   const headerLoggedInStyle: CSS.Properties = useMemo(() => {
     return {
       justifyContent: headerLogginSectionHeaderJustifyContent,
@@ -80,14 +82,53 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
     };
   }, [vectorLeft2]);
   const router = useRouter()
+  useEffect(() => {
+    const userLogin = JSON.parse(localStorage.getItem("loginData") || "{}");
+
+    setUsers(userLogin)
+  }, [])
 
   const onBannerHeaderClick = useCallback(() => {
     router.push("/");
   }, [router]);
 
+  const handleMenu = (event: any) => {
+    event.preventDefault();
+    const menu = document.getElementById("user-menu");
+    menu?.classList.toggle("hidden");
+  };
+
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleDocumentClick = (event: any) => {
+      if (dropdownRef.current && !dropdownRef.current?.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleDocumentClick);
+
+    return () => {
+      document.removeEventListener("click", handleDocumentClick);
+    };
+  }, []);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleMenuItemClick = () => {
+    setIsOpen(false);
+  };
+
+  console.log(users)
+
+
   return (
     <div
-      className="self-stretch bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col py-[21px] px-[92px] items-start justify-center text-left text-lg text-dimgray font-yeseva-one md:pl-5 md:pt-[21px] md:pr-5 md:box-border"
+      className="self-stretch bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col py-[12px] px-[92px] items-start justify-center text-left text-lg text-dimgray font-yeseva-one md:pl-5 md:pt-[21px] md:pr-5 md:box-border"
       style={headerLoggedInStyle}
     >
       <div className="self-stretch flex flex-row items-center justify-between sm:flex-col sm:gap-[32px]">
@@ -95,14 +136,14 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
           className="cursor-pointer [border:none] p-0 bg-[transparent] w-[111px] h-10 shrink-0 flex flex-col items-start justify-between"
           onClick={onFrameButtonClick}
         >
-          <div className="w-[111px] flex flex-row items-center justify-start gap-[4px]">
+          <div className="w-[120px] flex flex-row items-center justify-start gap-[4px]">
             <img
               className="relative w-6 h-6 shrink-0 overflow-hidden"
               alt=""
               src="/ionbed.svg"
             />
             <div className="flex-1 relative text-sm font-semibold font-montserrat-semibold-14 text-darkslategray-300 text-left">
-              Find Places
+              Cari Tempat
             </div>
           </div>
           <div className="self-stretch relative bg-darkslategray-300 h-[5px] shrink-0" />
@@ -207,7 +248,8 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
             </div>
           </div>
         </div>
-        <div className="w-[252px] shrink-0 flex flex-row items-center justify-between text-center text-base text-darkslategray-300 font-body-txt-body-s-regular">
+
+        {!users?.user_id && <div className="w-[252px] shrink-0 flex flex-row items-center justify-between text-center text-base text-darkslategray-300 font-body-txt-body-s-regular">
           <div className="rounded bg-neutrals box-border w-[110px] h-10 shrink-0 flex flex-row py-2 px-7 items-center justify-center border-[1px] border-solid border-darkslategray-300 hover:mix-blend-normal hover:bg-darkslategray-300 hover:text-white hover:cursor-pointer">
             <div className="relative leading-[148%]">Daftar</div>
           </div>
@@ -216,7 +258,60 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
               Login
             </div>
           </button>
-        </div>
+        </div>}
+
+        {users && <div className="relative ml-3" ref={dropdownRef}>
+          <div>
+            <button
+              type="button"
+              className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+              id="user-menu-button"
+              aria-expanded={isOpen}
+              aria-haspopup="true"
+              onClick={toggleDropdown}
+            >
+              <span className="sr-only">Open user menu</span>
+              <img
+                className="h-8 w-8 rounded-full"
+                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                alt=""
+              />
+            </button>
+          </div>
+
+          {isOpen && (
+            <div
+              className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="user-menu-button"
+
+            >
+              <a
+                href="#"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-darkslategray-300 hover:text-white"
+                role="menuitem"
+
+                id="user-menu-item-0"
+                onClick={handleMenuItemClick}
+              >
+                My Profile
+              </a>
+
+              <a
+                href="#"
+                className="block px-4 py-2 text-sm  text-gray-700 hover:bg-darkslategray-300 hover:text-white"
+                role="menuitem"
+                id="user-menu-item-2"
+                onClick={handleMenuItemClick}
+              >
+                Sign out
+              </a>
+            </div>
+          )}
+        </div>}
+
+
       </div>
     </div>
   );
