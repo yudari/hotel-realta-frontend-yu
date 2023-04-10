@@ -3,21 +3,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "@redux-saga/core";
 import { createLogger } from "redux-logger";
 
-import rootSaga from '../saga'
+import rootSaga from "../saga";
 import { bankReducers } from "../payment/reducer/bankReducer";
 import { fintechReducers } from "../payment/reducer/fintechReducer";
 import { paymentTransactionReducers } from "../payment/reducer/paymentTransactionReducer";
 import { userAccountReducers } from "../payment/reducer/userAccountReducer";
-import regionReducer from "../masterSchema/reducer/regionReducer";
-import servicetaskReducer from "../masterSchema/reducer/servicetaskReducer";
-import countryReducer from "../masterSchema/reducer/countryReducer";
-import provinceReducer from "../masterSchema/reducer/provinceReducer";
-import policyReducer from "../masterSchema/reducer/policyReducer";
-import categorygroupReducer from "../masterSchema/reducer/categorygroupReducer";
-import priceitemsReducer from "../masterSchema/reducer/priceitemsReducer";
-import cityReducer from "../masterSchema/reducer/cityReducer";
-import addressReducer from "../masterSchema/reducer/addressReducer";
 import hotelsReducers from "../hotel/reducer/hotelsReducer";
+
 import facilitiesSupportReducers from "../hotel/reducer/facilitiesSupportReducer";
 import hotelReviewsReducers from "../hotel/reducer/hotelReviewsReducer";
 import facilitiesReducers from "../hotel/reducer/facilitiesReducer";
@@ -42,25 +34,24 @@ import workOrderDetailReducers from "../human_resources/reducer/workOrderDetailR
 import employeePayHistoryReducers from "../human_resources/reducer/employeePayHistoryReducer";
 import departmentHistoryReducers from "../human_resources/reducer/employeeDepartmentHistoryReducer";
 
+import regionReducer from "../masterSchema/reducer/regionReducer";
+import servicetaskReducer from "../masterSchema/reducer/servicetaskReducer";
+import countryReducer from "../masterSchema/reducer/countryReducer";
+import provinceReducer from "../masterSchema/reducer/provinceReducer";
+import policyReducer from "../masterSchema/reducer/policyReducer";
+import categorygroupReducer from "../masterSchema/reducer/categorygroupReducer";
+import priceitemsReducer from "../masterSchema/reducer/priceitemsReducer";
+import cityReducer from "../masterSchema/reducer/cityReducer";
+import addressReducer from "../masterSchema/reducer/addressReducer";
+
 const logger = createLogger();
 const saga = createSagaMiddleware();
-
 
 const reducer = combineReducers({
   bankReducers,
   fintechReducers,
   paymentTransactionReducers,
   userAccountReducers,
-
-  regionReducer,
-  servicetaskReducer,
-  countryReducer,
-  provinceReducer,
-  policyReducer,
-  categorygroupReducer,
-  priceitemsReducer,
-  cityReducer,
-  addressReducer,
 
   //===Reducers Hotel===
   hotelsReducers,
@@ -88,6 +79,16 @@ const reducer = combineReducers({
   rephoReducers,
   ormeReducers,
   ordetReducers,
+
+  regionReducer,
+  servicetaskReducer,
+  countryReducer,
+  provinceReducer,
+  policyReducer,
+  categorygroupReducer,
+  priceitemsReducer,
+  cityReducer,
+  addressReducer,
 });
 
 const store = configureStore({
