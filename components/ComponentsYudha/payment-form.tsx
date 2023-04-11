@@ -22,14 +22,14 @@ const PaymentForm: NextPage<PaymentFormType> = ({ propWidth, propColor }) => {
   }, [propColor]);
 
   return (
-    <div className="flex-1 h-[146px] flex flex-col items-start justify-start gap-[6px] text-left text-base text-grayscale-black font-body-txt-body-s-regular">
+    <div className="flex-1 h-[146px] flex flex-col items-start justify-start gap-[6px] text-left text-[16px] text-grayscale-black font-body-txt-body-s-regular">
       <div
         className="w-[167.7px] flex flex-row items-start justify-start"
         style={inputDropdownTxtStyle}
       >
         <div className="relative leading-[148%]">Tipe Pembayaran</div>
       </div>
-      <div className="self-stretch rounded-sm bg-neutrals shadow-[0px_8px_16px_rgba(62,_19,_77,_0.07)] flex flex-col py-0 px-px items-start justify-start text-sm text-grayscale-border border-[1px] border-solid border-grayscale-spacer-light">
+      <div className="self-stretch rounded-sm bg-neutrals shadow-[0px_8px_16px_rgba(62,_19,_77,_0.07)] flex flex-col py-0 px-px items-start justify-start text-[14px] text-grayscale-border border-[1px] border-solid border-grayscale-spacer-light">
         <div className="self-stretch rounded-sm flex flex-row p-3 items-center justify-start gap-[12px]">
           <div className="flex-1 flex flex-row items-start justify-start">
             <div className="flex-1 relative leading-[140%]" style={bCAStyle}>

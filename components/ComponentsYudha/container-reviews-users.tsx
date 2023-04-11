@@ -6,7 +6,7 @@ interface ReviewUsersProps {
 
 const ContainerReviewsUsers: NextPage<ReviewUsersProps> = (props) => {
   return (
-    <div className="self-stretch flex flex-col items-start justify-start gap-[24px] mt-6 text-left text-sm text-blackish-green font-body-txt-body-s-regular">
+    <div className="self-stretch flex flex-col items-start justify-start gap-[24px] mt-6 text-left text-[14px] text-blackish-green font-body-txt-body-s-regular">
       {props.dataReviews.hotel_reviews.map((data: any) => {
         return <div className="self-stretch flex flex-row items-start justify-start gap-[16px]">
           <img

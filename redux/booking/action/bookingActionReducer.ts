@@ -65,6 +65,20 @@ export const doResponseGetBookingyQuery = (payload: any) => {
     }
 }
 
+export const doRequestCreateBookingTemporary = (payload: any) => {
+    return {
+        type: ActionTypesBooking.REQ_CREATE_TEMPORARY_BORDE,
+        payload: payload
+    }
+}
+
+export const doResponseCreateBookingsTemporary = (payload: any) => {
+    return {
+        type: ActionTypesBooking.RES_CREATE_TEMPORARY_BORDE,
+        payload: payload
+    }
+}
+
 
 export const doRequestGetOtherRooms = (...payload: any[]) => {
     console.log(payload)
@@ -83,6 +97,22 @@ export const doResponseGetOtherRooms = (payload: any) => {
     console.log(payload)
     return {
         type: ActionTypesBooking.RES_GET_OTHER_ROOMS,
+        payload: payload
+    }
+}
+
+export const doRequestGetOneDetailPembayaran = (...payload: any) => {
+    return {
+        type: ActionTypesBooking.REQ_GET_ONE_DETAIL_PEMBAYARAN_BOOKING,
+        payload: {
+            IdOrderDetail: payload[0], IdUser: payload[1], CheckIn: payload[2], CheckOut: payload[3], TotalGuest: payload[4], TotalRooms: payload[5]
+        }
+    }
+}
+
+export const doResponseGetOneDetailPembayaran = (payload: any) => {
+    return {
+        type: ActionTypesBooking.RES_GET_ONE_DETAIL_PEMBAYARAN_BOOKING,
         payload: payload
     }
 }

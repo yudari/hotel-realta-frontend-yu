@@ -35,11 +35,11 @@ const ListBookingFinal: NextPage = () => {
     const [searchData, setSearchData] = useState({
         page: 1,
         minSubTotal: 0,
-        maxSubTotal: 0,
+        maxSubTotal: 10000000000000000000000000,
         cityName: '',
         provName: '',
-        countryName: '',
-        regionName: '',
+        countryName: 'Indonesia',
+        regionName: 'Asia',
         startDate: startDateFinal,
         endDate: endDateFinal,
         facilities_support_filter: ['24-Hour Front Desk']
@@ -54,7 +54,7 @@ const ListBookingFinal: NextPage = () => {
     }, [router]);
 
     useEffect(() => {
-        console.log(startDateFinal)
+        console.log(bookings)
 
         if (router.pathname === '/booking/list-booking-final') {
 
@@ -63,7 +63,7 @@ const ListBookingFinal: NextPage = () => {
         // else (router.pathname === `/booking/list-booking-final?page=1&minSubtotal=0&maxSubTotal=900000&cityName=&provName=&countryName=Indonesia&regionName=Asia&startDate=${startDate}&endDate=${endDateFinal}&facilities_support_filter=[24-Hour Front Desk]`)
 
 
-    }, [dispatch])
+    }, [router.isReady])
 
     useEffect(() => {
         setTimeout(() => {
@@ -72,7 +72,7 @@ const ListBookingFinal: NextPage = () => {
     }, [loading])
 
 
-
+    console.log(searchData)
     return (
         <>
             <Head>
@@ -99,7 +99,7 @@ const ListBookingFinal: NextPage = () => {
                     size={150}
                     aria-label="Loading"
                     data-testid="loader"
-                /> : <>  {bookings && <SectionCardSearchBook changeSearchData={setSearchData} />}
+                /> : <>  {bookings && <SectionCardSearchBook classNames={``} changeSearchData={setSearchData} />}
 
                     {bookings && <SectionListBooking searchDataBooking={searchData} dataListBooking={bookings} />
                     }

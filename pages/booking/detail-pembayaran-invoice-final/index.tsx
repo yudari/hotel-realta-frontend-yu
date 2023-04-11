@@ -16,7 +16,7 @@ const DetailPembayaranInvoiceFina: NextPage = () => {
     }, []);
 
     const onFrameContainer4Click = useCallback(() => {
-        router.push("/booking//detail-booking-pembayaran-fina");
+        router.push("/booking//detail-booking-pembayaran-final");
     }, [router]);
 
     return (

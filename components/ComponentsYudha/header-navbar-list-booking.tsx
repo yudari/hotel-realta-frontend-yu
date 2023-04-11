@@ -7,8 +7,8 @@ const HeaderNavbarListBooking: NextPage = () => {
   }, []);
 
   return (
-    <div className="self-stretch bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col py-[21px] px-[92px] items-start justify-start text-left text-lg text-dimgray font-yeseva-one md:pl-5 md:pt-[21px] md:pr-5 md:box-border">
-      <div className="self-stretch flex flex-row items-center justify-between sm:flex-col sm:gap-[32px]">
+    <div className="self-stretch bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col py-[21px] px-[92px] items-start justify-start text-left text-[18px] text-dimgray font-yeseva-one yu_md:pl-5 yu_md:pt-[21px] yu_md:pr-5 yu_md:box-border">
+      <div className="self-stretch flex flex-row items-center justify-between yu_sm:flex-col yu_sm:gap-[32px]">
         <button
           className="cursor-pointer [border:none] p-0 bg-[transparent] w-[111px] h-10 shrink-0 flex flex-col items-start justify-between"
           onClick={onFrameButtonClick}
@@ -19,13 +19,13 @@ const HeaderNavbarListBooking: NextPage = () => {
               alt=""
               src="/ionbed.svg"
             />
-            <div className="flex-1 relative text-sm font-semibold font-montserrat-semibold-14 text-darkslategray-300 text-left">
+            <div className="flex-1 relative text-[14px] font-semibold font-montserrat-semibold-14 text-darkslategray-300 text-left">
               Find Places
             </div>
           </div>
           <div className="self-stretch relative bg-darkslategray-300 h-[5px] shrink-0" />
         </button>
-        <div className="w-[190px] shrink-0 flex flex-col items-center justify-start sm:order-[-1]">
+        <div className="w-[190px] shrink-0 flex flex-col items-center justify-start yu_sm:order-[-1]">
           <div className="relative w-[34px] h-[34px] shrink-0 overflow-hidden">
             <img
               className="absolute h-[99.19%] w-[99.17%] top-[0.4%] right-[0.41%] bottom-[0.41%] left-[0.41%] max-w-full overflow-hidden max-h-full"
@@ -122,12 +122,12 @@ const HeaderNavbarListBooking: NextPage = () => {
         </div>
         <div className="w-[252px] shrink-0 flex flex-row items-center justify-between">
           <button className="cursor-pointer py-2 px-7 bg-neutrals rounded box-border w-[110px] h-10 shrink-0 flex flex-row items-center justify-center border-[1px] border-solid border-darkslategray-300 hover:mix-blend-normal hover:bg-darkslategray-300 hover:text-white">
-            <div className="relative text-base leading-[148%] font-body-txt-body-s-regular text-darkslategray-300 text-center">
+            <div className="relative text-[16px] leading-[148%] font-body-txt-body-s-regular text-darkslategray-300 text-center">
               Daftar
             </div>
           </button>
           <button className="cursor-pointer [border:none] py-2 px-7 bg-darkslategray-300 rounded w-[110px] h-10 shrink-0 flex flex-row box-border items-center justify-center hover:bg-gray-800">
-            <div className="relative text-base leading-[148%] font-body-txt-body-s-regular text-neutrals text-center">
+            <div className="relative text-[16px] leading-[148%] font-body-txt-body-s-regular text-neutrals text-center">
               Login
             </div>
           </button>

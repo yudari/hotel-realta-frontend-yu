@@ -2,13 +2,13 @@ import type { NextPage } from "next";
 
 const SectionInvoice: NextPage = () => {
   return (
-    <div className="self-stretch flex flex-col py-10 px-[92px] items-start justify-start text-left text-base text-darkslategray-300 font-body-txt-body-s-regular">
+    <div className="self-stretch flex flex-col py-10 px-[92px] items-start justify-start text-left text-[16px] text-darkslategray-300 font-body-txt-body-s-regular">
       <div className="self-stretch flex flex-row items-start justify-start">
         <div className="flex-1 flex flex-col items-start justify-start">
           <div className="self-stretch flex flex-col items-start justify-start">
-            <div className="self-stretch rounded-xl bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col p-4 items-start justify-start gap-[42px]">
+            <div className="self-stretch rounded-[18px] bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col p-4 items-start justify-start gap-[42px]">
               <div className="self-stretch flex flex-col items-start justify-start gap-[16px]">
-                <div className="self-stretch rounded-xl bg-gainsboro-200 flex flex-row p-4 items-start justify-start">
+                <div className="self-stretch rounded-[18px] bg-gainsboro-200 flex flex-row p-4 items-start justify-start">
                   <div className="flex-1 flex flex-row items-start justify-between">
                     <b className="relative">Invoice</b>
                     <div className="relative font-semibold">
@@ -42,7 +42,7 @@ const SectionInvoice: NextPage = () => {
                 </div>
               </div>
               <div className="self-stretch flex flex-col items-start justify-start gap-[16px]">
-                <div className="self-stretch rounded-xl bg-gainsboro-200 flex flex-row p-4 items-start justify-start">
+                <div className="self-stretch rounded-[18px] bg-gainsboro-200 flex flex-row p-4 items-start justify-start">
                   <div className="flex-1 flex flex-row items-start justify-between">
                     <b className="relative">Customer</b>
                     <div className="relative font-semibold">
@@ -76,7 +76,7 @@ const SectionInvoice: NextPage = () => {
                 </div>
               </div>
               <div className="self-stretch flex flex-col items-start justify-start gap-[16px]">
-                <div className="self-stretch rounded-xl bg-gainsboro-200 flex flex-row p-4 items-start justify-start">
+                <div className="self-stretch rounded-[18px] bg-gainsboro-200 flex flex-row p-4 items-start justify-start">
                   <div className="flex-1 flex flex-row items-start justify-start">
                     <b className="flex-1 relative">Billing</b>
                   </div>
@@ -165,13 +165,13 @@ const SectionInvoice: NextPage = () => {
                 </div>
               </div>
               <div className="self-stretch flex flex-col items-start justify-start gap-[16px] text-right">
-                <div className="self-stretch rounded-xl bg-darkslategray-300 flex flex-row p-4 items-start justify-start">
+                <div className="self-stretch rounded-[18px] bg-darkslategray-300 flex flex-row p-4 items-start justify-start">
                   <div className="flex-1" />
                 </div>
                 <div className="self-stretch overflow-hidden flex flex-row py-0 px-4 items-start justify-end gap-[18px]">
                   <div className="self-stretch w-[164px] shrink-0 flex flex-col items-center justify-end">
                     <button className="cursor-pointer py-3 px-9 bg-neutrals self-stretch rounded flex flex-row items-center justify-center border-[1px] border-solid border-darkslategray-300">
-                      <div className="relative text-sm leading-[132%] font-semibold font-body-txt-body-s-regular text-darkslategray-300 text-center">
+                      <div className="relative text-[14px] leading-[132%] font-semibold font-body-txt-body-s-regular text-darkslategray-300 text-center">
                         Print
                       </div>
                     </button>

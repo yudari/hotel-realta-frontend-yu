@@ -13,7 +13,8 @@ import loginReducers from '../users/reducer/loginReducers'
 import registerReducers from '../users/reducer/registerReducers'
 import otherRoomsReducers from '../booking/reducer/OtherRoomsReducer'
 import usersReducers from '../users/reducer/userReducers'
-
+import bookingsTemporaryReducers from '../booking/reducer/bookingTemporary';
+import bookingDetailPembayaranReducers from '../booking/reducer/bookingDetailPembayaranReducers'
 const logger = createLogger()
 const saga = createSagaMiddleware()
 
@@ -28,6 +29,8 @@ const reducer = combineReducers({
   rephoReducers,
   ormeReducers,
   ordetReducers,
+  bookingsTemporaryReducers,
+  bookingDetailPembayaranReducers
 })
 
 const store = configureStore({

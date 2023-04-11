@@ -2,15 +2,15 @@ import type { NextPage } from "next";
 
 const SectionDetailDiri: NextPage = () => {
   return (
-    <div className="self-stretch flex flex-col py-0 px-[92px] items-start justify-start text-left text-base text-black font-body-txt-body-s-regular">
-      <div className="rounded-xl bg-neutrals shadow-[0px_4px_16px_rgba(0,_0,_0,_0.25)] w-[1232px] flex flex-row items-start justify-start">
+    <div className="self-stretch flex flex-col py-0 px-[92px] items-start justify-start text-left text-[16px] text-black font-body-txt-body-s-regular">
+      <div className="rounded-[18px] bg-neutrals shadow-[0px_4px_16px_rgba(0,_0,_0,_0.25)] w-[1232px] flex flex-row items-start justify-start">
         <div className="flex-1 flex flex-col py-3 px-4 items-start justify-start gap-[16px]">
           <div className="self-stretch flex flex-row items-start justify-start">
             <div className="flex-1 relative font-semibold">
               Hotel Lendosis Perintis Kemerdekaan
             </div>
           </div>
-          <div className="self-stretch flex flex-row items-start justify-start text-sm">
+          <div className="self-stretch flex flex-row items-start justify-start text-[14px]">
             <div className="flex-1 relative font-medium">
               Jln. Awang Long RT.030, Samarinda
             </div>
