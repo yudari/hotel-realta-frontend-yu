@@ -91,7 +91,6 @@ export default function Layout({ children }: any) {
     return <Loader />;
   }
 
-  console.log(showSidebar)
   return (
     <>
       <Navbar
@@ -106,8 +105,9 @@ export default function Layout({ children }: any) {
         loginData={loginData}
       />
       <main
-        className={`pt-24 transition-all duration-[400ms] ${showSidebar && !isMobile ? "pl-56" : ""
-          }`}
+        className={`pt-24 transition-all duration-[400ms] ${
+          showSidebar && !isMobile ? "pl-56" : ""
+        }`}
       >
         <div className="mx-4 px-4 py-4 md:px-16">
           <Breadcrumb />
