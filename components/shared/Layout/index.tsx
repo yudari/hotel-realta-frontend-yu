@@ -9,6 +9,7 @@ import { ImHome } from "react-icons/im";
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumbs";
 import Cookies from "js-cookie";
+import Footer from "../Footer";
 
 export default function Layout({ children }: any) {
   const [showSidebar, setShowSidebar] = useState(true);
@@ -18,6 +19,7 @@ export default function Layout({ children }: any) {
     user_role_id: 0,
     user_full_name: "",
   });
+  const [currentRoute, setCurrentRoute] = useState("Dashboard");
 
   const dispatch = useDispatch();
   const { isLogin } = useSelector((state: any) => state.loginReducers);
@@ -92,29 +94,33 @@ export default function Layout({ children }: any) {
   }
 
   return (
-    <>
-      <Navbar
-        showSidebar={showSidebar}
-        setShowSidebar={setShowSidebar}
-        handleLogout={handleLogout}
-        loginData={loginData}
-      />
+    <div className="flex h-full w-full">
       <Sidebar
         showSidebar={showSidebar}
         setShowSidebar={setShowSidebar}
         loginData={loginData}
       />
-      <main
-        className={`pt-24 transition-all duration-[400ms] ${
-          showSidebar && !isMobile ? "pl-56" : ""
-        }`}
-      >
-        <div className="mx-4 px-4 py-4 md:px-16">
-          <Breadcrumb />
 
-          {children}
-        </div>
-      </main>
-    </>
+      <div className="h-full w-full bg-[#F4F7FE]">
+        <main
+          className={`mx-5 h-full flex-none transition-all md:pr-2 xl:ml-[360px]`}
+        >
+          <div className="h-full">
+            <Navbar
+              showSidebar={showSidebar}
+              setShowSidebar={setShowSidebar}
+              handleLogout={handleLogout}
+              loginData={loginData}
+            />
+            <div className="pt-8 mx-auto mb-auto h-full min-h-[84vh] p-2 md:pr-2">
+              {children}
+            </div>
+            <div className="p-3">
+              <Footer />
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
   );
 }
