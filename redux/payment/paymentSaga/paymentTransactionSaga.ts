@@ -5,8 +5,8 @@ import { doGetPayTransResponse, doTopupResponse } from '../action/payTransAction
 function* handleGetPayTrans(action:any):any{
     try{
       
-        const { searchTerm, page, limit, type } = action.payload
-        const result = yield call(apiMethodPayTrans.finAll, searchTerm, page, limit, type)
+        const { searchTerm, page, limit, type,id } = action.payload
+        const result = yield call(apiMethodPayTrans.finAll, searchTerm, page, limit, type,id)
         yield put(doGetPayTransResponse(result.data))
         console.log('he',action.payload)
     }

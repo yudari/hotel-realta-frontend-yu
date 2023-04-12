@@ -87,7 +87,7 @@ export default function AddFintech(props:any) {
     
                           <div className='mb-4'>
                             <label className='block text-gray-700 font-bold mb-2'>
-                              Finech Name
+                              Fintech Name
                             </label>
                             <input
                               className='shadow appearance-none border rounded w-full py-3 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:bg-blue-100'

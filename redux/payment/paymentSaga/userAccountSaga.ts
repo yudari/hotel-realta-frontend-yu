@@ -3,9 +3,9 @@ import { doAddUserAcc, doAddUserAccResponse, doDeleteUserAccResponse, doGetBankF
 import apiMethodUserAcc from '@/api/payment/apiMethodUserAccount'
 import { doUpdateFintechResponse } from '../action/fintechActionReducer'
 
-function* handleGetUserAcc():any{
+function* handleGetUserAcc(action:any):any{
     try{
-        const result = yield call(apiMethodUserAcc.findAll)
+        const result = yield call(apiMethodUserAcc.findAll, action.payload)
         yield put(doGetUserAccResponse(result.data))
     }
     catch(error){

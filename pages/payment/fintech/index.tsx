@@ -54,11 +54,11 @@ return(
       <div className='bg-white p-8 rounded-md w-full'>
         <div className=' flex items-center justify-between pb-6'>
           <div>
-            <h2 className='text-gray-600 font-semibold'>Fintech</h2>
+            <h2 style={{ fontSize: "1.5em" }} className='text-gray-600 font-semibold'>Fintech</h2>
             
           </div>
           <div className='flex items-center justify-between'>
-            <div className='flex bg-gray-50 items-center p-2 rounded-md'>
+            
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 className='h-5 w-5 text-gray-400'
@@ -72,7 +72,7 @@ return(
                 />
               </svg>
               <input
-                className='bg-gray-50 outline-none ml-1 block '
+                className='bg-gray-50 outline-none ml-1 block rounded-2xl'
                 type='text'
                 name=''
                 id=''
@@ -80,7 +80,7 @@ return(
                 value={searchTerm}
                 onChange={handleSearchChange}
               />
-            </div>
+       
             <div className='lg:ml-40 ml-10 space-x-8'>
               <button
                 onClick={() => setOpen(true)}
@@ -95,8 +95,8 @@ return(
           </div>
         </div>
         <div>
-          <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
-            <div className='inline-block min-w-full shadow rounded-lg overflow-hidden'>
+          <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4'>
+            <div className='inline-block min-w-full shadow rounded-lg'>
               <table className='min-w-full leading-normal'>
                 <thead>
                   <tr>

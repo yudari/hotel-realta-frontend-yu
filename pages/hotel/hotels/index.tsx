@@ -1,21 +1,21 @@
 import {
   doRequestGetCity,
   doRequestGetHotels,
-} from "../../../redux/hotel/action/actionReducer";
-import { Menu, Transition } from "@headlessui/react";
-import React, { Fragment, useEffect, useState } from "react";
-import { FaRegEdit } from "react-icons/fa";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { HiOutlineSwitchHorizontal } from "react-icons/hi";
-import { MdAddBox } from "react-icons/md";
-import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import AddHotels from "./addHotels";
-import EditHotels from "./editHotels";
-import SwitchStatus from "./switchStatus";
-import Link from "next/link";
-import { Pagination } from "@/components/hotel/Pagination";
-import Button from "@/components/Button/button";
+} from '../../../redux/hotel/action/actionReducer'
+import { Menu, Transition } from '@headlessui/react'
+import React, { Fragment, useEffect, useState } from 'react'
+import { FaRegEdit } from 'react-icons/fa'
+import { BsThreeDotsVertical } from 'react-icons/bs'
+import { HiOutlineSwitchHorizontal } from 'react-icons/hi'
+import { MdAddBox } from 'react-icons/md'
+import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa'
+import { useDispatch, useSelector } from 'react-redux'
+import AddHotels from './addHotels'
+import EditHotels from './editHotels'
+import SwitchStatus from './switchStatus'
+import Link from 'next/link'
+import { Pagination } from '@/components/hotel/Pagination'
+
 
 const Hotels = () => {
   let { hotels, message, refresh } = useSelector(
@@ -392,4 +392,4 @@ const Hotels = () => {
   );
 };
 
-export default Hotels;
+export default Hotels

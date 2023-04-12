@@ -1,11 +1,12 @@
 import actionType from "./actionType"
 
-export const doGetPayTrans = (searchTerm: any, page: any, limit: any, type:any) => {
+export const doGetPayTrans = (searchTerm: any, page: any, limit: any, type:any, id:any) => {
     const payload = {
         searchTerm,
         page,
         limit,
-        type
+        type,
+        id
       }
     return{
         type: actionType.GET_PAYMENT_TRANSACTION,
