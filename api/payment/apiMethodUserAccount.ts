@@ -1,24 +1,23 @@
 import axios from '../../config/endpoint';
 
-const findAll = () => {
-    return axios.get('/user-accounts')
+const findAll = (id:number) => {
+    return axios.get(`/accounts?id=${id}`)
 }
 
-
 const create = (data:any) =>{
-  return axios.post(`/user-accounts`, data)
+  return axios.post(`/accounts`, data)
 }
 
 const update = (id: number, data: any) => {
-  return axios.put(`/user-accounts/${id}`, data)
+  return axios.put(`/accounts/${id}`, data)
 }
 
 const remove = (id: number) => {
-  return axios.delete(`/user-accounts/${id}`)
+  return axios.delete(`/accounts/${id}`)
 }
 
 const findBKData = () => {
-  return axios.get('/user-accounts/data')
+  return axios.get('/accounts/data')
 }
 
 const apiMethodUserAcc ={

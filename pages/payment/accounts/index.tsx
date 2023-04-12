@@ -1,6 +1,5 @@
 import {
   doDeleteUserAcc,
-  doGetBankFintech,
   doGetUserAccount,
 } from "@/redux/payment/action/userAccActionReducer";
 import { Menu, Transition } from "@headlessui/react";
@@ -14,7 +13,15 @@ import { useDispatch, useSelector } from "react-redux";
 import AddUserAccount from "./addUserAccount";
 import EditUserAccount from "./editUserAccount";
 
+
 export default function userAccount() {
+  const loginData: any = localStorage.getItem("loginData")
+  const objLoginData = JSON.parse(loginData)
+  const user_id = objLoginData.user_id
+
+  console.log(user_id)
+
+
   let { accounts, message, refresh } = useSelector(
     (state: any) => state.userAccountReducers
   );
@@ -50,7 +57,7 @@ export default function userAccount() {
   };
 
   useEffect(() => {
-    dispatch(doGetUserAccount());
+    dispatch(doGetUserAccount(user_id));
   }, [refresh]);
 
   return (
@@ -66,7 +73,7 @@ export default function userAccount() {
 
             </div>
             <div className="flex items-center justify-between">
-              <div className="flex bg-gray-50 items-center p-2 rounded-md"></div>
+
               <div className="lg:ml-40 ml-10 space-x-8">
                 <button
                   onClick={() => setOpen(true)}
@@ -81,8 +88,10 @@ export default function userAccount() {
             </div>
           </div>
           <div>
-            <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-              <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
+            {/* div bawah hilangkan overflow-x-auto */}
+            <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4">
+               {/*hilangkan overflow-hidden  */}
+              <div className="inline-block min-w-full shadow rounded-lg">
                 <table className="min-w-full leading-normal">
                   <thead>
                     <tr>

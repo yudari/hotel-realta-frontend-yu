@@ -6,6 +6,9 @@ import moment from "moment";
 
 
 export default function paymentTransaction(){
+  const loginData: any = localStorage.getItem("loginData")
+  const objLoginData = JSON.parse(loginData)
+  const user_id = objLoginData.user_id
     let{ payTrans, message, refresh } = useSelector((state:any) => state.paymentTransactionReducers);
     
     const dispatch = useDispatch()
@@ -30,8 +33,8 @@ export default function paymentTransaction(){
     ]
 
     
-  const handleGetData = (searchTerm?:any, currentPage?:any, limit?:any, type?:any) => {
-    dispatch(doGetPayTrans(searchTerm, currentPage, limit, type))
+  const handleGetData = (searchTerm?:any, currentPage?:any, limit?:any, type?:any, id?:any) => {
+    dispatch(doGetPayTrans(searchTerm, currentPage, limit, type, id))
   }
 
   const handleSearchChange = (e: any): void => {
@@ -52,12 +55,12 @@ export default function paymentTransaction(){
 }
   
     setCurrentPage(1) // reset currentPage only when search term changes
-    handleGetData(searchTerm, currentPage, limit, type) // call handleGetData to fetch data again
+    handleGetData(searchTerm, currentPage, limit, type,user_id) // call handleGetData to fetch data again
   }
 
   useEffect(() => {
-    handleGetData(searchTerm, currentPage, limit, type)
-  }, [refresh, searchTerm, currentPage, limit, type])
+    handleGetData(searchTerm, currentPage, limit, type,user_id)
+  }, [refresh, searchTerm, currentPage, limit, type,user_id])
 
   // Calculate total pages
   const totalData = payTrans ? payTrans.length : 0
@@ -89,10 +92,9 @@ return (
       <div className='bg-white p-8 rounded-md w-full'>
         <div className=' flex items-center justify-between pb-6'>
           <div>
-            <h1 className='text-gray-600 font-semibold'>History Payment</h1>
+            <h1 style={{ fontSize: "1.5em" }} className='text-gray-600 font-semibold'>History Payment</h1>
           </div>
           <div className='flex items-center justify-between'>
-            <div className='flex bg-gray-50 items-center p-2 rounded-md'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 className='h-5 w-5 text-gray-400'
@@ -106,16 +108,14 @@ return (
                 />
               </svg>
               <input
-                className='bg-gray-50 outline-none ml-1 block '
+                className='bg-gray-50 outline-none ml-1 block rounded-2xl'
                 type='text'
                 name=''
                 id=''
                 placeholder='search...'
-                // value={searchTerm}
+                value={searchTerm}
                 onChange={handleSearchChange}
               />
-            </div>
-
           </div>
         </div>
         <div>
@@ -189,7 +189,7 @@ return (
 
                           <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                             <p className='text-gray-900 whitespace-no-wrap'>
-                              {payTrans.patr_type}
+                              {payTrans.patr_trx_number_ref}
                             </p>
                           </td>
 

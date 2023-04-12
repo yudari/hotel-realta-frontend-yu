@@ -3,7 +3,7 @@ import {
   doRequestGetHotels,
 } from '../../../redux/hotel/action/actionReducer'
 import { Menu, Transition } from '@headlessui/react'
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { FaRegEdit } from 'react-icons/fa'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { HiOutlineSwitchHorizontal } from 'react-icons/hi'
@@ -393,8 +393,5 @@ const Hotels = () => {
 }
 
 export default Hotels
-import React from 'react'
 
-export default function Hotels() {
-  return <div>test</div>
-}
+

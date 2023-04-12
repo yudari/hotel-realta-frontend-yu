@@ -1,8 +1,9 @@
 import actionType from "./actionType"
 
-export const doGetUserAccount = () => {
+export const doGetUserAccount = (payload:any) => {
     return{
-        type:actionType.GET_USER_ACCOUNT
+        type:actionType.GET_USER_ACCOUNT,
+        payload
     }
 }
 

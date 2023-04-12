@@ -12,6 +12,7 @@ export default function AddUserAccount(props: any) {
   let { bankFintech, message, refresh } = useSelector(
     (state: any) => state.userAccountReducers
   );
+  const dispatch = useDispatch();
   type FormValues = {
     usac_entity_id: number;
     usac_user_id: number;
@@ -27,14 +28,17 @@ export default function AddUserAccount(props: any) {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
-  const dispatch = useDispatch();
+
+
   const handleError = (errors: any) => {};
   const handleSave = async (data: FormValues) => {
-
+    const loginData: any = localStorage.getItem("loginData")
+    const objLoginData = JSON.parse(loginData)
+    const user_id = objLoginData.user_id
     try {
       const dataAll = {
         usac_entity_id: data.usac_entity_id,
-        usac_user_id: data.usac_user_id,
+        usac_user_id: user_id,
         usac_account_number: data.usac_account_number,
         usac_saldo: data.usac_saldo,
         usac_type: data.usac_type,
@@ -52,7 +56,6 @@ export default function AddUserAccount(props: any) {
   const handleSelect = (e:any) =>{
     const data = e.target.value
     setPilih(data)
-    
   }
 
   useEffect(() => {
@@ -61,7 +64,7 @@ export default function AddUserAccount(props: any) {
 
   const registerOptions = {
     usac_entity_id: { required: "Entity id is required" },
-    // usac_user_id: ,
+    usac_user_id: {},
     usac_account_number: { required: "Account Number is required" },
     usac_saldo: { required: "Saldo is required" },
     usac_type: { required: "Type is required" },
@@ -110,7 +113,7 @@ export default function AddUserAccount(props: any) {
                             <select
                             className="w-8/12"
                           {...register(
-                            "usac_entity_id",
+                            "usac_entity_id", 
                             registerOptions.usac_entity_id
                           )}
                           onChange={handleSelect}
