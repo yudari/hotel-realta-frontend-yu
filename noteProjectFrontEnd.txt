@@ -1,0 +1,16 @@
+atur konfig sistem
+
+- config/endpoint.ts
+
+buat folder untuk redux semua table di mockup(action, reducer, saga, store) 
+
+--VENDOR--
+
+~ api/apiMethodVendor.ts
+~ action/actionType.ts
+~ action/vendorActionReducer.ts
+~ purchasingSaga/vendorSaga.ts
+~ saga/index
+~ reducer/departmentReducer.ts
+~ store/index
+~ pages/purchasing/vendor/index.jsx

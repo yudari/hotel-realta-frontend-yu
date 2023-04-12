@@ -118,15 +118,3 @@ export default function Layout({ children }: any) {
     </>
   );
 }
-
-export async function getServerSideProps(context: any) {
-  const { req } = context;
-
-  if (!req.cookies["loginData"] || !req.cookies["token"]) {
-    return {
-      redirect: {
-        destination: "/users/loginGuest",
-      },
-    };
-  }
-}

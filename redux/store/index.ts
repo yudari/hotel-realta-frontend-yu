@@ -18,6 +18,7 @@ import priceitemsReducer from "../masterSchema/reducer/priceitemsReducer";
 import cityReducer from "../masterSchema/reducer/cityReducer";
 import addressReducer from "../masterSchema/reducer/addressReducer";
 import hotelsReducers from "../hotel/reducer/hotelsReducer";
+
 import facilitiesSupportReducers from "../hotel/reducer/facilitiesSupportReducer";
 import hotelReviewsReducers from "../hotel/reducer/hotelReviewsReducer";
 import facilitiesReducers from "../hotel/reducer/facilitiesReducer";
@@ -87,17 +88,14 @@ const reducer = combineReducers({
   remeReducers,
   rephoReducers,
   ormeReducers,
-  ordetReducers,
+  ordetReducers
 });
 
 const store = configureStore({
   reducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
       serializableCheck: false,
-    })
-      .concat(logger)
-      .concat(saga),
+    }).concat(logger).concat(saga),
 });
 
 saga.run(rootSaga);

@@ -1,6 +1,6 @@
 import store from "@/redux/store";
 import "@/styles/globals.css";
-import 'react-gallery-carousel/dist/index.css';
+import "react-gallery-carousel/dist/index.css";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import NextNProgress from "nextjs-progressbar";
@@ -8,7 +8,6 @@ import Layout from "@/components/shared/Layout";
 import { Poppins } from "next/font/google";
 import { useRouter } from "next/router";
 import Head from "next/head";
-
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700", "800", "900"],
@@ -19,7 +18,9 @@ const poppins = Poppins({
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const hasLayout =
-    router.pathname !== '/' &&
+    router.pathname !== "/" &&
+    !router.pathname.startsWith("/resto/restoMenuPhotos") &&
+    !router.pathname.startsWith("/resto/orderMenu") &&
     !router.pathname.startsWith("/booking/detail-booking-final") &&
     !router.pathname.startsWith("/booking/list-booking-final") &&
     !router.pathname.startsWith("/users/loginEmployee") &&
@@ -49,10 +50,8 @@ export default function App({ Component, pageProps }: AppProps) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
         <link rel="icon" href="favicon.ico" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/datepicker.min.js"></script>
       </Head>
       {hasLayout ? (
-
         <Layout>
           <Component {...pageProps} />
         </Layout>
