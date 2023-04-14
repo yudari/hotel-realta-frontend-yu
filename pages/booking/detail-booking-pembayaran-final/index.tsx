@@ -135,14 +135,18 @@ const DetailBookingPembayaranFina: NextPage = () => {
 
     const deleteExtraItemsFinal = (idItem: any) => {
         let subTotal = 0
+
         const dataHitungItems = dataAllExtraItemsFinal.filter((data: any) => {
             if (data.namaItem.value.prit_id !== idItem) {
                 return data
             }
         })
+
         dataHitungItems.forEach((item: any) => {
             subTotal = subTotal + item.jumlahSubTotal
         })
+
+        console.log(dataHitungItems)
         setTotalExtraItemFinalPrice(subTotal)
         setDataAllExtraItemsFinal(dataHitungItems)
     }
