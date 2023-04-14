@@ -51,8 +51,8 @@ export default function UserProfile({ userData, bonus, members }: any) {
         <title>Hotel Realta - {userData.user_full_name} Profile</title>
       </Head>
       <div className="w-full">
-        <section className="relative general shadow-md overflow-auto">
-          <div className="h-60 w-full bg-[url('https://source.unsplash.com/random/900%C3%97700/?abstract')] bg-no-repeat bg-center bg-cover rounded-tl rounded-tr"></div>
+        <section className="relative general shadow-md overflow-auto bg-white">
+          <div className="h-60 w-full bg-[url('https://source.unsplash.com/random/900%C3%97700/?abstract')] bg-no-repeat bg-center bg-cover rounded-tl-lg rounded-tr-lg"></div>
 
           <div className="p-4">
             <div className="relative grid grid-cols-1 md:grid-rows-2 md:grid-cols-4 p-6">
@@ -115,8 +115,8 @@ export default function UserProfile({ userData, bonus, members }: any) {
                     {userData.user_type === "T"
                       ? "Travel Agent"
                       : userData.user_type === "C"
-                        ? "Corporate"
-                        : "Individual"}
+                      ? "Corporate"
+                      : "Individual"}
                   </p>
                 </div>
 
@@ -157,7 +157,10 @@ export default function UserProfile({ userData, bonus, members }: any) {
           </div>
         </section>
 
-        <section id="points-member" className="mt-10 p-4 rounded shadow-xl">
+        <section
+          id="points-member"
+          className="mt-10 p-4 rounded-lg shadow-xl bg-white"
+        >
           <div id="security-header">
             <h1 className="text-2xl text-primary font-bold">Points & Member</h1>
             <hr className="mt-1" />

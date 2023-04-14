@@ -122,7 +122,7 @@ const listMenu = [
     path: "/payment",
     icon: MdPayment,
     name: "Payment",
-    role: [4],
+    role: [1, 4],
     submenu: [
       {
         to: "/payment/bank",

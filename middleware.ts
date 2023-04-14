@@ -16,10 +16,19 @@ export function middleware(request: NextRequest) {
   const loginData = JSON.parse(loginCookie?.value || "{}");
 
   if (
+    request.nextUrl.pathname.startsWith("/payment") &&
+    loginData.user_role_id !== 1 &&
+    loginData.user_role_id !== 4
+  ) {
+    return NextResponse.redirect(
+      new URL(`/users/profile/${loginData.user_id}`, request.url)
+    );
+  }
+
+  if (
     (request.nextUrl.pathname.startsWith("/master") ||
       request.nextUrl.pathname.startsWith("/hotel") ||
       request.nextUrl.pathname.startsWith("/resto") ||
-      request.nextUrl.pathname.startsWith("/payment") ||
       request.nextUrl.pathname.startsWith("/hr") ||
       request.nextUrl.pathname.startsWith("/purchasing") ||
       request.nextUrl.pathname.startsWith("/dashboard")) &&
