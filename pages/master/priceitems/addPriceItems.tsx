@@ -1,0 +1,198 @@
+import { doAddPriceItems } from "@/redux/masterSchema/action/priceitemAction";
+import { doAddServiceTask } from "@/redux/masterSchema/action/servicetaskAction";
+import { Transition, Dialog } from "@headlessui/react";
+import React, { Fragment } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+
+export default function AddPriceMaster(props: any) {
+  type FormValues = {
+    prit_name: string;
+    prit_price: string;
+    prit_description: string;
+    prit_type: string;
+  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+  const dispatch = useDispatch();
+
+  const handleRegistration = async (data: any) => {
+    dispatch(doAddPriceItems(data));
+    props.closeModal();
+  };
+
+  const handleError = (errors: any) => {};
+
+  const registerOptions = {
+    prit_name: { required: "Name is required" },
+    prit_price: {
+      required: "price is required",
+    },
+    prit_description: { required: "description is required" },
+    prit_type: { required: "type is required" },
+  };
+  return (
+    <div>
+      <Transition appear show={props.isOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={props.closeModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel
+                  className="w-full max-w-md transform overflow-hidden rounded-2xl
+                            bg-white p-6 text-left align-middle shadow-xl transition-all"
+                >
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900"
+                  >
+                    Mohon isi dahulu
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <form
+                      onSubmit={handleSubmit(handleRegistration, handleError)}
+                    >
+                      <div className="grid grid-cols-1 gap-4">
+                        <div className="col-span-1">
+                          <label className="block text-gray-700">
+                            Item Name
+                          </label>
+                          <input
+                            // name="name"
+                            type="text"
+                            {...register(
+                              "prit_name",
+                              registerOptions.prit_name
+                            )}
+                            className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
+                          />
+                          <small className="text-danger">
+                            {errors?.prit_name && errors.prit_name.message}
+                          </small>
+                        </div>
+                        {/* <div className="col-span-1">
+                          <label className="block text-gray-700">desc</label>
+                          <input
+                            type="desc"
+                            // name="desc"
+                            {...register(
+                              "cagro_description",
+                              registerOptions.cagro_description
+                            )}
+                            className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
+                          />
+                          <small className="text-danger">
+                            {errors?.cagro_description &&
+                              errors.cagro_description.message}
+                          </small>
+                        </div> */}
+                        <div className="col-span-1">
+                          {/* <label className="block text-gray-700">type</label>
+                          <input
+                          type="cateid"
+                          // name="cateid"
+                          {...register("cagro_type", registerOptions.cagro_type)}
+                          className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
+                        /> */}
+
+                          <label className="block text-gray-700">
+                            Select an option
+                          </label>
+                          <select
+                            {...register(
+                              "prit_type",
+                              registerOptions.prit_type
+                            )}
+                            className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
+                          >
+                            <option selected>Choose a type</option>
+                            <option value="Facility">Facility</option>
+                            <option value="Service">Service</option>
+                            <option value="Room">Room</option>
+                          </select>
+
+                          <small className="text-danger">
+                            {errors?.prit_type && errors.prit_type.message}
+                          </small>
+                        </div>
+                        <div className="col-span-1">
+                          <label className="block text-gray-700">desc</label>
+                          <textarea
+                            {...register(
+                              "prit_description",
+                              registerOptions.prit_description
+                            )}
+                            className="description w-full p-5 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
+                          />
+                          <small className="text-danger">
+                            {errors?.prit_description &&
+                              errors.prit_description.message}
+                          </small>
+                        </div>
+                        <div className="col-span-1">
+                          <label className="block text-gray-700">
+                            price
+                          </label>
+                          <input
+                            type="text"
+                            {...register(
+                              "prit_price",
+                              registerOptions.prit_price
+                            )}
+                            className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
+                          />
+                          <small className="text-danger">
+                            {errors?.prit_price && errors.prit_price.message}
+                          </small>
+                        </div>
+                      </div>
+                      <div className="flex-row space-x-4 mt-4 text-rigt">
+                        <button
+                          className="inline-flex justify-center rounded-md border border-transparent 
+                                    bg-blug-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none 
+                                    focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        >
+                          Submit
+                        </button>
+                        <button
+                          className="inline-flex justify-center rounded-md border border-transparent bg-blug-100 px-4 py-2 text-sm 
+                        font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                          onClick={props.closeModal}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+    </div>
+  );
+}

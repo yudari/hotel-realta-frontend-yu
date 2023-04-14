@@ -277,7 +277,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
                           </div> : ''}
 
                         </div>
-                        <b className="relative">{item.faci_name} | <span>{item.faci_room_number}</span> </b>
+                        <b className="relative">{item.faci_name} | Room <span>{item.faci_room_number}</span> </b>
                         <div className="self-stretch flex flex-row items-center justify-start gap-[10px]">
                           <div className="relative font-medium">
                             {new Intl.NumberFormat('id-ID', {

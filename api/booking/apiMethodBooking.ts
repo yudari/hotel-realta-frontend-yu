@@ -43,6 +43,48 @@ const getAllExtraItems = () => {
     return axios.get(`/booking/price-items/`)
 }
 
+const getUserByIdentities = ({ userName }: any) => {
+    return axios.get(`/users/usersByName?search=${userName}`)
+}
+
+const getUserById = (IdUser: any) => {
+    return axios.get(`/users/${IdUser}`)
+}
+
+const getAllPaymentUser = (IdUser: any) => {
+    return axios.get(`/accounts?id=${IdUser}`)
+}
+
+const getUserPaymentDetail = (metPemUser: any, rekeningUser: any) => {
+    return axios.get(`/accounts?metPemUser=${metPemUser}&rekeningUser=${rekeningUser}`)
+}
+
+const createExtraItemPrice = (dataExtraItems: any, IdUser: any, TotalGuest: any, TotalRooms: any) => {
+    return axios.post(`booking/hotel/rooms/extra/?IdUser=${IdUser}&TotalGuest=${TotalGuest}&TotalRooms=${TotalRooms}`, dataExtraItems)
+}
+
+const createBreakFeast = (ParamBoorId: any, DataInputBreakFeast: any) => {
+    return axios.post(`booking/hotel/breakfeast/${ParamBoorId}`, DataInputBreakFeast)
+}
+
+const updateUserMemberPointsBooking = (UserMemberId: any, UserMemberName: any, dataUpdateUserMemberPoints: any) => {
+    return axios.put(`booking/user_points?UserMemberId=${UserMemberId}&UserMemberName=${UserMemberName}`, dataUpdateUserMemberPoints)
+}
+
+const createBookingOrdersDetail = (IdBoor: any, BordeIdAll: any, dataUpdate: any) => {
+    console.log(`booking/booking_orders_detail/${IdBoor}?Borde_Id_All=[${BordeIdAll}]`)
+    return axios.put(`booking/booking_orders_detail/${IdBoor}?Borde_Id_All=[${BordeIdAll}]`, dataUpdate)
+}
+
+const createBookingOrderFinal = (IdBoor: any, dataOrder: any) => {
+    return axios.put(`booking/booking_orders/${IdBoor}`, dataOrder)
+}
+
+const userBookingInfoDetail = (IdUser: any) => {
+    return axios.get(`http://localhost:5000/users/${IdUser}`)
+}
+
+
 export default {
     getAllBookingApi,
     getAllFacilitiesSupport,
@@ -54,5 +96,15 @@ export default {
     getAllSpecialRoomByBoorId,
     pickKuponBooking,
     getUserMembersAPI,
-    getAllExtraItems
+    getAllExtraItems,
+    getUserByIdentities,
+    getUserById,
+    getAllPaymentUser,
+    getUserPaymentDetail,
+    createExtraItemPrice,
+    createBreakFeast,
+    updateUserMemberPointsBooking,
+    createBookingOrdersDetail,
+    createBookingOrderFinal,
+    userBookingInfoDetail
 }

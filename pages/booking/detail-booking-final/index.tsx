@@ -46,7 +46,7 @@ const DetailBookingFinal: NextPage = (props) => {
     })
     const dispatch = useDispatch();
     const onFrameButtonClick = useCallback(() => {
-        router.replace('/booking/list-booking-final')
+        router.push('/booking/list-booking-final')
     }, []);
 
     useEffect(() => {

@@ -53,13 +53,22 @@ const DetailBookingPembayaranFina: NextPage = () => {
     const [totalExtraItemFinalPrice, setTotalExtraItemFinalPrice] = useState<any>(0)
     const [selectedExtraItems, setSelectedExtraItems] = useState<any>({})
     const [userLogin, setUserLogin] = useState<any>({})
-    const [openItem, setOpenItem] = useState(false)
+    const [getAllPaymentMetodeUser, setGetAllPaymentMetodeUser] = useState<any>([{}])
+    const [getAllPaymentMetodeRealta, setGetAllPaymentMetodeRealta] = useState<any>([{}])
+    const [selectedPaymentRealta, setSelectedPaymentRealta] = useState<any>({})
+    const [selectedPaymentUser, setSelectedPaymentUser] = useState<any>({})
 
+
+    const [openItem, setOpenItem] = useState(false)
+    const [userDetailDiri, setUserDetailDiri] = useState<any>({})
+    const [validasiUser, setValidasiUser] = useState<boolean>(false)
+    const [validasiPayment, setValidasiPayment] = useState<boolean>(false)
+    const [validasiPaymentDetails, setValidasiPaymentDetails] = useState<any>([])
     const cancelButtonRef = useRef(null)
 
     const dispatch = useDispatch()
     const onFrameButtonClick = useCallback(() => {
-        // Please sync "Landing Page Hotel" to the project
+        router.push(`/booking/list-booking-final`)
     }, []);
 
     const onFrameContainer4Click = useCallback(() => {
@@ -136,31 +145,157 @@ const DetailBookingPembayaranFina: NextPage = () => {
         })
         setTotalExtraItemFinalPrice(subTotal)
         setDataAllExtraItemsFinal(dataHitungItems)
+    }
+
+    const submitValidasiDetailDiriUser = async (e: any) => {
+        e.preventDefault()
+        const userDetail = {
+            userName: e.target.nameUser.value,
+            userPhoneNumber: phoneNumber,
+            userEmail: e.target.emailUser.value
+        }
+
+        try {
+            const dataResponse = await apiMethodBooking.getUserByIdentities(userDetail)
+            const dataUser = dataResponse.data.data
+            const userEmailFinal = dataUser.find((item: any) => {
+                if (item.user_id === userLogin.user_id) {
+                    setValidasiUser(true)
+                    return item
+                }
+            })
+            e.target.nameUser.value = ''
+            setPhoneNumber('')
+            e.target.emailUser.value = ''
 
 
+        } catch (error) {
+            console.log(error)
+        }
+        // console.log(userDetail)
+    }
+
+    const getAllMetodePembayaranUserPelanggan = async (IdUser: any) => {
+        try {
+            if (IdUser) {
+                const dataResponse = await apiMethodBooking.getAllPaymentUser(IdUser)
+
+                setGetAllPaymentMetodeUser(dataResponse.data)
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const getAllMetodePembayaranRealta = async (IdRealta: any) => {
+        try {
+            if (IdRealta) {
+                const dataResponse = await apiMethodBooking.getAllPaymentUser(IdRealta)
+                setGetAllPaymentMetodeRealta(dataResponse.data)
+            }
+
+        } catch (error) {
+
+        }
+    }
+    const changeSelectInputMetodePembayaranRealta = (rekeningRealta: any) => {
+        function isJSON(str: string): boolean {
+            try {
+                JSON.parse(str);
+                return true;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        if (isJSON(rekeningRealta.target.value)) {
+            const dataRekening = JSON.parse(rekeningRealta.target.value)
+            setSelectedPaymentRealta(dataRekening)
+        } else {
+            console.log(`Data Bukan JSON`)
+        }
 
 
     }
+
+    const changeSelectInputMetodePembayaranUser = (rekeningUser: any) => {
+
+        function isJSON(str: string): boolean {
+            try {
+                JSON.parse(str);
+                return true;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        if (isJSON(rekeningUser.target.value)) {
+
+            const dataRekening = JSON.parse(rekeningUser.target.value)
+            console.log(dataRekening)
+            setSelectedPaymentUser(dataRekening)
+
+        } else {
+            console.log(`Data bukan JSON`)
+        }
+    }
+
+    const submitValidasiRekeningUserdanRealta = async (e: any) => {
+        e.preventDefault()
+        const dataRekening = {
+            metodePembayaranUser: selectedPaymentUser.entity_name,
+            rekeningUser: e.target.elements.rekening_user.value,
+            metodePembayaranRealta: selectedPaymentRealta.entity_name,
+            rekeningRealta: e.target.elements.rekening_realta.value
+        }
+
+        try {
+            const dataUserPaymentDetails = await apiMethodBooking.getUserPaymentDetail(dataRekening.metodePembayaranUser, dataRekening.rekeningUser)
+            const dataUserFinalPaymentDetails = dataUserPaymentDetails.data[0]
+
+            const dataRealtaPaymentDetails = await apiMethodBooking.getUserPaymentDetail(dataRekening.metodePembayaranRealta, dataRekening.rekeningRealta)
+            const dataRealtaFinalPaymentDetails = dataRealtaPaymentDetails.data[0]
+
+            setValidasiPaymentDetails([{ ...dataUserFinalPaymentDetails }, { ...dataRealtaFinalPaymentDetails }])
+            setValidasiPayment(true)
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    const getUserDetailDiri = async (iduser: any) => {
+        try {
+            const userData = await apiMethodBooking.userBookingInfoDetail(iduser)
+            const userDataResponse = userData.data
+
+            setUserDetailDiri(userDataResponse)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
         if (router.isReady) {
             const userLogin = JSON.parse(localStorage.getItem("loginData") || "{}");
             setUserLogin(userLogin)
+            getUserDetailDiri(userLogin?.user_id)
             dispatch(doRequestGetOneDetailPembayaran(router.query.IdOrderDetail, router.query.IdUser, router.query.CheckIn, router.query.CheckOut, router.query.TotalGuest, router.query.totalRooms))
+            console.log(router)
             getAllExtraItems()
-
+            getAllMetodePembayaranUserPelanggan(userLogin?.user_id); getAllMetodePembayaranRealta(21);
         }
     }, [router.isReady]);
 
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
+
         }, 2000)
     }, [loading])
-    console.log(router.isReady)
 
-    console.log(bookingBayar)
-    console.log(showCoupons)
-    console.log(dataAllExtraItemsFinal)
     return (
         <>
             <Head>
@@ -207,14 +342,14 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="self-stretch overflow-hidden flex flex-col items-start justify-start gap-[18px]">
+                                        <form onSubmit={submitValidasiDetailDiriUser} className="self-stretch overflow-hidden flex flex-col items-start justify-start gap-[18px]">
                                             <div className="w-[398px] flex flex-col items-start justify-start gap-[12px]">
                                                 <div className="self-stretch flex flex-row items-start justify-start">
                                                     <div className="relative leading-[148%]">
                                                         Nama Lengkap
                                                     </div>
                                                 </div>
-                                                <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Yudha" required />
+                                                <input type="text" id="name_user" name="nameUser" className="bg-gray-50 border border-gray-300 text-gray-900 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Yudha" required />
                                             </div>
                                             <div className="w-[398px] flex flex-col items-start justify-start gap-[6px]">
                                                 <div className="self-stretch flex flex-row items-start justify-start">
@@ -252,14 +387,14 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                                         Email
                                                     </div>
                                                 </div>
-                                                <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="user@gmail.com" required />
+                                                <input type="email" id="email_user" className="bg-gray-50 border border-gray-300 text-gray-900 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="user@gmail.com" required name="emailUser" />
                                             </div>
                                             <button className="rounded bg-darkslategray-300 w-[398px] cursor-pointer hover:bg-darkslategray-100  flex flex-row py-2 px-4 box-border items-center justify-center text-center text-[14px] text-neutrals font-montserrat-regular-14">
                                                 <div className="flex-1 relative font-semibold">
                                                     Cek Detail Informasi
                                                 </div>
                                             </button>
-                                        </div>
+                                        </form>
                                     </div>
                                     <div className="self-stretch rounded-[18px] bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col p-4 items-start justify-start gap-[16px]">
                                         <div className="self-stretch rounded-[18px] bg-gainsboro-200 flex flex-row p-4 items-start justify-start">
@@ -345,7 +480,7 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="self-stretch rounded-[18px] gap-5 bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col p-4 items-start justify-start">
+                                    <form onSubmit={submitValidasiRekeningUserdanRealta} className="self-stretch rounded-[18px] gap-5 bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col p-4 items-start justify-start">
                                         <div className="self-stretch rounded-[18px] bg-gainsboro-200 flex flex-row p-4 items-start justify-start text-[inherit] font-inherit">
                                             <div className="flex-1 flex flex-col items-start justify-start">
                                                 <b className="self-stretch relative">
@@ -363,11 +498,11 @@ const DetailBookingPembayaranFina: NextPage = () => {
 
                                                 <div className="flex-1 h-[146px] flex flex-col items-start justify-start gap-[6px] text-left text-[16px] text-grayscale-black font-body-txt-body-s-regular">
                                                     <label htmlFor=" " className="block relative leading-[148%]">Tipe Pembayaran</label>
-                                                    <select id="tipePembayaran" className="bg-gray-50 w-fit border border-gray-300 text-gray-900 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                    <select id="tipePembayaran" className="bg-gray-50 w-fit border border-gray-300 text-gray-900 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={changeSelectInputMetodePembayaranUser}>
                                                         <option selected>Pilih Tipe Pembayaran</option>
-                                                        <option value="BCA">BCA</option>
-                                                        <option value="Go To">GoTo</option>
-
+                                                        {getAllPaymentMetodeUser && getAllPaymentMetodeUser.map((item: any, index: any) => (
+                                                            <option key={index} value={JSON.stringify(item)}>{item?.entity_name}</option>
+                                                        ))}
                                                     </select>
 
                                                 </div>
@@ -377,7 +512,7 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                                             Account Number
                                                         </div>
                                                     </div>
-                                                    <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="111-111-111-111" required />
+                                                    <input type="text" id="rekening_user" name="rekening_user" className="bg-gray-50 border border-gray-300 text-gray-900 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="111-111-111-111" required />
                                                 </div>
                                             </div>
                                         </div>
@@ -391,10 +526,11 @@ const DetailBookingPembayaranFina: NextPage = () => {
 
                                                 <div className="flex-1 h-[146px] flex flex-col items-start justify-start gap-[6px] text-left text-[16px] text-grayscale-black font-body-txt-body-s-regular">
                                                     <label htmlFor=" " className="block relative leading-[148%]">Tipe Pembayaran</label>
-                                                    <select id="tipePembayaran" className="bg-gray-50 w-fit border border-gray-300 text-gray-900 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                    <select id="tipePembayaran" className="bg-gray-50 w-fit border border-gray-300 text-gray-900 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={changeSelectInputMetodePembayaranRealta} name="option_rekening_realta">
                                                         <option selected>Pilih Tipe Pembayaran</option>
-                                                        <option value="BCA">BCA</option>
-                                                        <option value="Go To">GoTo</option>
+                                                        {getAllPaymentMetodeRealta && getAllPaymentMetodeRealta?.map((item: any, index: any) => (
+                                                            <option key={index} value={JSON.stringify(item)}>{item?.entity_name}</option>
+                                                        ))}
 
                                                     </select>
 
@@ -405,13 +541,13 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                                             Account Number
                                                         </div>
                                                     </div>
-                                                    <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="111-111-111-111" required />
+                                                    <input type="text" id="rekening_realta" name="rekening_realta" className="bg-gray-50 border border-gray-300 text-gray-900 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="111-111-111-111" required value={selectedPaymentRealta?.usac_account_number} />
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="self-stretch overflow-hidden flex flex-col items-start justify-start">
                                             <div className="self-stretch flex flex-row items-center justify-end">
-                                                <button className="cursor-pointer [border:none] py-2 px-4 bg-darkslategray-300 rounded w-[118px] hover:bg-darkslategray-100 h-12 shrink-0 flex flex-row box-border items-center justify-center">
+                                                <button type="submit" className="cursor-pointer [border:none] py-2 px-4 bg-darkslategray-300 rounded w-[118px] hover:bg-darkslategray-100 h-12 shrink-0 flex flex-row box-border items-center justify-center">
                                                     <div className="relative text-[14px] font-semibold font-montserrat-regular-14 text-neutrals text-left">
                                                         Validasi
                                                     </div>
@@ -419,25 +555,18 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                             </div>
                                         </div>
                                         <div className="self-stretch overflow-hidden" />
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
-                            <CardDetailsOrderPayment finalExtraPrice={totalExtraItemFinalPrice} user={userLogin} dataBookingBayar={bookingBayar} />
+                            <CardDetailsOrderPayment validasiPaymentDetails={validasiPaymentDetails} userDetailDiri={userDetailDiri} dataAllExtraItemsFinal={dataAllExtraItemsFinal} finalExtraPrice={totalExtraItemFinalPrice} user={userLogin} dataBookingBayar={bookingBayar} />
                         </div>
                     </div>
                     <FooterContainer /></>}
 
             </div>
-            {isModalAddItemOpen && (
-                <PortalPopup
-                    overlayColor="rgba(58, 58, 58, 0.3)"
-                    placement="Centered"
-                    onOutsideClick={closeModalAddItem}
-                >
-                    <ModalAddItem onClose={closeModalAddItem} />
-                </PortalPopup>
-            )}
 
+
+            {/* Modal Add Items */}
             <Transition appear show={openItem} as={Fragment}>
                 <Dialog as="div" className="relative z-10 font-body-txt-body-s-regular" onClose={() => setOpenItem(false)}>
                     <Transition.Child
@@ -492,6 +621,101 @@ const DetailBookingPembayaranFina: NextPage = () => {
 
                                         <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
                                     </form>
+
+
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
+
+            {/* Modal Confirmation User Ada */}
+
+            <Transition appear show={validasiUser} as={Fragment}>
+                <Dialog as="div" className="relative z-10 font-body-txt-body-s-regular" onClose={() => setValidasiUser(false)}>
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95"
+                            >
+                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-2xl font-semibold  text-darkslategray-300 cursor-pointer text-center"
+                                    >
+                                        Informasi Anda Sudah Terverifikasi
+                                    </Dialog.Title>
+
+                                    <div className="w-full flex flex-row justify-center mt-3">
+                                        <img src="/icons8-verified-account-50.png" alt="" width={`50px`} height={`50px`} />
+                                    </div>
+
+
+
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
+
+            {/* Modal Validasi Payment */}
+            <Transition appear show={validasiPayment} as={Fragment}>
+                <Dialog as="div" className="relative z-10 font-body-txt-body-s-regular" onClose={() => setValidasiPayment(false)}>
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95"
+                            >
+                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-2xl font-semibold  text-darkslategray-300 cursor-pointer text-center"
+                                    >
+                                        Rekening Berhasil Terverifikasi
+                                    </Dialog.Title>
+
+                                    <div className="w-full flex flex-row justify-center mt-3">
+                                        <img src="/icons8-verified-account-50.png" alt="" width={`50px`} height={`50px`} />
+                                    </div>
+
 
 
                                 </Dialog.Panel>

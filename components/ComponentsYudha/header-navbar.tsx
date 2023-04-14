@@ -4,6 +4,7 @@ import CSS, { Property } from "csstype";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { Menu } from "@headlessui/react";
+import apiMethodBooking from "@/api/booking/apiMethodBooking";
 
 type HeaderNavbarType = {
   vector?: string;
@@ -51,6 +52,7 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
   onFrameButtonClick,
 }) => {
   const [users, setUsers] = useState<any>({})
+  const [usersDetail, setUsersDetail] = useState<any>({})
   const headerLoggedInStyle: CSS.Properties = useMemo(() => {
     return {
       justifyContent: headerLogginSectionHeaderJustifyContent,
@@ -84,8 +86,8 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
   const router = useRouter()
   useEffect(() => {
     const userLogin = JSON.parse(localStorage.getItem("loginData") || "{}");
-
     setUsers(userLogin)
+    getUsersDetail(userLogin.user_id)
   }, [])
 
   const onBannerHeaderClick = useCallback(() => {
@@ -98,6 +100,22 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
     menu?.classList.toggle("hidden");
   };
 
+  const toMyProfile = (IdUser: any) => {
+    router.push(`/users/profile/${IdUser}`)
+  }
+
+  const getUsersDetail = async (IdUser: any) => {
+    try {
+
+      const dataResponse = await apiMethodBooking.getUserById(IdUser)
+      const dataUser = dataResponse.data
+      setUsersDetail(dataUser.data)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
@@ -105,6 +123,7 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
     const handleDocumentClick = (event: any) => {
       if (dropdownRef.current && !dropdownRef.current?.contains(event.target)) {
         setIsOpen(false);
+
       }
     };
 
@@ -123,6 +142,9 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
     setIsOpen(false);
   };
 
+  useEffect(() => {
+
+  }, [])
   console.log(users)
 
 
@@ -273,7 +295,7 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
               <span className="sr-only">Open user menu</span>
               <img
                 className="h-8 w-8 rounded-full"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                src={`${process.env.BACKEND_URL}/image/users/${usersDetail.user_photo_profile}`}
                 alt=""
               />
             </button>
@@ -293,7 +315,9 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
                 role="menuitem"
 
                 id="user-menu-item-0"
-                onClick={handleMenuItemClick}
+                onClick={() => {
+                  toMyProfile(users.user_id)
+                }}
               >
                 My Profile
               </a>

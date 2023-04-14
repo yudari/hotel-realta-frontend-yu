@@ -4,8 +4,6 @@ import { Menu, Transition } from "@headlessui/react";
 import { HiMenuAlt1 } from "react-icons/hi";
 import Avatar from "@/public/avatar.svg";
 import { BiLogOut } from "react-icons/bi";
-import { useDispatch } from "react-redux";
-import { doLogout } from "@/redux/users/action/loginActionReducers";
 
 export default function Navbar({
   showSidebar,
@@ -13,7 +11,9 @@ export default function Navbar({
   handleLogout,
   loginData,
 }: any) {
-  const { user_role_id, user_full_name } = loginData;
+  const { user_role_id, user_full_name, user_photo_profile } = loginData;
+
+  const imageUrl = `${process.env.BACKEND_URL}/image/users`;
 
 
   return (
@@ -55,13 +55,23 @@ export default function Navbar({
                     </span>
                   </div>
                   <picture>
-                    <Image
-                      src={Avatar}
-                      alt="Picsum"
-                      width={50}
-                      height={50}
-                      className="rounded-full"
-                    />
+                    {user_photo_profile ? (
+                      <Image
+                        src={`${imageUrl}/${user_photo_profile}`}
+                        alt="Picsum"
+                        width={50}
+                        height={50}
+                        className="rounded-full"
+                      />
+                    ) : (
+                      <Image
+                        src={Avatar}
+                        alt="Picsum"
+                        width={50}
+                        height={50}
+                        className="rounded-full"
+                      />
+                    )}
                   </picture>
                 </Menu.Button>
               </div>

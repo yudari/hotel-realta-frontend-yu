@@ -24,6 +24,7 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
   const [selectedRooms, setSelectedRooms] = useState<any>([props.dataBookings.data.data_rooms[0]]);
   const router = useRouter();
   const dispatch = useDispatch()
+
   const onButtonLanjutBookingClick = async () => {
     const dataBookingRooms = bookings.data.data_rooms.map((room: any) => {
       const converseFaciRatePrice = parseInt(room.faci_rate_price.replace(/[^\d]/g, "").slice(0, -2))
@@ -61,7 +62,8 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
       console.error(error);
     }
     // router.push("/booking/detail-booking-pembayaran-fina");
-  };
+  }
+
 
   const ButtonPickDateCheckIn = forwardRef<HTMLButtonElement, { value: string; onClick: () => void }>((props, ref) => (
     <button onClick={props.onClick} ref={ref} className="cursor-pointer border-none py-1 px-0.5 bg-seagreen rounded w-full shrink-0 flex flex-row box-border items-center justify-center gap-[2px]">
@@ -140,8 +142,10 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
   const totalPrice: number = parseInt(props.dataBookings.data.total_price.replace(/[^\d]/g, '').slice(0, -2));
   const totalPriceReal: number = parseInt(props.dataBookings.data.total_price_real.replace(/[^\d]/g, '').slice(0, -2));
   const JumlahPenguranganPrice = totalPriceReal - totalPrice
-  const finalTotalPrice = totalPriceReal - JumlahPenguranganPrice
-
+  let finalTotalPrice = totalPriceReal - JumlahPenguranganPrice
+  let discountPrice = Number(selectedRooms[0].faci_discount) * finalTotalPrice
+  finalTotalPrice = finalTotalPrice - discountPrice
+  console.log(Number(selectedRooms[0].faci_discount) * finalTotalPrice)
   const dataPickPiihOpsiBooking = () => {
     const AllRoomsFinal = {
       IdRooms: selectedRooms[0].faci_id,
@@ -170,6 +174,7 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
 
   useEffect(() => {
     if (Object.keys(bookingsTemporary).length > 0) {
+      console.log(bookingsTemporary)
       let totalGuest = 0;
       let totalRooms = bookingsTemporary?.data?.length;
 
@@ -219,8 +224,8 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
                 {props.dataBookings.data.data_rooms[0].hotel.hotel_rating_status} {props.dataBookings.data.data_rooms[0].hotel.hotel_reviews.length} reviews
               </div>
             </div>
-            <div className="rounded-sm bg-slamon shadow-[0px_1px_4px_rgba(0,_0,_0,_0.25)] w-[88px] flex flex-col py-1 px-3 box-border items-center justify-center text-5xs text-neutrals">
-              <div className="self-stretch relative font-medium ">
+            <div className="rounded-sm bg-slamon shadow-[0px_1px_4px_rgba(0,_0,_0,_0.25)] max-w-[140px] flex flex-col py-1 px-3 box-border items-center justify-center text-5xs text-neutrals">
+              <div className="self-stretch relative font-medium w-full">
                 {props.dataBookings.data.data_rooms[0].faci_memb_name} MEMBER
               </div>
             </div>
@@ -304,7 +309,7 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
               </button>}
             </div>
             <div className="self-stretch relative bg-darkslategray-300 h-[0.5px] shrink-0 opacity-[0.25]" />
-            <div className="self-stretch flex flex-row items-start justify-start gap-[14px] text-neutrals font-montserrat-semibold-14">
+            <div className="self-stretch flex flex-row items-start justify-start gap-[14px] text-neutrals">
               <ReactDatePicker className="z-50"
                 selected={startDateOpen}
                 onChange={(date: Date) => setStartDateOpen(date)}
@@ -416,7 +421,7 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
                   <div className="relative leading-[132%]">-{new Intl.NumberFormat('id-ID', {
                     style: 'currency',
                     currency: 'IDR',
-                  }).format(JumlahPenguranganPrice)}</div>
+                  }).format(discountPrice)}</div>
                 </div>
               </div>
               <div className="self-stretch flex flex-col pt-3 px-0 pb-0 items-start justify-start gap-[16px]">
