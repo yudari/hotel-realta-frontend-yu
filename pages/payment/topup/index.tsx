@@ -1,3 +1,4 @@
+// import { doTopup } from "@/redux/payment/action/payTransActionReducer";
 import { doTopup } from "@/redux/payment/action/payTransActionReducer";
 import {
   doGetBankFintech,
@@ -13,12 +14,11 @@ const TopUp = () => {
   const loginData: any = localStorage.getItem("loginData");
   const objLoginData = JSON.parse(loginData);
   const user_id = objLoginData.user_id;
+
   const { payTrans, message, refresh } = useSelector(
     (state: any) => state.paymentTransactionReducers
   );
 
-  let { accounts } = useSelector((state: any) => state.userAccountReducers);
-  let { bankFintech } = useSelector((state: any) => state.userAccountReducers);
 
   type FormValues = {
     patr_debet: number;
@@ -30,6 +30,13 @@ const TopUp = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
+
+  let { accounts  } = useSelector(
+    (state: any) => state.userAccountReducers
+  );
+  let { bankFintech } = useSelector(
+    (state: any) => state.userAccountReducers
+  );
   const dispatch = useDispatch();
   const handleError = (errors: any) => {};
   const router = useRouter()
@@ -40,7 +47,7 @@ const TopUp = () => {
     const recipientAccount = data.patr_target_id;
   
     const confirmed = window.confirm(
-      `Are you sure you want to transfer ${transferAmount} from account ${senderAccount} to account ${recipientAccount}?`
+      `Are you sure you want to Topup  ${transferAmount} from account ${senderAccount} to account ${recipientAccount}?`
     );
   
     if (confirmed) {
@@ -83,6 +90,7 @@ const TopUp = () => {
   }, [refresh]);
 
 
+console.log(accounts)
   return (
     <section>
       <div className="flex justify-center">

@@ -18,9 +18,9 @@ export default function Breadcrumb() {
         <li className="inline-flex items-center">
           <Link
             href="/dashboard"
-            className="inline-flex items-center font-medium text-blue-600 hover:text-blue-800 text-md underline underline-offset-4"
+            className="inline-flex items-center font-medium text-blue-600 text-sm underline underline-offset-4"
           >
-            <ImHome className="mr-2 text-lg" />
+            {/* <ImHome className="mr-2 text-lg" /> */}
             Home
           </Link>
         </li>
@@ -35,14 +35,13 @@ export default function Breadcrumb() {
           return (
             <li key={routeTo}>
               <div className="flex items-center">
-                <HiChevronRight className="text-2xl text-gray-500" />
-
+                {/* <HiChevronRight className="text-2xl text-gray-500" /> */}/
                 <Link
                   href={routeTo}
-                  className={`ml-1 text-md font-medium  md:ml-2 ${
+                  className={`ml-1 text-sm font-medium  md:ml-2 ${
                     router.pathname === routeTo
                       ? "text-gray-500"
-                      : "text-blue-600 hover:text-blue-800"
+                      : "text-primary hover:text-primary"
                   }`}
                 >
                   {capitalizeRoute}

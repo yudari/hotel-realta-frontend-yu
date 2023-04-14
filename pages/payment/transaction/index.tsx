@@ -2,7 +2,6 @@ import { doGetPayTrans } from "@/redux/payment/action/payTransActionReducer";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import { useRouter } from "next/router";
 
 
 
@@ -11,7 +10,7 @@ export default function paymentTransaction(){
   const objLoginData = JSON.parse(loginData)
   const user_id = objLoginData.user_id
     let{ payTrans, message, refresh } = useSelector((state:any) => state.paymentTransactionReducers);
-    const router = useRouter()
+    
     const dispatch = useDispatch()
     const [searchTerm, setSearchTerm] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
@@ -60,19 +59,14 @@ export default function paymentTransaction(){
   }
 
   useEffect(() => {
-    console.log(payTrans)
-    if(router.isReady){
-      handleGetData(searchTerm, currentPage, limit, type,user_id)
-    }
+    handleGetData(searchTerm, currentPage, limit, type,user_id)
   }, [refresh, searchTerm, currentPage, limit, type,user_id])
 
+  // Calculate total pages
+  const totalData = payTrans ? payTrans.length : 0
 
-  let totalData : any;
-  let totalPages: any;
+  const totalPages = Math.ceil(payTrans.length / limit)
 
-  totalData = payTrans ? payTrans.length : 0
-  totalPages = Math.ceil(payTrans / limit)
- 
   // Pagination function
   const handlePageChange = (type: string) => {
     if (type === 'prev' && currentPage > 1) {
@@ -83,12 +77,14 @@ export default function paymentTransaction(){
       handleGetData() // call handleGetData to fetch data again
     }
   }
+
   // Create array of pages to display in pagination buttons
   const pageNumbers = []
   for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i)
   }
 
+console.log(payTrans.data)
 return (
   <div className='bg-white'>
     <>
@@ -117,6 +113,7 @@ return (
                 name=''
                 id=''
                 placeholder='search...'
+                value={searchTerm}
                 onChange={handleSearchChange}
               />
           </div>

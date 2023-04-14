@@ -9,6 +9,7 @@ import { ImHome } from "react-icons/im";
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumbs";
 import Cookies from "js-cookie";
+import Footer from "../Footer";
 
 export default function Layout({ children }: any) {
   const [showSidebar, setShowSidebar] = useState(true);
@@ -18,6 +19,7 @@ export default function Layout({ children }: any) {
     user_role_id: 0,
     user_full_name: "",
   });
+  const [currentRoute, setCurrentRoute] = useState("Dashboard");
 
   const dispatch = useDispatch();
   const { isLogin } = useSelector((state: any) => state.loginReducers);
@@ -92,13 +94,7 @@ export default function Layout({ children }: any) {
   }
 
   return (
-    <>
-      <Navbar
-        showSidebar={showSidebar}
-        setShowSidebar={setShowSidebar}
-        handleLogout={handleLogout}
-        loginData={loginData}
-      />
+    <div className="flex h-full w-full">
       <Sidebar
         showSidebar={showSidebar}
         setShowSidebar={setShowSidebar}

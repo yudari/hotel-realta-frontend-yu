@@ -4,15 +4,13 @@ import { doGetPayTransResponse, doTopupResponse } from '../action/payTransAction
 
 function* handleGetPayTrans(action:any):any{
     try{
-        const { searchTerm, page, limit, type,id } = action.payload
-        const result = yield call(apiMethodPayTrans.finAll, searchTerm, page, limit, type,id)
-        console.log(result.data)
+        const { searchTerm, page, limit, type } = action.payload
+        const result = yield call(apiMethodPayTrans.finAll, searchTerm, page, limit, type)
         yield put(doGetPayTransResponse(result.data))
-        
     }
     catch(error){
         yield put(doGetPayTransResponse({message:error}))
-    }
+}
 }
 
 function* handleTopup(action:any):any{

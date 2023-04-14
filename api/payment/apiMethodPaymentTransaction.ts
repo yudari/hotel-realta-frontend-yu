@@ -5,7 +5,6 @@ const finAll = (searchTerm: any, page: number, limit: number, type:any, id: any)
 }
 
 const topup = (data:any) => {
-    console.log("testtttttt",data)
     return axios.post('/transaction/topup', data)
 }
 
