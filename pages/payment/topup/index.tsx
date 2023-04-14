@@ -1,140 +1,182 @@
-// import { doTopup } from "@/redux/payment/action/payTransActionReducer";
-import { doGetBankFintech, doGetUserAccount } from "@/redux/payment/action/userAccActionReducer";
+import { doTopup } from "@/redux/payment/action/payTransActionReducer";
+import {
+  doGetBankFintech,
+  doGetUserAccount,
+} from "@/redux/payment/action/userAccActionReducer";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 const TopUp = () => {
-  const loginData: any = localStorage.getItem("loginData")
-  const objLoginData = JSON.parse(loginData)
-  const user_id = objLoginData.user_id
+  const loginData: any = localStorage.getItem("loginData");
+  const objLoginData = JSON.parse(loginData);
+  const user_id = objLoginData.user_id;
   const { payTrans, message, refresh } = useSelector(
     (state: any) => state.paymentTransactionReducers
   );
 
-  let { accounts  } = useSelector(
-    (state: any) => state.userAccountReducers
-  );
-  let { bankFintech } = useSelector(
-    (state: any) => state.userAccountReducers
-  );
+  let { accounts } = useSelector((state: any) => state.userAccountReducers);
+  let { bankFintech } = useSelector((state: any) => state.userAccountReducers);
+
+  type FormValues = {
+    patr_debet: number;
+    patr_source_id: number;
+    patr_target_id: number;
+  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
   const dispatch = useDispatch();
+  const handleError = (errors: any) => {};
+  const router = useRouter()
 
-  const [senderAccount, setSenderAccount] = useState("");
-  const [senderSaldo, setSenderSaldo] = useState(0);
-  const [recipientAccount, setRecipientAccount] = useState("");
-  const [recipientSaldo, setRecipientSaldo] = useState(0);
-  const [transferAmount, setTransferAmount] = useState("");
-
-  const [ selectOption, setSelectOption ] = useState<any>({})
-//   useEffect(() => {
-//     dispatch(doTopup());
-//   }, [dispatch, refresh]);
-
-const handleSenderAccountChange = (e:any) => {
-const dataSaldo =   accounts.find((data:any)=>{
-    if(data.usac_account_number === e.target.value){
-      return data
-    }
-  })
-
-  setSelectOption(dataSaldo);
-
-}
-
-// const handleSenderAccountChangename = (e:any) => {
-//   const accountName =    bankFintech.find((name:any)=>{
-//     console.log('oooooooooooo',accountName)
-//     if(name.usac_account_number === e.target.value){
-//       return name
-//     }
-//   })
-//   setSelectOption(accountName);
-// }
-useEffect(() => {
-  dispatch(doGetUserAccount(user_id));
-}, [refresh]);
-
-  const handleTransferClick = () => {
+  const handleSave = (data: any) => {
+    const transferAmount = data.patr_debet;
+    const senderAccount = data.patr_source_id;
+    const recipientAccount = data.patr_target_id;
+  
     const confirmed = window.confirm(
-      `You will Topup  ${transferAmount} from ${senderAccount} to ${recipientAccount}. Click the transfer button to confirm.`
+      `Are you sure you want to transfer ${transferAmount} from account ${senderAccount} to account ${recipientAccount}?`
     );
+  
     if (confirmed) {
-      // Handle transfer process
+      const dataAll = {
+        debit: transferAmount,
+        sourceId: senderAccount,
+        targetId: recipientAccount,
+      };
+      dispatch(doTopup(dataAll));
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Top-up has been successfully completed!',
+        showConfirmButton: false,
+        timer: 5000 // pesan akan otomatis ditutup setelah 1,5 detik
+      });
     }
+  
+  };
+  
+
+  const [selectOption, setSelectOption] = useState<any>({});
+  const handleSenderAccountChange = (e: any) => {
+    const dataSaldo = accounts.find((data: any) => {
+      if (data.usac_account_number === e.target.value) {
+        return data;
+      }
+    });
+    setSelectOption(dataSaldo);
   };
 
-console.log(accounts)
+  const registerOptions = {
+    patr_source_id: { required: "Source is required" },
+    patr_debet: { required: "Amount is required" },
+    patr_target_id: { required: "Target Account is required" },
+  };
+
+  useEffect(() => {
+    dispatch(doGetUserAccount(user_id));
+  }, [refresh]);
+
+
   return (
     <section>
       <div className="flex justify-center">
-        <article className="w-[28rem]">
-          <h1 style={{ fontSize: "1.5em" }}className="text-center font-semibold mb-8 text-xl">TOP UP</h1>
-          
-          <div className="flex justify-between items-center mb-6">
-            <label htmlFor="account" className="text-[14px]">Account</label>
-            <select
-              name="account"
-              id="account"
-              className="w-56"
-              onChange={handleSenderAccountChange}
-            >
-              <option value="">Pilih Account Anda</option>
-              {(accounts || []).map((a: any) => (
-                  <option key={a.usac_account_number} value={a.usac_account_number}>
-                      {a.usac_account_number}
-                            </option>
-                          ))}
-            </select>
-          </div>
-
-          <div className="flex justify-between items-center mb-6">
-            <label htmlFor="SourceName" className="text-[14px]">Source Name</label>
-            <input type="text"
-             className="disabled"
-             value={selectOption?selectOption.entity_name : 'None'}
-             placeholder="Bank name"
-             readOnly/>
-            
-          </div>
-          <div className="flex justify-between items-center mb-6">
-            <label htmlFor="currentsaldo" className="text-[14px]">Current Saldo</label>
-            <input
-              type="number"
-              className="disabled"
-              value={selectOption?selectOption.usac_saldo : '0'}
-              placeholder="Current Saldo"
-              readOnly
-            />
-          </div>
-          <div className="flex justify-between items-center mb-6" >
-            <label htmlFor="account" className="text-[14px]">Target Account</label>
-            <input
-              type="number"
-              // value={recipientAccount}
-              // onChange={handleRecipientAccountChange}
-              placeholder="Masukkan Account Number"
-            />
-          </div>
-          <div className="flex justify-between items-center mb-6" >
-            <label htmlFor="account" className="text-[14px]">Nominal Top Up</label>
-            <input
-              type="text"
-              placeholder="Masukkan Nominal Transfer"
-            />
-          </div>
-        </article>
         
-      </div>
-      <div className="flex items-center mt-12">
+        <article className="w-[28rem]">
+          <h1
+            style={{ fontSize: "1.5em" }}
+            className="text-center font-semibold mb-8 text-xl"
+          >
+            TOP UP
+          </h1>
+          <form onSubmit={handleSubmit(handleSave, handleError)}>
+            <div className="flex justify-between items-center mb-6">
+              <label htmlFor="account" className="text-[14px]">
+                Account
+              </label>
+              <select
+                id="account"
+                className="w-[245.6px]"
+                {...register("patr_source_id")}
+                onChange={handleSenderAccountChange}
+              >
+                <option value="">Pilih Account Anda</option>
+                {(accounts || []).map((a: any) => (
+                  <option
+                    key={a.usac_account_number}
+                    value={a.usac_account_number}
+                  >
+                    {a.usac_account_number}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="flex justify-between items-center mb-6">
+              <label htmlFor="SourceName" className="text-[14px]">
+                Source Name
+              </label>
+              <input
+                type="text"
+                className="disabled"
+                value={selectOption ? selectOption.entity_name : "None"}
+                placeholder="Bank name"
+                readOnly
+              />
+            </div>
+            <div className="flex justify-between items-center mb-6">
+              <label htmlFor="currentsaldo" className="text-[14px]">
+                Current Saldo
+              </label>
+              <input
+                type="number"
+                className="disabled"
+                value={selectOption ? selectOption.usac_saldo : "0"}
+                placeholder="Current Saldo"
+                readOnly
+              />
+            </div>
+            <div className="flex justify-between items-center mb-6">
+              <label htmlFor="account" className="text-[14px]">
+                Target Account
+              </label>
+
+              <input
+                type="number"
+                placeholder="Masukkan Account Number"
+                {...register("patr_target_id")}
+              />
+            </div>
+
+            <div className="flex justify-between items-center mb-6">
+              <label htmlFor="account" className="text-[14px]">
+                Nominal Top Up
+              </label>
+              <input
+                type="number"
+                placeholder="Masukkan Nominal Transfer"
+                {...register("patr_debet")}
+              />
+            </div>
+            <div className="flex items-center mt-12">
         <div className="mx-auto">
-          {/* <input type="text" className="w-64 mb-6" placeholder="Masukkan Nominal Transfer" />  */}
-          <button className="border-2 rounded-lg py-4 px-12 bg-blue-900 text-lg font-medium text-white"
-          //  onClick={handleTransferClick}
-           >
-            Transfer
+          <button
+            type="submit"
+            className="text-white bg-primary/90 hover:bg-primary focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          >
+            Topup
           </button>
         </div>
       </div>
+          </form>
+        </article>
+      </div>
+      
     </section>
   );
 };

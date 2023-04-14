@@ -38,7 +38,6 @@ export const doUpdateFintech = (...payload: any[]) => {
     }
   }
   export const doUpdateFintechResponse = (...payload: any[]) => {
-    console.log('test',payload)
     return {
       type: actionType.UPDATE_FINTECH_RESPONSE,
       payload,

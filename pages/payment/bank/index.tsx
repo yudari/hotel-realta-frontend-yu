@@ -46,12 +46,6 @@ export default function bank(){
         dispatch(doDeleteBank(id))
       }
     }
-  
-    // const handleGetData = () => {
-    //   dispatch(doGetBank(searchTerm))
-    // }
-  
-
     useEffect(() =>{
         dispatch(doGetBank(searchTerm))
     },[refresh,searchTerm])
@@ -91,9 +85,6 @@ return(
                   onChange={handleSearchChange}
                 />
               <div className='lg:ml-40 ml-10 space-x-8'>
-                {/* <button className='bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer'>
-                  New Report
-                </button> */}
                 <button
                   onClick={() => setOpen(true)}
                   type='button'
@@ -239,29 +230,7 @@ return(
                     )}
                   </tbody>
                 </table>
-                {/* <div className='px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between'>
-                  <span className='text-xs xs:text-sm text-gray-900'>
-                    Showing Page {currentPage}
-                  </span>
-
-                  <div className='inline-flex mt-2 xs:mt-0'>
-                    <button
-                      className='text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 font-semibold py-2 px-4 rounded-l'
-                      disabled={currentPage === 1}
-                      onClick={() => setCurrentPage(currentPage - 1)}
-                    >
-                      Prev
-                    </button>
-                    &nbsp; &nbsp;
-                    <button
-                      className='text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 font-semibold py-2 px-4 rounded-r'
-                      disabled={currentPage * limit >= restoMenus.length}
-                      onClick={() => setCurrentPage(currentPage + 1)}
-                    >
-                      Next
-                    </button>
-                  </div>
-                </div> */}
+            
               </div>
             </div>
           </div>

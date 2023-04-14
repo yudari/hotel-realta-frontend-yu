@@ -8,7 +8,6 @@ const initialState={
 
 export function bankReducers(state = initialState, action: any){
     const {type, payload} = action;
-    
     switch(type){
         case actionType.GET_BANK_RESPONSE:
             return{state, banks:payload, refresh:true}

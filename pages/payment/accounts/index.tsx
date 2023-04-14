@@ -13,14 +13,10 @@ import { useDispatch, useSelector } from "react-redux";
 import AddUserAccount from "./addUserAccount";
 import EditUserAccount from "./editUserAccount";
 
-
 export default function userAccount() {
-  const loginData: any = localStorage.getItem("loginData")
-  const objLoginData = JSON.parse(loginData)
-  const user_id = objLoginData.user_id
-
-  console.log(user_id)
-
+  const loginData: any = localStorage.getItem("loginData");
+  const objLoginData = JSON.parse(loginData);
+  const user_id = objLoginData.user_id;
 
   let { accounts, message, refresh } = useSelector(
     (state: any) => state.userAccountReducers
@@ -67,19 +63,20 @@ export default function userAccount() {
         <div className="bg-white p-8 rounded-md w-full">
           <div className=" flex items-center justify-between pb-6">
             <div>
-            <h1 style={{ fontSize: "1.5em" }} className="text-gray-600 font-semibold">
-  User Account
-</h1>
-
+              <h1
+                style={{ fontSize: "1.5em" }}
+                className="text-gray-600 font-semibold"
+              >
+                User Account
+              </h1>
             </div>
             <div className="flex items-center justify-between">
-
               <div className="lg:ml-40 ml-10 space-x-8">
                 <button
                   onClick={() => setOpen(true)}
                   type="button"
                   className="order-0 inline-flex items-center px-4 py-2 border border-transparent rounded-md
-            bg-blue-900 text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500
+            bg-primary/90 text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500
             sm:order-1"
                 >
                   Add
@@ -90,7 +87,7 @@ export default function userAccount() {
           <div>
             {/* div bawah hilangkan overflow-x-auto */}
             <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4">
-               {/*hilangkan overflow-hidden  */}
+              {/*hilangkan overflow-hidden  */}
               <div className="inline-block min-w-full shadow rounded-lg">
                 <table className="min-w-full leading-normal">
                   <thead>

@@ -9,12 +9,10 @@ const initialState={
 
 export function userAccountReducers(state = initialState, action: any){
     const {type, payload} = action;
-    
     switch(type){
         case actionType.GET_USER_ACCOUNT_RESPONSE:
             return{...state, accounts:payload, refresh:true}
         case actionType.ADD_USER_ACCOUNT_RESPONSE:
-            console.log('first', action.payload)
             return{message: payload.message, refresh:false}
         case actionType.UPDATE_USER_ACCOUNT_RESPONSE:
             return { message: payload.message, refresh: false }
