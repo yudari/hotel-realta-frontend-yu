@@ -1,11 +1,15 @@
 import Button from "@/components/Button/button";
-import { doDeletePolicy, doRequestGetPolicy } from "@/redux/masterSchema/action/policyAction";
+import {
+  doDeletePolicy,
+  doRequestGetPolicy,
+} from "@/redux/masterSchema/action/policyAction";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AiOutlineDoubleRight } from "react-icons/ai";
+import { AiOutlineDoubleRight, AiOutlinePlus } from "react-icons/ai";
 import Modal from "./componentmodal";
 import AddPolicyMaster from "./addPolicy";
 import EditPolicyMaster from "./editPolicy";
+import { MdEdit, MdDelete } from "react-icons/md";
 
 export default function PolicyMaster() {
   let { policy, refresh } = useSelector((state: any) => state.policyReducer);
@@ -20,7 +24,7 @@ export default function PolicyMaster() {
   const columns = [
     { name: "Policy ID" },
     { name: "Policy Name" },
-    { name: "Policy Description" },
+    { name: "                   " },
   ];
 
   const editOpen = (id: number) => {
@@ -29,7 +33,7 @@ export default function PolicyMaster() {
     });
   };
 
-  const deleteOpen =  (id: number) => {
+  const deleteOpen = (id: number) => {
     const confirmDelete = window.confirm(`Anda yakin ingin mengahpus data ini`);
     if (confirmDelete) {
       dispatch(doDeletePolicy(id));
@@ -54,12 +58,13 @@ export default function PolicyMaster() {
             ))}
             <td className="py-2 flex pl-6 border-black bg-gray-50 text-left text-xs font-medium text-black uppercase tracking-wider ">
               <Button
-                variant="variant"
+                variant="primary"
                 label="Add"
                 size="small"
                 type="secondary"
                 className="ml-0"
                 onClick={() => setIsOpen(true)}
+                icon={AiOutlinePlus}
               />
             </td>
           </tr>
@@ -83,17 +88,17 @@ export default function PolicyMaster() {
               <td className="flex items-center px-6 py-4 space-x-3">
                 <a
                   href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  className="border-2 border-primary hover:bg-primary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-primary"
                   onClick={() => editOpen(dt.poli_id)}
                 >
-                  Edit
+                  <MdEdit className="text-xl" />
                 </a>
                 <a
                   href="#"
-                  className="font-medium text-red-600 dark:text-red-500 hover:underline"
-                    onClick={() => deleteOpen(dt.poli_id)}
+                  className="border-2 border-danger-secondary hover:bg-danger-secondary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-danger-secondary"
+                  onClick={() => deleteOpen(dt.poli_id)}
                 >
-                  Remove
+                  <MdDelete className="text-xl" />
                 </a>
               </td>
             </tr>

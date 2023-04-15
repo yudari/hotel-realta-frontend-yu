@@ -1,35 +1,46 @@
-import { doUpdateAddress } from '@/redux/masterSchema/action/addressAction';
-import { doUpdateRegion } from '@/redux/masterSchema/action/regionAction';
-import { Transition, Dialog } from '@headlessui/react';
-import React, { Fragment } from 'react'
-import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux'
+import { doUpdateAddress } from "@/redux/masterSchema/action/addressAction";
+import { doUpdateRegion } from "@/redux/masterSchema/action/regionAction";
+import { Transition, Dialog } from "@headlessui/react";
+import React, { Fragment, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function EditRegionMaster(props:any) {
+export default function EditRegionMaster(props: any) {
+  const [regionData, setRegionData] = useState({
+    region_code: 0,
+    region_name: "",
+  });
+  let { region } = useSelector((state: any) => state.regionReducer);
 
-    let {} = useSelector((state: any) => state.regionReducer)
-    type FormValues = {
-        region_name: string;
-      };
-      const {
-        register,
-        handleSubmit,
-        formState: { errors },
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      } = useForm<FormValues>();
+  type FormValues = {
+    region_name: string;
+  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+  } = useForm<FormValues>();
+  
+  const dispatch = useDispatch();
+  
+  const handleEdit = async (data: any) => {
+    dispatch(doUpdateRegion({ id: props.isEdit.id, data }));
+    props.closeModal();
+  };
+  
+  const handleError = (errors: any) => {};
+  
+  const registerOptions = {
+    region_name: { required: "Name is required" },
+  };
+  useEffect(() => {
+    const filter = region?.data.filter((reg: any) => {
+      return reg.region_code === props.isEdit.id;
+    })[0];
 
-      const dispatch = useDispatch();
-
-      const handleEdit = async (data: any) => {
-        dispatch(doUpdateRegion({ id: props.isEdit.id, data }));
-        props.closeModal();
-      };
-
-      const handleError = (errors: any) => {};
-
-      const registerOptions = {
-        region_name: { required: "Name is required" },
-      };
+    setRegionData(filter);
+  }, [props.isEdit.id,region.data]);
   return (
     <div>
       <Transition appear show={props.isEdit.status} as={Fragment}>
@@ -68,9 +79,7 @@ export default function EditRegionMaster(props:any) {
                     Add/Edit Region
                   </Dialog.Title>
                   <div className="mt-2">
-                    <form
-                      onSubmit={handleSubmit(handleEdit, handleError)}
-                    >
+                    <form onSubmit={handleSubmit(handleEdit, handleError)}>
                       <div className="grid grid-cols-1 gap-4">
                         <div className="col-span-1">
                           <label className="block text-gray-700">
@@ -82,6 +91,7 @@ export default function EditRegionMaster(props:any) {
                               "region_name",
                               registerOptions.region_name
                             )}
+                            defaultValue={regionData.region_name}
                             className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
                           />
                           <small className="text-danger">
@@ -130,5 +140,5 @@ export default function EditRegionMaster(props:any) {
         </Dialog>
       </Transition>
     </div>
-  )
+  );
 }

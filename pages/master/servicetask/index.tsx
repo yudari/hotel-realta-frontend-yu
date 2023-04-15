@@ -9,6 +9,8 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddServiceTask from "./addServiceTask";
 import EditServiceMaster from "./editServiceTask";
+import { AiOutlinePlus } from "react-icons/ai";
+import { MdEdit, MdDelete } from "react-icons/md";
 
 export default function ServiceMaster() {
   let { servicetask, refresh } = useSelector(
@@ -35,7 +37,7 @@ export default function ServiceMaster() {
     });
   };
 
-  const deleteOpen =  (id: number) => {
+  const deleteOpen = (id: number) => {
     const confirmDelete = window.confirm(`Anda yakin ingin mengahpus data ini`);
     if (confirmDelete) {
       dispatch(doDeleteServiceTask(id));
@@ -66,6 +68,7 @@ export default function ServiceMaster() {
                 type="secondary"
                 className="ml-0"
                 onClick={() => setIsOpen(true)}
+                icon={AiOutlinePlus}
               />
             </td>
           </tr>
@@ -89,17 +92,17 @@ export default function ServiceMaster() {
               <td className="flex items-center px-6 py-4 space-x-3">
                 <a
                   href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  className="border-2 border-primary hover:bg-primary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-primary"
                   onClick={() => editOpen(dt.seta_id)}
                 >
-                  Edit
+                  <MdEdit className="text-xl" />
                 </a>
                 <a
                   href="#"
-                  className="font-medium text-red-600 dark:text-red-500 hover:underline"
+                  className="border-2 border-danger-secondary hover:bg-danger-secondary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-danger-secondary"
                   onClick={() => deleteOpen(dt.seta_id)}
                 >
-                  Remove
+                  <MdDelete className="text-xl" />
                 </a>
               </td>
             </tr>

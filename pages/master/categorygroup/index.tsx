@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "./componentmodal";
 import AddCategoryMaster from "./addCategoryGroup";
 import EditCategoryMaster from "./editCategoryGroup";
+import { AiOutlinePlus } from "react-icons/ai";
+import { MdEdit, MdDelete } from "react-icons/md";
 
 export default function CategorygroupMaster() {
   const imageUrl = `${process.env.BACKEND_URL}/image/master`;
@@ -40,7 +42,7 @@ export default function CategorygroupMaster() {
     { name: "Icon" },
     { name: "Category ID" },
     { name: "Category Name" },
-    { name: "Category Description" },
+    { name: "                   " },
     { name: "Type" },
   ];
 
@@ -61,12 +63,13 @@ export default function CategorygroupMaster() {
             ))}
             <td className="py-2 flex pl-6 border-black bg-gray-50 text-left text-xs font-medium text-black uppercase tracking-wider ">
               <Button
-                variant="variant"
+                variant="primary"
                 label="Add"
                 size="small"
                 type="secondary"
                 className="ml-0"
                 onClick={() => setIsOpen(true)}
+                icon={AiOutlinePlus}
               />
             </td>
           </tr>
@@ -89,7 +92,7 @@ export default function CategorygroupMaster() {
                   />
                 </div>
               </td>
-              <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white pl-[5rem]">
                 {index + 1}
               </td>
               <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -104,17 +107,17 @@ export default function CategorygroupMaster() {
               <td className="flex items-center px-6 py-4 space-x-3">
                 <a
                   href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  className="border-2 border-primary hover:bg-primary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-primary"
                   onClick={() => editOpen(dt.cagro_id)}
                 >
-                  Edit
+                  <MdEdit className="text-xl" />
                 </a>
                 <a
                   href="#"
-                  className="font-medium text-red-600 dark:text-red-500 hover:underline"
+                  className="border-2 border-danger-secondary hover:bg-danger-secondary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-danger-secondary"
                   onClick={() => deleteOpen(dt.cagro_id)}
                 >
-                  Remove
+                  <MdDelete className="text-xl" />
                 </a>
               </td>
             </tr>

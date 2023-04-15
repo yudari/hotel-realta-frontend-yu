@@ -1,11 +1,11 @@
-import { doAddPriceItems } from "@/redux/masterSchema/action/priceitemAction";
-import { doAddServiceTask } from "@/redux/masterSchema/action/servicetaskAction";
+import { doUpdatePriceItems } from "@/redux/masterSchema/action/priceitemAction";
 import { Transition, Dialog } from "@headlessui/react";
 import React, { Fragment } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function AddPriceMaster(props: any) {
+export default function EditPriceMaster(props: any) {
+  let {} = useSelector((state: any) => state.priceitemsReducer);
   type FormValues = {
     prit_name: string;
     prit_price: string;
@@ -16,12 +16,13 @@ export default function AddPriceMaster(props: any) {
     register,
     handleSubmit,
     formState: { errors },
+    // eslint-disable-next-line react-hooks/rules-of-hooks
   } = useForm<FormValues>();
+
   const dispatch = useDispatch();
 
-
-  const handleRegistration = async (data: any) => {
-    dispatch(doAddPriceItems(data));
+  const handleEdit = async (data: any) => {
+    dispatch(doUpdatePriceItems({ id: props.isEdit.id, data }));
     props.closeModal();
   };
 
@@ -37,7 +38,7 @@ export default function AddPriceMaster(props: any) {
   };
   return (
     <div>
-      <Transition appear show={props.isOpen} as={Fragment}>
+      <Transition appear show={props.isEdit.status} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={props.closeModal}>
           <Transition.Child
             as={Fragment}
@@ -74,7 +75,7 @@ export default function AddPriceMaster(props: any) {
                   </Dialog.Title>
                   <div className="mt-2">
                     <form
-                      onSubmit={handleSubmit(handleRegistration, handleError)}
+                      onSubmit={handleSubmit(handleEdit, handleError)}
                     >
                       <div className="grid grid-cols-1 gap-4">
                         <div className="col-span-1">

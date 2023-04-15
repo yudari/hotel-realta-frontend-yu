@@ -1,11 +1,18 @@
 import Button from "@/components/Button/button";
 import { doRequestGetAddressByCityById } from "@/redux/masterSchema/action/addressAction";
-import { doRequestGetCityByProvinceById } from "@/redux/masterSchema/action/city";
 import {
+  doDeleteCity,
+  doRequestGetCityByProvinceById,
+} from "@/redux/masterSchema/action/city";
+import {
+  doDeleteCountry,
   doRequestGetCountry,
   doRequestGetCountryByRegionById,
 } from "@/redux/masterSchema/action/countryAction";
-import { doRequestGetProvinceByCountryById } from "@/redux/masterSchema/action/provinceAction";
+import {
+  doDeleteProvince,
+  doRequestGetProvinceByCountryById,
+} from "@/redux/masterSchema/action/provinceAction";
 import {
   doDeleteRegion,
   doRequestGetRegion,
@@ -20,12 +27,32 @@ import { useDispatch, useSelector } from "react-redux";
 import AddRegionMaster from "./addRegion";
 import EditRegionMaster from "./editRegion";
 import AddCountryMaster from "./addCountry";
+import EditCountryMaster from "./editCountry";
+import AddProvinceMaster from "./addProvince";
+import EditProvinceMaster from "./editProvince";
+import AddCityMaster from "./addCity";
+import EditCityMaster from "./editCity";
+import { AiOutlinePlus } from "react-icons/ai";
+import { MdEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 
 export default function Locations() {
-  const [regionID, setRegionID] = useState<any>(null);
-  const [countryID, setCountryID] = useState<any>(null);
-  const [provinceID, setProvinceID] = useState(null);
-  const [cityID, setCityID] = useState(null);
+  const [regionID, setRegionID] = useState<any>({
+    regionID: 0,
+    regionName: "",
+  });
+  const [countryID, setCountryID] = useState<any>({
+    countryID: 0,
+    countryName: "",
+  });
+  const [provinceID, setProvinceID] = useState<any>({
+    provinceID: 0,
+    provinceName: "",
+  });
+  const [cityID, setCityID] = useState<any>({
+    cityID: 0,
+    cityName: "",
+  });
   const [addressID, setAddressID] = useState(null);
 
   let {
@@ -34,11 +61,17 @@ export default function Locations() {
     refresh: refreshregion,
   } = useSelector((state: any) => state.regionReducer);
 
-  let { country } = useSelector((state: any) => state.countryReducer);
+  let { country, refresh: refreshCountry } = useSelector(
+    (state: any) => state.countryReducer
+  );
 
-  let { province } = useSelector((state: any) => state.provinceReducer);
+  let { province, refresh: refreshProvince } = useSelector(
+    (state: any) => state.provinceReducer
+  );
 
-  let { city } = useSelector((state: any) => state.cityReducer);
+  let { city, refresh: refreshCity } = useSelector(
+    (state: any) => state.cityReducer
+  );
 
   let { address } = useSelector((state: any) => state.addressReducer);
   // console.log(province);
@@ -46,7 +79,21 @@ export default function Locations() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenC, setIsOpenC] = useState(false);
+  const [isOpenP, setIsOpenP] = useState(false);
+  const [isOpenT, setIsOpenT] = useState(false);
   const [isEdit, setIsEdit] = useState({
+    status: false,
+    id: 0,
+  });
+  const [isEditC, setIsEditC] = useState({
+    status: false,
+    id: 0,
+  });
+  const [isEditP, setIsEditP] = useState({
+    status: false,
+    id: 0,
+  });
+  const [isEditT, setIsEditT] = useState({
     status: false,
     id: 0,
   });
@@ -66,6 +113,21 @@ export default function Locations() {
       return { ...prev, status: true, id: id };
     });
   };
+  const editOpenC = (id: number) => {
+    setIsEditC((prev) => {
+      return { ...prev, status: true, id: id };
+    });
+  };
+  const editOpenP = (id: number) => {
+    setIsEditP((prev) => {
+      return { ...prev, status: true, id: id };
+    });
+  };
+  const editOpenT = (id: number) => {
+    setIsEditT((prev) => {
+      return { ...prev, status: true, id: id };
+    });
+  };
 
   const deleteOpen = (id: number) => {
     const confirmDelete = window.confirm(`Anda yakin ingin mengahpus data ini`);
@@ -73,21 +135,44 @@ export default function Locations() {
       dispatch(doDeleteRegion(id));
     }
   };
-
-  // const [data, setData] = useState({
-  //   regionID: null,
-  //   countryID: null,
-  // });
-
-  // console.log("data", data);
+  const deleteOpenC = (id: number) => {
+    const confirmDelete = window.confirm(`Anda yakin ingin mengahpus data ini`);
+    if (confirmDelete) {
+      dispatch(doDeleteCountry(id));
+    }
+  };
+  const deleteOpenP = (id: number) => {
+    const confirmDelete = window.confirm(`Anda yakin ingin mengahpus data ini`);
+    if (confirmDelete) {
+      dispatch(doDeleteProvince(id));
+    }
+  };
+  const deleteOpenT = (id: number) => {
+    const confirmDelete = window.confirm(`Anda yakin ingin mengahpus data ini`);
+    if (confirmDelete) {
+      dispatch(doDeleteCity(id));
+    }
+  };
 
   useEffect(() => {
     dispatch(doRequestGetRegion());
   }, [dispatch, refreshregion]);
 
+  useEffect(() => {
+    dispatch(doRequestGetCountryByRegionById(regionID.regionID));
+  }, [refreshCountry, dispatch, regionID]);
+
+  useEffect(() => {
+    dispatch(doRequestGetProvinceByCountryById(countryID.countryID));
+  }, [refreshProvince, dispatch, countryID]);
+
+  useEffect(() => {
+    dispatch(doRequestGetCityByProvinceById(provinceID.provinceID));
+  }, [refreshCity, dispatch, provinceID]);
+
   const handleRegionChange = (e: any, name: string) => {
     const regionID = e.target.value;
-    setProvinceID(null);
+    // setProvinceID(null);
     setCityID(null);
     setAddressID(null);
     setRegionID({ regionID: regionID, name: name });
@@ -96,47 +181,32 @@ export default function Locations() {
 
   const handleCountryChange = (e: any, name: string) => {
     const countryID = e.target.value;
-
-    console.log("Country name", name);
-
-    setCountryID({ countryID: countryID, name: name });
+    // setProvinceID(null);
+    setCityID(null);
+    setAddressID(null);
+    setCountryID({ countryID: Number(countryID), name: name });
     dispatch(doRequestGetProvinceByCountryById(countryID));
   };
-  const handleProvinceChange = (e: any) => {
+  const handleProvinceChange = (e: any, name: string) => {
     const provinceID = e.target.value;
-    setProvinceID(provinceID);
+    // setProvinceID(null);
+    setCityID(null);
+    setAddressID(null);
+    setProvinceID({ provinceID: provinceID, name: name });
     dispatch(doRequestGetCityByProvinceById(provinceID));
   };
-  const handleCityChange = (e: any) => {
+  const handleCityChange = (e: any, name: string) => {
     const cityID = e.target.value;
-    setCityID(cityID);
+    // setProvinceID(null);
+    setCityID(null);
+    setAddressID(null);
+    setCityID({ cityID: cityID, name: name });
     dispatch(doRequestGetAddressByCityById(cityID));
   };
-  // const handleAddressChange = (e: any) => {
-  //   const addressID = e.target.value;
-  //   setAddressID(addressID);
-  //   dispatch(doRequestGetAddressByCityById(addressID));
-  // };
-  // useEffect(() => {
-  //   if (regionID !== null) {
-  //     dispatch(doRequestGetCountryByRegionById(regionID));
-  //   }
-  // }, [dispatch, regionID]);
-
-  // useEffect(() => {
-  //   if (countryID !== null) {
-  //     dispatch(doRequestGetProvinceByCountryById(countryID));
-  //   }
-  // }, [dispatch, countryID]);
-
-  // console.log("prov", province);
 
   return (
     <>
       <>
-        <div className="bg-white text-black py-2 px-6 flex  font-bold border-2 items-center justify-between">
-          REGION
-        </div>
         <>
           <div className="relative overflow-y-auto max-h-[400px] shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -152,18 +222,19 @@ export default function Locations() {
                   ))}
                   <td className="py-2 flex pl-6 border-black bg-gray-50 text-left text-xs font-medium text-black uppercase tracking-wider ">
                     <Button
-                      variant="variant"
+                      variant="primary"
                       label="Add"
                       size="small"
                       type="secondary"
                       className="ml-0"
                       onClick={() => setIsOpen(true)}
+                      icon={AiOutlinePlus}
                     />
                   </td>
                 </tr>
               </thead>
               <tbody>
-                {(region?.data || []).map((dt: any) => (
+                {(region?.data || []).map((dt: any, index: number) => (
                   <tr
                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                     key={dt.region_code}
@@ -192,7 +263,7 @@ export default function Locations() {
                       </div>
                     </td>
                     <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      {dt.region_code}
+                      {index + 1}
                     </td>
                     <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white ">
                       {dt.region_name}
@@ -200,17 +271,17 @@ export default function Locations() {
                     <td className="flex items-center px-6 py-4 space-x-3">
                       <a
                         href="#"
-                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                        className="border-2 border-primary hover:bg-primary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-primary"
                         onClick={() => editOpen(dt.region_code)}
                       >
-                        Edit
+                        <MdEdit className="text-xl" />
                       </a>
                       <a
                         href="#"
-                        className="font-medium text-red-600 dark:text-red-500 hover:underline"
+                        className="border-2 border-danger-secondary hover:bg-danger-secondary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-danger-secondary"
                         onClick={() => deleteOpen(dt.region_code)}
                       >
-                        Remove
+                        <MdDelete className="text-xl" />
                       </a>
                     </td>
                   </tr>
@@ -250,18 +321,19 @@ export default function Locations() {
                     ))}
                     <td className="py-2 flex pl-6 border-black bg-gray-50 text-left text-xs font-medium text-black uppercase tracking-wider ">
                       <Button
-                        variant="variant"
+                        variant="primary"
                         label="Add"
                         size="small"
                         type="secondary"
                         className="ml-0"
                         onClick={() => setIsOpenC(true)}
+                        icon={AiOutlinePlus}
                       />
                     </td>
                   </tr>
                 </thead>
                 <tbody>
-                  {(country || []).map((ct: any) => (
+                  {(country || []).map((ct: any, index: number) => (
                     <tr
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       key={ct.country_id}
@@ -289,7 +361,7 @@ export default function Locations() {
                         </div>
                       </td>
                       <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {ct.country_id}
+                        {index + 1}
                       </td>
                       <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {ct.country_name}
@@ -298,15 +370,17 @@ export default function Locations() {
                       <td className="flex items-center px-6 py-4 space-x-3">
                         <a
                           href="#"
-                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          className="border-2 border-primary hover:bg-primary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-primary"
+                          onClick={() => editOpenC(ct.country_id)}
                         >
-                          Edit
+                          <MdEdit className="text-xl" />
                         </a>
                         <a
                           href="#"
-                          className="font-medium text-red-600 dark:text-red-500 hover:underline"
+                          className="border-2 border-danger-secondary hover:bg-danger-secondary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-danger-secondary"
+                          onClick={() => deleteOpenC(ct.country_id)}
                         >
-                          Remove
+                          <MdDelete className="text-xl" />
                         </a>
                       </td>
                     </tr>
@@ -317,8 +391,19 @@ export default function Locations() {
             {isOpenC ? (
               <AddCountryMaster
                 isOpen={isOpenC}
-                name={regionID.name}
+                region={regionID}
                 closeModal={() => setIsOpenC(false)}
+              />
+            ) : null}
+            {isEditC.status ? (
+              <EditCountryMaster
+                isEdit={isEditC}
+                region={regionID}
+                closeModal={() =>
+                  setIsEditC((prev) => {
+                    return { ...prev, status: false };
+                  })
+                }
               />
             ) : null}
           </div>
@@ -343,12 +428,14 @@ export default function Locations() {
                         size="small"
                         type="secondary"
                         className="ml-0"
+                        onClick={() => setIsOpenP(true)}
+                        icon={AiOutlinePlus}
                       />
                     </td>
                   </tr>
                 </thead>
                 <tbody>
-                  {(province || []).map((pt: any) => (
+                  {(province || []).map((pt: any, index: number) => (
                     <tr
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       key={pt.prov_id}
@@ -357,7 +444,9 @@ export default function Locations() {
                         <div className="flex items-center">
                           <input
                             value={pt.prov_id}
-                            onChange={handleProvinceChange}
+                            onChange={(e) =>
+                              handleProvinceChange(e, pt.prov_name)
+                            }
                             // onChange={() => setRegionID(dt.region_code)}
                             name="province"
                             id="checkbox-table-search-1"
@@ -367,7 +456,7 @@ export default function Locations() {
                         </div>
                       </td>
                       <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {pt.prov_id}
+                        {index + 1}
                       </td>
                       <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {pt.prov_name}
@@ -376,15 +465,17 @@ export default function Locations() {
                       <td className="flex items-center px-6 py-4 space-x-3">
                         <a
                           href="#"
-                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          className="border-2 border-primary hover:bg-primary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-primary"
+                          onClick={() => editOpenP(pt.prov_id)}
                         >
-                          Edit
+                          <MdEdit className="text-xl" />
                         </a>
                         <a
                           href="#"
-                          className="font-medium text-red-600 dark:text-red-500 hover:underline"
+                          className="border-2 border-danger-secondary hover:bg-danger-secondary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-danger-secondary"
+                          onClick={() => deleteOpenP(pt.prov_id)}
                         >
-                          Remove
+                          <MdDelete className="text-xl" />
                         </a>
                       </td>
                     </tr>
@@ -392,6 +483,24 @@ export default function Locations() {
                 </tbody>
               </table>
             )}
+            {isOpenP ? (
+              <AddProvinceMaster
+                isOpen={isOpenP}
+                country={countryID}
+                closeModal={() => setIsOpenP(false)}
+              />
+            ) : null}
+            {isEditP.status ? (
+              <EditProvinceMaster
+                isEdit={isEditP}
+                country={countryID}
+                closeModal={() =>
+                  setIsEditP((prev) => {
+                    return { ...prev, status: false };
+                  })
+                }
+              />
+            ) : null}
           </div>
 
           <div className="relative overflow-y-auto max-h-[400px] shadow-md sm:rounded-lg mt-10">
@@ -414,12 +523,14 @@ export default function Locations() {
                         size="small"
                         type="secondary"
                         className="ml-0"
+                        onClick={() => setIsOpenT(true)}
+                        icon={AiOutlinePlus}
                       />
                     </td>
                   </tr>
                 </thead>
                 <tbody>
-                  {(city || []).map((tt: any) => (
+                  {(city || []).map((tt: any, index: number) => (
                     <tr
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       key={tt.city_id}
@@ -428,7 +539,7 @@ export default function Locations() {
                         <div className="flex items-center">
                           <input
                             value={tt.city_id}
-                            onChange={handleCityChange}
+                            onChange={(e) => handleCityChange(e, tt.city_name)}
                             // onChange={() => setRegionID(dt.region_code)}
                             name="city"
                             id="checkbox-table-search-1"
@@ -438,7 +549,7 @@ export default function Locations() {
                         </div>
                       </td>
                       <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {tt.city_id}
+                        {index + 1}
                       </td>
                       <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {tt.city_name}
@@ -447,15 +558,17 @@ export default function Locations() {
                       <td className="flex items-center px-6 py-4 space-x-3">
                         <a
                           href="#"
-                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          className="border-2 border-primary hover:bg-primary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-primary"
+                          onClick={() => editOpenT(tt.city_id)}
                         >
-                          Edit
+                          <MdEdit className="text-xl" />
                         </a>
                         <a
                           href="#"
-                          className="font-medium text-red-600 dark:text-red-500 hover:underline"
+                          className="border-2 border-danger-secondary hover:bg-danger-secondary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-danger-secondary"
+                          onClick={() => deleteOpenT(tt.city_id)}
                         >
-                          Remove
+                          <MdDelete className="text-xl" />
                         </a>
                       </td>
                     </tr>
@@ -463,6 +576,24 @@ export default function Locations() {
                 </tbody>
               </table>
             )}
+            {isOpenT ? (
+              <AddCityMaster
+                isOpen={isOpenT}
+                province={provinceID}
+                closeModal={() => setIsOpenT(false)}
+              />
+            ) : null}
+            {isEditT.status ? (
+              <EditCityMaster
+                isEdit={isEditT}
+                province={provinceID}
+                closeModal={() =>
+                  setIsEditT((prev) => {
+                    return { ...prev, status: false };
+                  })
+                }
+              />
+            ) : null}
           </div>
 
           <div className="relative overflow-y-auto max-h-[400px] shadow-md sm:rounded-lg mt-10">
@@ -478,7 +609,7 @@ export default function Locations() {
                         </td>
                       </>
                     ))}
-                    <td className="py-2 flex pl-6 border-black bg-gray-50 text-left text-xs font-medium text-black uppercase tracking-wider ">
+                    {/* <td className="py-2 flex pl-6 border-black bg-gray-50 text-left text-xs font-medium text-black uppercase tracking-wider ">
                       <Button
                         variant="variant"
                         label="Add"
@@ -486,18 +617,18 @@ export default function Locations() {
                         type="secondary"
                         className="ml-0"
                       />
-                    </td>
+                    </td> */}
                   </tr>
                 </thead>
                 <tbody>
-                  {(address || []).map((at: any) => (
+                  {(address || []).map((at: any, index: number) => (
                     <tr
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       key={at.addr_id}
                     >
                       <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"></td>
                       <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {at.addr_id}
+                        {index + 1}
                       </td>
                       <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {at.addr_line1 + at.addr_line2}
@@ -506,7 +637,7 @@ export default function Locations() {
                         {at.addr_postal_code + at.addr_spatial_code}
                       </td>
 
-                      <td className="flex items-center px-6 py-4 space-x-3">
+                      {/* <td className="flex items-center px-6 py-4 space-x-3">
                         <a
                           href="#"
                           className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
@@ -519,7 +650,7 @@ export default function Locations() {
                         >
                           Remove
                         </a>
-                      </td>
+                      </td> */}
                     </tr>
                   ))}
                 </tbody>
