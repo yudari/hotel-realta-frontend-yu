@@ -29,6 +29,7 @@ export default function ServiceMaster() {
     { name: "ID" },
     { name: "Task Name" },
     { name: "Sequence Order" },
+    { name: "Action" },
   ];
 
   const editOpen = (id: number) => {
@@ -49,9 +50,21 @@ export default function ServiceMaster() {
   }, [dispatch, refresh]);
 
   return (
-    <div className="relative overflow-y-auto  shadow-md sm:rounded-lg">
+    <div className="relative overflow-y-auto  shadow-md sm:rounded-lg bg-white p-4">
+      <div className="flex justify-end pb-4">
+        <Button
+          variant="variant"
+          label="Add"
+          size="small"
+          type="secondary"
+          className="ml-0"
+          onClick={() => setIsOpen(true)}
+          icon={AiOutlinePlus}
+        />
+      </div>
+
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-200">
           <tr>
             {(columns || []).map((col) => (
               <>
@@ -60,23 +73,12 @@ export default function ServiceMaster() {
                 </td>
               </>
             ))}
-            <td className="py-2 flex pl-6 border-black bg-gray-50 text-left text-xs font-medium text-black uppercase tracking-wider ">
-              <Button
-                variant="variant"
-                label="Add"
-                size="small"
-                type="secondary"
-                className="ml-0"
-                onClick={() => setIsOpen(true)}
-                icon={AiOutlinePlus}
-              />
-            </td>
           </tr>
         </thead>
         <tbody>
           {(servicetask?.data || []).map((dt: any, index: number) => (
             <tr
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              className="bg-white border-b border-gray-200 hover:bg-gray-50"
               key={dt.id}
             >
               {/* <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"></td> */}

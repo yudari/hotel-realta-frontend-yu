@@ -98,10 +98,26 @@ export default function Locations() {
     id: 0,
   });
 
-  const columnsRegion = [{ name: "Region ID" }, { name: "Region Name" }];
-  const columnsCountry = [{ name: "Country ID" }, { name: "Country Name" }];
-  const columnsProvince = [{ name: "Province ID" }, { name: "Province Name" }];
-  const columnsCity = [{ name: "City ID" }, { name: "City Name" }];
+  const columnsRegion = [
+    { name: "Region ID" },
+    { name: "Region Name" },
+    { name: "Action" },
+  ];
+  const columnsCountry = [
+    { name: "Country ID" },
+    { name: "Country Name" },
+    { name: "Action" },
+  ];
+  const columnsProvince = [
+    { name: "Province ID" },
+    { name: "Province Name" },
+    { name: "Action" },
+  ];
+  const columnsCity = [
+    { name: "City ID" },
+    { name: "City Name" },
+    { name: "Action" },
+  ];
   const columnsAddress = [
     { name: "Address ID" },
     { name: "Address Name" },
@@ -206,410 +222,405 @@ export default function Locations() {
 
   return (
     <>
-      <>
-        <>
-          <div className="relative overflow-y-auto max-h-[400px] shadow-md sm:rounded-lg">
-            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <td className="px-6 py-3"></td>
-                  {(columnsRegion || []).map((col) => (
-                    <>
-                      <td key={col.name} className="px-6 py-3">
-                        <span className="lg:pl-1 font-bold">{col.name}</span>
-                      </td>
-                    </>
-                  ))}
-                  <td className="py-2 flex pl-6 border-black bg-gray-50 text-left text-xs font-medium text-black uppercase tracking-wider ">
-                    <Button
-                      variant="primary"
-                      label="Add"
-                      size="small"
-                      type="secondary"
-                      className="ml-0"
-                      onClick={() => setIsOpen(true)}
-                      icon={AiOutlinePlus}
+      <div className="relative overflow-y-auto max-h-[400px] shadow-md sm:rounded-lg p-4 bg-white">
+        <div className="pb-4 flex justify-end">
+          <Button
+            variant="primary"
+            label="Add"
+            size="small"
+            type="secondary"
+            className="ml-0"
+            onClick={() => setIsOpen(true)}
+            icon={AiOutlinePlus}
+          />
+        </div>
+        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <td className="px-6 py-3"></td>
+              {(columnsRegion || []).map((col) => (
+                <>
+                  <td key={col.name} className="px-6 py-3">
+                    <span className="lg:pl-1 font-bold">{col.name}</span>
+                  </td>
+                </>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {(region?.data || []).map((dt: any, index: number) => (
+              <tr
+                className="bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                key={dt.region_code}
+              >
+                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  <div className="flex items-center">
+                    <input
+                      // checked={() => setRegionID(dt.region_code)}
+                      // onClick={() => setRegionID(dt.region_code)}
+                      // onChange={() => setRegionID(dt.region_code)}
+                      // onClick={() =>
+                      //   setData((prev) => {
+                      //     return { ...prev, regionID: dt.region_code };
+                      //   })
+                      // }
+                      value={dt.region_code}
+                      onChange={(e) => handleRegionChange(e, dt.region_name)}
+                      name="region"
+                      id="checkbox-table-search-1"
+                      // checked={regionID === region.id}
+                      type="radio"
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
+                  </div>
+                </td>
+                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  {index + 1}
+                </td>
+                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white ">
+                  {dt.region_name}
+                </td>
+                <td className="flex items-center px-6 py-4 space-x-3">
+                  <a
+                    href="#"
+                    className="border-2 border-primary hover:bg-primary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-primary"
+                    onClick={() => editOpen(dt.region_code)}
+                  >
+                    <MdEdit className="text-xl" />
+                  </a>
+                  <a
+                    href="#"
+                    className="border-2 border-danger-secondary hover:bg-danger-secondary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-danger-secondary"
+                    onClick={() => deleteOpen(dt.region_code)}
+                  >
+                    <MdDelete className="text-xl" />
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {isOpen ? (
+          <AddRegionMaster
+            isOpen={isOpen}
+            closeModal={() => setIsOpen(false)}
+          />
+        ) : null}
+        {isEdit.status ? (
+          <EditRegionMaster
+            isEdit={isEdit}
+            closeModal={() =>
+              setIsEdit((prev) => {
+                return { ...prev, status: false };
+              })
+            }
+          />
+        ) : null}
+      </div>
+
+      <div className="relative overflow-y-auto max-h-[400px] shadow-md sm:rounded-lg mt-10 p-4 bg-white">
+        <div className="pb-4 flex justify-end">
+          <Button
+            variant="primary"
+            label="Add"
+            size="small"
+            type="secondary"
+            className="ml-0"
+            onClick={() => setIsOpenC(true)}
+            icon={AiOutlinePlus}
+          />
+        </div>
+        {country && country.length !== 0 && (
+          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <td className="px-6 py-3"></td>
+                {(columnsCountry || []).map((col) => (
+                  <>
+                    <td key={col.name} className="px-6 py-3">
+                      <span className="lg:pl-1 font-bold">{col.name}</span>
+                    </td>
+                  </>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {(country || []).map((ct: any, index: number) => (
+                <tr
+                  className="bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  key={ct.country_id}
+                >
+                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <div className="flex items-center">
+                      <input
+                        // onClick={() => setCountryID(ct.country_id)}
+
+                        // onChange={() => setCountryID(ct.country_id)}
+                        value={ct.country_id}
+                        onChange={(e) =>
+                          handleCountryChange(e, ct.country_name)
+                        }
+                        // onClick={() =>
+                        //   setData((prev) => {
+                        //     return { ...prev, countryID: ct.country_id };
+                        //   })
+                        // }
+                        name="country"
+                        id="checkbox-table-search-1"
+                        type="radio"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      />
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {index + 1}
+                  </td>
+                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {ct.country_name}
+                  </td>
+
+                  <td className="flex items-center px-6 py-4 space-x-3">
+                    <a
+                      href="#"
+                      className="border-2 border-primary hover:bg-primary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-primary"
+                      onClick={() => editOpenC(ct.country_id)}
+                    >
+                      <MdEdit className="text-xl" />
+                    </a>
+                    <a
+                      href="#"
+                      className="border-2 border-danger-secondary hover:bg-danger-secondary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-danger-secondary"
+                      onClick={() => deleteOpenC(ct.country_id)}
+                    >
+                      <MdDelete className="text-xl" />
+                    </a>
                   </td>
                 </tr>
-              </thead>
-              <tbody>
-                {(region?.data || []).map((dt: any, index: number) => (
-                  <tr
-                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    key={dt.region_code}
-                  >
-                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      <div className="flex items-center">
-                        <input
-                          // checked={() => setRegionID(dt.region_code)}
-                          // onClick={() => setRegionID(dt.region_code)}
-                          // onChange={() => setRegionID(dt.region_code)}
-                          // onClick={() =>
-                          //   setData((prev) => {
-                          //     return { ...prev, regionID: dt.region_code };
-                          //   })
-                          // }
-                          value={dt.region_code}
-                          onChange={(e) =>
-                            handleRegionChange(e, dt.region_name)
-                          }
-                          name="region"
-                          id="checkbox-table-search-1"
-                          // checked={regionID === region.id}
-                          type="radio"
-                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                        />
-                      </div>
+              ))}
+            </tbody>
+          </table>
+        )}
+        {isOpenC ? (
+          <AddCountryMaster
+            isOpen={isOpenC}
+            region={regionID}
+            closeModal={() => setIsOpenC(false)}
+          />
+        ) : null}
+        {isEditC.status ? (
+          <EditCountryMaster
+            isEdit={isEditC}
+            region={regionID}
+            closeModal={() =>
+              setIsEditC((prev) => {
+                return { ...prev, status: false };
+              })
+            }
+          />
+        ) : null}
+      </div>
+
+      <div className="relative overflow-y-auto max-h-[400px] shadow-md sm:rounded-lg mt-10 p-4 bg-white">
+        <div className="flex justify-end pb-4">
+          <Button
+            variant="variant"
+            label="Add"
+            size="small"
+            type="secondary"
+            className="ml-0"
+            onClick={() => setIsOpenP(true)}
+            icon={AiOutlinePlus}
+          />
+        </div>
+        {province && province.length !== 0 && (
+          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <td className="px-6 py-3"></td>
+                {(columnsProvince || []).map((col) => (
+                  <>
+                    <td key={col.name} className="px-6 py-3">
+                      <span className="lg:pl-1 font-bold">{col.name}</span>
                     </td>
-                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      {index + 1}
-                    </td>
-                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white ">
-                      {dt.region_name}
-                    </td>
-                    <td className="flex items-center px-6 py-4 space-x-3">
-                      <a
-                        href="#"
-                        className="border-2 border-primary hover:bg-primary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-primary"
-                        onClick={() => editOpen(dt.region_code)}
-                      >
-                        <MdEdit className="text-xl" />
-                      </a>
-                      <a
-                        href="#"
-                        className="border-2 border-danger-secondary hover:bg-danger-secondary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-danger-secondary"
-                        onClick={() => deleteOpen(dt.region_code)}
-                      >
-                        <MdDelete className="text-xl" />
-                      </a>
-                    </td>
-                  </tr>
+                  </>
                 ))}
-              </tbody>
-            </table>
-            {isOpen ? (
-              <AddRegionMaster
-                isOpen={isOpen}
-                closeModal={() => setIsOpen(false)}
-              />
-            ) : null}
-            {isEdit.status ? (
-              <EditRegionMaster
-                isEdit={isEdit}
-                closeModal={() =>
-                  setIsEdit((prev) => {
-                    return { ...prev, status: false };
-                  })
-                }
-              />
-            ) : null}
-          </div>
-
-          <div className="relative overflow-y-auto max-h-[400px] shadow-md sm:rounded-lg mt-10">
-            {country && country.length !== 0 && (
-              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                    <td className="px-6 py-3"></td>
-                    {(columnsCountry || []).map((col) => (
-                      <>
-                        <td key={col.name} className="px-6 py-3">
-                          <span className="lg:pl-1 font-bold">{col.name}</span>
-                        </td>
-                      </>
-                    ))}
-                    <td className="py-2 flex pl-6 border-black bg-gray-50 text-left text-xs font-medium text-black uppercase tracking-wider ">
-                      <Button
-                        variant="primary"
-                        label="Add"
-                        size="small"
-                        type="secondary"
-                        className="ml-0"
-                        onClick={() => setIsOpenC(true)}
-                        icon={AiOutlinePlus}
+              </tr>
+            </thead>
+            <tbody>
+              {(province || []).map((pt: any, index: number) => (
+                <tr
+                  className="bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  key={pt.prov_id}
+                >
+                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <div className="flex items-center">
+                      <input
+                        value={pt.prov_id}
+                        onChange={(e) => handleProvinceChange(e, pt.prov_name)}
+                        // onChange={() => setRegionID(dt.region_code)}
+                        name="province"
+                        id="checkbox-table-search-1"
+                        type="radio"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                       />
-                    </td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {(country || []).map((ct: any, index: number) => (
-                    <tr
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      key={ct.country_id}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {index + 1}
+                  </td>
+                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {pt.prov_name}
+                  </td>
+
+                  <td className="flex items-center px-6 py-4 space-x-3">
+                    <a
+                      href="#"
+                      className="border-2 border-primary hover:bg-primary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-primary"
+                      onClick={() => editOpenP(pt.prov_id)}
                     >
-                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <div className="flex items-center">
-                          <input
-                            // onClick={() => setCountryID(ct.country_id)}
+                      <MdEdit className="text-xl" />
+                    </a>
+                    <a
+                      href="#"
+                      className="border-2 border-danger-secondary hover:bg-danger-secondary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-danger-secondary"
+                      onClick={() => deleteOpenP(pt.prov_id)}
+                    >
+                      <MdDelete className="text-xl" />
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        {isOpenP ? (
+          <AddProvinceMaster
+            isOpen={isOpenP}
+            country={countryID}
+            closeModal={() => setIsOpenP(false)}
+          />
+        ) : null}
+        {isEditP.status ? (
+          <EditProvinceMaster
+            isEdit={isEditP}
+            country={countryID}
+            closeModal={() =>
+              setIsEditP((prev) => {
+                return { ...prev, status: false };
+              })
+            }
+          />
+        ) : null}
+      </div>
 
-                            // onChange={() => setCountryID(ct.country_id)}
-                            value={ct.country_id}
-                            onChange={(e) =>
-                              handleCountryChange(e, ct.country_name)
-                            }
-                            // onClick={() =>
-                            //   setData((prev) => {
-                            //     return { ...prev, countryID: ct.country_id };
-                            //   })
-                            // }
-                            name="country"
-                            id="checkbox-table-search-1"
-                            type="radio"
-                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                          />
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {index + 1}
-                      </td>
-                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {ct.country_name}
-                      </td>
+      <div className="relative overflow-y-auto max-h-[400px] shadow-md sm:rounded-lg mt-10 p-4 bg-white">
+        <div className="flex justify-end pb-4">
+          <Button
+            variant="variant"
+            label="Add"
+            size="small"
+            type="secondary"
+            className="ml-0"
+            onClick={() => setIsOpenT(true)}
+            icon={AiOutlinePlus}
+          />
+        </div>
 
-                      <td className="flex items-center px-6 py-4 space-x-3">
-                        <a
-                          href="#"
-                          className="border-2 border-primary hover:bg-primary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-primary"
-                          onClick={() => editOpenC(ct.country_id)}
-                        >
-                          <MdEdit className="text-xl" />
-                        </a>
-                        <a
-                          href="#"
-                          className="border-2 border-danger-secondary hover:bg-danger-secondary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-danger-secondary"
-                          onClick={() => deleteOpenC(ct.country_id)}
-                        >
-                          <MdDelete className="text-xl" />
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-            {isOpenC ? (
-              <AddCountryMaster
-                isOpen={isOpenC}
-                region={regionID}
-                closeModal={() => setIsOpenC(false)}
-              />
-            ) : null}
-            {isEditC.status ? (
-              <EditCountryMaster
-                isEdit={isEditC}
-                region={regionID}
-                closeModal={() =>
-                  setIsEditC((prev) => {
-                    return { ...prev, status: false };
-                  })
-                }
-              />
-            ) : null}
-          </div>
-
-          <div className="relative overflow-y-auto max-h-[400px] shadow-md sm:rounded-lg mt-10">
-            {province && province.length !== 0 && (
-              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                    <td className="px-6 py-3"></td>
-                    {(columnsProvince || []).map((col) => (
-                      <>
-                        <td key={col.name} className="px-6 py-3">
-                          <span className="lg:pl-1 font-bold">{col.name}</span>
-                        </td>
-                      </>
-                    ))}
-                    <td className="py-2 flex pl-6 border-black bg-gray-50 text-left text-xs font-medium text-black uppercase tracking-wider ">
-                      <Button
-                        variant="variant"
-                        label="Add"
-                        size="small"
-                        type="secondary"
-                        className="ml-0"
-                        onClick={() => setIsOpenP(true)}
-                        icon={AiOutlinePlus}
+        {city && city.length !== 0 && (
+          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <td className="px-6 py-3"></td>
+                {(columnsCity || []).map((col) => (
+                  <>
+                    <td key={col.name} className="px-6 py-3">
+                      <span className="lg:pl-1 font-bold">{col.name}</span>
+                    </td>
+                  </>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {(city || []).map((tt: any, index: number) => (
+                <tr
+                  className="bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  key={tt.city_id}
+                >
+                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <div className="flex items-center">
+                      <input
+                        value={tt.city_id}
+                        onChange={(e) => handleCityChange(e, tt.city_name)}
+                        // onChange={() => setRegionID(dt.region_code)}
+                        name="city"
+                        id="checkbox-table-search-1"
+                        type="radio"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                       />
-                    </td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {(province || []).map((pt: any, index: number) => (
-                    <tr
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      key={pt.prov_id}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {index + 1}
+                  </td>
+                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {tt.city_name}
+                  </td>
+
+                  <td className="flex items-center px-6 py-4 space-x-3">
+                    <a
+                      href="#"
+                      className="border-2 border-primary hover:bg-primary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-primary"
+                      onClick={() => editOpenT(tt.city_id)}
                     >
-                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <div className="flex items-center">
-                          <input
-                            value={pt.prov_id}
-                            onChange={(e) =>
-                              handleProvinceChange(e, pt.prov_name)
-                            }
-                            // onChange={() => setRegionID(dt.region_code)}
-                            name="province"
-                            id="checkbox-table-search-1"
-                            type="radio"
-                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                          />
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {index + 1}
-                      </td>
-                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {pt.prov_name}
-                      </td>
-
-                      <td className="flex items-center px-6 py-4 space-x-3">
-                        <a
-                          href="#"
-                          className="border-2 border-primary hover:bg-primary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-primary"
-                          onClick={() => editOpenP(pt.prov_id)}
-                        >
-                          <MdEdit className="text-xl" />
-                        </a>
-                        <a
-                          href="#"
-                          className="border-2 border-danger-secondary hover:bg-danger-secondary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-danger-secondary"
-                          onClick={() => deleteOpenP(pt.prov_id)}
-                        >
-                          <MdDelete className="text-xl" />
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-            {isOpenP ? (
-              <AddProvinceMaster
-                isOpen={isOpenP}
-                country={countryID}
-                closeModal={() => setIsOpenP(false)}
-              />
-            ) : null}
-            {isEditP.status ? (
-              <EditProvinceMaster
-                isEdit={isEditP}
-                country={countryID}
-                closeModal={() =>
-                  setIsEditP((prev) => {
-                    return { ...prev, status: false };
-                  })
-                }
-              />
-            ) : null}
-          </div>
-
-          <div className="relative overflow-y-auto max-h-[400px] shadow-md sm:rounded-lg mt-10">
-            {city && city.length !== 0 && (
-              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                    <td className="px-6 py-3"></td>
-                    {(columnsCity || []).map((col) => (
-                      <>
-                        <td key={col.name} className="px-6 py-3">
-                          <span className="lg:pl-1 font-bold">{col.name}</span>
-                        </td>
-                      </>
-                    ))}
-                    <td className="py-2 flex pl-6 border-black bg-gray-50 text-left text-xs font-medium text-black uppercase tracking-wider ">
-                      <Button
-                        variant="variant"
-                        label="Add"
-                        size="small"
-                        type="secondary"
-                        className="ml-0"
-                        onClick={() => setIsOpenT(true)}
-                        icon={AiOutlinePlus}
-                      />
-                    </td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {(city || []).map((tt: any, index: number) => (
-                    <tr
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      key={tt.city_id}
+                      <MdEdit className="text-xl" />
+                    </a>
+                    <a
+                      href="#"
+                      className="border-2 border-danger-secondary hover:bg-danger-secondary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-danger-secondary"
+                      onClick={() => deleteOpenT(tt.city_id)}
                     >
-                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <div className="flex items-center">
-                          <input
-                            value={tt.city_id}
-                            onChange={(e) => handleCityChange(e, tt.city_name)}
-                            // onChange={() => setRegionID(dt.region_code)}
-                            name="city"
-                            id="checkbox-table-search-1"
-                            type="radio"
-                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                          />
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {index + 1}
-                      </td>
-                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {tt.city_name}
-                      </td>
+                      <MdDelete className="text-xl" />
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        {isOpenT ? (
+          <AddCityMaster
+            isOpen={isOpenT}
+            province={provinceID}
+            closeModal={() => setIsOpenT(false)}
+          />
+        ) : null}
+        {isEditT.status ? (
+          <EditCityMaster
+            isEdit={isEditT}
+            province={provinceID}
+            closeModal={() =>
+              setIsEditT((prev) => {
+                return { ...prev, status: false };
+              })
+            }
+          />
+        ) : null}
+      </div>
 
-                      <td className="flex items-center px-6 py-4 space-x-3">
-                        <a
-                          href="#"
-                          className="border-2 border-primary hover:bg-primary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-primary"
-                          onClick={() => editOpenT(tt.city_id)}
-                        >
-                          <MdEdit className="text-xl" />
-                        </a>
-                        <a
-                          href="#"
-                          className="border-2 border-danger-secondary hover:bg-danger-secondary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-danger-secondary"
-                          onClick={() => deleteOpenT(tt.city_id)}
-                        >
-                          <MdDelete className="text-xl" />
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-            {isOpenT ? (
-              <AddCityMaster
-                isOpen={isOpenT}
-                province={provinceID}
-                closeModal={() => setIsOpenT(false)}
-              />
-            ) : null}
-            {isEditT.status ? (
-              <EditCityMaster
-                isEdit={isEditT}
-                province={provinceID}
-                closeModal={() =>
-                  setIsEditT((prev) => {
-                    return { ...prev, status: false };
-                  })
-                }
-              />
-            ) : null}
-          </div>
-
-          <div className="relative overflow-y-auto max-h-[400px] shadow-md sm:rounded-lg mt-10">
-            {address && address.length !== 0 && (
-              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                    <td className="px-6 py-3"></td>
-                    {(columnsAddress || []).map((col) => (
-                      <>
-                        <td key={col.name} className="px-6 py-3">
-                          <span className="lg:pl-1 font-bold">{col.name}</span>
-                        </td>
-                      </>
-                    ))}
-                    {/* <td className="py-2 flex pl-6 border-black bg-gray-50 text-left text-xs font-medium text-black uppercase tracking-wider ">
+      <div className="relative overflow-y-auto max-h-[400px] shadow-md sm:rounded-lg mt-10 p-4 bg-white">
+        {address && address.length !== 0 && (
+          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <td className="px-6 py-3"></td>
+                {(columnsAddress || []).map((col) => (
+                  <>
+                    <td key={col.name} className="px-6 py-3">
+                      <span className="lg:pl-1 font-bold">{col.name}</span>
+                    </td>
+                  </>
+                ))}
+                {/* <td className="py-2 flex pl-6 border-black bg-gray-50 text-left text-xs font-medium text-black uppercase tracking-wider ">
                       <Button
                         variant="variant"
                         label="Add"
@@ -618,26 +629,26 @@ export default function Locations() {
                         className="ml-0"
                       />
                     </td> */}
-                  </tr>
-                </thead>
-                <tbody>
-                  {(address || []).map((at: any, index: number) => (
-                    <tr
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      key={at.addr_id}
-                    >
-                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"></td>
-                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {index + 1}
-                      </td>
-                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {at.addr_line1 + at.addr_line2}
-                      </td>
-                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {at.addr_postal_code + at.addr_spatial_code}
-                      </td>
+              </tr>
+            </thead>
+            <tbody>
+              {(address || []).map((at: any, index: number) => (
+                <tr
+                  className="bg-white border-b borde-gray-200 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  key={at.addr_id}
+                >
+                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"></td>
+                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {index + 1}
+                  </td>
+                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {at.addr_line1 + at.addr_line2}
+                  </td>
+                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {at.addr_postal_code + at.addr_spatial_code}
+                  </td>
 
-                      {/* <td className="flex items-center px-6 py-4 space-x-3">
+                  {/* <td className="flex items-center px-6 py-4 space-x-3">
                         <a
                           href="#"
                           className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
@@ -651,14 +662,12 @@ export default function Locations() {
                           Remove
                         </a>
                       </td> */}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </div>
-        </>
-      </>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </>
   );
 }

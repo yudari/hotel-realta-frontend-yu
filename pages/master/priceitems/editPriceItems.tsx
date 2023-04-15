@@ -1,11 +1,12 @@
+import Button from "@/components/Button/button";
 import { doUpdatePriceItems } from "@/redux/masterSchema/action/priceitemAction";
 import { Transition, Dialog } from "@headlessui/react";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function EditPriceMaster(props: any) {
-  let {} = useSelector((state: any) => state.priceitemsReducer);
+  let { priceitems } = useSelector((state: any) => state.priceitemsReducer);
   type FormValues = {
     prit_name: string;
     prit_price: string;
@@ -18,6 +19,22 @@ export default function EditPriceMaster(props: any) {
     formState: { errors },
     // eslint-disable-next-line react-hooks/rules-of-hooks
   } = useForm<FormValues>();
+
+  const [priceItemData, setPriceItemData] = useState({
+    prit_id: 0,
+    prit_name: "",
+    prit_description: "",
+    prit_price: "",
+    prit_type: "",
+  });
+
+  useEffect(() => {
+    const filter = priceitems?.data.filter((price: any) => {
+      return price.prit_id === props.isEdit.id;
+    })[0];
+
+    setPriceItemData(filter);
+  }, [priceitems, props.isEdit.id]);
 
   const dispatch = useDispatch();
 
@@ -39,7 +56,7 @@ export default function EditPriceMaster(props: any) {
   return (
     <div>
       <Transition appear show={props.isEdit.status} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={props.closeModal}>
+        <Dialog as="div" className="relative z-50" onClose={props.closeModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -74,9 +91,7 @@ export default function EditPriceMaster(props: any) {
                     Mohon isi dahulu
                   </Dialog.Title>
                   <div className="mt-2">
-                    <form
-                      onSubmit={handleSubmit(handleEdit, handleError)}
-                    >
+                    <form onSubmit={handleSubmit(handleEdit, handleError)}>
                       <div className="grid grid-cols-1 gap-4">
                         <div className="col-span-1">
                           <label className="block text-gray-700">
@@ -89,6 +104,7 @@ export default function EditPriceMaster(props: any) {
                               "prit_name",
                               registerOptions.prit_name
                             )}
+                            defaultValue={priceItemData.prit_name}
                             className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
                           />
                           <small className="text-danger">
@@ -149,6 +165,7 @@ export default function EditPriceMaster(props: any) {
                               "prit_description",
                               registerOptions.prit_description
                             )}
+                            defaultValue={priceItemData.prit_description}
                             className="description w-full p-5 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
                           />
                           <small className="text-danger">
@@ -164,6 +181,7 @@ export default function EditPriceMaster(props: any) {
                               "prit_price",
                               registerOptions.prit_price
                             )}
+                            defaultValue={priceItemData.prit_price}
                             className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
                           />
                           <small className="text-danger">
@@ -171,21 +189,23 @@ export default function EditPriceMaster(props: any) {
                           </small>
                         </div>
                       </div>
-                      <div className="flex-row space-x-4 mt-4 text-rigt">
-                        <button
-                          className="inline-flex justify-center rounded-md border border-transparent 
-                                    bg-blug-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none 
-                                    focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                        >
-                          Submit
-                        </button>
-                        <button
-                          className="inline-flex justify-center rounded-md border border-transparent bg-blug-100 px-4 py-2 text-sm 
-                        font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      <div className="flex flex-row space-x-4 mt-4 text-right">
+                        <Button
+                          variant="primary"
+                          label="Submit"
+                          size="small"
+                          type="main"
+                          className="ml-0"
+                        />
+
+                        <Button
+                          variant="danger-secondary"
+                          label="Cancel"
+                          size="small"
+                          type="main"
+                          className="ml-0"
                           onClick={props.closeModal}
-                        >
-                          Cancel
-                        </button>
+                        />
                       </div>
                     </form>
                   </div>
