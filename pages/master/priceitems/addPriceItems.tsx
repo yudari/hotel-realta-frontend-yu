@@ -20,6 +20,7 @@ export default function AddPriceMaster(props: any) {
   } = useForm<FormValues>();
   const dispatch = useDispatch();
 
+
   const handleRegistration = async (data: any) => {
     dispatch(doAddPriceItems(data));
     props.closeModal();
