@@ -7,6 +7,7 @@ import { BiLogOut } from "react-icons/bi";
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumbs";
 import { FaUser } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 export default function Navbar({
   showSidebar,
@@ -22,19 +23,38 @@ export default function Navbar({
     user_id,
   } = loginData;
 
+  const router = useRouter();
   const imageUrl = `${process.env.BACKEND_URL}/image/users`;
+
+  const pathnames = router.pathname.split("/").filter((path) => path);
+
+  if (pathnames.length && /\[.+\]/.test(pathnames[pathnames.length - 1])) {
+    pathnames.pop();
+  }
 
   return (
     <nav className="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
-      <div className="ml-[6px]">
-        <div className="ml-[6px]">
+      <div className="">
+        <div className="">
           <div className="h-6 w-[224px] pt-1">
             <Breadcrumb />
           </div>
           <p className="shrink text-3xl capitalize text-navy-700 dark:text-white mt-5">
-            <Link href="#" className="font-bold capitalize hover:text-navy-700">
-              Hotel Realta Admin
-            </Link>
+            {pathnames.map((name, index) => {
+              const capitalizeRoute =
+                name[0].toUpperCase() + name.slice(1) + " ";
+              const routeTo = `/${pathnames.slice(0, index + 1).join(" ")}`;
+
+              return (
+                <Link
+                  key={routeTo}
+                  href="/dashboard"
+                  className="font-bold capitalize hover:text-navy-700"
+                >
+                  {capitalizeRoute}
+                </Link>
+              );
+            })}
           </p>
         </div>
       </div>
