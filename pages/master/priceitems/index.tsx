@@ -211,7 +211,10 @@ export default function PriceMaster() {
                 <Modal>{dt.prit_description} </Modal>
               </td>
               <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {dt.prit_price}
+                {new Intl.NumberFormat("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                }).format(Number(dt.prit_price.replace(/[^0-9.-]+/g, "")))}
               </td>
               <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {dt.prit_type}

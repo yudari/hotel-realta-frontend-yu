@@ -33,7 +33,7 @@ export default function EditPriceMaster(props: any) {
       return price.prit_id === props.isEdit.id;
     })[0];
 
-    setPriceItemData(filter);
+    setPriceItemData({ ...filter, prit_price: filter.prit_price });
   }, [priceitems, props.isEdit.id]);
 
   const dispatch = useDispatch();
@@ -181,7 +181,10 @@ export default function EditPriceMaster(props: any) {
                               "prit_price",
                               registerOptions.prit_price
                             )}
-                            defaultValue={priceItemData.prit_price}
+                            defaultValue={priceItemData.prit_price.replace(
+                              "$",
+                              ""
+                            )}
                             className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
                           />
                           <small className="text-danger">
@@ -190,20 +193,15 @@ export default function EditPriceMaster(props: any) {
                         </div>
                       </div>
                       <div className="flex flex-row space-x-4 mt-4 text-right">
-                        <Button
-                          variant="primary"
-                          label="Submit"
-                          size="small"
-                          type="main"
-                          className="ml-0"
-                        />
+                        <button
+                          type="submit"
+                          className="inline-flex justify-center rounded-md border border-transparent bg-blug-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        >
+                          Save
+                        </button>
 
-                        <Button
-                          variant="danger-secondary"
-                          label="Cancel"
-                          size="small"
-                          type="main"
-                          className="ml-0"
+                        <button
+                          className="inline-flex justify-center rounded-md border border-transparent bg-blug-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                           onClick={props.closeModal}
                         />
                       </div>
