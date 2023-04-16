@@ -50,7 +50,7 @@ export default function userAccount() {
   };
 
   useEffect(() => {
-    dispatch(doGetUserAccount());
+    dispatch(doGetUserAccount(id));
   }, [refresh]);
 
   return (

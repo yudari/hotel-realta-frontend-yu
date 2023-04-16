@@ -45,7 +45,7 @@ const ActionTypes = {
   DEL_CITY: "DEL_CITY",
   DEL_CITY_RESPONSE: "DEL_CITY_RESPONSE",
 
-  //==============City===================//
+  //==============Address===================//
   UPDATE_ADDRESS: "UPDATE_ADDRESS",
   UPDATE_ADDRESS_RESPONSE: "UPDATE_ADDRESS_RESPONSE",
   REQ_GET_ADDRESS: "REQ_GET_ADDRESS",

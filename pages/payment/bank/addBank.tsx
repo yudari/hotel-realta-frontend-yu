@@ -37,6 +37,7 @@ export default function AddBank(props:any) {
   }
 
   return (
+    
     <div>
       <Transition appear show={props.isOpen} as={Fragment}>
         <Dialog as='div' className='relative z-10' onClose={props.closeModal}>
@@ -80,14 +81,14 @@ export default function AddBank(props:any) {
                           {...register('bank_code', registerOptions.bank_code)}
                         />
                         {errors?.bank_code && (
-                          <p className='text-red-500 text-xs italic'>
+                          <p className='text-danger-secondary text-xs italic'>
                             {errors.bank_code.message}
                           </p>
                         )}
                       </div>
 
                       <div className='mb-4'>
-                        <label className='block text-gray-700 font-bold mb-2'>
+                        <label className='block text-primaryfont-bold mb-2'>
                           Bank Name
                         </label>
                         <input
@@ -100,57 +101,22 @@ export default function AddBank(props:any) {
                           )}
                         />
                         {errors?.bank_name && (
-                          <p className='text-red-500 text-xs italic'>
+                          <p className='text-danger-secondary text-xs italic'>
                             {errors.bank_name.message}
                           </p>
                         )}
                       </div>
 
-                  
-
-                 
-                      {/* TOGGLE AVAILABLE */}
-                      {/* <div className='mb-4 flex items-center'>
-                        <label className='block text-gray-700 font-bold mr-4'>
-                          Status
-                        </label>
-                        <div className='flex items-center'>
-                          <Switch
-                            checked={status}
-                            onChange={handleStatusChange}
-                            className={`${status ? 'bg-teal-500' : 'bg-red-700'}
-      relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
-                          >
-                            <span className='sr-only'>Use setting</span>
-                            <span
-                              aria-hidden='true'
-                              className={`${
-                                status ? 'translate-x-9' : 'translate-x-0'
-                              } pointer-events-none inline-block h-[34px] w-[34px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
-                            />
-                          </Switch>
-                          <p
-                            className={`text-lg ml-4 font-medium ${
-                              status ? 'text-green-500' : 'text-red-500'
-                            }`}
-                          >
-                            {status ? 'Available' : 'Empty'}
-                          </p>
-                        </div>
-                      </div> */}
-
-                      {/* TOGGLE AVAILABLE */}
-
                       <div className='flex justify-between'>
                         <button
                           type='submit'
-                          className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
+                          className='text-white bg-primary hover:bg-primary-hover focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
                         >
                           Submit
                         </button>
 
                         <button
-                          className='text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800'
+                          className='text-white bg-danger-secondary hover:bg-danger-secondary-hover focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800'
                           onClick={props.closeModal}
                         >
                           Cancel

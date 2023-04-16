@@ -64,6 +64,7 @@
     "rodal": "^2.0.1",
     "slick-carousel": "^1.8.1",
     "sucrase": "^3.32.0",
+    "sweetalert2": "^11.7.3",
     "swiper": "^9.2.0",
     "tiny-warning": "^1.0.3",
     "tw-elements": "^1.0.0-beta1",

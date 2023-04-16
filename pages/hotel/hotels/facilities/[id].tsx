@@ -1,24 +1,28 @@
 import { Menu, Transition } from '@headlessui/react'
 import React, { Fragment, useEffect, useState } from 'react'
-import { FaRegEdit } from 'react-icons/fa'
-import { BsThreeDotsVertical } from 'react-icons/bs'
-import { MdAddBox } from 'react-icons/md'
+import { FaRegEdit, FaTrashAlt } from 'react-icons/fa'
+import { BsFillCloudUploadFill, BsThreeDotsVertical } from 'react-icons/bs'
+import { MdAddBox, MdDelete, MdEdit } from 'react-icons/md'
 import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
-import { useRouter } from 'next/router'
+import Image from 'next/image'
 import AddFacilities from './addFacilities'
 import EditFacilities from './editFacilities'
 import Link from 'next/link'
 import {
+  doDeleteFacilities,
   doRequestGetFacilities,
   doRequestGetHotels,
 } from '@/redux/hotel/action/actionReducer'
+import UploadPhotosFacilities from './uploadPhotosFacilities'
+import { ImPriceTags } from 'react-icons/im'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { AiOutlinePlus } from 'react-icons/ai'
 
 const Facilities = (props: any) => {
   let { hotels, refresh } = useSelector((state: any) => state.hotelsReducers)
   const [hotel, setHotels] = useState<any>({})
-  // console.log('hotels:', hotels)
-  // console.log('hotel:', hotel)
 
   const renderStars = (rating: number) => {
     const stars = []
@@ -38,9 +42,13 @@ const Facilities = (props: any) => {
     return stars
   }
   const [isOpen, setIsOpen] = useState(false)
+  const [isUpload, setIsUpload] = useState({
+    status: false,
+    faci_id: 0,
+  })
   const [isEdit, setIsEdit] = useState({
     status: false,
-    hotel_id: 0,
+    faci_id: 0,
   })
 
   const editOpen = (faci_id: number) => {
@@ -48,8 +56,25 @@ const Facilities = (props: any) => {
       return { ...prev, status: true, faci_id: faci_id }
     })
   }
+  const UploadOpen = (faci_id: number) => {
+    setIsUpload((prev) => {
+      return { ...prev, status: true, faci_id: faci_id }
+    })
+  }
+
+  const deleteOpen = async (faci_id: number) => {
+    const confirmed = window.confirm(
+      `Are you sure, you want to delete this facilities hotel ?`
+    )
+    if (confirmed) {
+      dispatch(doDeleteFacilities(faci_id))
+      toast.success(`Successfully removed`)
+    }
+  }
+
   const columns = [
     { name: 'NO' },
+    { name: '       ' },
     { name: 'Facility Name' },
     { name: 'Room Number' },
     { name: 'Max Vacant' },
@@ -60,23 +85,27 @@ const Facilities = (props: any) => {
     { name: 'Tax' },
   ]
   const dispatch = useDispatch()
+
   //===Pagination===
   const [pageNumber, setPageNumber] = useState(1)
   const [pageSize, setPageSize] = useState(7)
+
   //============Search================
   const [search, setSearch] = useState('')
   const handleSearch = (event: any): void => {
     setSearch(event.target.value)
   }
 
-  // Mengambil data hotels dari reducer dan menyimpannya di localStorage
+  useEffect(() => {
+    dispatch(doRequestGetFacilities())
+  })
+
   useEffect(() => {
     dispatch(doRequestGetHotels(pageNumber, pageSize, search))
     localStorage.setItem('hotels', JSON.stringify(hotels))
   }, [refresh, dispatch])
 
   // Mengambil data hotels dari localStorage saat halaman direfresh
-  // const router = useRouter().query
   useEffect(() => {
     const routerId = window.location.pathname
     const id = routerId.split('/').pop()
@@ -89,139 +118,95 @@ const Facilities = (props: any) => {
   }, [refresh])
 
   return (
-    <div className='relative overflow-x-auto shadow-md sm:rounded-lg h-screen'>
-      {/* breadcrumb */}
-      <div className='bg-white text-black py-2 px-6 flex font-bold border-t-2 border-r-2 border-l-2 items-center justify-between'>
-        <nav className='flex' aria-label='Breadcrumb'>
-          <ol className='inline-flex items-center space-x-1 md:space-x-3'>
-            <li className='inline-flex items-center'>
-              <a
-                href='/'
-                className='inline-flex items-center font-bold text-black text-medium hover:text-blue-600 dark:text-gray-400 dark:hover:text-white'
-              >
-                <svg
-                  aria-hidden='true'
-                  className='w-4 h-4 mr-2'
-                  fill='currentColor'
-                  viewBox='0 0 20 20'
-                  xmlns='http://www.w3.org/2000/svg'
-                >
-                  <path d='M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z'></path>
-                </svg>
-                Home
-              </a>
-            </li>
-            <li>
-              <div className='flex items-center'>
-                <svg
-                  aria-hidden='true'
-                  className='w-6 h-6 text-gray-400'
-                  fill='currentColor'
-                  viewBox='0 0 20 20'
-                  xmlns='http://www.w3.org/2000/svg'
-                >
-                  <path
-                    fill-rule='evenodd'
-                    d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z'
-                    clip-rule='evenodd'
-                  ></path>
-                </svg>
-                <a
-                  href='/hotel/hotels'
-                  className='ml-1 text-sm text-black font-bold hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white'
-                >
-                  Hotels
-                </a>
-              </div>
-            </li>
-            <li>
-              <div className='flex items-center'>
-                <svg
-                  aria-hidden='true'
-                  className='w-6 h-6 text-gray-400'
-                  fill='currentColor'
-                  viewBox='0 0 20 20'
-                  xmlns='http://www.w3.org/2000/svg'
-                >
-                  <path
-                    fill-rule='evenodd'
-                    d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z'
-                    clip-rule='evenodd'
-                  ></path>
-                </svg>
-                <a
-                  // href={`/hotel/facilities/${router}`}
-                  className='ml-1 text-sm text-black font-bold hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white'
-                >
-                  Facilities
-                </a>
-              </div>
-            </li>
-          </ol>
-        </nav>
-      </div>
-      {/* Header */}
-      <div className='bg-white text-black py-2 px-6 flex border-2 items-center justify-between'>
-        <div className='mb-4 mt-4 ml-10'>
-          <div className='text-xl font-bold'>{hotel.hotel_name}</div>
-          <div className='text-xs font-semibold'>
-            {` ${hotel.address && hotel.address.addr_line1}, ${
-              hotel.address && hotel.address.addr_line2
-            }`}
+    <div className='relative overflow-x-auto sm:rounded-lg shadow-md mt-5 rounded-xl bg-white p-4 '>
+      <div className='pb-4 bg-white flex items-center gap-4 justify-between'>
+        <div className='flex items-center gap-4'>
+          <div className='mb-4 mt-4 ml-10'>
+            <div className='text-2xl font-bold'>{hotel.hotel_name}</div>
+            <div className='text-xs text-gray-500'>
+              {` ${hotel.address && hotel.address.addr_line1}, ${
+                hotel.address && hotel.address.addr_line2
+              }`}
+            </div>
+            <div className='text-xs font-semibold'>
+              {hotel.hotel_description}
+            </div>
           </div>
-        </div>
-
-        <div className='mr-52'>
-          <div className='mr-4'>{hotel.hotel_phonenumber}</div>
-          <div className='display flex'>
-            {renderStars(hotel.hotel_rating_star)}
+          <div className='ml-96'>
+            <div className='mr-4'>{hotel.hotel_phonenumber}</div>
+            <div className='display flex'>
+              {renderStars(hotel.hotel_rating_star)}
+            </div>
           </div>
         </div>
       </div>
-      <div className='relative overflow-x-auto shadow-md sm:rounded-lg h-screen'>
-        <table className='w-full text-xs text-left text-gray-500 dark:text-gray-400'>
-          <thead className='text-sm text-white uppercase bg-primary dark:bg-black dark:text-black'>
+      <div className='flex items-center gap-4'>
+        <div className='text-base font-bold ml-6'>{`${hotel.hotel_name} Facilities`}</div>
+        <button
+          className='bg-primary hover:bg-primary-hover transition-colors ease-in duration-100 p-2 rounded text-white flex items-center gap-2 border border-primary ml-auto mb-4'
+          onClick={() => setIsOpen(true)}
+        >
+          <AiOutlinePlus className='text-xl' />
+          Add
+        </button>
+      </div>
+      <div className='relative overflow-x-auto shadow-md sm:rounded-lg h-80'>
+        <table className='w-full text-sm text-left text-black'>
+          <thead className='text-xs text-gray-700 uppercase bg-gray-100'>
             <tr>
               {(columns || []).map((col) => (
-                <th key={col.name} style={{ whiteSpace: 'nowrap' }}>
-                  <span className='px-6 py-3'>{col.name}</span>
+                <th
+                  scope='col'
+                  className='px-6 py-3'
+                  key={col.name}
+                  style={{ whiteSpace: 'nowrap' }}
+                >
+                  {col.name}
                 </th>
               ))}
-              <th className='px-6 py-3 '>
-                <button
-                  className='flex items-center'
-                  onClick={() => setIsOpen(true)}
-                >
-                  <MdAddBox className='mr-1' />
-                  <span className='mr-2' style={{ whiteSpace: 'nowrap' }}>
-                    Add Facilities
-                  </span>
-                </button>
-              </th>
+              <th scope='col' className='px-6 py-3'></th>
             </tr>
           </thead>
           <tbody>
             {(hotel.facilitiesHotels || []).map((dt: any, index: number) => (
               <tr
+                className='bg-white border-b border-gray-200'
                 key={dt.faci_id}
-                className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'
               >
-                <td className='px-8 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
-                  {index + 1}
+                <td className='px-6 py-4'>{index + 1}</td>
+                <td className='px-6 py-4'>
+                  <div className='flex items-center'>
+                    {dt.facility_photos
+                      .filter((photo: any) => photo.fapho_primary === '1')
+                      .map((photo: any) => (
+                        <div
+                          className='flex-shrink-0 w-20 h-20'
+                          key={photo.fapho_id}
+                        >
+                          <Image
+                            src={photo.fapho_url}
+                            alt={photo.fapho_thumbnail_filename}
+                            width={500}
+                            height={500}
+                            className='w-full h-full rounded-full shadow-2xl'
+                          />
+                        </div>
+                      ))}
+                  </div>
                 </td>
-                <td className='px-8 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
+                <td className='px-6 py-4'>
                   {dt.faci_name}
                   <br />
                   {dt.category_group.cagro_name}
                 </td>
-                <td className='px-8 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center'>
-                  {dt.faci_room_number.substring(3)}
+                <td className='px-6 py-4'>
+                  {dt.faci_room_number.split('-')[1]}
                 </td>
-                <td className='px-8 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center'>
+                <td className='px-6 py-4'>
                   {`${dt.faci_max_number} `}
                   {dt.faci_measure_unit}
                 </td>
-                <td className='px-8 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
+                <td className='px-6 py-4'>
                   {new Date(dt.faci_startdate).toLocaleDateString('en-GB', {
                     day: 'numeric',
                     month: 'short',
@@ -234,7 +219,7 @@ const Facilities = (props: any) => {
                     year: 'numeric',
                   })}
                 </td>
-                <td className='px-8 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
+                <td className='px-6 py-4'>
                   {new Intl.NumberFormat('id-ID', {
                     style: 'currency',
                     currency: 'IDR',
@@ -253,11 +238,11 @@ const Facilities = (props: any) => {
                     )
                   )}
                 </td>
-
-                <td className='px-8 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center'>
+                <td className='px-6 py-4'>
                   {(dt.faci_discount * 100).toFixed(0)}%
                 </td>
-                <td className='px-8 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
+                <td className='px-6 py-4'>
+                  {' '}
                   {new Intl.NumberFormat('id-ID', {
                     style: 'currency',
                     currency: 'IDR',
@@ -267,10 +252,11 @@ const Facilities = (props: any) => {
                     )
                   )}
                 </td>
-                <td className='px-8 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
+                <td className='px-6 py-4'>
+                  {' '}
                   {(dt.faci_tax_rate * 100).toFixed(0)}%
                 </td>
-                <td className='px-10 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
+                <td className='px-6 py-4'>
                   <Menu as='div' className='relative inline-block text-left'>
                     <div>
                       <Menu.Button className='inline-flex w-full justify-center rounded-md bg-none px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
@@ -296,7 +282,7 @@ const Facilities = (props: any) => {
                               <button
                                 className={`${
                                   active
-                                    ? 'bg-[#4B5563] text-white'
+                                    ? 'bg-primary text-white'
                                     : 'text-gray-900'
                                 } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                 onClick={() => editOpen(dt.faci_id)}
@@ -323,18 +309,45 @@ const Facilities = (props: any) => {
                               <button
                                 className={`${
                                   active
-                                    ? 'bg-[#4B5563] text-white'
+                                    ? 'bg-danger text-white'
                                     : 'text-gray-900'
                                 } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                                // onClick={() => editOpen(dt.id_user)}
+                                onClick={() => deleteOpen(dt.faci_id)}
                               >
                                 {active ? (
-                                  <MdAddBox
+                                  <FaTrashAlt
                                     className='mr-2 h-5 w-5'
                                     aria-hidden='true'
                                   />
                                 ) : (
-                                  <MdAddBox
+                                  <FaTrashAlt
+                                    className='mr-2 h-5 w-5'
+                                    aria-hidden='true'
+                                  />
+                                )}
+                                Delete
+                              </button>
+                            )}
+                          </Menu.Item>
+                        </div>
+                        <div className='px-1 py-1 '>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                className={`${
+                                  active
+                                    ? 'bg-primary text-white'
+                                    : 'text-gray-900'
+                                } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                onClick={() => UploadOpen(dt.faci_id)}
+                              >
+                                {active ? (
+                                  <BsFillCloudUploadFill
+                                    className='mr-2 h-5 w-5'
+                                    aria-hidden='true'
+                                  />
+                                ) : (
+                                  <BsFillCloudUploadFill
                                     className='mr-2 h-5 w-5'
                                     aria-hidden='true'
                                   />
@@ -348,23 +361,22 @@ const Facilities = (props: any) => {
                           <Menu.Item>
                             {({ active }) => (
                               <Link
-                                href={`/hotel/facility-price-history/${dt.faci_id}`}
+                                href={`/hotel/hotels/facilities/facility-price-history/${dt.faci_id}`}
                               >
                                 <button
                                   className={`${
                                     active
-                                      ? 'bg-[#4B5563] text-white'
+                                      ? 'bg-primary text-white'
                                       : 'text-gray-900'
                                   } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                                  // onClick={() => editOpen(dt.id_user)}
                                 >
                                   {active ? (
-                                    <MdAddBox
+                                    <ImPriceTags
                                       className='mr-2 h-5 w-5'
                                       aria-hidden='true'
                                     />
                                   ) : (
-                                    <MdAddBox
+                                    <ImPriceTags
                                       className='mr-2 h-5 w-5'
                                       aria-hidden='true'
                                     />
@@ -384,6 +396,78 @@ const Facilities = (props: any) => {
           </tbody>
         </table>
       </div>
+
+      <nav
+        className='flex items-center justify-between pt-4'
+        aria-label='Table navigation'
+      >
+        <span className='text-sm font-normal text-gray-500'>
+          Showing <span className='font-semibold text-gray-900'>1-10</span> of{' '}
+          <span className='font-semibold text-gray-900'>1000</span>
+        </span>
+        <ul className='inline-flex items-center -space-x-px'>
+          <li>
+            <a
+              href='#'
+              className='block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l hover:bg-gray-100 hover:text-gray-700 '
+            >
+              <span className='sr-only'>Previous</span>
+              <svg
+                className='w-5 h-5'
+                aria-hidden='true'
+                fill='currentColor'
+                viewBox='0 0 20 20'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  fill-rule='evenodd'
+                  d='M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z'
+                  clip-rule='evenodd'
+                ></path>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a
+              href='#'
+              className='px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700'
+            >
+              1
+            </a>
+          </li>
+          <li>
+            <a
+              href='#'
+              className='px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+            >
+              2
+            </a>
+          </li>
+
+          <li>
+            <a
+              href='#'
+              className='block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700'
+            >
+              <span className='sr-only'>Next</span>
+              <svg
+                className='w-5 h-5'
+                aria-hidden='true'
+                fill='currentColor'
+                viewBox='0 0 20 20'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  fill-rule='evenodd'
+                  d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z'
+                  clip-rule='evenodd'
+                ></path>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <ToastContainer autoClose={5000} />
       {isOpen ? (
         <AddFacilities isOpen={isOpen} closeModal={() => setIsOpen(false)} />
       ) : null}
@@ -392,6 +476,16 @@ const Facilities = (props: any) => {
           isEdit={isEdit}
           closeModal={() =>
             setIsEdit((prev) => {
+              return { ...prev, status: false }
+            })
+          }
+        />
+      ) : null}
+      {isUpload.status ? (
+        <UploadPhotosFacilities
+          isUpload={isUpload}
+          closeModal={() =>
+            setIsUpload((prev) => {
               return { ...prev, status: false }
             })
           }

@@ -1,39 +1,39 @@
-import { doAddFintech } from "@/redux/payment/action/fintechActionReducer"
-import { Dialog, Transition } from "@headlessui/react"
-import { Fragment } from "react"
-import { useForm } from "react-hook-form"
-import { useDispatch } from "react-redux"
+import { doAddFintech } from '@/redux/payment/action/fintechActionReducer'
+import { Dialog, Transition } from '@headlessui/react'
+import { Fragment } from 'react'
+import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 
-export default function AddFintech(props:any) {
-    type FormValues = {
-      fint_code: number
-      fint_name: string
-    }
-  
-    const {
-      register,
-      handleSubmit,
-      formState: { errors },
-    } = useForm<FormValues>()
-    const dispatch = useDispatch()
-    const handleError = (errors: any) => {}
-    const handleSave = async (data: FormValues) => {
-      try {
-        const dataAll = {
-            fint_code: data.fint_code,
-            fint_name: data.fint_name,
-        }
-        dispatch(doAddFintech(dataAll))
-        props.closeModal()
-      } catch (error) {
-        console.error(error)
+export default function AddFintech(props: any) {
+  type FormValues = {
+    fint_code: number
+    fint_name: string
+  }
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>()
+  const dispatch = useDispatch()
+  const handleError = (errors: any) => {}
+  const handleSave = async (data: FormValues) => {
+    try {
+      const dataAll = {
+        fint_code: data.fint_code,
+        fint_name: data.fint_name,
       }
+      dispatch(doAddFintech(dataAll))
+      props.closeModal()
+    } catch (error) {
+      console.error(error)
     }
-  
-    const registerOptions = {
-        fint_code: { required: 'Fintech code is required' },
-        fint_name: { required: 'Fintech name is required' },
-    }
+  }
+
+  const registerOptions = {
+    fint_code: { required: 'Fintech code is required' },
+    fint_name: { required: 'Fintech name is required' },
+  }
 
     return (
         <div>
@@ -108,13 +108,13 @@ export default function AddFintech(props:any) {
                           <div className='flex justify-between'>
                             <button
                               type='submit'
-                              className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
+                              className='text-white bg-primary hover:bg-primary-hover focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
                             >
                               Submit
                             </button>
     
                             <button
-                              className='text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800'
+                              className='text-white bg-danger-secondary hover:bg-danger-secondary focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800'
                               onClick={props.closeModal}
                             >
                               Cancel

@@ -8,6 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "./componentmodal";
 import AddCategoryMaster from "./addCategoryGroup";
 import EditCategoryMaster from "./editCategoryGroup";
+import { AiOutlinePlus } from "react-icons/ai";
+import { MdEdit, MdDelete } from "react-icons/md";
+import Image from "next/image";
+import ModalImage from "./modalImage";
 
 export default function CategorygroupMaster() {
   const imageUrl = `${process.env.BACKEND_URL}/image/master`;
@@ -34,23 +38,49 @@ export default function CategorygroupMaster() {
     }
   };
 
+  const [showImage, setShowImage] = useState({
+    status: false,
+    image: "",
+  });
+
+  const handleShowImage = (e: any) => {
+    setShowImage({
+      status: true,
+      image: e.target.getAttribute("src"),
+    });
+  };
+
   const dispatch = useDispatch();
 
   const columns = [
     { name: "Icon" },
     { name: "Category ID" },
     { name: "Category Name" },
-    { name: "Category Description" },
+    { name: "" },
     { name: "Type" },
+    { name: "Action" },
   ];
 
   useEffect(() => {
     dispatch(doRequestGetCategoryGroup());
   }, [dispatch, refresh]);
+
   return (
-    <div className="relative overflow-y-auto  shadow-md sm:rounded-lg">
+    <div className="relative overflow-y-auto  shadow-md sm:rounded-lg bg-white p-4">
+      <div className="pb-4 flex justify-end">
+        <Button
+          variant="primary"
+          label="Add"
+          size="small"
+          type="secondary"
+          className="ml-0"
+          onClick={() => setIsOpen(true)}
+          icon={AiOutlinePlus}
+        />
+      </div>
+
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             {(columns || []).map((col) => (
               <>
@@ -59,16 +89,6 @@ export default function CategorygroupMaster() {
                 </td>
               </>
             ))}
-            <td className="py-2 flex pl-6 border-black bg-gray-50 text-left text-xs font-medium text-black uppercase tracking-wider ">
-              <Button
-                variant="variant"
-                label="Add"
-                size="small"
-                type="secondary"
-                className="ml-0"
-                onClick={() => setIsOpen(true)}
-              />
-            </td>
           </tr>
         </thead>
         <tbody>
@@ -80,16 +100,17 @@ export default function CategorygroupMaster() {
               {/* <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"></td> */}
               <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 <div className="flex-shrink-0 w-10 h-10">
-                  <img
+                  <Image
                     src={`${imageUrl}/${dt.cagro_icon_url}`}
                     alt="waw"
                     width={1000}
                     height={1000}
                     className="w-full h-full rounded-full"
+                    onClick={handleShowImage}
                   />
                 </div>
               </td>
-              <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white pl-[5rem]">
                 {index + 1}
               </td>
               <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -104,23 +125,34 @@ export default function CategorygroupMaster() {
               <td className="flex items-center px-6 py-4 space-x-3">
                 <a
                   href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  className="border-2 border-primary hover:bg-primary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-primary"
                   onClick={() => editOpen(dt.cagro_id)}
                 >
-                  Edit
+                  <MdEdit className="text-xl" />
                 </a>
                 <a
                   href="#"
-                  className="font-medium text-red-600 dark:text-red-500 hover:underline"
+                  className="border-2 border-danger-secondary hover:bg-danger-secondary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-danger-secondary"
                   onClick={() => deleteOpen(dt.cagro_id)}
                 >
-                  Remove
+                  <MdDelete className="text-xl" />
                 </a>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {showImage.status ? (
+        <ModalImage
+          showImage={showImage}
+          closeModal={() =>
+            setShowImage((prev) => {
+              return { ...prev, status: false };
+            })
+          }
+        />
+      ) : null}
 
       {isOpen ? (
         <AddCategoryMaster

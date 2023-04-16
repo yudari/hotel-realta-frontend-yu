@@ -1,59 +1,52 @@
-import {
-  doUpdatePolicy,
-  doUpdatePolicyResponse,
-} from "@/redux/masterSchema/action/policyAction";
-import { Dialog, Transition } from "@headlessui/react";
+import { doUpdateProvince } from "@/redux/masterSchema/action/provinceAction";
+import { Transition, Dialog } from "@headlessui/react";
 import React, { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function EditPolicyMaster(props: any) {
-  const [policyData, setPolicyData] = useState({
-    poli_id: 0,
-    poli_name: "",
-    poli_description: "",
+export default function EditProvinceMaster(props: any) {
+  const [provinceData, setProvinceData] = useState({
+    prov_id: 0,
+    prov_name: "",
   });
-  let { policy } = useSelector((state: any) => state.policyReducer);
-  // console.log(policy);
+  let { province } = useSelector((state: any) => state.provinceReducer);
   type FormValues = {
-    poli_name: string;
-    poli_description: string;
+    prov_name: string;
+    prov_country_id: any;
   };
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-    // eslint-disable-next-line react-hooks/rules-of-hooks
   } = useForm<FormValues>();
-
   const dispatch = useDispatch();
 
   const handleEdit = async (data: any) => {
     const dataEdit = {
-      poli_name: data.poli_name,
-      poli_description: data.poli_description,
+      prov_name: data.prov_name,
+      prov_country_id: Number(data.prov_country_id),
     };
-    dispatch(doUpdatePolicy({ id: props.isEdit.id, data: dataEdit }));
+    dispatch(
+      doUpdateProvince({
+        id: props.isEdit.id,
+        dataEdit,
+      })
+    );
     props.closeModal();
   };
 
   const handleError = (errors: any) => {};
 
   const registerOptions = {
-    poli_name: { required: "Name is required" },
-    poli_description: {
-      required: "description is required",
-    },
+    prov_name: { required: "Name is required" },
   };
-
   useEffect(() => {
-    const filter = policy.data.filter((poli: any) => {
-      return poli.poli_id === props.isEdit.id;
+    const filter = province.filter((pro: any) => {
+      return pro.prov_id === props.isEdit.id;
     })[0];
 
-    setPolicyData(filter);
-  }, [policy, props.isEdit.id]);
+    setProvinceData(filter);
+  }, [props.isEdit.id, province, province.data]);
   return (
     <div>
       <Transition appear show={props.isEdit.status} as={Fragment}>
@@ -89,44 +82,37 @@ export default function EditPolicyMaster(props: any) {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Add/Edit Policy
+                    Add/Edit Province {props.name}
                   </Dialog.Title>
                   <div className="mt-2">
                     <form onSubmit={handleSubmit(handleEdit, handleError)}>
                       <div className="grid grid-cols-1 gap-4">
+                        <div className="flex gap-4 mt-4">
+                          <label htmlFor="regionName">Country Name</label>
+                          <p>{props.country.name}</p>
+                        </div>
                         <div className="col-span-1">
                           <label className="block text-gray-700">
-                            Policy Name
+                            Province Name
                           </label>
                           <input
                             type="text"
                             {...register(
-                              "poli_name",
-                              registerOptions.poli_name
+                              "prov_name",
+                              registerOptions.prov_name
                             )}
-                            defaultValue={policyData.poli_name}
+                            defaultValue={provinceData.prov_name}
+                            className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
+                          />
+
+                          <input
+                            type="hidden"
+                            {...register("prov_country_id")}
+                            value={Number(props.country.countryID)}
                             className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
                           />
                           <small className="text-danger">
-                            {errors?.poli_name && errors.poli_name.message}
-                          </small>
-                        </div>
-
-                        <div className="col-span-1">
-                          <label className="block text-gray-700">
-                            Policy Description
-                          </label>
-                          <textarea
-                            {...register(
-                              "poli_description",
-                              registerOptions.poli_description
-                            )}
-                            defaultValue={policyData.poli_description}
-                            className="description w-full p-5 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
-                          />
-                          <small className="text-danger">
-                            {errors?.poli_description &&
-                              errors.poli_description.message}
+                            {errors?.prov_name && errors.prov_name.message}
                           </small>
                         </div>
                       </div>

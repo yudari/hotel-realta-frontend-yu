@@ -1,4 +1,4 @@
-import axios from '../../config/endpoint';
+import axios from '../../config/endpoint'
 
 const findAll = (id: number) => {
   return axios.get(`/accounts?id=${id}`)

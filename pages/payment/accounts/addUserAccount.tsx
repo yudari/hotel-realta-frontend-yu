@@ -7,7 +7,6 @@ import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
-
 export default function AddUserAccount(props: any) {
   let { bankFintech, message, refresh } = useSelector(
     (state: any) => state.userAccountReducers
@@ -50,7 +49,6 @@ export default function AddUserAccount(props: any) {
     } catch (error) {
       console.error(error);
     }
-    // console.log("jhkshfkh", data);
   };
   const [pilih, setPilih] = useState()
   const handleSelect = (e:any) =>{
@@ -64,7 +62,6 @@ export default function AddUserAccount(props: any) {
 
   const registerOptions = {
     usac_entity_id: { required: "Entity id is required" },
-    usac_user_id: {},
     usac_account_number: { required: "Account Number is required" },
     usac_saldo: { required: "Saldo is required" },
     usac_type: { required: "Type is required" },
@@ -247,13 +244,13 @@ export default function AddUserAccount(props: any) {
                       <div className='flex justify-between'>
                         <button
                           type='submit'
-                          className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
+                          className='text-white bg-primary hover:bg-primary-hover focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
                         >
                           Submit
                         </button>
 
                         <button
-                          className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
+                          className="text-white bg-danger-secondary hover:bg-danger-secondary-hover focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
                           onClick={props.closeModal}
                         >
                           Cancel

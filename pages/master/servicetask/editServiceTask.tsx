@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function EditServiceMaster(props: any) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  let { } = useSelector((state: any) => state.servicetaskReducer);
+  let { servicetask } = useSelector((state: any) => state.servicetaskReducer);
   type FormValues = {
     seta_name: string;
     seta_seq: number;
@@ -15,30 +15,44 @@ export default function EditServiceMaster(props: any) {
     register,
     handleSubmit,
     formState: { errors },
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+    // eslint-disable-next-line react-hooks/rules-of-hooks
   } = useForm<FormValues>();
+
+  const [serviceData, setServiceData] = useState({
+    seta_id: 0,
+    seta_name: "",
+    seta_seq: 0,
+  });
+
+  useEffect(() => {
+    const filter = servicetask?.data.filter((serv: any) => {
+      return serv.seta_id === props.isEdit.id;
+    })[0];
+
+    setServiceData(filter);
+  }, [props.isEdit.id, servicetask]);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const dispatch = useDispatch();
   // eslint-disable-next-line react-hooks/rules-of-hooks
-//   const [servicetas, setServicetask] = useState<any>({});
+  //   const [servicetas, setServicetask] = useState<any>({});
 
   const handleEdit = async (data: any) => {
     dispatch(doUpdateServiceTask({ id: props.isEdit.id, data }));
     props.closeModal();
   };
-//   console.log(props)
+  //   console.log(props)
 
   const handleError = (errors: any) => {};
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-//   useEffect(() => {
-//     setServicetask(
-//       servicetask.filter((data: any) => data.id === props.isEdit.id)[0]
-//     );
-//   }, [props.isEdit.id, servicetask]);
+  //   useEffect(() => {
+  //     setServicetask(
+  //       servicetask.filter((data: any) => data.id === props.isEdit.id)[0]
+  //     );
+  //   }, [props.isEdit.id, servicetask]);
 
-//   console.log(servicetask)
+  //   console.log(servicetask)
   const registerOptions = {
     seta_name: { required: "Name is required" },
     seta_seq: {
@@ -48,7 +62,7 @@ export default function EditServiceMaster(props: any) {
   return (
     <div>
       <Transition appear show={props.isEdit.status} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={props.closeModal}>
+        <Dialog as="div" className="relative z-50" onClose={props.closeModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -83,9 +97,7 @@ export default function EditServiceMaster(props: any) {
                     Add/Edit Task Name
                   </Dialog.Title>
                   <div className="mt-2">
-                    <form
-                      onSubmit={handleSubmit(handleEdit, handleError)}
-                    >
+                    <form onSubmit={handleSubmit(handleEdit, handleError)}>
                       <div className="grid grid-cols-1 gap-4">
                         <div className="col-span-1">
                           <label className="block text-gray-700">
@@ -97,6 +109,7 @@ export default function EditServiceMaster(props: any) {
                               "seta_name",
                               registerOptions.seta_name
                             )}
+                            defaultValue={serviceData.seta_name}
                             className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
                           />
                           <small className="text-danger">
@@ -111,6 +124,7 @@ export default function EditServiceMaster(props: any) {
                           <input
                             type="text"
                             {...register("seta_seq", registerOptions.seta_seq)}
+                            defaultValue={serviceData.seta_seq}
                             className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
                           />
                           <small className="text-danger">

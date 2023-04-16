@@ -30,11 +30,13 @@ export default function AddUserAccount(props: any) {
   const dispatch = useDispatch();
   const handleError = (errors: any) => {};
   const handleSave = async (data: FormValues) => {
-
+  const loginData: any = localStorage.getItem("loginData")
+    const objLoginData = JSON.parse(loginData)
+    const user_id = objLoginData.user_id
     try {
       const dataAll = {
         usac_entity_id: data.usac_entity_id,
-        usac_user_id: data.usac_user_id,
+        usac_user_id: user_id,
         usac_account_number: data.usac_account_number,
         usac_saldo: data.usac_saldo,
         usac_type: data.usac_type,
@@ -46,7 +48,6 @@ export default function AddUserAccount(props: any) {
     } catch (error) {
       console.error(error);
     }
-    // console.log("jhkshfkh", data);
   };
   const [pilih, setPilih] = useState()
   const handleSelect = (e:any) =>{
@@ -61,7 +62,6 @@ export default function AddUserAccount(props: any) {
 
   const registerOptions = {
     usac_entity_id: { required: "Entity id is required" },
-    // usac_user_id: ,
     usac_account_number: { required: "Account Number is required" },
     usac_saldo: { required: "Saldo is required" },
     usac_type: { required: "Type is required" },
@@ -71,6 +71,8 @@ export default function AddUserAccount(props: any) {
 
   return (
     <div>
+
+      
       <Transition appear show={props.isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={props.closeModal}>
           <Transition.Child
@@ -120,7 +122,7 @@ export default function AddUserAccount(props: any) {
                             <option key={d.entity_id} value={d.entity_id}>
                               {d.bankname || d.fintechname}
                             </option>
-                          ))}
+                              ))}
                         </select>
                            
                             {
@@ -212,6 +214,7 @@ export default function AddUserAccount(props: any) {
                             "usac_expmonth",
                             registerOptions.usac_expmonth
                           )}
+                          placeholder="MM"
                         />
                         {errors?.usac_expmonth && (
                           <p className="text-red-500 text-xs italic">
@@ -226,6 +229,7 @@ export default function AddUserAccount(props: any) {
                         </label>
                         <input
                           className="shadow appearance-none border rounded w-full py-3 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:bg-blue-100"
+                          placeholder="YYYY"
                           id="description"
                           type="text"
                           {...register(
@@ -244,7 +248,7 @@ export default function AddUserAccount(props: any) {
                       <div className='flex justify-between'>
                         <button
                           type='submit'
-                          className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
+                          className='text-white bg-primary/90 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
                         >
                           Submit
                         </button>

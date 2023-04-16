@@ -13,7 +13,7 @@ import PhoneInput from 'react-phone-input-2'
 import Select from "react-tailwindcss-select";
 import 'react-phone-input-2/lib/style.css'
 import { useDispatch, useSelector } from "react-redux";
-import { doRequestGetOneDetailPembayaran } from "@/redux/booking/action/bookingActionReducer";
+
 import { ClipLoader } from "react-spinners";
 import { slide as Menu } from 'react-burger-menu'
 import { Dialog, Transition } from "@headlessui/react";
@@ -22,6 +22,7 @@ import apiMethodBooking from "@/api/booking/apiMethodBooking";
 import { useFormik } from "formik";
 import secureLocalStorage from "react-secure-storage";
 import SectionFooter from "@/components/ComponentsYudha/section-footer";
+import { doRequestGetOneDetailPembayaran } from "@/redux/booking/action/bookingActionReducer";
 
 const options = [
     { value: 'chocolate', label: 'Chocolate' },

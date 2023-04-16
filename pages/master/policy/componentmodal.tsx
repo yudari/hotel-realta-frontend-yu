@@ -1,6 +1,9 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { AiOutlineDoubleRight } from "react-icons/ai";
+import { BsEyeSlashFill } from "react-icons/bs";
+import { FaMehRollingEyes } from "react-icons/fa";
+import { VscEyeClosed } from "react-icons/vsc";
 
 export default function Modal({ children }: any) {
   let [isOpen, setIsOpen] = useState(false);

@@ -12,15 +12,12 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import AddUserAccount from "./addUserAccount";
 import EditUserAccount from "./editUserAccount";
-
+import { AiOutlinePlus } from "react-icons/ai";
 
 export default function userAccount() {
-  const loginData: any = localStorage.getItem("loginData")
-  const objLoginData = JSON.parse(loginData)
-  const user_id = objLoginData.user_id
-
-  console.log(user_id)
-
+  const loginData: any = localStorage.getItem("loginData");
+  const objLoginData = JSON.parse(loginData);
+  const user_id = objLoginData.user_id;
 
   let { accounts, message, refresh } = useSelector(
     (state: any) => state.userAccountReducers
@@ -64,24 +61,17 @@ export default function userAccount() {
     <div className="bg-white">
       <>
         {/* component */}
-        <div className="bg-white p-8 rounded-md w-full">
-          <div className=" flex items-center justify-between pb-6">
-            <div>
-            <h1 style={{ fontSize: "1.5em" }} className="text-gray-600 font-semibold">
-  User Account
-</h1>
-
-            </div>
+        <div className="bg-white p-4 rounded-md w-full">
+          <div className=" flex items-center justify-end pb-6">
+            
             <div className="flex items-center justify-between">
-
               <div className="lg:ml-40 ml-10 space-x-8">
                 <button
                   onClick={() => setOpen(true)}
                   type="button"
-                  className="order-0 inline-flex items-center px-4 py-2 border border-transparent rounded-md
-            bg-blue-900 text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500
-            sm:order-1"
+                  className="bg-primary hover:bg-primary-hover transition-colors ease-in duration-100 p-2 rounded text-white flex items-center gap-2 border border-primary"
                 >
+                  <AiOutlinePlus className="text-xl" />
                   Add
                 </button>
               </div>
@@ -90,15 +80,15 @@ export default function userAccount() {
           <div>
             {/* div bawah hilangkan overflow-x-auto */}
             <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4">
-               {/*hilangkan overflow-hidden  */}
+              {/*hilangkan overflow-hidden  */}
               <div className="inline-block min-w-full shadow rounded-lg">
-                <table className="min-w-full leading-normal">
-                  <thead>
+                <table className="w-full text-sm text-left text-gray-500">
+                  <thead className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     <tr>
                       {((column && column) || []).map((col) => (
                         <th
                           key={col.name}
-                          className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                          className="px-6 py-3"
                         >
                           <span className="lg:pl-2">{col.name}</span>
                         </th>
@@ -108,17 +98,17 @@ export default function userAccount() {
                   <tbody>
                     {(accounts || []).map((data: any) => (
                       <>
-                        <tr key={data.usac_account_number}>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 border-b-2 border-gray-200">
+                        <tr key={data.usac_account_number} className="bg-white border-b border-gray-200">
+                          <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                             {data.usac_account_number}
                           </td>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 border-b-2 border-gray-200">
+                          <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                             {data.entity_name}
                           </td>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 border-b-2 border-gray-200">
+                          <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                             {data.usac_saldo}
                           </td>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 border-b-2 border-gray-200">
+                          <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                             {data.usac_type}
                           </td>
 
@@ -152,8 +142,8 @@ export default function userAccount() {
                                         <button
                                           className={`${
                                             active
-                                              ? "bg-blue-900 text-white"
-                                              : "text-gray-900"
+                                              ? "bg-primary text-white"
+                                              : "text-primary"
                                           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                           onClick={() =>
                                             editOpen(
@@ -185,8 +175,8 @@ export default function userAccount() {
                                         <button
                                           className={`${
                                             active
-                                              ? "bg-red-600 text-white"
-                                              : "text-gray-900"
+                                              ? "bg-danger-secondary text-white"
+                                              : "text-primary"
                                           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                           onClick={() =>
                                             deleteOpen(data.usac_account_number)

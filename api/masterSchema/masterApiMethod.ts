@@ -25,6 +25,7 @@ const getAllIncludeCountry = (id: number) => {
   return axios.get(`/country/country/${id}`);
 };
 const createCountry = (data: any) => {
+  console.log("Create country", data);
   return axios.post("/country", data);
 };
 const updateCountry = (id: number, data: any) => {
@@ -47,8 +48,8 @@ const createProvince = (data: any) => {
 const updateProvince = (id: number, data: any) => {
   return axios.put(`/provinces/${id}`, data);
 };
-const deleteProvince = (id: number, data: any) => {
-  return axios.delete(`/provinces/${id}`, data);
+const deleteProvince = (id: number) => {
+  return axios.delete(`/provinces/${id}`);
 };
 
 //================ApiMethodCity=============//
@@ -67,8 +68,8 @@ const createCity = (data: any) => {
 const updateCity = (id: number, data: any) => {
   return axios.put(`/city/${id}`, data);
 };
-const deleteCity = (id: number, data: any) => {
-  return axios.delete(`/city/${id}`, data);
+const deleteCity = (id: number) => {
+  return axios.delete(`/city/${id}`);
 };
 
 //=============//ApiMethodAddress===========//
@@ -84,8 +85,8 @@ const createAddress = (data: any) => {
 const updateAddress = (id: number, data: any) => {
   return axios.put(`/address/${id}`, data);
 };
-const deleteAddress = (id: number, data: any) => {
-  return axios.delete(`/address/${id}`, data);
+const deleteAddress = (id: number) => {
+  return axios.delete(`/address/${id}`);
 };
 
 //=============ApiMethodServiceTask==========//
