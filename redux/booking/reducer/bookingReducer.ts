@@ -12,14 +12,14 @@ function bookingReducers(state = initialState, action: any) {
     switch (type) {
         case ActionTypesBooking.RES_GET_ALL_LIST_BOOKING:
             return {
-                ...state,
+
                 bookings: payload,
                 status: true,
                 message: 'Data berhasil didapatkan',
             };
         case ActionTypesBooking.RES_GET_ONE_BOOKING:
             return {
-                ...state,
+
                 bookings: payload,
                 status: true,
                 message: `Data telah berhasil didapatkan`

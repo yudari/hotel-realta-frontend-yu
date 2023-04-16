@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useCallback, useEffect, useState, CSSProperties } from "react";
+import { useCallback, useEffect, useState, CSSProperties, Fragment, useRef } from "react";
 import HeaderNavbar from "../../../components/ComponentsYudha/header-navbar";
 import SectionCardSearchBooking from "../../../components/ComponentsYudha/section-card-search-booking";
 import SectionDetailsOrder from "../../../components/ComponentsYudha/section-details-order";
@@ -17,6 +17,12 @@ import { Carousel } from '@trendyol-js/react-carousel';
 
 import ClipLoader from "react-spinners/ClipLoader";
 import apiMethodBooking from "@/api/booking/apiMethodBooking";
+import secureLocalStorage from "react-secure-storage";
+import { Dialog, Transition } from "@headlessui/react";
+import { Rating } from '@smastrom/react-rating'
+
+import '@smastrom/react-rating/style.css'
+import ApiMethodHotel from "@/api/hotel/apiMethodHotel";
 
 const override: CSSProperties = {
     display: "block",
@@ -26,6 +32,10 @@ const override: CSSProperties = {
 const DetailBookingFinal: NextPage = (props) => {
     let [loading, setLoading] = useState(true);
     let [color, setColor] = useState("#ffffff");
+    let [openModalComment, setOpenModalComment] = useState(false)
+    let [ratingReview, setRatingReview] = useState(3)
+    let [user, setUser] = useState<any>({})
+    const ratingRef = useRef<HTMLDivElement>(null);
     let dataAllPhotos: any[] = []
     const { bookings, message, status } = useSelector((state: any) => state.bookingReducers)
     const { otherRooms, message: messageOtherRooms, status: statusOtherRooms } = useSelector((state: any) => state.otherRoomsReducers)
@@ -46,14 +56,51 @@ const DetailBookingFinal: NextPage = (props) => {
     })
     const dispatch = useDispatch();
     const onFrameButtonClick = useCallback(() => {
-        router.replace('/booking/list-booking-final')
+        router.push('/booking/list-booking-final')
     }, []);
+
+    const onStartModal = () => {
+        setOpenModalComment(true)
+    }
+
+    const handleRating = (rate: number) => {
+        setRatingReview(rate)
+    }
+
+    const onSubmitComment = async (e: any) => {
+        e.preventDefault()
+        const dataInputComment = {
+            hore_user_review: e.target.user_comment.value,
+            hore_rating: ratingReview,
+            hore_user_id: Number(e.target.user_id.value),
+            hore_hotel_id: Number(e.target.hotel_id.value)
+        }
+
+        console.log(dataInputComment)
+        try {
+            const dataResponseInputComment = await ApiMethodHotel.createHotelReviews(dataInputComment)
+            if (dataResponseInputComment) {
+                e.target.user_comment.value = '';
+                setRatingReview(0)
+                e.target.user_id.value = "";
+                e.target.hotel_id.value = ""
+                setOpenModalComment(false)
+            } else {
+                throw 'Gagal Input'
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
         if (router.isReady) {
+            secureLocalStorage.removeItem('yu_date')
+            const dataUser = JSON.parse(localStorage.getItem('loginData')!)
+            setUser(dataUser)
             dispatch(doRequestGetBookingByQuery(router.query.idRooms, router.query.idHotel, router.query.startDate, router.query.endDate, router.query.dataRooms, router.query.guestRooms))
         }
-    }, [router.isReady]);
+    }, [router.isReady, openModalComment]);
 
     useEffect(() => {
         setTimeout(() => {
@@ -67,8 +114,20 @@ const DetailBookingFinal: NextPage = (props) => {
         }
     }, [bookings.data?.data_rooms])
 
+    useEffect(() => {
+        const handleOutsideClick = (event: any) => {
+            if (!ratingRef?.current?.contains(event.target)) {
+                setRatingReview(0);
+            }
+        };
 
-    console.log(bookings)
+        document.addEventListener('click', handleOutsideClick);
+        return () => {
+            document.removeEventListener('click', handleOutsideClick);
+        };
+    }, []);
+
+
     return (
         <>
             <Head>
@@ -96,7 +155,7 @@ const DetailBookingFinal: NextPage = (props) => {
                     aria-label="Loading"
                     data-testid="loader"
                 /> : <>
-                    <SectionCardSearchBook changeSearchData={setSearchData} />
+                    <SectionCardSearchBook classNames={`hidden`} changeSearchData={setSearchData} />
 
                     <div className="self-stretch flex flex-col pt-[45px] px-[92px] pb-0 items-start justify-start">
 
@@ -117,7 +176,7 @@ const DetailBookingFinal: NextPage = (props) => {
                     <SectionRooms dataOtherRooms={otherRooms} />
                     <div className="self-stretch flex flex-col pt-[26px] px-[92px] pb-0 items-start justify-start">
                         <div className="w-full flex flex-col items-start justify-start gap-[49px]">
-                            <ContainerRating dataRatings={bookings.data.data_rooms[0].hotel} />
+                            <ContainerRating onOpenModalComment={onStartModal} dataRatings={bookings.data.data_rooms[0].hotel} />
                             <ContainerReviewsUsers dataReviews={bookings.data.data_rooms[0].hotel} />
                         </div>
                     </div>
@@ -126,6 +185,86 @@ const DetailBookingFinal: NextPage = (props) => {
 
 
             </div>
+            {/* Modal Add Comment User */}
+            {!loading && <Transition appear show={openModalComment} as={Fragment}>
+                <Dialog as="div" className="relative z-10 font-body-txt-body-s-regular" onClose={() => setOpenModalComment(false)}>
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95"
+                            >
+                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-lg font-semibold mb-2  text-darkslategray-300 "
+                                    >
+                                        Add Your Review
+                                    </Dialog.Title>
+                                    <p className="text-sm text-darkslategray-100">Give us your feedback</p>
+                                    <div className="h-[1px] mt-2 mb-4 bg-gray-300"></div>
+                                    <form onSubmit={onSubmitComment} className="mt-3">
+                                        <div className="mb-6">
+                                            <label htmlFor="nama-item" className="block mb-2 text-md  font-semibold font-body-txt-body-s-regular text-gray-900 dark:text-white">Comment</label>
+
+                                            <textarea required placeholder="Insert your comment" name="user_comment" id="user-comment" className="w-full rounded-sm focus:border-darkslategray-300 focus:bg-white" cols={30} rows={3} />
+                                        </div>
+
+                                        <div className="mb-6 w-full">
+                                            <label htmlFor="nama-item" className="block mb-2 text-md  font-semibold font-body-txt-body-s-regular text-gray-900 dark:text-white">Rating</label>
+
+                                            <Rating ref={ratingRef} style={{ maxWidth: 250 }} value={ratingReview} onChange={handleRating} />
+                                        </div>
+
+
+                                        <div className="mb-6 w-full hidden">
+                                            <label htmlFor="nama-item" className="block mb-2 text-md  font-semibold font-body-txt-body-s-regular text-gray-900 dark:text-white">Hotel</label>
+
+                                            <input type="number" disabled value={bookings.data?.data_rooms[0]?.hotel.hotel_id} name='hotel_id' />
+                                        </div>
+
+                                        <div className="mb-6 w-full hidden">
+                                            <label htmlFor="nama-item" className="block mb-2 text-md  font-semibold font-body-txt-body-s-regular text-gray-900 dark:text-white">Users</label>
+
+                                            <input type="text" disabled value={user?.user_id} name='user_id' />
+                                        </div>
+                                        <div className="h-[1px] mt-2 mb-4 bg-gray-300"></div>
+                                        <div className="button-container w-full flex flex-row-reverse justify-start gap-5">
+                                            <button type="submit" className="text-white bg-darkslategray-300 hover:bg-darkslategray-100 focus:ring-4 focus:outline-none focus:ring-darkslategray-100 font-medium rounded-md text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-darkslategray-200 dark:hover:bg-darkslategray-200 dark:focus:ring-darkslategray-100">Submit</button>
+
+                                            <button type="submit" className="text-white bg-red-500 hover:bg-red-400 focus:ring-4 focus:outline-none focus:ring-red-400 font-medium rounded-md text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-darkslategray-200 dark:hover:bg-darkslategray-200 dark:focus:ring-darkslategray-100">Cancel</button>
+                                        </div>
+
+
+                                    </form>
+
+
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>}
+
+
+
         </>
     );
 };

@@ -80,3 +80,11 @@ export const doResponseGetOtherRooms = (payload: any) => {
     payload: payload,
   }
 }
+
+export const doResponseGetOneDetailPembayaran = (payload: any) => {
+  return {
+    type: ActionTypesBooking.RES_GET_ONE_DETAIL_PEMBAYARAN_BOOKING,
+    payload: payload
+  }
+}
+

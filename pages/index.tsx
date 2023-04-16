@@ -29,7 +29,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="relative bg-neutrals w-full flex flex-col py-2.5 px-0 box-border items-start justify-start gap-[10px] lg:h-auto lg:gap-[22px]">
+      <div className="relative bg-neutrals w-full flex flex-col  px-0 box-border items-start justify-start lg:h-auto ">
         <HeaderNavbar
           vector="/vector17.svg"
           vector1="/vector18.svg"
@@ -45,9 +45,9 @@ export default function Home() {
         />
         <JumbotronSection />
         <ExploreSection />
-        <SectionLiburan />
+        {/* <SectionLiburan />
         <HotelFavoritesSection />
-        <HotelSubscribeSection />
+        <HotelSubscribeSection /> */}
         <SectionFooter />
       </div>
     </>

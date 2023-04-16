@@ -48,7 +48,7 @@ const JumbotronSection: NextPage = () => {
         <input
           type="text"
           id="floating_standard"
-          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          className="block py-2.5 px-0 w-full text-[14px] text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
           onClick={onClick}
           value={value}
@@ -56,9 +56,9 @@ const JumbotronSection: NextPage = () => {
         />
         <label
           htmlFor="floating_standard"
-          className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          className="absolute text-[14px] text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
         >
-          Check Buka
+          Check In
         </label>
       </div>
     )
@@ -70,7 +70,7 @@ const JumbotronSection: NextPage = () => {
         <input
           type="text"
           id="floating_standard"
-          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          className="block py-2.5 px-0 w-full text-[14px] text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
           onClick={onClick}
           value={value}
@@ -78,29 +78,29 @@ const JumbotronSection: NextPage = () => {
         />
         <label
           htmlFor="floating_standard"
-          className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          className="absolute text-[14px] text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
         >
-          Check Close
+          Check Out
         </label>
       </div>
     )
   );
 
   return (
-    <div className="self-stretch h-[634px] shrink-0 flex flex-col py-0 px-[92px] box-border items-start justify-center bg-[url(/section-jumbotron@3x.png)] bg-cover bg-no-repeat bg-[top] relative text-left text-17xl text-neutrals font-body-txt-body-s-regular lg:pl-24 lg:pr-24 lg:box-border md:h-[800px] md:items-start md:justify-start md:pl-8 md:pt-5 md:pr-8 md:box-border sm:pl-2 sm:pr-2 sm:pb-0 sm:box-border sm:relative">
-      <div className="self-stretch flex flex-col items-start justify-start relative gap-[10px] sm:flex-1 sm:gap-[10px]">
+    <div className="self-stretch h-[634px] shrink-0 flex flex-col py-0 px-[92px] box-border items-start justify-center bg-[url(/section-jumbotron@3x.png)] bg-cover bg-no-repeat bg-[top] relative text-left text-[36px] text-neutrals font-body-txt-body-s-regular yu_lg:pl-24 yu_lg:pr-24 yu_lg:box-border yu_md:h-[800px] yu_md:items-start yu_md:justify-start yu_md:pl-8 yu_md:pt-5 yu_md:pr-8 yu_md:box-border yu_sm:pl-2 yu_sm:pr-2 yu_sm:pb-0 yu_sm:box-border yu_sm:relative">
+      <div className="self-stretch flex flex-col items-start justify-start relative gap-[10px] yu_sm:flex-1 yu_sm:gap-[10px]">
         <ContainerHeaderContent />
         <div
-          className="self-stretch my-0 mx-[!important] absolute top-[274px] left-[12px] rounded-2xl bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col py-8 px-6 box-border items-end justify-center gap-[32px] [&.animate]:animate-[1s_ease-in_0s_1_normal_forwards_fade-in] opacity-[0] min-w-full z-[1] text-xl text-darkslategray-300 font-montserrat-semibold-14 lg:self-stretch lg:w-auto md:self-stretch md:w-auto md:h-auto sm:self-stretch sm:w-auto sm:items-center sm:justify-center"
+          className="self-stretch my-0 mx-[!important] absolute top-[274px] left-[12px] rounded-2xl bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col py-8 px-6 box-border items-end justify-center gap-[32px] [&.animate]:animate-[1s_ease-in_0s_1_normal_forwards_fade-in] opacity-[0] min-w-full z-[1] text-[18px] text-darkslategray-300 font-montserrat-semibold-14 yu_lg:self-stretch yu_lg:w-auto yu_md:self-stretch yu_md:w-auto yu_md:h-auto yu_sm:self-stretch yu_sm:w-auto yu_sm:items-center yu_sm:justify-center"
           data-animate-on-scroll
         >
           <div className="self-stretch relative font-semibold">
             Temukan Hotel Impianmu Sekarang!
           </div>
-          <div className="self-stretch flex flex-row items-center justify-start gap-[16px] text-base md:flex-col">
+          <div className="self-stretch flex flex-row items-center justify-start gap-[16px] text-[16px] yu_md:flex-col">
             <div className="relative z-0 w-full">
-              <input type="text" id="floating_standard" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
-              <label htmlFor="floating_standard" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cari kota, negara, provinsi</label>
+              <input type="text" id="floating_standard" className="block py-2.5 px-0 w-full text-[14px] text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+              <label htmlFor="floating_standard" className="absolute text-[14px] text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cari kota, negara, provinsi</label>
             </div>
 
 
@@ -128,7 +128,7 @@ const JumbotronSection: NextPage = () => {
                   alt=""
                   src="/building2.svg"
                 />
-                <div className="relative text-sm font-medium font-montserrat-semibold-14 text-neutrals text-left">
+                <div className="relative text-[14px] font-medium font-montserrat-semibold-14 text-neutrals text-left">
                   Show Places
                 </div>
               </button>

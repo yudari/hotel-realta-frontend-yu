@@ -18,10 +18,10 @@ const SectionFooter: NextPage<SectionFooterType> = ({
 
   return (
     <div
-      className="self-stretch bg-darkslategray-300 h-[360px] shrink-0 flex flex-col py-16 px-[104px] box-border items-start justify-center text-left text-lg text-neutrals font-yeseva-one lg:pl-16 lg:pr-16 lg:box-border md:py-[22px] md:px-8 md:box-border sm:h-auto sm:pt-[08px] sm:px-3 sm:pb-2 sm:box-border mq720:h-auto"
+      className="self-stretch no-print bg-darkslategray-300 h-[360px] shrink-0 flex flex-col py-16 px-[104px] box-border items-start justify-center text-left text-[18px] text-neutrals font-yeseva-one yu_lg:pl-16 yu_lg:pr-16 yu_lg:box-border yu_md:py-[22px] yu_md:px-8 yu_md:box-border yu_sm:h-auto yu_sm:pt-[08px] yu_sm:px-3 yu_sm:pb-2 yu_sm:box-border yu_mq720:h-auto"
       style={sectionFooterStyle}
     >
-      <div className="self-stretch flex flex-row items-start justify-start gap-[140px] mq720:flex-col mq720:gap-[42px] mq720:items-center mq720:justify-start">
+      <div className="self-stretch flex flex-row items-start justify-start gap-[140px] yu_mq720:flex-col yu_mq720:gap-[42px] yu_mq720:items-center yu_mq720:justify-start">
         <div className="flex flex-col items-center justify-start gap-[24px]">
           <div className="w-[190px] flex flex-col items-center justify-start">
             <img
@@ -31,7 +31,7 @@ const SectionFooter: NextPage<SectionFooterType> = ({
             />
             <div className="w-[190px] h-[33px] shrink-0 flex flex-col items-center justify-start gap-[2px]">
               <div className="relative">HOTEL REALTA</div>
-              <div className="relative text-5xs font-montserrat-semibold-14">
+              <div className="relative text-[8px] font-montserrat-semibold-14">
                 EXPERIENCE ELEVATED LUXURY AT ITS FINEST
               </div>
             </div>
@@ -59,10 +59,10 @@ const SectionFooter: NextPage<SectionFooterType> = ({
             />
           </div>
         </div>
-        <div className="flex-1 flex flex-row items-start justify-start gap-[24px] text-base font-body-txt-body-s-regular sm:flex-col mq720:flex-[unset] mq720:self-stretch">
+        <div className="flex-1 flex flex-row items-start justify-start gap-[24px] text-[16px] font-body-txt-body-s-regular yu_sm:flex-col yu_mq720:flex-[unset] yu_mq720:self-stretch">
           <div className="w-[151px] shrink-0 flex flex-col items-start justify-start gap-[16px]">
             <b className="relative">Hotel Kita</b>
-            <div className="self-stretch flex flex-col items-start justify-start gap-[12px] text-sm">
+            <div className="self-stretch flex flex-col items-start justify-start gap-[12px] text-[14px]">
               <div className="self-stretch relative font-medium opacity-[0.7]">
                 Jakarta
               </div>
@@ -77,9 +77,9 @@ const SectionFooter: NextPage<SectionFooterType> = ({
               </div>
             </div>
           </div>
-          <div className="flex-1 flex flex-col items-start justify-start gap-[16px] sm:flex-[unset] sm:self-stretch">
+          <div className="flex-1 flex flex-col items-start justify-start gap-[16px] yu_sm:flex-[unset] yu_sm:self-stretch">
             <b className="relative">About Us</b>
-            <div className="self-stretch flex flex-col items-start justify-start text-sm">
+            <div className="self-stretch flex flex-col items-start justify-start text-[14px]">
               <div className="self-stretch relative leading-[175%] font-medium opacity-[0.7]">
                 Kami adalah platform booking hotel terpercaya yang menyediakan
                 pengalaman menginap terbaik dengan harga terbaik. Kami

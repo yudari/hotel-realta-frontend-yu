@@ -1,11 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './node_modules/flowbite-react/**/*.js',
-    './app/**/*.{js,ts,jsx,tsx}',
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-
+    "./node_modules/flowbite-react/**/*.js",
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-tailwindcss-select/dist/index.esm.js",
     // Or if using `src` directory:
     './src/**/*.{js,ts,jsx,tsx}',
   ],
@@ -67,14 +67,13 @@ module.exports = {
         darkorchid: '#CC2BD2',
         ffff: '#ffff',
         steelblue: '#2c5072',
+      fontFamily: {
+        "body-txt-body-s-regular": "Poppins",
+        "montserrat-semibold-14": "Montserrat",
+        "yeseva-one": "'Yeseva One'",
+        inherit: "inherit",
+        "text-sm-normal": "Inter",
       },
-      // fontFamily: {
-      //   "body-txt-body-s-regular": "Poppins",
-      //   "montserrat-semibold-14": "Montserrat",
-      //   "yeseva-one": "'Yeseva One'",
-      //   inherit: "inherit",
-      //   "text-sm-normal": "Inter",
-      // },
       // borderRadius: { "81xl": "100px", lg: "18px", xl: "20px" },
       // fontSize: {
       //   sm: "14px",
@@ -94,14 +93,14 @@ module.exports = {
       //   "13xl": "32px",
       //   "7xl": "26px",
       // },
-      // screens: {
-      //   lg: { max: "1200px" },
-      //   md: { max: "960px" },
-      //   sm: { max: "420px" },
-      //   mq720: { raw: "screen and (max-width: 720px)" },
-      // },
+      screens: {
+        yu_lg: { max: "1200px" },
+        yu_md: { max: "960px" },
+        yu_sm: { max: "420px" },
+        yu_mq720: { raw: "screen and (max-width: 720px)" },
+      },
     },
   },
-  plugins: [require('flowbite/plugin')],
+  plugins: [require('flowbite/plugin'), require('@tailwindcss/forms')],
   // corePlugins: { preflight: false },
 }

@@ -39,6 +39,7 @@ body {
   border-width: 0;
 }
 
+
 @keyframes fade-in {
   0% {
     opacity: 0;
@@ -140,4 +141,20 @@ body {
 }
 .thumbnail .keen-slider__slide.active {
   border: 2px dashed black;
+}
+
+@media print {
+  .component-to-print {
+    display: block !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: visible;
+  }
+  .no-print {
+    display: none;
+  }
+  @page {
+    size: tabloid;
+  }
 }

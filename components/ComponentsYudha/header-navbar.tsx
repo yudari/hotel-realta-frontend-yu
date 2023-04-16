@@ -1,8 +1,10 @@
 import type { NextPage } from "next";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import CSS, { Property } from "csstype";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
+import { Menu } from "@headlessui/react";
+import apiMethodBooking from "@/api/booking/apiMethodBooking";
 
 type HeaderNavbarType = {
   vector?: string;
@@ -15,6 +17,7 @@ type HeaderNavbarType = {
   vector7?: string;
   vector8?: string;
   vector9?: string;
+  idboor?: any;
 
   /** Style props */
   headerLogginSectionHeaderJustifyContent?: Property.JustifyContent;
@@ -48,7 +51,10 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
   vectorLeft1,
   vectorLeft2,
   onFrameButtonClick,
+  idboor
 }) => {
+  const [users, setUsers] = useState<any>({})
+  const [usersDetail, setUsersDetail] = useState<any>({})
   const headerLoggedInStyle: CSS.Properties = useMemo(() => {
     return {
       justifyContent: headerLogginSectionHeaderJustifyContent,
@@ -80,34 +86,95 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
     };
   }, [vectorLeft2]);
   const router = useRouter()
+  useEffect(() => {
+    const userLogin = JSON.parse(localStorage.getItem("loginData") || "{}");
+    setUsers(userLogin)
+    getUsersDetail(userLogin.user_id)
+  }, [])
 
-  const onBannerHeaderClick = useCallback(() => {
+  const onBannerHeaderClick = useCallback(async (IdBoor: any) => {
+
+    const removeBookingOrder = await apiMethodBooking.removeBookingOrders(IdBoor)
     router.push("/");
   }, [router]);
 
+  const handleMenu = (event: any) => {
+    event.preventDefault();
+    const menu = document.getElementById("user-menu");
+    menu?.classList.toggle("hidden");
+  };
+
+  const toMyProfile = (IdUser: any) => {
+    router.push(`/users/profile/${IdUser}`)
+  }
+
+  const getUsersDetail = async (IdUser: any) => {
+    try {
+
+      const dataResponse = await apiMethodBooking.getUserById(IdUser)
+      const dataUser = dataResponse.data
+      setUsersDetail(dataUser.data)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleDocumentClick = (event: any) => {
+      if (dropdownRef.current && !dropdownRef.current?.contains(event.target)) {
+        setIsOpen(false);
+
+      }
+    };
+
+    document.addEventListener("click", handleDocumentClick);
+
+    return () => {
+      document.removeEventListener("click", handleDocumentClick);
+    };
+  }, []);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleMenuItemClick = () => {
+    setIsOpen(false);
+  };
+
+  useEffect(() => {
+
+  }, [])
+
+
+  console.log(usersDetail)
   return (
     <div
-      className="self-stretch bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col py-[21px] px-[92px] items-start justify-center text-left text-lg text-dimgray font-yeseva-one md:pl-5 md:pt-[21px] md:pr-5 md:box-border"
+      className="self-stretch no-print bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col py-[12px] px-[92px] items-start justify-center text-left text-[18px] text-dimgray font-yeseva-one yu_md:pl-5 yu_md:pt-[21px] yu_md:pr-5 yu_md:box-border"
       style={headerLoggedInStyle}
     >
-      <div className="self-stretch flex flex-row items-center justify-between sm:flex-col sm:gap-[32px]">
+      <div className="self-stretch flex flex-row items-center justify-between yu_sm:flex-col yu_sm:gap-[32px]">
         <button
-          className="cursor-pointer [border:none] p-0 bg-[transparent] w-[111px] h-10 shrink-0 flex flex-col items-start justify-between"
+          className="cursor-pointer [border:none] p-0 bg-[transparent] w-[111px] h-10 shrink-0 flex flex-col items-start justify-center"
           onClick={onFrameButtonClick}
         >
-          <div className="w-[111px] flex flex-row items-center justify-start gap-[4px]">
+          <div className="w-[120px] flex flex-row items-center justify-start gap-[4px]">
             <img
               className="relative w-6 h-6 shrink-0 overflow-hidden"
               alt=""
               src="/ionbed.svg"
             />
-            <div className="flex-1 relative text-sm font-semibold font-montserrat-semibold-14 text-darkslategray-300 text-left">
-              Find Places
+            <div className="flex-1 relative text-[14px] font-semibold font-montserrat-semibold-14 text-darkslategray-300 text-left">
+              Cari Tempat
             </div>
           </div>
-          <div className="self-stretch relative bg-darkslategray-300 h-[5px] shrink-0" />
+
         </button>
-        <div className="w-[190px] shrink-0 flex flex-col items-center justify-start sm:order-[-1]">
+        <div className="w-[190px] shrink-0 flex flex-col items-center justify-start yu_sm:order-[-1]">
           <div className="relative w-[34px] h-[34px] shrink-0 overflow-hidden">
             <img
               className="absolute h-[99.19%] w-[99.17%] top-[0.4%] right-[0.41%] bottom-[0.41%] left-[0.41%] max-w-full overflow-hidden max-h-full"
@@ -199,24 +266,81 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
             />
           </div>
           <div onClick={() => {
-            onBannerHeaderClick()
+            onBannerHeaderClick(idboor)
           }} className="w-[190px] cursor-pointer h-[33px] shrink-0 flex flex-col items-center justify-start gap-[2px]">
             <div className="relative">HOTEL REALTA</div>
-            <div className="relative text-5xs text-center font-body-txt-body-s-regular text-gray-800">
+            <div className="relative text-[8px] text-center font-body-txt-body-s-regular text-gray-800">
               EXPERIENCE ELEVATED LUXURY AT ITS FINEST
             </div>
           </div>
         </div>
-        <div className="w-[252px] shrink-0 flex flex-row items-center justify-between text-center text-base text-darkslategray-300 font-body-txt-body-s-regular">
+
+        {!users && <div className="w-[252px] shrink-0 flex flex-row items-center justify-between text-center text-[16px] text-darkslategray-300 font-body-txt-body-s-regular">
           <div className="rounded bg-neutrals box-border w-[110px] h-10 shrink-0 flex flex-row py-2 px-7 items-center justify-center border-[1px] border-solid border-darkslategray-300 hover:mix-blend-normal hover:bg-darkslategray-300 hover:text-white hover:cursor-pointer">
             <div className="relative leading-[148%]">Daftar</div>
           </div>
           <button className="cursor-pointer [border:none] py-2 px-7 bg-darkslategray-300 rounded w-[110px] h-10 shrink-0 flex flex-row box-border items-center justify-center hover:bg-gray-800 hover:cursor-pointer">
-            <div className="relative text-base leading-[148%] font-body-txt-body-s-regular text-neutrals text-center">
+            <div className="relative text-[16px] leading-[148%] font-body-txt-body-s-regular text-neutrals text-center">
               Login
             </div>
           </button>
-        </div>
+        </div>}
+
+        {users && <div className="relative ml-3" ref={dropdownRef}>
+          <div>
+            <button
+              type="button"
+              className="flex rounded-full bg-gray-800 text-[14px] focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+              id="user-menu-button"
+              aria-expanded={isOpen}
+              aria-haspopup="true"
+              onClick={toggleDropdown}
+            >
+              <span className="sr-only">Open user menu</span>
+              <img
+                className="h-8 w-8 rounded-full"
+                src={`${process.env.BACKEND_URL}/image/users/${usersDetail && usersDetail.user_photo_profile ? usersDetail.user_photo_profile : 'dummy-1.png'}`}
+                alt=""
+              />
+
+            </button>
+          </div>
+
+          {isOpen && (
+            <div
+              className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="user-menu-button"
+
+            >
+              <a
+                href="#"
+                className="block px-4 py-2 text-[14px] text-gray-700 hover:bg-darkslategray-300 hover:text-white"
+                role="menuitem"
+
+                id="user-menu-item-0"
+                onClick={() => {
+                  toMyProfile(users.user_id)
+                }}
+              >
+                My Profile
+              </a>
+
+              <a
+                href="#"
+                className="block px-4 py-2 text-[14px]  text-gray-700 hover:bg-darkslategray-300 hover:text-white"
+                role="menuitem"
+                id="user-menu-item-2"
+                onClick={handleMenuItemClick}
+              >
+                Sign out
+              </a>
+            </div>
+          )}
+        </div>}
+
+
       </div>
     </div>
   );

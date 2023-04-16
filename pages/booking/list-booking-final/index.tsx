@@ -13,7 +13,7 @@ import { ClipLoader } from "react-spinners";
 
 const override: CSSProperties = {
     display: "block",
-    margin: "0 auto",
+    margin: "20px auto",
     borderColor: "rgb(19 41 61 / var(--tw-bg-opacity))",
 };
 
@@ -35,16 +35,17 @@ const ListBookingFinal: NextPage = () => {
     const [searchData, setSearchData] = useState({
         page: 1,
         minSubTotal: 0,
-        maxSubTotal: 0,
+        maxSubTotal: 10000000000000000000000000,
         cityName: '',
         provName: '',
-        countryName: '',
-        regionName: '',
+        countryName: 'Indonesia',
+        regionName: 'Asia',
         startDate: startDateFinal,
         endDate: endDateFinal,
         facilities_support_filter: ['24-Hour Front Desk']
     })
     let [loading, setLoading] = useState(true);
+    let [loadingFilter, setLoadingFilter] = useState(false)
     let [color, setColor] = useState("#ffffff");
     const router = useRouter()
     const dispatch = useDispatch()
@@ -54,7 +55,7 @@ const ListBookingFinal: NextPage = () => {
     }, [router]);
 
     useEffect(() => {
-        console.log(startDateFinal)
+        console.log(bookings)
 
         if (router.pathname === '/booking/list-booking-final') {
 
@@ -63,14 +64,14 @@ const ListBookingFinal: NextPage = () => {
         // else (router.pathname === `/booking/list-booking-final?page=1&minSubtotal=0&maxSubTotal=900000&cityName=&provName=&countryName=Indonesia&regionName=Asia&startDate=${startDate}&endDate=${endDateFinal}&facilities_support_filter=[24-Hour Front Desk]`)
 
 
-    }, [dispatch])
+    }, [router.isReady])
 
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
         }, 2000)
     }, [loading])
-
+    console.log(searchData.endDate)
 
 
     return (
@@ -99,12 +100,13 @@ const ListBookingFinal: NextPage = () => {
                     size={150}
                     aria-label="Loading"
                     data-testid="loader"
-                /> : <>  {bookings && <SectionCardSearchBook changeSearchData={setSearchData} />}
+                /> : <>  {bookings && <SectionCardSearchBook classNames={``} changeSearchData={setSearchData} />}
 
-                    {bookings && <SectionListBooking searchDataBooking={searchData} dataListBooking={bookings} />
+
+                    {bookings && <SectionListBooking searchDataBooking={searchData} dataListBooking={bookings} loadingListBook={undefined} />
                     }
 
-                    <SectionFooter footerSectionSectionFooteHeight="338px" />
+                    <SectionFooter />
                 </>}
 
 

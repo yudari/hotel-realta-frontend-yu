@@ -25,7 +25,7 @@ const apiMethodUserAcc = {
   create,
   update,
   remove,
-  findBKData,
+  findBKData
 }
 
 export default apiMethodUserAcc

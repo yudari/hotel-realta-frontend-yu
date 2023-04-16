@@ -47,6 +47,9 @@ import categorygroupReducer from '../masterSchema/reducer/categorygroupReducer'
 import priceitemsReducer from '../masterSchema/reducer/priceitemsReducer'
 import cityReducer from '../masterSchema/reducer/cityReducer'
 import addressReducer from '../masterSchema/reducer/addressReducer'
+import bookingsTemporaryReducers from "../booking/reducer/bookingTemporary";
+import bookingDetailPembayaranReducers from "../booking/reducer/bookingDetailPembayaranReducers";
+
 
 const logger = createLogger()
 const saga = createSagaMiddleware()
@@ -88,7 +91,8 @@ const reducer = combineReducers({
   rephoReducers,
   ormeReducers,
   ordetReducers,
-
+  bookingsTemporaryReducers,
+  bookingDetailPembayaranReducers,
   regionReducer,
   servicetaskReducer,
   countryReducer,
@@ -102,6 +106,7 @@ const reducer = combineReducers({
 
 const store = configureStore({
   reducer,
+
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,

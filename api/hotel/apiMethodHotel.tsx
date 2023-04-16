@@ -67,21 +67,21 @@ const removeFacilities = (faci_id: number) => {
   return axios.delete(`/facilities/${faci_id}`)
 }
 //=============apiMethod HotelReviews=================
-// const getAllHotelReviews = () => {
-//   return axios.get('/hotel-reviews')
-// }
-// const getAllHotelReviewsById = (hore_id: number) => {
-//   return axios.get(`/hotel-reviews/${hore_id}`)
-// }
-// const createHotelReviews = (data: any) => {
-//   return axios.post('/hotel-reviews', data)
-// }
-// const updateHotelReviews = (hore_id: number, data: any) => {
-//   return axios.put(`/hotel-reviews/${hore_id}`, data)
-// }
-// const removeHotelReviews = (hore_id: number) => {
-//   return axios.delete(`/hotel-reviews/${hore_id}`)
-// }
+const getAllHotelReviews = () => {
+  return axios.get('/hotel-reviews')
+}
+const getAllHotelReviewsById = (hore_id: number) => {
+  return axios.get(`/hotel-reviews/${hore_id}`)
+}
+const createHotelReviews = (data: any) => {
+  return axios.post('/hotel-reviews', data)
+}
+const updateHotelReviews = (hore_id: number, data: any) => {
+  return axios.put(`/hotel-reviews/${hore_id}`, data)
+}
+const removeHotelReviews = (hore_id: number) => {
+  return axios.delete(`/hotel-reviews/${hore_id}`)
+}
 //=============apiMethod FacilitiesSupport=================
 const getAllFacilitiesSupport = () => {
   return axios.get('/facilities-support')
@@ -182,11 +182,11 @@ const ApiMethodHotel = {
   getFacilitiesIncludeFacilityPhotos,
   getFacilitiesIncludeFacilityPriceHistory,
   //===HOTEL REVIEWS===
-  // getAllHotelReviews,
-  // createHotelReviews,
-  // updateHotelReviews,
-  // removeHotelReviews,
-  // getAllHotelReviewsById,
+  getAllHotelReviews,
+  createHotelReviews,
+  updateHotelReviews,
+  removeHotelReviews,
+  getAllHotelReviewsById,
   ///===FACILITIES SUPPORT===
   getAllFacilitiesSupport,
   createFacilitiesSupport,
