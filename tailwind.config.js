@@ -67,7 +67,6 @@ module.exports = {
         darkorchid: '#CC2BD2',
         ffff: '#ffff',
         steelblue: '#2c5072',
-      },
       fontFamily: {
         "body-txt-body-s-regular": "Poppins",
         "montserrat-semibold-14": "Montserrat",
