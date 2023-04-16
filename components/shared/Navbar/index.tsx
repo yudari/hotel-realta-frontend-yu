@@ -36,25 +36,11 @@ export default function Navbar({
     <nav className="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
       <div className="">
         <div className="">
-          <div className="h-6 w-[224px] pt-1">
+          <div className="h-6 w-full pt-1">
             <Breadcrumb />
           </div>
-          <p className="shrink text-3xl capitalize text-navy-700 dark:text-white mt-5">
-            {pathnames.map((name, index) => {
-              const capitalizeRoute =
-                name[0].toUpperCase() + name.slice(1) + " ";
-              const routeTo = `/${pathnames.slice(0, index + 1).join(" ")}`;
-
-              return (
-                <Link
-                  key={routeTo}
-                  href="/dashboard"
-                  className="font-bold capitalize hover:text-navy-700"
-                >
-                  {capitalizeRoute}
-                </Link>
-              );
-            })}
+          <p className="shrink text-3xl capitalize text-navy-700 dark:text-white mt-5 font-bold hover:text-navy-700">
+            {pathnames[0]} {pathnames[pathnames.length - 1]}
           </p>
         </div>
       </div>
