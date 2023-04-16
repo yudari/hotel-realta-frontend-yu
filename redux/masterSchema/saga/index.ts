@@ -23,8 +23,11 @@ import {
 } from "./countrySaga";
 
 import {
+  handleAddProvince,
+  handleDeleteProvince,
   handleGetAllProvince,
   handleGetProvinceByCountryById,
+  handleUpdateProvince,
 } from "./provinceSaga";
 import {
   handleAddPolicy,
@@ -38,8 +41,13 @@ import {
   handleGetAllCategoryGroup,
   handleUpdateCategoryGroup,
 } from "./categorygroupSaga";
-import { handleGetAllPriceItems } from "./priceitemsSaga";
-import { handleGetAllCity, handleGetCityByProvinceById } from "./citySaga";
+import {
+  handleAddPriceItems,
+  handleDeletePriceItems,
+  handleGetAllPriceItems,
+  handleUpdatePriceItems,
+} from "./priceitemsSaga";
+import { handleAddCity, handleDeleteCity, handleGetAllCity, handleGetCityByProvinceById, handleUpdateCity } from "./citySaga";
 import { handleGetAddressByCityById, handleGetAllAddress } from "./addressSaga";
 
 function* watchAll() {
@@ -65,10 +73,16 @@ function* watchAll() {
       ActionTypes.REQ_GET_PROVINCEBYCOUNTRY,
       handleGetProvinceByCountryById
     ),
+    takeEvery(ActionTypes.ADD_PROVINCE, handleAddProvince),
+    takeEvery(ActionTypes.UPDATE_PROVINCE, handleUpdateProvince),
+    takeEvery(ActionTypes.DEL_PROVINCE, handleDeleteProvince),
     //============City============//
     takeEvery(ActionTypes.REQ_GET_CITY, handleGetAllCity),
     takeEvery(ActionTypes.REQ_GET_CITYBYPROVINCE, handleGetCityByProvinceById),
-    //============City============//
+    takeEvery(ActionTypes.ADD_CITY, handleAddCity),
+    takeEvery(ActionTypes.UPDATE_CITY, handleUpdateCity),
+    takeEvery(ActionTypes.DEL_CITY, handleDeleteCity),
+    //============Address============//
     takeEvery(ActionTypes.REQ_GET_ADDRESS, handleGetAllAddress),
     takeEvery(ActionTypes.REQ_GET_ADDRESSBYCITY, handleGetAddressByCityById),
 
@@ -92,6 +106,9 @@ function* watchAll() {
 
     //===============PriceItems==========//
     takeEvery(ActionTypes.REQ_GET_PRICEITEMS, handleGetAllPriceItems),
+    takeEvery(ActionTypes.ADD_PRICEITEMS, handleAddPriceItems),
+    takeEvery(ActionTypes.UPDATE_PRICEITEMS, handleUpdatePriceItems),
+    takeEvery(ActionTypes.DEL_PRICEITEMS, handleDeletePriceItems),
   ]);
 }
 export default watchAll;

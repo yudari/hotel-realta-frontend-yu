@@ -1,8 +1,11 @@
 import { call, put } from "redux-saga/effects";
 import apiMethodMaster from "../../../api/masterSchema/masterApiMethod";
 import {
+  doAddProvinceResponse,
+  doDeleteProvinceResponse,
   doGetProvinceResponse,
   doRequestGetProvinceByCountryByIdResponse,
+  doUpdateProvinceResponse,
 } from "../action/provinceAction";
 import {
   doAddCountryResponse,
@@ -32,9 +35,41 @@ function* handleGetProvinceByCountryById(action: any): any {
   }
 }
 
+function* handleAddProvince(action: any): any {
+  try {
+    const result = yield call(apiMethodMaster.createProvince, action.payload);
+    yield put(doAddProvinceResponse(result.data));
+  } catch (error) {
+    yield put(doAddProvinceResponse({ message: error }));
+  }
+}
+
+function* handleUpdateProvince(action: any): any {
+  try {
+    const result = yield call(
+      apiMethodMaster.updateProvince,
+      action.payload.id,
+      action.payload.dataEdit
+    );
+    yield put(doUpdateProvinceResponse(result.data));
+  } catch (error) {
+    yield put(doUpdateProvinceResponse({ message: error }));
+  }
+}
+
+function* handleDeleteProvince(action: any): any {
+  try {
+    const result = yield call(apiMethodMaster.deleteProvince, action.payload);
+    yield put(doDeleteProvinceResponse(result.data));
+  } catch (error) {
+    yield put(doDeleteProvinceResponse({ message: error }));
+  }
+}
 
 export {
   handleGetAllProvince,
   handleGetProvinceByCountryById,
-  
+  handleAddProvince,
+  handleUpdateProvince,
+  handleDeleteProvince,
 };

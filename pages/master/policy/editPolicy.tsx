@@ -1,11 +1,20 @@
-import { doUpdatePolicy, doUpdatePolicyResponse } from "@/redux/masterSchema/action/policyAction";
+import {
+  doUpdatePolicy,
+  doUpdatePolicyResponse,
+} from "@/redux/masterSchema/action/policyAction";
 import { Dialog, Transition } from "@headlessui/react";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function EditPolicyMaster(props: any) {
+  const [policyData, setPolicyData] = useState({
+    poli_id: 0,
+    poli_name: "",
+    poli_description: "",
+  });
   let { policy } = useSelector((state: any) => state.policyReducer);
+  // console.log(policy);
   type FormValues = {
     poli_name: string;
     poli_description: string;
@@ -21,7 +30,11 @@ export default function EditPolicyMaster(props: any) {
   const dispatch = useDispatch();
 
   const handleEdit = async (data: any) => {
-    dispatch(doUpdatePolicy({ id: props.isEdit.id, data }));
+    const dataEdit = {
+      poli_name: data.poli_name,
+      poli_description: data.poli_description,
+    };
+    dispatch(doUpdatePolicy({ id: props.isEdit.id, dataEdit }));
     props.closeModal();
   };
 
@@ -33,6 +46,14 @@ export default function EditPolicyMaster(props: any) {
       required: "description is required",
     },
   };
+
+  useEffect(() => {
+    const filter = policy.data.filter((poli: any) => {
+      return poli.poli_id === props.isEdit.id;
+    })[0];
+
+    setPolicyData(filter);
+  }, [policy, props.isEdit.id]);
   return (
     <div>
       <Transition appear show={props.isEdit.status} as={Fragment}>
@@ -71,9 +92,7 @@ export default function EditPolicyMaster(props: any) {
                     Add/Edit Policy
                   </Dialog.Title>
                   <div className="mt-2">
-                    <form
-                      onSubmit={handleSubmit(handleEdit, handleError)}
-                    >
+                    <form onSubmit={handleSubmit(handleEdit, handleError)}>
                       <div className="grid grid-cols-1 gap-4">
                         <div className="col-span-1">
                           <label className="block text-gray-700">
@@ -85,6 +104,7 @@ export default function EditPolicyMaster(props: any) {
                               "poli_name",
                               registerOptions.poli_name
                             )}
+                            defaultValue={policyData.poli_name}
                             className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
                           />
                           <small className="text-danger">
@@ -101,6 +121,7 @@ export default function EditPolicyMaster(props: any) {
                               "poli_description",
                               registerOptions.poli_description
                             )}
+                            defaultValue={policyData.poli_description}
                             className="description w-full p-5 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
                           />
                           <small className="text-danger">

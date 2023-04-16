@@ -1,49 +1,54 @@
-import { doUpdateCountry } from "@/redux/masterSchema/action/countryAction";
-import { Dialog, Transition } from "@headlessui/react";
+import { doUpdateCity } from "@/redux/masterSchema/action/city";
+import { Transition, Dialog } from "@headlessui/react";
 import React, { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function EditCountryMaster(props: any) {
-    const [countryData, setCountryData] = useState({
-        country_id: 0,
-        country_name: "",
-      });
-  let { country } = useSelector((state: any) => state.countryReducer);
+export default function EditCityMaster(props: any) {
+  const [cityData, setCityData] = useState({
+    city_id: 0,
+    city_name: "",
+  });
+  let { city } = useSelector((state: any) => state.cityReducer);
   type FormValues = {
-    country_name: string;
-    country_region_id: any;
+    city_name?: string;
+    city_prov_id?: number;
   };
   const {
     register,
     handleSubmit,
     formState: { errors },
-    // eslint-disable-next-line react-hooks/rules-of-hooks
   } = useForm<FormValues>();
-
   const dispatch = useDispatch();
 
   const handleEdit = async (data: any) => {
     const dataEdit = {
-        country_name: data.country.name,
-        country_region_id: Number(data.country_region_id),
-    }
-    dispatch(doUpdateCountry({ id: props.isEdit.id, dataEdit }));
+      city_name: data.city_name,
+      city_prov_id: Number(data.city_prov_id),
+    };
+    dispatch(
+      doUpdateCity({
+        id: props.isEdit.id,
+        dataEdit,
+      })
+    );
     props.closeModal();
   };
 
   const handleError = (errors: any) => {};
 
   const registerOptions = {
-    country_name: { required: "Name is required" },
+    city_name: { required: "Name is required" },
   };
+
+//   console.log(city);
   useEffect(() => {
-    const filter = country.filter((cou: any) => {
-      return cou.country_id === props.isEdit.id;
+    const filter = city.filter((pro: any) => {
+      return pro.city_id === props.isEdit.id;
     })[0];
 
-    setCountryData(filter);
-  }, [props.isEdit.id, country, country.data]);
+    setCityData(filter);
+  }, [props.isEdit.id, city.data, city]);
   return (
     <div>
       <Transition appear show={props.isEdit.status} as={Fragment}>
@@ -73,44 +78,43 @@ export default function EditCountryMaster(props: any) {
               >
                 <Dialog.Panel
                   className="w-full max-w-md transform overflow-hidden rounded-2xl
-               bg-white p-6 text-left align-middle shadow-xl transition-all"
+             bg-white p-6 text-left align-middle shadow-xl transition-all"
                 >
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Add/Edit Country {props.name}
+                    Add/Edit Province {props.name}
                   </Dialog.Title>
                   <div className="mt-2">
                     <form onSubmit={handleSubmit(handleEdit, handleError)}>
                       <div className="grid grid-cols-1 gap-4">
                         <div className="flex gap-4 mt-4">
-                          <label htmlFor="regionName">Region Name</label>
-                          <p>{props.region.name}</p>
+                          <label htmlFor="regionName">Country Name</label>
+                          <p>{props.province.name}</p>
                         </div>
                         <div className="col-span-1">
                           <label className="block text-gray-700">
-                            Country Name
+                            Province Name
                           </label>
                           <input
                             type="text"
                             {...register(
-                              "country_name",
-                              registerOptions.country_name
+                              "city_name",
+                              registerOptions.city_name
                             )}
-                            defaultValue={countryData.country_name}
+                            defaultValue={cityData.city_name}
                             className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
                           />
 
                           <input
                             type="hidden"
-                            {...register("country_region_id")}
-                            value={props.region.regionID}
+                            {...register("city_prov_id")}
+                            value={Number(props.province.provinceID)}
                             className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
                           />
                           <small className="text-danger">
-                            {errors?.country_name &&
-                              errors.country_name.message}
+                            {errors?.city_name && errors.city_name.message}
                           </small>
                         </div>
                       </div>

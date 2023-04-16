@@ -1,12 +1,12 @@
 import Button from "@/components/Button/button";
-import { doAddPriceItems } from "@/redux/masterSchema/action/priceitemAction";
-import { doAddServiceTask } from "@/redux/masterSchema/action/servicetaskAction";
+import { doUpdatePriceItems } from "@/redux/masterSchema/action/priceitemAction";
 import { Transition, Dialog } from "@headlessui/react";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function AddPriceMaster(props: any) {
+export default function EditPriceMaster(props: any) {
+  let { priceitems } = useSelector((state: any) => state.priceitemsReducer);
   type FormValues = {
     prit_name: string;
     prit_price: string;
@@ -17,12 +17,29 @@ export default function AddPriceMaster(props: any) {
     register,
     handleSubmit,
     formState: { errors },
+    // eslint-disable-next-line react-hooks/rules-of-hooks
   } = useForm<FormValues>();
+
+  const [priceItemData, setPriceItemData] = useState({
+    prit_id: 0,
+    prit_name: "",
+    prit_description: "",
+    prit_price: "",
+    prit_type: "",
+  });
+
+  useEffect(() => {
+    const filter = priceitems?.data.filter((price: any) => {
+      return price.prit_id === props.isEdit.id;
+    })[0];
+
+    setPriceItemData({ ...filter, prit_price: filter.prit_price });
+  }, [priceitems, props.isEdit.id]);
+
   const dispatch = useDispatch();
 
-
-  const handleRegistration = async (data: any) => {
-    dispatch(doAddPriceItems(data));
+  const handleEdit = async (data: any) => {
+    dispatch(doUpdatePriceItems({ id: props.isEdit.id, data }));
     props.closeModal();
   };
 
@@ -38,7 +55,7 @@ export default function AddPriceMaster(props: any) {
   };
   return (
     <div>
-      <Transition appear show={props.isOpen} as={Fragment}>
+      <Transition appear show={props.isEdit.status} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={props.closeModal}>
           <Transition.Child
             as={Fragment}
@@ -74,9 +91,7 @@ export default function AddPriceMaster(props: any) {
                     Mohon isi dahulu
                   </Dialog.Title>
                   <div className="mt-2">
-                    <form
-                      onSubmit={handleSubmit(handleRegistration, handleError)}
-                    >
+                    <form onSubmit={handleSubmit(handleEdit, handleError)}>
                       <div className="grid grid-cols-1 gap-4">
                         <div className="col-span-1">
                           <label className="block text-gray-700">
@@ -89,6 +104,7 @@ export default function AddPriceMaster(props: any) {
                               "prit_name",
                               registerOptions.prit_name
                             )}
+                            defaultValue={priceItemData.prit_name}
                             className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
                           />
                           <small className="text-danger">
@@ -149,6 +165,7 @@ export default function AddPriceMaster(props: any) {
                               "prit_description",
                               registerOptions.prit_description
                             )}
+                            defaultValue={priceItemData.prit_description}
                             className="description w-full p-5 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
                           />
                           <small className="text-danger">
@@ -163,6 +180,10 @@ export default function AddPriceMaster(props: any) {
                             {...register(
                               "prit_price",
                               registerOptions.prit_price
+                            )}
+                            defaultValue={priceItemData.prit_price.replace(
+                              "$",
+                              ""
                             )}
                             className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
                           />
