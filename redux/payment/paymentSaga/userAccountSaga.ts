@@ -19,14 +19,14 @@ function* handleGetUserAcc(action: any): any {
   }
 }
 
-function* hanleAddUserAcc(action: any): any {
-  try {
-    const result = yield call(apiMethodUserAcc.create, action.payload)
-    console.log('sayyyyylo', result.data)
-    yield put(doAddUserAccResponse(result.data))
-  } catch (error) {
-    yield put(doAddUserAccResponse({ message: error }))
-  }
+function* hanleAddUserAcc(action:any):any{
+    try{
+      const result = yield call (apiMethodUserAcc.create, action.payload)
+      yield put(doAddUserAccResponse(result.data))
+    }
+    catch(error){
+        yield put(doAddUserAccResponse({message:error}))
+    }
 }
 
 function* handleUpdateUserAcc(action: any): any {

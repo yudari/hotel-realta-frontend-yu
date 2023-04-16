@@ -1,11 +1,11 @@
-import { combineReducers } from 'redux'
-import { configureStore } from '@reduxjs/toolkit'
-import createSagaMiddleware from '@redux-saga/core'
-import { createLogger } from 'redux-logger'
-import orderReducers from '../purchasing/reducer/orderReducer'
-import vendorProdReducers from '../purchasing/reducer/prodVendorReducer'
-import stockReducers from '../purchasing/reducer/stockReducer'
-import vendorReducers from '../purchasing/reducer/vendorReducer'
+import { combineReducers } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
+import createSagaMiddleware from "@redux-saga/core";
+import { createLogger } from "redux-logger";
+import orderReducers from "../purchasing/reducer/orderReducer";
+import vendorProdReducers from "../purchasing/reducer/prodVendorReducer";
+import stockReducers from "../purchasing/reducer/stockReducer";
+import vendorReducers from "../purchasing/reducer/vendorReducer";
 
 import rootSaga from '../saga'
 import { bankReducers } from '../payment/reducer/bankReducer'

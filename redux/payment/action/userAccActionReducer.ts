@@ -14,19 +14,18 @@ export const doGetUserAccResponse = (payload: any) => {
   }
 }
 
-export const doAddUserAcc = (payload: any) => {
-  console.log('melow', payload)
-  return {
-    type: actionType.ADD_USER_ACCOUNT,
-    payload,
-  }
+export const doAddUserAcc = (payload:any) => {
+    return{
+        type:actionType.ADD_USER_ACCOUNT,
+        payload
+    }
 }
 
-export const doAddUserAccResponse = (payload: any) => {
-  return {
-    type: actionType.ADD_USER_ACCOUNT_RESPONSE,
-    payload,
-  }
+export const doAddUserAccResponse = (payload:any) => {
+    return{
+        type:actionType.ADD_USER_ACCOUNT_RESPONSE,
+        payload
+    }
 }
 
 export const doUpadateUserAcc = (...payload: any[]) => {
