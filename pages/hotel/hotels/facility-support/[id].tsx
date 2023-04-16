@@ -1,56 +1,114 @@
-import {
-  doDeleteFacilitiesSupport,
-  doRequestGetFacilitiesSupport,
-} from '../../../redux/hotel/action/actionReducer'
 import React, { useEffect, useState } from 'react'
-import { MdDelete, MdEdit } from 'react-icons/md'
+import { MdAddBox, MdDelete } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
+import {
+  doDeleteFacilitySupportHotel,
+  doRequestGetFacilitiesSupport,
+  doRequestGetHotels,
+} from '@/redux/hotel/action/actionReducer'
 import Image from 'next/image'
-import AddSupport from './addSupport'
-import EditSupport from './editSupport'
+import { FaStar, FaRegStar, FaStarHalfAlt, FaTrashAlt } from 'react-icons/fa'
+import AddSupportHotel from './addSupportHotel'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { AiOutlinePlus } from 'react-icons/ai'
 
-const FacilitiesSupport = () => {
-  let { fasupp, message, refresh } = useSelector(
-    (state: any) => state.facilitiesSupportReducers
-  )
+const Facilities = () => {
+  let { hotels, refresh } = useSelector((state: any) => state.hotelsReducers)
+  const [hotel, setHotels] = useState<any>({})
+
   const dispatch = useDispatch()
+
+  const renderStars = (rating: number) => {
+    const stars = []
+    const fullStars = Math.floor(rating)
+    const halfStar = rating - fullStars >= 0.5 ? true : false
+
+    for (let i = 1; i <= 5; i++) {
+      if (i <= fullStars) {
+        stars.push(<FaStar className='text-amber-400' key={i} />)
+      } else if (halfStar && i === fullStars + 1) {
+        stars.push(<FaStarHalfAlt className='text-amber-400' key={i} />)
+      } else {
+        stars.push(<FaRegStar className='text-amber-400' key={i} />)
+      }
+    }
+
+    return stars
+  }
+
   const columns = [
-    { name: 'NO' },
+    { name: 'ID' },
     { name: 'Facilities Support Name' },
     { name: 'Description' },
   ]
   const [isOpen, setIsOpen] = useState(false)
-  const [isEdit, setIsEdit] = useState({
-    status: false,
-    fs_id: 0,
-  })
-  const editOpen = (fs_id: number) => {
-    setIsEdit((prev) => {
-      return { ...prev, status: true, fs_id: fs_id }
-    })
-    toast.success(`Berhasil Dirubah`)
-  }
-  const deleteOpen = async (fs_id: number) => {
+
+  const deleteOpen = async (fsh_id: number) => {
     const confirmed = window.confirm(
       `Are you sure, you want to delete this facilities support hotel ?`
     )
     if (confirmed) {
-      dispatch(doDeleteFacilitiesSupport(fs_id))
-      toast.success(`Berhasil Dihapus`)
+      dispatch(doDeleteFacilitySupportHotel(fsh_id))
+      toast.success(`Successfully removed`)
     }
+  }
+
+  //===Pagination===
+  const [pageNumber, setPageNumber] = useState(1)
+  const [pageSize, setPageSize] = useState(7)
+
+  //====Search======
+  const [search, setSearch] = useState('')
+  const handleSearch = (event: any): void => {
+    setSearch(event.target.value)
   }
 
   useEffect(() => {
     dispatch(doRequestGetFacilitiesSupport())
+  })
+
+  useEffect(() => {
+    dispatch(doRequestGetHotels(pageNumber, pageSize, search))
+    localStorage.setItem('hotels', JSON.stringify(hotels))
+  }, [refresh, dispatch])
+
+  useEffect(() => {
+    const routerId = window.location.pathname
+    const id = routerId.split('/').pop()
+    const cachedHotels = JSON.parse(localStorage.getItem('hotels') || '[]')
+    cachedHotels?.data?.filter((data: any) => {
+      if (data.hotel_id === Number(id)) {
+        setHotels(data)
+      }
+    })
   }, [refresh])
 
   return (
     <div className='relative overflow-x-auto shadow-md mt-5 rounded-xl bg-white p-4'>
+      <div className='pb-4 bg-white flex items-center gap-4 justify-between'>
+        <div className='flex items-center gap-4'>
+          <div className='mb-4 mt-4 ml-10'>
+            <div className='text-2xl font-bold'>{hotel.hotel_name}</div>
+            <div className='text-xs text-gray-500'>
+              {` ${hotel.address && hotel.address.addr_line1}, ${
+                hotel.address && hotel.address.addr_line2
+              }`}
+            </div>
+            <div className='text-xs font-semibold'>
+              {hotel.hotel_description}
+            </div>
+          </div>
+          <div className='ml-96'>
+            <div className='mr-4'>{hotel.hotel_phonenumber}</div>
+            <div className='display flex'>
+              {renderStars(hotel.hotel_rating_star)}
+            </div>
+          </div>
+        </div>
+      </div>
       <div className='flex items-center gap-4'>
-        <div className='text-base font-bold ml-6'>{`Facilities Support`}</div>
+        <div className='text-base font-bold ml-6'>{`${hotel.hotel_name} Facilities`}</div>
         <button
           className='bg-primary hover:bg-primary-hover transition-colors ease-in duration-100 p-2 rounded text-white flex items-center gap-2 border border-primary ml-auto mb-4'
           onClick={() => setIsOpen(true)}
@@ -71,7 +129,7 @@ const FacilitiesSupport = () => {
           </tr>
         </thead>
         <tbody>
-          {(fasupp || []).map((dt: any, index: number) => (
+          {(hotel.facilities_support || []).map((dt: any, index: number) => (
             <tr className='bg-white border-b border-gray-200' key={dt.fs_id}>
               <td className='px-6 py-4'>{index + 1}</td>
               <td className='flex px-6 py-4 font-medium text-xs text-gray-900 whitespace-nowrap dark:text-white text-center'>
@@ -86,15 +144,10 @@ const FacilitiesSupport = () => {
               <td className='px-6 py-4'>{dt.fs_description}</td>
               <td className='px-6 py-4 flex gap-2'>
                 <button
-                  className='border-2 border-primary hover:bg-primary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-primary'
-                  onClick={() => editOpen(dt.fs_id)}
-                >
-                  <MdEdit className='text-xl' />
-                </button>
-
-                <button
                   className='border-2 border-danger-secondary hover:bg-danger-secondary hover:text-white transition-colors ease-in duration-100 p-2 rounded text-danger-secondary'
-                  onClick={() => deleteOpen(dt.fs_id)}
+                  onClick={() =>
+                    deleteOpen(dt?.facility_support_hotels?.fsh_id)
+                  }
                 >
                   <MdDelete className='text-xl' />
                 </button>
@@ -103,7 +156,6 @@ const FacilitiesSupport = () => {
           ))}
         </tbody>
       </table>
-
       <nav
         className='flex items-center justify-between pt-4'
         aria-label='Table navigation'
@@ -176,20 +228,10 @@ const FacilitiesSupport = () => {
       </nav>
       <ToastContainer autoClose={5000} />
       {isOpen ? (
-        <AddSupport isOpen={isOpen} closeModal={() => setIsOpen(false)} />
-      ) : null}
-      {isEdit.status ? (
-        <EditSupport
-          isEdit={isEdit}
-          closeModal={() =>
-            setIsEdit((prev) => {
-              return { ...prev, status: false }
-            })
-          }
-        />
+        <AddSupportHotel isOpen={isOpen} closeModal={() => setIsOpen(false)} />
       ) : null}
     </div>
   )
 }
 
-export default FacilitiesSupport
+export default Facilities

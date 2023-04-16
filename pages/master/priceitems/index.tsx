@@ -10,6 +10,7 @@ import AddPriceMaster from "./addPriceItems";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdEdit, MdDelete } from "react-icons/md";
 import EditPriceMaster from "./editPriceItems";
+// import EditPriceMaster from "./editPriceItems";
 
 export default function PriceMaster() {
   const [searchQuery, setSearchQuery] = useState("");
