@@ -1,39 +1,39 @@
-import { doAddFintech } from "@/redux/payment/action/fintechActionReducer"
-import { Dialog, Transition } from "@headlessui/react"
-import { Fragment } from "react"
-import { useForm } from "react-hook-form"
-import { useDispatch } from "react-redux"
+import { doAddFintech } from '@/redux/payment/action/fintechActionReducer'
+import { Dialog, Transition } from '@headlessui/react'
+import { Fragment } from 'react'
+import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 
-export default function AddFintech(props:any) {
-    type FormValues = {
-      fint_code: number
-      fint_name: string
-    }
-  
-    const {
-      register,
-      handleSubmit,
-      formState: { errors },
-    } = useForm<FormValues>()
-    const dispatch = useDispatch()
-    const handleError = (errors: any) => {}
-    const handleSave = async (data: FormValues) => {
-      try {
-        const dataAll = {
-            fint_code: data.fint_code,
-            fint_name: data.fint_name,
-        }
-        dispatch(doAddFintech(dataAll))
-        props.closeModal()
-      } catch (error) {
-        console.error(error)
+export default function AddFintech(props: any) {
+  type FormValues = {
+    fint_code: number
+    fint_name: string
+  }
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>()
+  const dispatch = useDispatch()
+  const handleError = (errors: any) => {}
+  const handleSave = async (data: FormValues) => {
+    try {
+      const dataAll = {
+        fint_code: data.fint_code,
+        fint_name: data.fint_name,
       }
+      dispatch(doAddFintech(dataAll))
+      props.closeModal()
+    } catch (error) {
+      console.error(error)
     }
-  
-    const registerOptions = {
-        fint_code: { required: 'Fintech code is required' },
-        fint_name: { required: 'Fintech name is required' },
-    }
+  }
+
+  const registerOptions = {
+    fint_code: { required: 'Fintech code is required' },
+    fint_name: { required: 'Fintech name is required' },
+  }
 
     return (
         <div>

@@ -34,7 +34,7 @@ export default function EditPolicyMaster(props: any) {
       poli_name: data.poli_name,
       poli_description: data.poli_description,
     };
-    dispatch(doUpdatePolicy({ id: props.isEdit.id, dataEdit }));
+    dispatch(doUpdatePolicy({ id: props.isEdit.id, data: dataEdit }));
     props.closeModal();
   };
 

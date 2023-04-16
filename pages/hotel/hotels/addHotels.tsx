@@ -7,6 +7,7 @@ import {
   doRequestGetCity,
 } from '@/redux/hotel/action/actionReducer'
 import Select from 'react-select'
+import { toast } from 'react-toastify'
 
 export default function AddHotels(props: any) {
   //================Data Redux Saga================
@@ -59,6 +60,7 @@ export default function AddHotels(props: any) {
     }
     dispatch(doAddHotels(formData))
     props.closeModal()
+    toast.success(`Berhasil Menambahkan Data ${data.hotel_name}`)
   }
   const handleError = (errors: any) => {}
 
@@ -84,7 +86,7 @@ export default function AddHotels(props: any) {
   return (
     <div>
       <Transition appear show={props.isOpen} as={Fragment}>
-        <Dialog as='div' className='relative z-20' onClose={props.closeModal}>
+        <Dialog as='div' className='relative z-40' onClose={props.closeModal}>
           <Transition.Child
             as={Fragment}
             enter='ease-out duration-300'
@@ -111,7 +113,7 @@ export default function AddHotels(props: any) {
                 <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
                   <Dialog.Title
                     as='h3'
-                    className='text-lg font-medium leading-6 text-primary'
+                    className='text-lg font-bold leading-6 text-primary'
                   >
                     ADD HOTELS
                   </Dialog.Title>
@@ -133,7 +135,7 @@ export default function AddHotels(props: any) {
                           Hotel Name
                         </label>
                       </div>
-                      <div className='relative z-0 w-full mb-6 group'>
+                      <div className='relative z-0 w-full mb-4 group'>
                         <input
                           type='text'
                           className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
@@ -146,25 +148,25 @@ export default function AddHotels(props: any) {
                           Phone Number
                         </label>
                       </div>
-                      <div className='flex items-center mb-6 group space-x-4'>
-                        <label className='peer-focus:font-medium text-sm text-gray-500 '>
+                      <div className='items-center mb-4 group'>
+                        <label className='peer-focus:font-medium text-xs text-gray-500'>
                           Status
                         </label>
                         <select
                           value={selectedStatus}
                           onChange={handleSatusChange}
-                          className='w-full px-2 py-2 border rounded-md text-sm focus:outline-none focus:shadow-outline-primary'
+                          className='w-full px-2 py-2 mt-2 border rounded-md text-sm focus:outline-none focus:shadow-outline-primary'
                         >
                           <option value='Active'>Active</option>
                           <option value='Disactive'>Disactive</option>
                         </select>
                       </div>
 
-                      <div className='flex items-center mb-6 group space-x-8'>
-                        <label className='peer-focus:font-medium text-sm text-gray-500 dark:text-gray-400'>
+                      <div className='items-center mb-6 group'>
+                        <label className='peer-focus:font-medium text-xs text-gray-500 dark:text-gray-400'>
                           City
                         </label>
-                        <div className='w-full text-sm'>
+                        <div className='w-full text-sm mt-2'>
                           <Controller
                             name='city_name'
                             control={control}
@@ -224,13 +226,12 @@ export default function AddHotels(props: any) {
                           Description
                         </label>
                       </div>
-                      <div className=' flex-row space-x-4 mt-4'>
-                        <button className='text-white bg-secondary  hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800'>
+                      <div className=' flex-row space-x-6 mt-4'>
+                        <button className='text-[#2563EB] border-2 border-[#2563EB] hover:text-white hover:bg-[#2563EB] font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center'>
                           Submit
                         </button>
-
                         <button
-                          className='text-white bg-danger  hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-800'
+                          className='text-[#D51A52] border-2 border-[#D51A52] hover:text-white hover:bg-[#D51A52] font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center'
                           onClick={props.closeModal}
                         >
                           Cancel

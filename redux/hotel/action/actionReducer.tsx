@@ -22,27 +22,13 @@ export const doGetHotelsResponse = (payload: any) => {
     payload,
   }
 }
-export const doRequestGetHotelsWhereSupport = (payload: any) => {
-  return {
-    type: ActionTypeHotel.REQ_GET_HOTELS_SUPPORT,
-    payload,
-  }
-} //INCLUDE SUPPORT
-export const doGetHotelsWhereSupportResponse = (payload: any) => {
-  return {
-    type: ActionTypeHotel.GET_HOTELS_SUPPORT_RESPONSE,
-    payload,
-  }
-} // INCLUDE SUPPORT
 export const doAddHotels = (payload: any) => {
-  // console.log(payload)
   return {
     type: ActionTypeHotel.ADD_HOTELS,
     payload,
   }
 }
 export const doAddHotelsResponse = (payload: any) => {
-  // console.log(payload)
   return {
     type: ActionTypeHotel.ADD_HOTELS_RESPONSE,
     payload,
@@ -67,7 +53,6 @@ export const doSwitchHotels = (...payload: any) => {
   }
 }
 export const doSwitchHotelsResponse = (payload: any) => {
-  // console.log(payload)
   return {
     type: ActionTypeHotel.SWITCH_STATUS_HOTELS_RESPONSE,
     payload,
@@ -75,13 +60,13 @@ export const doSwitchHotelsResponse = (payload: any) => {
 }
 export const doDeleteHotels = (payload: any) => {
   return {
-    type: ActionTypeHotel.UPDATE_HOTELS,
+    type: ActionTypeHotel.DEL_HOTELS,
     payload,
   }
 }
 export const doDeleteHotelsResponse = (payload: any) => {
   return {
-    type: ActionTypeHotel.UPDATE_HOTELS_RESPONSE,
+    type: ActionTypeHotel.DEL_HOTELS_RESPONSE,
     payload,
   }
 }
@@ -139,7 +124,6 @@ export const doAddFacilities = (payload: any) => {
   }
 }
 export const doAddFacilitiesResponse = (payload: any) => {
-  console.log(payload)
   return {
     type: ActionTypeHotel.ADD_FACILITIES_RESPONSE,
     payload,
@@ -159,13 +143,13 @@ export const doUpdateFacilitiesResponse = (payload: any) => {
 }
 export const doDeleteFacilities = (payload: any) => {
   return {
-    type: ActionTypeHotel.UPDATE_FACILITIES,
+    type: ActionTypeHotel.DEL_FACILITIES,
     payload,
   }
 }
 export const doDeleteFacilitiesResponse = (payload: any) => {
   return {
-    type: ActionTypeHotel.UPDATE_FACILITIES_RESPONSE,
+    type: ActionTypeHotel.DEL_FACILITIES_RESPONSE,
     payload,
   }
 }
@@ -208,13 +192,13 @@ export const doUpdateHotelReviewsResponse = (payload: any) => {
 }
 export const doDeleteHotelReviews = (payload: any) => {
   return {
-    type: ActionTypeHotel.UPDATE_HOTEL_REVIEWS,
+    type: ActionTypeHotel.DEL_HOTEL_REVIEWS,
     payload,
   }
 }
 export const doDeleteHotelReviewsResponse = (payload: any) => {
   return {
-    type: ActionTypeHotel.UPDATE_HOTEL_REVIEWS_RESPONSE,
+    type: ActionTypeHotel.DEL_HOTEL_REVIEWS_RESPONSE,
     payload,
   }
 }
@@ -238,7 +222,6 @@ export const doAddFacilitiesSupport = (payload: any) => {
   }
 }
 export const doAddFacilitiesSupportResponse = (payload: any) => {
-  console.log(payload)
   return {
     type: ActionTypeHotel.ADD_FACILITIES_SUPPORT_RESPONSE,
     payload,
@@ -250,8 +233,7 @@ export const doUpdateFacilitiesSupport = (...payload: any) => {
     payload,
   }
 }
-export const doUpdateFacilitiesSupportResponse = (payload: any) => {
-  console.log(payload)
+export const doUpdateFacilitiesSupportResponse = (...payload: any) => {
   return {
     type: ActionTypeHotel.UPDATE_FACILITIES_SUPPORT_RESPONSE,
     payload,
@@ -282,8 +264,8 @@ export const doGetFacilitySupportHotelResponse = (payload: any) => {
     payload,
   }
 }
+
 export const doAddFacilitySupportHotel = (payload: any) => {
-  // console.log(payload)
   return {
     type: ActionTypeHotel.ADD_FACILITY_SUPPORT_HOTEL,
     payload,
@@ -302,7 +284,6 @@ export const doUpdateFacilitySupportHotel = (...payload: any) => {
   }
 }
 export const doUpdateFacilitySupportHotelResponse = (payload: any) => {
-  console.log(payload)
   return {
     type: ActionTypeHotel.UPDATE_FACILITY_SUPPORT_HOTEL_RESPONSE,
     payload,
@@ -359,15 +340,13 @@ export const doUpdateFacilityPhotosResponse = (payload: any) => {
 }
 export const doDeleteFacilityPhotos = (payload: any) => {
   return {
-    type: ActionTypeHotel.UPDATE_FACILITY_PHOTOS,
+    type: ActionTypeHotel.DEL_FACILITY_PHOTOS,
     payload,
   }
 }
 export const doDeleteFacilityPhotosResponse = (payload: any) => {
   return {
-    type: ActionTypeHotel.UPDATE_FACILITY_PHOTOS_RESPONSE,
+    type: ActionTypeHotel.DEL_FACILITY_PHOTOS_RESPONSE,
     payload,
   }
 }
-
-//====================FACILITIES=======================

@@ -17,7 +17,7 @@ const TopUp = () => {
 
   const { payTrans, message, refresh } = useSelector(
     (state: any) => state.paymentTransactionReducers
-  );
+  )
 
 
   type FormValues = {
@@ -186,7 +186,7 @@ console.log(accounts)
       </div>
       
     </section>
-  );
-};
+  )
+}
 
-export default TopUp;
+export default TopUp

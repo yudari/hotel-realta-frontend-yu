@@ -13,7 +13,7 @@ function facilitiesSupportReducers(state = initialState, action: any) {
     case ActionTypeHotel.GET_FACILITIES_SUPPORT_RESPONSE:
       return { ...state, fasupp: payload.data, refresh: true }
     case ActionTypeHotel.ADD_FACILITIES_SUPPORT_RESPONSE:
-      return { ...state, message: payload.message, refresh: false } //index
+      return { message: payload.message, refresh: false } //index
     case ActionTypeHotel.UPDATE_FACILITIES_SUPPORT_RESPONSE:
       return { ...state, message: payload.message, refresh: false }
     case ActionTypeHotel.DEL_FACILITIES_SUPPORT_RESPONSE:

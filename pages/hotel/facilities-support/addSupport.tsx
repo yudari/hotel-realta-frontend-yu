@@ -2,12 +2,9 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Controller, useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  doAddFacilitiesSupport,
-  doAddHotels,
-  doRequestGetCity,
-} from '@/redux/hotel/action/actionReducer'
+import { doAddFacilitiesSupport } from '@/redux/hotel/action/actionReducer'
 import Select from 'react-select'
+import { toast } from 'react-toastify'
 
 export default function AddSupport(props: any) {
   //===============For Registration==================
@@ -39,13 +36,15 @@ export default function AddSupport(props: any) {
   }
 
   const handleRegistration = async (data: any) => {
-    console.log(data.fs_icon[0])
+    // console.log(data.fs_icon[0])
     const formData = {
       fs_name: data.fs_name,
       fs_description: data.fs_description,
       icons: data.fs_icon[0],
     }
+    console.log('ini form Data', formData)
     dispatch(doAddFacilitiesSupport(formData))
+    toast.success(`Berhasil Menambahkan Facility Support ${data.fs_name}`)
     props.closeModal()
   }
   const handleError = (errors: any) => {}
@@ -83,11 +82,8 @@ export default function AddSupport(props: any) {
                 leaveTo='opacity-0 scale-95'
               >
                 <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
-                  <Dialog.Title
-                    as='h3'
-                    className='text-lg font-medium leading-6 text-primary'
-                  >
-                    ADD HOTELS
+                  <Dialog.Title as='h3' className='text-lg font-bold leading-6'>
+                    ADD FACILITY SUPPORT
                   </Dialog.Title>
                   <hr className='border-b border-t border-black h-1 my-4' />
                   <div className='mt-2'>
@@ -137,13 +133,12 @@ export default function AddSupport(props: any) {
                           alt='Product Priview'
                         />
                       )}
-                      <div className=' flex-row space-x-4 mt-4'>
-                        <button className='text-white bg-secondary  hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800'>
+                      <div className=' flex-row space-x-6 mt-4'>
+                        <button className='text-[#2563EB] border-2 border-[#2563EB] hover:text-white hover:bg-[#2563EB] font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center'>
                           Submit
                         </button>
-
                         <button
-                          className='text-white bg-danger  hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-800'
+                          className='text-[#D51A52] border-2 border-[#D51A52] hover:text-white hover:bg-[#D51A52] font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center'
                           onClick={props.closeModal}
                         >
                           Cancel

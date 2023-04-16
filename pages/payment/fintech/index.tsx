@@ -1,18 +1,26 @@
-import { doDeleteFintech, doGetFintech } from "@/redux/payment/action/fintechActionReducer";
-import { Fragment, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import AddFintech from "./addFintech";
-import { Menu, Transition } from "@headlessui/react";
-import { BsFillPencilFill, BsThreeDotsVertical, BsTrashFill } from "react-icons/bs";
-import EditFintech from "./editFintech";
+import {
+  doDeleteFintech,
+  doGetFintech,
+} from '@/redux/payment/action/fintechActionReducer'
+import { Fragment, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import AddFintech from './addFintech'
+import { Menu, Transition } from '@headlessui/react'
+import {
+  BsFillPencilFill,
+  BsThreeDotsVertical,
+  BsTrashFill,
+} from 'react-icons/bs'
+import EditFintech from './editFintech'
 import { AiOutlinePlus } from "react-icons/ai";
 
-
-export default function fintech(){
-  let{ fintechs, message, refresh } = useSelector((state:any) => state.fintechReducers);
+export default function fintech() {
+  let { fintechs, message, refresh } = useSelector(
+    (state: any) => state.fintechReducers
+  )
   const [searchTerm, setSearchTerm] = useState('')
   const dispatch = useDispatch()
-  const [isOpen, setOpen] =useState(false)
+  const [isOpen, setOpen] = useState(false)
   const [isEdit, setIsEdit] = useState({
     status: false,
     id: 0,
@@ -20,9 +28,9 @@ export default function fintech(){
   })
 
   const column = [
-      {name: 'Fintech Code'},
-      {name: 'Fintech Name'},
-      {name: 'Action'}
+    { name: 'Fintech Code' },
+    { name: 'Fintech Name' },
+    { name: 'Action' },
   ]
   const editOpen = (id: number, data: any[]) => {
     setIsEdit((prev) => {
@@ -34,18 +42,18 @@ export default function fintech(){
     setSearchTerm(e.target.value)
   }
 
-    const deleteOpen = async (id: number) => {
-      const confirmed = window.confirm(
-        `Are you sure you want to delete the fintech data with ID ${id} ?`
-      )
-      if (confirmed) {
-        dispatch(doDeleteFintech(id))
-      }
-    }    
-  
-    useEffect(() =>{
-      dispatch(doGetFintech(searchTerm))
-  },[refresh,searchTerm])
+  const deleteOpen = async (id: number) => {
+    const confirmed = window.confirm(
+      `Are you sure you want to delete the fintech data with ID ${id} ?`
+    )
+    if (confirmed) {
+      dispatch(doDeleteFintech(id))
+    }
+  }
+
+  useEffect(() => {
+    dispatch(doGetFintech(searchTerm))
+  }, [refresh, searchTerm])
 
 
 return(
@@ -249,4 +257,3 @@ return(
   </div>
 )
 }
-

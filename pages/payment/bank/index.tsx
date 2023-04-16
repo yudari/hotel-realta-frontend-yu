@@ -7,33 +7,33 @@ import AddBank from "./addBank";
 import EditBank from "./editBank";
 import { AiOutlinePlus } from "react-icons/ai"
 
+export default function bank() {
+  let { banks, message, refresh } = useSelector(
+    (state: any) => state.bankReducers
+  )
+  const [searchTerm, setSearchTerm] = useState('')
+  const dispatch = useDispatch()
+  const [isOpen, setOpen] = useState(false)
+  const [isEdit, setIsEdit] = useState({
+    status: false,
+    id: 0,
+    data: [{}],
+  })
 
-export default function bank(){
-    let{ banks, message, refresh } = useSelector((state:any) => state.bankReducers);
-    const [searchTerm, setSearchTerm] = useState('')
-    const dispatch = useDispatch()
-    const [isOpen, setOpen] =useState(false)
-    const [isEdit, setIsEdit] = useState({
-      status: false,
-      id: 0,
-      data: [{}],
+  const columns = [
+    { name: 'Bank Code' },
+    { name: 'Bank Name' },
+    { name: 'Action' },
+  ]
+
+  const editOpen = (id: number, data: any[]) => {
+    setIsEdit((prev) => {
+      return { ...prev, status: true, id: id, data: data }
     })
+  }
 
-    const columns = [
-        {name: 'Bank Code'},
-        {name: 'Bank Name'},
-        {name: 'Action'}
-    ]
-
-  
-    const editOpen = (id: number, data: any[]) => {
-      setIsEdit((prev) => {
-        return { ...prev, status: true, id: id, data: data }
-      })
-    }
-
-    const handleSearchChange = (e: any): void => {
-      setSearchTerm(e.target.value)
+  const handleSearchChange = (e: any): void => {
+    setSearchTerm(e.target.value)
     // reset currentPage only when search term changes
       // handleGetData() // call handleGetData to fetch data again
     }
@@ -51,10 +51,8 @@ export default function bank(){
         dispatch(doGetBank(searchTerm))
     },[refresh,searchTerm])
 
-
-
-return(
-<div className='bg-white'>
+  return (
+    <div className='bg-white'>
       <>
         {/* component */}
         <div className='bg-white p-4 rounded-md w-full shadow-md'>
@@ -243,7 +241,7 @@ return(
       ) : null}
       {isEdit.status ? (
         <EditBank
-         dataBank={isEdit.data}
+          dataBank={isEdit.data}
           isEdit={isEdit}
           closeModal={() =>
             setIsEdit((prev) => {
@@ -256,12 +254,11 @@ return(
   )
 }
 
-
 // return(
 //   <div className="bg-white">
 // <section className="py-1 bg-blueGray-50">
 //   {/* search */}
-// <form className="flex items-center">   
+// <form className="flex items-center">
 //     <label htmlFor="simple-search" className="sr-only">Search</label>
 //     <div className="relative w-full">
 //         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -295,7 +292,7 @@ return(
 //             {(column || []).map((data, index) => (
 //               <th key={index} className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
 //                 {data.name}
-               
+
 //               </th>
 //             ))}
 //           </tr>
@@ -307,15 +304,15 @@ return(
 //               <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">{data.bank_name}</td>
 //               <Menu as="div" className="w-full text-right">
 //                                     <div>
-//                                     <Menu.Button className="inline-flex w-full justify-center rounded-md bg-none bg-opacity-20 
+//                                     <Menu.Button className="inline-flex w-full justify-center rounded-md bg-none bg-opacity-20
 //                                     px-4 py-2 text-sm font-medium text-black hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                                        
+
 //                                         <BsThreeDotsVertical
 //                                         className="ml-2 -mr-1 h-5 w-5 text-slate-900 hover:text-violet-100"
 //                                         aria-hidden="true"
-//                                         />      
+//                                         />
 //                                     </Menu.Button>
-                                    
+
 //             </tr>
 //           ))}
 //         </tbody>
@@ -343,4 +340,3 @@ return(
 // </div>
 // )
 // }
-
