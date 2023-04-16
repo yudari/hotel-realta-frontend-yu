@@ -1,52 +1,40 @@
-import { doUpdateCountry } from "@/redux/masterSchema/action/countryAction";
+import { doAddProvince } from "@/redux/masterSchema/action/provinceAction";
 import { Dialog, Transition } from "@headlessui/react";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-export default function EditCountryMaster(props: any) {
-    const [countryData, setCountryData] = useState({
-        country_id: 0,
-        country_name: "",
-      });
-  let { country } = useSelector((state: any) => state.countryReducer);
+export default function AddProvinceMaster(props: any) {
   type FormValues = {
-    country_name: string;
-    country_region_id: any;
+    prov_name: string;
+    prov_country_id: any;
   };
   const {
     register,
     handleSubmit,
     formState: { errors },
-    // eslint-disable-next-line react-hooks/rules-of-hooks
   } = useForm<FormValues>();
-
   const dispatch = useDispatch();
 
-  const handleEdit = async (data: any) => {
-    const dataEdit = {
-        country_name: data.country.name,
-        country_region_id: Number(data.country_region_id),
-    }
-    dispatch(doUpdateCountry({ id: props.isEdit.id, dataEdit }));
+  const handleRegistration = async (data: any) => {
+    // console.log(data);
+    dispatch(
+      doAddProvince({
+        prov_name: data.prov_name,
+        prov_country_id: Number(data.prov_country_id),
+      })
+    );
     props.closeModal();
   };
 
   const handleError = (errors: any) => {};
 
   const registerOptions = {
-    country_name: { required: "Name is required" },
+    prov_name: { required: "Name is required" },
   };
-  useEffect(() => {
-    const filter = country.filter((cou: any) => {
-      return cou.country_id === props.isEdit.id;
-    })[0];
-
-    setCountryData(filter);
-  }, [props.isEdit.id, country, country.data]);
   return (
     <div>
-      <Transition appear show={props.isEdit.status} as={Fragment}>
+      <Transition appear show={props.isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={props.closeModal}>
           <Transition.Child
             as={Fragment}
@@ -79,38 +67,38 @@ export default function EditCountryMaster(props: any) {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Add/Edit Country {props.name}
+                    Add/Edit Province {props.name}
                   </Dialog.Title>
                   <div className="mt-2">
-                    <form onSubmit={handleSubmit(handleEdit, handleError)}>
+                    <form
+                      onSubmit={handleSubmit(handleRegistration, handleError)}
+                    >
                       <div className="grid grid-cols-1 gap-4">
                         <div className="flex gap-4 mt-4">
-                          <label htmlFor="regionName">Region Name</label>
-                          <p>{props.region.name}</p>
+                          <label htmlFor="regionName">Country Name</label>
+                          <p>{props.country.name}</p>
                         </div>
                         <div className="col-span-1">
                           <label className="block text-gray-700">
-                            Country Name
+                            Province Name
                           </label>
                           <input
                             type="text"
                             {...register(
-                              "country_name",
-                              registerOptions.country_name
+                              "prov_name",
+                              registerOptions.prov_name
                             )}
-                            defaultValue={countryData.country_name}
                             className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
                           />
 
                           <input
                             type="hidden"
-                            {...register("country_region_id")}
-                            value={props.region.regionID}
+                            {...register("prov_country_id")}
+                            value={Number(props.country.countryID)}
                             className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
                           />
                           <small className="text-danger">
-                            {errors?.country_name &&
-                              errors.country_name.message}
+                            {errors?.prov_name && errors.prov_name.message}
                           </small>
                         </div>
                       </div>

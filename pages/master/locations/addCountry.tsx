@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 export default function AddCountryMaster(props: any) {
   type FormValues = {
     country_name: string;
+    country_region_id: any;
   };
   const {
     register,
@@ -16,6 +17,7 @@ export default function AddCountryMaster(props: any) {
   const dispatch = useDispatch();
 
   const handleRegistration = async (data: any) => {
+    // console.log(data);
     dispatch(doAddCountry(data));
     props.closeModal();
   };
@@ -69,7 +71,7 @@ export default function AddCountryMaster(props: any) {
                       <div className="grid grid-cols-1 gap-4">
                         <div className="flex gap-4 mt-4">
                           <label htmlFor="regionName">Region Name</label>
-                          <p>{props.name}</p>
+                          <p>{props.region.name}</p>
                         </div>
                         <div className="col-span-1">
                           <label className="block text-gray-700">
@@ -83,8 +85,16 @@ export default function AddCountryMaster(props: any) {
                             )}
                             className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
                           />
+
+                          <input
+                            type="hidden"
+                            {...register("country_region_id")}
+                            value={props.region.regionID}
+                            className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
+                          />
                           <small className="text-danger">
-                            {errors?.country_name && errors.country_name.message}
+                            {errors?.country_name &&
+                              errors.country_name.message}
                           </small>
                         </div>
                       </div>

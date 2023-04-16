@@ -5,6 +5,13 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function EditCategoryMaster(props: any) {
+  const [categoryData, setCategoryData] = useState({
+    cagro_id: 0,
+    cagro_name: "",
+    cagro_description: "",
+    cagro_type: "",
+    cagro_icon: "",
+  });
   type FormValues = {
     cagro_name: string;
     cagro_description: string;
@@ -20,7 +27,7 @@ export default function EditCategoryMaster(props: any) {
   let { categorygroup } = useSelector(
     (state: any) => state.categorygroupReducer
   );
-//   console.log("data", categorygroup);
+  //   console.log("data", categorygroup);
   const dispatch = useDispatch();
   const [category, setCategory] = useState<any>({});
 
@@ -31,8 +38,17 @@ export default function EditCategoryMaster(props: any) {
     formData.append("cagro_type", data.cagro_type);
     formData.append("cagro_icon", data.cagro_icon[0]);
 
+    const dataEdit = {
+      cagro_name: data.cagro_name,
+      cagro_description: data.cagro_description,
+      cagro_type: data.cagro_type,
+      cagro_icon: data.cagro_icon,
+    };
+
     // console.log("data", formData);
-    dispatch(doUpdateCategoryGroup({id: props.isEdit.id, data: formData}));
+    dispatch(
+      doUpdateCategoryGroup({ id: props.isEdit.id, data: formData, dataEdit })
+    );
     props.closeModal();
   };
 
@@ -45,9 +61,11 @@ export default function EditCategoryMaster(props: any) {
   };
 
   useEffect(() => {
-    setCategory(
-      categorygroup.data.filter((cagro: any) => cagro.id === props.isEdit.id)[0]
-    );
+    const filter = categorygroup?.data?.filter((cagro: any) => {
+      return cagro.cagro_id === props.isEdit.id;
+    })[0];
+
+    setCategoryData(filter);
   }, [categorygroup, props.isEdit.id]);
   return (
     <div>
@@ -102,6 +120,7 @@ export default function EditCategoryMaster(props: any) {
                               "cagro_name",
                               registerOptions.cagro_name
                             )}
+                            defaultValue={categoryData.cagro_name}
                             className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
                           />
                           <small className="text-danger">
@@ -152,6 +171,7 @@ export default function EditCategoryMaster(props: any) {
                               "cagro_description",
                               registerOptions.cagro_description
                             )}
+                            defaultValue={categoryData.cagro_description}
                             className="description w-full p-5 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-200"
                           />
                           <small className="text-danger">

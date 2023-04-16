@@ -20,8 +20,7 @@ export default function AddServiceMaster(props: any) {
     dispatch(doAddServiceTask(data));
     props.closeModal();
   };
- 
-  
+
   const handleError = (errors: any) => {};
 
   const registerOptions = {
@@ -105,7 +104,10 @@ export default function AddServiceMaster(props: any) {
                         </div>
                       </div>
                       <div className="flex-row space-x-4 mt-4 text-rigt">
-                        <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-blug-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
+                        <button
+                          type="submit"
+                          className="inline-flex justify-center rounded-md border border-transparent bg-blug-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        >
                           Save
                         </button>
 

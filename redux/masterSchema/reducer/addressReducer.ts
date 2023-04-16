@@ -14,7 +14,7 @@ function addressReducer(state = initialState, action: any) {
     case ActionTypes.GET_ADDRESS_RESPONSE:
       return { address: payload, refresh: true };
     case ActionTypes.GET_ADDRESSBYCITY_RESPONSE:
-      return { ...state, address: payload.address, refresh: true };
+      return { ...state, address: payload.addresses, refresh: true };
     case ActionTypes.ADD_ADDRESS_RESPONSE:
       return { message: payload.message, refresh: false };
     case ActionTypes.UPDATE_CITY_RESPONSE:
