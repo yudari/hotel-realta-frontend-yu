@@ -4,16 +4,16 @@ const FooterContainer: NextPage = () => {
   return (
     <footer className="bg-darkslategray-300 h-[316px] shrink-0 flex flex-col py-0 px-[104px] box-border items-center justify-center text-left text-[18px] text-neutrals font-yeseva-one">
       <div className="w-[1232px] flex flex-row items-start justify-start gap-[140px]">
-        <div className="flex flex-col items-center justify-start gap-[24px]">
-          <div className="relative w-[190px] h-[67px] shrink-0">
+        <div className="flex flex-col items-center justify-start gap-[42px]">
+          <div className="relative min-w-[190px] max-w-[280px] h-[67px] shrink-0">
             <img
               className="absolute top-[0px] left-[78px] w-[34px] h-[34px] overflow-hidden"
               alt=""
               src="/hotelrealta.svg"
             />
-            <div className="absolute top-[34px] left-[0px] w-[190px] h-[33px]">
-              <div className="absolute top-[0px] left-[27px]">HOTEL REALTA</div>
-              <div className="absolute top-[23px] left-[0px] text-5xs font-montserrat-semibold-14">
+            <div className="w-[190px] h-[33px] shrink-0 flex flex-col items-center justify-start gap-[2px]">
+              <div className="relative">HOTEL REALTA</div>
+              <div className="relative text-[8px] font-montserrat-semibold-14">
                 EXPERIENCE ELEVATED LUXURY AT ITS FINEST
               </div>
             </div>

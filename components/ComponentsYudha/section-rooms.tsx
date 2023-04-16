@@ -25,7 +25,7 @@ const SectionRooms: NextPage<InterfaceSectionRooms> = (props) => {
         <div className="self-stretch flex flex-col items-start justify-start gap-[32px]">
           <b className="self-stretch relative">Ruangan Lain</b>
           <div className="self-stretch flex flex-col items-start justify-start gap-[16px] text-[16px] text-darkslategray-100">
-            {dataRooms.map((data: any) => {
+            {dataRooms.length > 0 ? dataRooms.map((data: any) => {
               return <div className="self-stretch flex flex-row items-center justify-between">
                 <div className="flex flex-row items-center justify-between">
                   <img
@@ -51,7 +51,7 @@ const SectionRooms: NextPage<InterfaceSectionRooms> = (props) => {
                   </button>
                 </div>
               </div>
-            })}
+            }) : <p className="text-[16px] text-darkslategray-100">Tidak Ada Ruangan Lain</p>}
           </div>
         </div>
       </div>

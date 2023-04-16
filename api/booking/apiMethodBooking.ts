@@ -84,6 +84,14 @@ const userBookingInfoDetail = (IdUser: any) => {
     return axios.get(`http://localhost:5000/users/${IdUser}`)
 }
 
+const transactionBookingPayment = (dataPayment: any) => {
+    return axios.post(`${process.env.BACKEND_URL}/transaction/payment`, dataPayment)
+}
+
+const removeBookingOrders = (IdBoor: any) => {
+    return axios.delete(`booking/booking_orders/${IdBoor}`)
+}
+
 
 export default {
     getAllBookingApi,
@@ -106,5 +114,7 @@ export default {
     updateUserMemberPointsBooking,
     createBookingOrdersDetail,
     createBookingOrderFinal,
-    userBookingInfoDetail
+    userBookingInfoDetail,
+    transactionBookingPayment,
+    removeBookingOrders
 }

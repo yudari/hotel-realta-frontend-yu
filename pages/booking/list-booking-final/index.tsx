@@ -13,7 +13,7 @@ import { ClipLoader } from "react-spinners";
 
 const override: CSSProperties = {
     display: "block",
-    margin: "0 auto",
+    margin: "20px auto",
     borderColor: "rgb(19 41 61 / var(--tw-bg-opacity))",
 };
 
@@ -45,6 +45,7 @@ const ListBookingFinal: NextPage = () => {
         facilities_support_filter: ['24-Hour Front Desk']
     })
     let [loading, setLoading] = useState(true);
+    let [loadingFilter, setLoadingFilter] = useState(false)
     let [color, setColor] = useState("#ffffff");
     const router = useRouter()
     const dispatch = useDispatch()
@@ -70,9 +71,9 @@ const ListBookingFinal: NextPage = () => {
             setLoading(false)
         }, 2000)
     }, [loading])
+    console.log(searchData.endDate)
 
 
-    console.log(searchData)
     return (
         <>
             <Head>
@@ -101,10 +102,11 @@ const ListBookingFinal: NextPage = () => {
                     data-testid="loader"
                 /> : <>  {bookings && <SectionCardSearchBook classNames={``} changeSearchData={setSearchData} />}
 
-                    {bookings && <SectionListBooking searchDataBooking={searchData} dataListBooking={bookings} />
+
+                    {bookings && <SectionListBooking searchDataBooking={searchData} dataListBooking={bookings} loadingListBook={undefined} />
                     }
 
-                    <SectionFooter footerSectionSectionFooteHeight="338px" />
+                    <SectionFooter />
                 </>}
 
 

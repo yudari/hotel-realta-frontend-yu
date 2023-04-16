@@ -20,6 +20,8 @@ import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import apiMethodBooking from "@/api/booking/apiMethodBooking";
 import { useFormik } from "formik";
+import secureLocalStorage from "react-secure-storage";
+import SectionFooter from "@/components/ComponentsYudha/section-footer";
 
 const options = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -67,11 +69,16 @@ const DetailBookingPembayaranFina: NextPage = () => {
     const cancelButtonRef = useRef(null)
 
     const dispatch = useDispatch()
-    const onFrameButtonClick = useCallback(() => {
+    const onFrameButtonClick = useCallback(async (IdBoor: any) => {
+        secureLocalStorage.removeItem("yu_vo")
+        const removeBookingOrder = await apiMethodBooking.removeBookingOrders(IdBoor)
         router.push(`/booking/list-booking-final`)
     }, []);
 
-    const onFrameContainer4Click = useCallback(() => {
+    const onFrameContainer4Click = useCallback(async (IdBoor: any) => {
+        secureLocalStorage.removeItem("yu_vo")
+        const removeBookingOrder = await apiMethodBooking.removeBookingOrders(IdBoor)
+        console.log(removeBookingOrder)
         router.back();
     }, [router]);
 
@@ -300,6 +307,9 @@ const DetailBookingPembayaranFina: NextPage = () => {
         }, 2000)
     }, [loading])
 
+
+
+    console.log(router.query.IdOrderDetail)
     return (
         <>
             <Head>
@@ -317,7 +327,10 @@ const DetailBookingPembayaranFina: NextPage = () => {
                     vector7="/vector24.svg"
                     vector8="/vector25.svg"
                     vector9="/vector26.svg"
-                    onFrameButtonClick={onFrameButtonClick}
+                    idboor={router.query.IdOrderDetail && router.query.IdOrderDetail}
+                    onFrameButtonClick={() => {
+                        onFrameButtonClick(router.query.IdOrderDetail)
+                    }}
                 />
                 {loading ? <ClipLoader
                     color={color}
@@ -328,7 +341,9 @@ const DetailBookingPembayaranFina: NextPage = () => {
                     data-testid="loader"
                 /> : <><SectionOrderSuccess
                     confirmationMessage="Kembali"
-                    onFrameContainer4Click={onFrameContainer4Click}
+                    onFrameContainer4Click={() => {
+                        onFrameContainer4Click(router.query.IdOrderDetail)
+                    }}
                 />
                     <div className="self-stretch flex flex-col py-0 px-[92px] items-start justify-start">
                         <div className="w-[1232px] flex flex-row pt-0 px-0 pb-20 box-border items-start justify-start gap-[30px]">
@@ -367,12 +382,14 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                                     value={phoneNumber}
                                                     onChange={phone => setPhoneNumber(phone)}
                                                     containerStyle={{
-                                                        width: '100%'
+                                                        width: '100%',
+
                                                     }}
                                                     inputStyle={{
                                                         width: '100%'
                                                     }}
                                                     placeholder="+62"
+
                                                 />
 
                                                 {/* <PhoneInput
@@ -565,7 +582,7 @@ const DetailBookingPembayaranFina: NextPage = () => {
                             <CardDetailsOrderPayment validasiPaymentDetails={validasiPaymentDetails} userDetailDiri={userDetailDiri} dataAllExtraItemsFinal={dataAllExtraItemsFinal} finalExtraPrice={totalExtraItemFinalPrice} user={userLogin} dataBookingBayar={bookingBayar} />
                         </div>
                     </div>
-                    <FooterContainer /></>}
+                    <SectionFooter /></>}
 
             </div>
 

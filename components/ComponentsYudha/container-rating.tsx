@@ -2,6 +2,8 @@ import type { NextPage } from "next";
 
 interface propsContainerRating {
   dataRatings: any;
+  onOpenModalComment: any;
+
 }
 
 const ContainerRating: NextPage<propsContainerRating> = (props) => {
@@ -9,7 +11,9 @@ const ContainerRating: NextPage<propsContainerRating> = (props) => {
     <div className="self-stretch flex flex-col items-start justify-start gap-[24px] text-left text-[18px] text-darkslategray-300 font-body-txt-body-s-regular">
       <div className="self-stretch flex flex-row items-center justify-between">
         <b className="relative">Reviews</b>
-        <button className="cursor-pointer [border:none] py-3 px-4 bg-darkslategray-300 self-stretch rounded w-[180px] shrink-0 flex flex-row box-border items-center justify-center">
+        <button onClick={() => {
+          props.onOpenModalComment()
+        }} className="cursor-pointer [border:none] py-3 px-4 bg-darkslategray-300 self-stretch rounded w-[180px] shrink-0 flex flex-row box-border items-center justify-center">
           <div className="relative text-[14px] font-semibold font-montserrat-semibold-14 text-neutrals text-left">
             Berikan review anda
           </div>
@@ -17,7 +21,8 @@ const ContainerRating: NextPage<propsContainerRating> = (props) => {
       </div>
       <div className="self-stretch flex flex-row items-center justify-start gap-[76px] text-31xl">
         <div className="flex flex-row items-center justify-between gap-2">
-          <b className="relative">{props.dataRatings.hotel_rating_final_star}</b>
+
+          <p className="relative font-body-txt-body-s-regular text-5xl font-semibold">{props.dataRatings.hotel_rating_final_star}</p>
           <div className="flex flex-col items-start justify-start gap-[8px] text-[18px] font-montserrat-semibold-14">
             <div className="relative font-semibold">{props.dataRatings.hotel_rating_status}</div>
             <div className="relative text-[14px] font-body-txt-body-s-regular text-darkslategray-100">

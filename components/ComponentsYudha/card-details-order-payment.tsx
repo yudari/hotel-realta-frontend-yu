@@ -3,8 +3,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Select from "react-tailwindcss-select";
 import apiMethodBooking from "@/api/booking/apiMethodBooking";
+import ls from 'localstorage-slim';
 
 import 'rodal/lib/rodal.css';
+import secureLocalStorage from "react-secure-storage";
 const options = [
   { value: "fox", label: "🦊 Fox" },
   { value: "Butterfly", label: "🦋 Butterfly" },
@@ -59,6 +61,7 @@ const CardDetailsOrderPayment: NextPage<CardDetailsOrderPaymentProps> = (props) 
       let pointRpPakaiGOLDPerPoints = 100
       let pointRpPakaiVIPPerPoints = 150
       let pointRpPakaiWIZARDPerPoints = 200
+      let pointRpTidakPakai = 0
       let pointNominalPakai = 100
       let pointSisaPakai = 0
 
@@ -71,12 +74,47 @@ const CardDetailsOrderPayment: NextPage<CardDetailsOrderPaymentProps> = (props) 
         }
 
       })
-      if (faciMember.usme_memb_name === 'SILVER') {
+
+      if (typeof faciMember === 'undefined') {
+        const today: Date = new Date();
+        const year: number = today.getFullYear();
+        const month: number = today.getMonth() + 1;
+        const day: number = today.getDate();
+        const hours: number = today.getHours();
+        const minutes: number = today.getMinutes();
+        const seconds: number = today.getSeconds();
+        const timezoneOffset: number = -(today.getTimezoneOffset() / 60);
+        const timezoneOffsetFormatted: string = timezoneOffset < 0 ? '-' + ('0' + (-timezoneOffset)).slice(-2) : '+' + ('0' + timezoneOffset).slice(-2);
+
+        const formattedDate: string = `${year}-${('0' + month).slice(-2)}-${('0' + day).slice(-2)} ${('0' + hours).slice(-2)}:${('0' + minutes).slice(-2)}:${('0' + seconds).slice(-2)}${timezoneOffsetFormatted}`;
+        console.log(formattedDate)
+        pointRpTidakPakai = pointRpTidakPakai * props.dataBookingBayar?.data_proses?.length;
+        pointSisaPakai = 0
+        totalDiskonMember = pointRpTidakPakai * pointNominalPakai
+
+
+        setUserMember({
+          subTotalBonusMember: totalDiskonMember,
+          pointSisaPakai,
+          user_members: {
+            usme_user_id: props.user.user_id,
+            usme_memb_name: 'Tidak Ada',
+            usme_promote_date: formattedDate,
+            usme_points: pointSisaPakai,
+            usme_type: 'default'
+
+          }
+        })
+      }
+
+
+      else if (faciMember.usme_memb_name === 'SILVER') {
         pointRpPakaiSILVERPerPoints = pointRpPakaiSILVERPerPoints * props.dataBookingBayar?.data_proses?.length
         pointSisaPakai = faciMember.usme_points - pointRpPakaiSILVERPerPoints
         totalDiskonMember = pointRpPakaiSILVERPerPoints * pointNominalPakai
         setUserMember({
           subTotalBonusMember: totalDiskonMember,
+          jumlahPointPakai: pointRpPakaiSILVERPerPoints,
           user_members: {
             ...faciMember,
             usme_points: pointSisaPakai
@@ -89,6 +127,7 @@ const CardDetailsOrderPayment: NextPage<CardDetailsOrderPaymentProps> = (props) 
         totalDiskonMember = pointRpPakaiGOLDPerPoints * pointNominalPakai
         setUserMember({
           subTotalBonusMember: totalDiskonMember,
+          jumlahPointPakai: pointRpPakaiGOLDPerPoints,
           user_members: {
             ...faciMember,
             usme_points: pointSisaPakai
@@ -101,6 +140,7 @@ const CardDetailsOrderPayment: NextPage<CardDetailsOrderPaymentProps> = (props) 
         totalDiskonMember = pointRpPakaiVIPPerPoints * pointNominalPakai
         setUserMember({
           subTotalBonusMember: totalDiskonMember,
+          jumlahPointPakai: pointRpPakaiVIPPerPoints,
           user_members: {
             ...faciMember,
             usme_points: pointSisaPakai
@@ -113,13 +153,13 @@ const CardDetailsOrderPayment: NextPage<CardDetailsOrderPaymentProps> = (props) 
         totalDiskonMember = pointRpPakaiWIZARDPerPoints * pointNominalPakai
         setUserMember({
           subTotalBonusMember: totalDiskonMember,
+          jumlahPointPakai: pointRpPakaiWIZARDPerPoints,
           user_members: {
             ...faciMember,
             usme_points: pointSisaPakai
           }
         })
       }
-
 
     } catch (error) {
       console.log(error)
@@ -190,144 +230,230 @@ const CardDetailsOrderPayment: NextPage<CardDetailsOrderPaymentProps> = (props) 
     return data3 !== null
   });
 
+
   const createOrderBooking = async () => {
 
     // Create Data Pada Tabel Booking Order Details Extra Yang 
     try {
-      // let dataSumExtraItems = 0
-      // let dataAllExtraItem = {
-      //   booking_order_detail_extra: props.dataAllExtraItemsFinal.map((data: any) => {
-      //     return {
-      //       boex_price: data.jumlahHargaPerItem,
-      //       boex_qty: data.jumlahItem,
-      //       boex_subtotal: data.jumlahSubTotal,
-      //       boex_measure_unit: 'unit',
-      //       boex_borde_id: props.dataBookingBayar.data_proses[0].borde_id,
-      //       boex_prit_id: data.namaItem.value.prit_id
-      //     }
-      //   })
-      // }
+      // console.log(props.userDetailDiri)
+      // console.log(props.validasiPaymentDetails)
+
+      if (props.userDetailDiri.data.user_id !== undefined && props.validasiPaymentDetails.length > 0) {
+        console.log(props.dataAllExtraItemsFinal)
+        let dataSumExtraItems = 0
+        let dataAllExtraItem = {
+          booking_order_detail_extra: props.dataAllExtraItemsFinal.map((data: any) => {
+            return {
+              boex_price: data.jumlahHargaPerItem,
+              boex_qty: data.jumlahItem,
+              boex_subtotal: data.jumlahSubTotal,
+              boex_measure_unit: 'unit',
+              boex_borde_id: props.dataBookingBayar.data_proses[0].borde_id,
+              boex_prit_id: data.namaItem.value.prit_id
+            }
+          })
+        }
 
 
-      //   console.log(detailBonus)
-      // const dataAllExtraItems = await apiMethodBooking.createExtraItemPrice(dataAllExtraItem, props.user.user_id, props.dataBookingBayar.data.boor_border_hotel_rooms_total_guest, props.dataBookingBayar.data.boor_border_hotel_rooms_total_rooms)
-      // const dataAllExtraResponse = dataAllExtraItems.data
-
-      // Diambil dari data price item berdasarkan 1 ID yang jadi perwakilan
-      // Create Data Pada Tabel Kupon atau special_offers_coupon
-      // let all_special_offers = {
-      //   special_offers: props.dataBookingBayar.data_proses.map((book: any) => {
-      //     return {
-      //       soco_borde_id: book.borde_id,
-      //       soco_spof_id: detailBonus.id_kupon
-      //     }
-      //   }),
-
-      // }
-      // const idiKupon = {
-      //   paramSubmitKupon: {
-      //     IdUser: props.user.user_id,
-      //     TotalGuest: props.dataBookingBayar.data.boor_border_hotel_rooms_total_guest,
-      //     TotalRooms: props.dataBookingBayar.data.boor_border_hotel_rooms_total_rooms
-      //   },
-      //   pickingSubmitKupon: all_special_offers
-      // }
-      // const dataResponseKupon = await apiMethodBooking.pickKuponBooking(idiKupon)
-      // console.log(dataResponseKupon)
-
-      // Create Data Pada Tabel user_breakfeast
-
-      const currentDate = new Date();
-      const year = currentDate.getFullYear();
-      const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-      const date = currentDate.getDate().toString().padStart(2, '0');
-      const hour = currentDate.getHours().toString().padStart(2, '0');
-      const minute = currentDate.getMinutes().toString().padStart(2, '0');
-      const second = currentDate.getSeconds().toString().padStart(2, '0');
-      const timezoneOffset = (currentDate.getTimezoneOffset() / 60) * -1;
-      const timezoneOffsetString = timezoneOffset >= 0 ? `+${timezoneOffset}`.padStart(2, '0') : `-${Math.abs(timezoneOffset)}`.padStart(2, '0');
-      const formattedDate = `${year}-${month}-${date} ${hour}:${minute}:${second}${timezoneOffsetString}:00`;
+        console.log(detailBonus)
+        const dataAllExtraItems = await apiMethodBooking.createExtraItemPrice(dataAllExtraItem, props.user.user_id, props.dataBookingBayar.data.boor_border_hotel_rooms_total_guest, props.dataBookingBayar.data.boor_border_hotel_rooms_total_rooms)
+        const dataAllExtraResponse = dataAllExtraItems.data
 
 
-      const IdBoor = props.dataBookingBayar.data.boor_id
-      // const dataInputBreakFeast = props.dataBookingBayar.data_proses.map((data: any) => {
-      //   return {
-      //     usbr_borde_id: data.borde_id,
-      //     usbr_modified_date: formattedDate,
-      //     usbr_total_vacant: data.borde_adults
-      //   }
-      // })
+        // Diambil dari data price item berdasarkan 1 ID yang jadi perwakilan
+        // Create Data Pada Tabel Kupon atau special_offers_coupon
+        let all_special_offers = {
+          special_offers: props.dataBookingBayar.data_proses.map((book: any) => {
+            return {
+              soco_borde_id: book.borde_id,
+              soco_spof_id: detailBonus.id_kupon
+            }
+          }),
 
-      // const dataResponseInputBreakFeast = await apiMethodBooking.createBreakFeast(IdBoor, dataInputBreakFeast)
+
+        }
+
+        const idiKupon = {
+          paramSubmitKupon: {
+            IdUser: props.user.user_id,
+            TotalGuest: props.dataBookingBayar.data.boor_border_hotel_rooms_total_guest,
+            TotalRooms: props.dataBookingBayar.data.boor_border_hotel_rooms_total_rooms
+          },
+          pickingSubmitKupon: all_special_offers
+        }
+        const dataResponseKupon = await apiMethodBooking.pickKuponBooking(idiKupon)
+        console.log(dataResponseKupon)
+
+        // //   // Create Data Pada Tabel user_breakfeast
+
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+        const date = currentDate.getDate().toString().padStart(2, '0');
+        const hour = currentDate.getHours().toString().padStart(2, '0');
+        const minute = currentDate.getMinutes().toString().padStart(2, '0');
+        const second = currentDate.getSeconds().toString().padStart(2, '0');
+        const timezoneOffset = (currentDate.getTimezoneOffset() / 60) * -1;
+        const timezoneOffsetString = timezoneOffset >= 0 ? `+${timezoneOffset}`.padStart(2, '0') : `-${Math.abs(timezoneOffset)}`.padStart(2, '0');
+        const formattedDate = `${year}-${month}-${date} ${hour}:${minute}:${second}${timezoneOffsetString}:00`;
 
 
-      // Update Data Poin User Members dan kurangkan penggunaannya
-      // let dataParamMemberUserId = userMember.user_members.usme_user_id
-      // let dataParamMemberUserName = userMember.user_members.usme_memb_name
-      // let dataUpdateUserMemberPoints = {
-      //   usme_points: userMember.user_members.usme_points,
-      //   usme_type: userMember.user_members.usme_type
-      // }
+        const IdBoor = props.dataBookingBayar.data.boor_id
+        const dataInputBreakFeast = props.dataBookingBayar.data_proses.map((data: any) => {
+          return {
+            usbr_borde_id: data.borde_id,
+            usbr_modified_date: formattedDate,
+            usbr_total_vacant: data.borde_adults + data.borde_kids
+          }
+        })
 
-      // let dataItemsUserMemberPoints = await apiMethodBooking.updateUserMemberPointsBooking(dataParamMemberUserId, dataParamMemberUserName, dataUpdateUserMemberPoints)
-      // let dataItemsUserMemberPointsResponse = dataItemsUserMemberPoints.data.data[0]
+        const dataResponseInputBreakFeast = await apiMethodBooking.createBreakFeast(IdBoor, dataInputBreakFeast)
+        console.log(dataResponseInputBreakFeast)
 
-      // Update dua data atau dinamis kedalam tabel masing-masing berdasrkan
-      // Borde_id nya
-      // let paramBordeId = props.dataBookingBayar.data_proses.map((data: any) => {
-      //   return data.borde_id.toString()
-      // }).join(', ')
-      // let dataUpdateCreateBookingOrderDetails = props.dataBookingBayar.data_proses.map((data: any) => {
-      //   return {
-      //     border_boor_id: IdBoor,
-      //     borde_checkin: data.borde_checkin,
-      //     borde_checkout: data.borde_checkout,
-      //     borde_adults: data.borde_adults,
-      //     borde_kids: data.borde_kids,
-      //     borde_price: parseInt(data.borde_price.replace(/[$,]/g, "")),
-      //     borde_extra: (detailBonus.subTotalDiscount + userMember?.subTotalBonusMember + props.finalExtraPrice) / props.dataBookingBayar.data_proses.length,
-      //     borde_discount: jumlahDiskon / props.dataBookingBayar.data_proses.length,
-      //     borde_tax: jumlahPajak / props.dataBookingBayar.data_proses.length,
-      //     borde_subtotal: totalPrice / props.dataBookingBayar.data_proses.length,
-      //     borde_faci_id: data.borde_faci_id
-      //   }
-      // })
+        // Update Data Poin User Members dan kurangkan penggunaannya
 
-      // const dataApiCreateBookingOrdersDetail = await apiMethodBooking.createBookingOrdersDetail(IdBoor, paramBordeId, dataUpdateCreateBookingOrderDetails)
-      // const dataResponseCreateBookingOrdersDetail = dataApiCreateBookingOrdersDetail.data
+        let dataParamMemberUserId = userMember.user_members.usme_user_id
+        let dataParamMemberUserName = userMember.user_members.usme_memb_name
+        let dataUpdateUserMemberPoints = {
+          usme_points: userMember.user_members.usme_points,
+          usme_type: userMember.user_members.usme_type
+        }
+        console.log(dataUpdateUserMemberPoints)
+        let dataItemsUserMemberPoints: any;
+        let dataItemsUserMemberPointsResponse: any;
+        if (dataUpdateUserMemberPoints.usme_points > 0) {
+          dataItemsUserMemberPoints = await apiMethodBooking.updateUserMemberPointsBooking(dataParamMemberUserId, dataParamMemberUserName, dataUpdateUserMemberPoints)
+          dataItemsUserMemberPointsResponse = dataItemsUserMemberPoints.data.data[0]
 
-      // Update data kedalam booking_orders
-      // const now = new Date();
-      // const year2 = now.getFullYear().toString().padStart(4, '0');
-      // const month2 = (now.getMonth() + 1).toString().padStart(2, '0');
-      // const day = now.getDate().toString().padStart(2, '0');
-      // const hours = now.toLocaleString('en-US', { hour: 'numeric', hour12: false, timeZone: 'Asia/Jakarta' }).toString().padStart(2, '0');
-      // const minutes = now.toLocaleString('en-US', { minute: 'numeric', timeZone: 'Asia/Jakarta' }).toString().padStart(2, '0');
-      // const seconds = now.toLocaleString('en-US', { second: 'numeric', timeZone: 'Asia/Jakarta' }).toString().padStart(2, '0');
-      // const formattedDate2 = `${year2}-${month2}-${day} ${hours}:${minutes}:${seconds}`;
+        }
 
-      // const dataInputOrderFinal = {
-      //   boor_arrival_date: props.dataBookingBayar.data_proses[0].borde_checkin,
-      //   boor_cardnumber: props.validasiPaymentDetails[0]?.usac_account_number,
-      //   boor_discount: jumlahDiskon,
-      //   boor_down_payment: 0,
-      //   boor_order_date: formattedDate2,
-      //   boor_is_paid: 'P',
-      //   boor_member_type: userMember?.user_members?.usme_memb_name,
-      //   boor_pay_type: props.validasiPaymentDetails[1].usac_type === 'Debit' ? 'D' : 'PG',
-      //   boor_status: "BOOKING",
-      //   boor_total_amount: totalPrice,
-      //   boor_total_guest: props.dataBookingBayar?.data?.boor_border_hotel_rooms_total_guest,
-      //   boor_total_room: props.dataBookingBayar?.data?.boor_border_hotel_rooms_total_rooms,
-      //   boor_total_tax: jumlahPajak,
-      //   boor_type: props.userDetailDiri.data.user_type,
-      //   boor_user_id: props.user.user_id
-      // }
 
-      // const dataBookingOrders = await apiMethodBooking.createBookingOrderFinal(IdBoor, dataInputOrderFinal)
-      // const dataBookingOrdersResponse = dataBookingOrders.data
+        // Update dua data atau dinamis kedalam tabel masing-masing berdasrkan
+        // Borde_id nya
+        let paramBordeId = props.dataBookingBayar.data_proses.map((data: any) => {
+          return data.borde_id.toString()
+        }).join(', ')
+        let dataUpdateCreateBookingOrderDetails = props.dataBookingBayar.data_proses.map((data: any) => {
+          return {
+            border_boor_id: IdBoor,
+            borde_checkin: data.borde_checkin,
+            borde_checkout: data.borde_checkout,
+            borde_adults: data.borde_adults,
+            borde_kids: data.borde_kids,
+            borde_price: parseInt(data.borde_price.replace(/[$,]/g, "")),
+            borde_extra: (detailBonus.subTotalDiscount + userMember?.subTotalBonusMember + props.finalExtraPrice) / props.dataBookingBayar.data_proses.length,
+            borde_discount: jumlahDiskon / props.dataBookingBayar.data_proses.length,
+            borde_tax: jumlahPajak / props.dataBookingBayar.data_proses.length,
+            borde_subtotal: totalPrice / props.dataBookingBayar.data_proses.length,
+            borde_faci_id: data.borde_faci_id
+          }
+        })
 
-      // Create data kedalam payment transactions menggunakan key booking number
+
+        const dataApiCreateBookingOrdersDetail = await apiMethodBooking.createBookingOrdersDetail(IdBoor, paramBordeId, dataUpdateCreateBookingOrderDetails)
+        const dataResponseCreateBookingOrdersDetail = dataApiCreateBookingOrdersDetail.data
+
+        const now = new Date();
+        const year2 = now.getFullYear().toString().padStart(4, '0');
+        const month2 = (now.getMonth() + 1).toString().padStart(2, '0');
+        const day = now.getDate().toString().padStart(2, '0');
+        const hours = '09';
+        const minutes = '00';
+        const seconds = '00';
+        const formattedDate2 = `${year2}-${month2}-${day} ${hours}:${minutes}:${seconds}`;
+
+        const dataInputOrderFinal = {
+          boor_arrival_date: props.dataBookingBayar.data_proses[0].borde_checkin,
+          boor_cardnumber: props.validasiPaymentDetails[0]?.usac_account_number,
+          boor_discount: jumlahDiskon,
+          boor_down_payment: 0,
+          boor_order_date: formattedDate2,
+          boor_is_paid: 'P',
+          boor_member_type: userMember?.user_members?.usme_memb_name,
+          boor_pay_type: props.validasiPaymentDetails[1].usac_type === 'Debit' ? 'D' : 'P',
+          boor_status: "BOOKING",
+          boor_total_amount: totalPrice,
+          boor_total_guest: props.dataBookingBayar?.data?.boor_border_hotel_rooms_total_guest,
+          boor_total_room: props.dataBookingBayar?.data?.boor_border_hotel_rooms_total_rooms,
+          boor_total_tax: jumlahPajak,
+          boor_type: props.userDetailDiri.data.user_type,
+          boor_user_id: props.user.user_id
+        };
+
+        const dataBookingOrders = await apiMethodBooking.createBookingOrderFinal(IdBoor, dataInputOrderFinal)
+        const dataBookingOrdersResponse = dataBookingOrders.data
+        console.log(dataBookingOrdersResponse)
+
+        console.log(dataBookingOrdersResponse)
+        const dataOrderBookingTransaction = {
+          boorOrderNumber: dataBookingOrdersResponse.data.boor_order_number,
+          debit: totalPrice,
+          sourceId: dataBookingOrdersResponse.data.boor_cardnumber,
+          targetId: props.validasiPaymentDetails[1]?.usac_account_number,
+          userId: props.user.user_id
+        }
+
+        // Create data kedalam payment transactions menggunakan key booking number
+        const dataCreatePaymentBooking = await apiMethodBooking.transactionBookingPayment(dataOrderBookingTransaction)
+        console.log(dataCreatePaymentBooking)
+
+        console.log(props.validasiPaymentDetails)
+        const dataFinalInvoice = {
+          booking_order_id: dataBookingOrdersResponse.data.boor_id,
+          name_hotel: props.dataBookingBayar.data.boor_border_hotel_book_name,
+          alamat_hotel: props.dataBookingBayar.data.boor_border_rooms_address1,
+          name_order_booking: props.userDetailDiri.data.user_full_name,
+          user_handphone: props.userDetailDiri.data.user_phone_number,
+          user_email: props.userDetailDiri.data.user_email,
+          user_book_checkIn: props.dataBookingBayar?.data?.boor_border_hotel_checkin_checkout.split(' ')[0],
+          user_book_checkOut: props.dataBookingBayar?.data?.boor_border_hotel_checkin_checkout.split(' ')[1],
+          user_book_total_guest: props.dataBookingBayar?.data?.boor_border_hotel_rooms_total_guest,
+          user_book_total_rooms: props.dataBookingBayar?.data?.boor_border_hotel_rooms_total_rooms,
+          user_room_type: props.dataBookingBayar?.data?.boor_border_rooms_name,
+          user_booking_order_number: dataBookingOrdersResponse.data.boor_order_number,
+          user_booking_order_date: formattedDate2,
+          user_booking_invoice_number: dataCreatePaymentBooking.data[0].patr_trx_number,
+          user_booking_invoice_date: dataCreatePaymentBooking.data[0].patr_modified_date,
+          user_booking_status_is_paid: dataBookingOrdersResponse.data.boor_is_paid,
+          user_booking_payment_type: props.validasiPaymentDetails[0].entity_name,
+          user_booking_full_name: props.userDetailDiri.data.user_full_name,
+          user_booking_contact_number: props.userDetailDiri.data.user_phone_number,
+          user_booking_member: userMember?.user_members?.usme_memb_name,
+          user_booking_member_date: userMember?.user_members?.usme_promote_date,
+          user_booking_member_remaining_points: userMember?.user_members?.usme_points,
+          user_booking_facilities_list: [props.dataBookingBayar?.data?.boor_border_rooms_name, ...props.dataAllExtraItemsFinal.map((itExtra: any) => {
+            return itExtra.namaItem.value.prit_name
+          })],
+          user_booking_facilities_qty_list: [props.dataBookingBayar?.data?.boor_border_hotel_rooms_total_rooms, ...props.dataAllExtraItemsFinal.map((itExtra: any) => {
+            return itExtra.jumlahItem
+          })],
+          user_booking_facilities_total_vacant: props.dataBookingBayar?.data?.boor_border_hotel_rooms_total_guest,
+          user_booking_price_list: [priceTotal, ...props.dataAllExtraItemsFinal.map((itExtra: any) => {
+            return itExtra.namaItem.value.prit_price
+          })],
+          user_booking_discount_price: jumlahDiskon,
+          user_booking_discount_price_bonus: detailBonus.subTotalDiscount,
+          user_booking_point_member_price: userMember?.subTotalBonusMember,
+          user_booking_point_member: userMember?.jumlahPointPakai,
+          user_subtotal_booking_list: [(priceTotal - jumlahDiskon - detailBonus.subTotalDiscount - userMember?.subTotalBonusMember), ...props.dataAllExtraItemsFinal.map((itExtra: any) => {
+            return itExtra.jumlahSubTotal
+          })],
+          user_booking_tax_percent: taxPercent,
+          user_booking_total_payment: totalPrice
+        }
+        console.log(dataFinalInvoice)
+        secureLocalStorage.setItem('yu_vo', dataFinalInvoice)
+        secureLocalStorage.setItem('yu_tr', dataCreatePaymentBooking.data)
+        router.push({
+          pathname: "/booking/detail-pembayaran-invoice-final",
+          query: dataFinalInvoice
+        }, '/booking/detail-pembayaran-invoice-final');
+
+      } else {
+        console.log(`Data Salah`)
+      }
+
+
 
     } catch (error) {
       console.log(error)
@@ -335,18 +461,6 @@ const CardDetailsOrderPayment: NextPage<CardDetailsOrderPaymentProps> = (props) 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-    // router.push("/booking/detail-pembayaran-invoice-final");
   }
 
 
@@ -355,11 +469,7 @@ const CardDetailsOrderPayment: NextPage<CardDetailsOrderPaymentProps> = (props) 
     getUsermember()
   }, [])
 
-  console.log(jumlahDiskon)
-  console.log(detailBonus)
-  console.log(optionsKupon)
-  console.log(userMember)
-
+  console.log(props.dataBookingBayar.data_proses)
   return (
     <div className="flex-1 rounded-[18px] bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] overflow-hidden flex flex-col p-6 items-start justify-start gap-[16px] text-left text-[12px] text-blackish-green font-montserrat-semibold-14">
       <div className="self-stretch flex flex-row items-center justify-start gap-[24px]">

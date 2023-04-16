@@ -5,6 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Formik, useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { doRequestGetListBooking } from "@/redux/booking/action/bookingActionReducer";
+import secureLocalStorage from "react-secure-storage";
 
 type InputPickDateCheckOpenProps = {
   value: string;
@@ -129,6 +130,18 @@ const SectionCardSearchBook: NextPage<SearchBookingInterfaceProps> = (props) => 
         endDate: dataAddressFinal.checkClose,
         facilities_support_filter: ['24-Hour Front Desk']
       })
+      secureLocalStorage.setItem('yu_date', {
+        page: 1,
+        minSubTotal: 0,
+        maxSubTotal: 100000000,
+        cityName: dataAddressFinal.addressCityName,
+        provName: dataAddressFinal.addressProvName,
+        countryName: dataAddressFinal.addressCountryName,
+        regionName: 'Asia',
+        startDate: dataAddressFinal.checkOpen,
+        endDate: dataAddressFinal.checkClose,
+        facilities_support_filter: ['24-Hour Front Desk']
+      })
       // handle form submission
 
     },
@@ -153,6 +166,7 @@ const SectionCardSearchBook: NextPage<SearchBookingInterfaceProps> = (props) => 
             onChange={(date: Date) => setStartDateOpen(date)}
             customInput={<InputPickDateCheckOpen value={startDateOpen.toDateString()} onClick={() => { }} />}
             value={startDateOpen ? startDateOpen.toDateString() : ''}
+            popperPlacement="top-start"
           />
 
           <ReactDatePicker
@@ -160,6 +174,7 @@ const SectionCardSearchBook: NextPage<SearchBookingInterfaceProps> = (props) => 
             onChange={(date: Date) => setStartDateClose(date)}
             customInput={<InputPickDateCheckClose value={startDateClose.toDateString()} onClick={() => { }} />}
             value={startDateClose ? startDateClose.toDateString() : ''}
+            popperPlacement="top-start"
           />
 
         </div>

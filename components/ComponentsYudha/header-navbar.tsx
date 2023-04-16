@@ -17,6 +17,7 @@ type HeaderNavbarType = {
   vector7?: string;
   vector8?: string;
   vector9?: string;
+  idboor?: any;
 
   /** Style props */
   headerLogginSectionHeaderJustifyContent?: Property.JustifyContent;
@@ -50,6 +51,7 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
   vectorLeft1,
   vectorLeft2,
   onFrameButtonClick,
+  idboor
 }) => {
   const [users, setUsers] = useState<any>({})
   const [usersDetail, setUsersDetail] = useState<any>({})
@@ -90,7 +92,9 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
     getUsersDetail(userLogin.user_id)
   }, [])
 
-  const onBannerHeaderClick = useCallback(() => {
+  const onBannerHeaderClick = useCallback(async (IdBoor: any) => {
+
+    const removeBookingOrder = await apiMethodBooking.removeBookingOrders(IdBoor)
     router.push("/");
   }, [router]);
 
@@ -145,12 +149,12 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
   useEffect(() => {
 
   }, [])
-  console.log(users)
 
 
+  console.log(usersDetail)
   return (
     <div
-      className="self-stretch bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col py-[12px] px-[92px] items-start justify-center text-left text-[18px] text-dimgray font-yeseva-one yu_md:pl-5 yu_md:pt-[21px] yu_md:pr-5 yu_md:box-border"
+      className="self-stretch no-print bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col py-[12px] px-[92px] items-start justify-center text-left text-[18px] text-dimgray font-yeseva-one yu_md:pl-5 yu_md:pt-[21px] yu_md:pr-5 yu_md:box-border"
       style={headerLoggedInStyle}
     >
       <div className="self-stretch flex flex-row items-center justify-between yu_sm:flex-col yu_sm:gap-[32px]">
@@ -262,7 +266,7 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
             />
           </div>
           <div onClick={() => {
-            onBannerHeaderClick()
+            onBannerHeaderClick(idboor)
           }} className="w-[190px] cursor-pointer h-[33px] shrink-0 flex flex-col items-center justify-start gap-[2px]">
             <div className="relative">HOTEL REALTA</div>
             <div className="relative text-[8px] text-center font-body-txt-body-s-regular text-gray-800">
@@ -271,7 +275,7 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
           </div>
         </div>
 
-        {!users?.user_id && <div className="w-[252px] shrink-0 flex flex-row items-center justify-between text-center text-[16px] text-darkslategray-300 font-body-txt-body-s-regular">
+        {!users && <div className="w-[252px] shrink-0 flex flex-row items-center justify-between text-center text-[16px] text-darkslategray-300 font-body-txt-body-s-regular">
           <div className="rounded bg-neutrals box-border w-[110px] h-10 shrink-0 flex flex-row py-2 px-7 items-center justify-center border-[1px] border-solid border-darkslategray-300 hover:mix-blend-normal hover:bg-darkslategray-300 hover:text-white hover:cursor-pointer">
             <div className="relative leading-[148%]">Daftar</div>
           </div>
@@ -295,9 +299,10 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
               <span className="sr-only">Open user menu</span>
               <img
                 className="h-8 w-8 rounded-full"
-                src={`${process.env.BACKEND_URL}/image/users/${usersDetail.user_photo_profile}`}
+                src={`${process.env.BACKEND_URL}/image/users/${usersDetail && usersDetail.user_photo_profile ? usersDetail.user_photo_profile : 'dummy-1.png'}`}
                 alt=""
               />
+
             </button>
           </div>
 

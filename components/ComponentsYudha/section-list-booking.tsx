@@ -1,12 +1,13 @@
 import type { NextPage } from "next";
-import { MutableRefObject, useCallback, useEffect, useState } from "react";
+import { CSSProperties, useCallback, useEffect, useState } from "react";
 
+import { doRequestGetAllFacilitiesSupport, doRequestGetListBooking } from "@/redux/booking/action/bookingActionReducer";
+import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import Carousel from 'react-gallery-carousel';
-import formatCurrency from "@/config/converse_number_to_rupiah";
-import { Formik, useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { doRequestGetAllFacilitiesSupport, doRequestGetListBooking } from "@/redux/booking/action/bookingActionReducer";
+import { ClipLoader } from "react-spinners";
+import secureLocalStorage from "react-secure-storage";
 
 
 
@@ -29,7 +30,14 @@ interface DataSearch {
 interface PropsInterfaceListBookingProps {
   dataListBooking: DataListBooking;
   searchDataBooking: DataSearch;
+  loadingListBook: any;
+
 }
+const override: CSSProperties = {
+  display: "block",
+  margin: "20px auto",
+  borderColor: "rgb(19 41 61 / var(--tw-bg-opacity))",
+};
 const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => {
   const { faci_supports, message: fasuppmessage, refresh } = useSelector((state: any) => state.facilitiesSupportBookingReducers)
   const { bookings: bookingsFaci, message, status } = useSelector((state: any) => state.bookingReducers)
@@ -38,33 +46,36 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
   let startDateObj = new Date()
   let startDateStr = startDateObj.toISOString().substring(0, 10)
   let startDate = new Date(startDateStr)
-
+  let [color, setColor] = useState("#ffffff");
   let endDateObj = new Date()
   endDateObj.setDate(endDateObj.getDate() + 1)
   let endDateStr = endDateObj.toISOString().substring(0, 10)
   let endDate = new Date(endDateStr)
+  let [loadingFilter, setLoadingFilter] = useState(false)
+  // let startDateFinal = startDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', timeZone: 'Asia/Jakarta' })
+  // let endDateFinal = endDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', timeZone: 'Asia/Jakarta' })
 
-  let startDateFinal = startDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', timeZone: 'Asia/Jakarta' })
-  let endDateFinal = endDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', timeZone: 'Asia/Jakarta' })
-
-
+  const [startDateFinal, setStartDateFinal] = useState(props.searchDataBooking.startDate)
+  const [endDatFinal, setEndDateFinal] = useState(props.searchDataBooking.endDate)
 
   const router = useRouter();
   const dispatch = useDispatch()
   const onButtonDetailClick = useCallback((idRooms: any, idHotel: any) => {
-    console.log(idRooms)
+    console.log(idRooms);
+    let dataDate: any = secureLocalStorage.getItem('yu_date');
+
     router.push({
       pathname: '/booking/detail-booking-final',
       query: {
         idRooms: idRooms,
         idHotel: idHotel,
-        startDate: props.searchDataBooking.startDate,
-        endDate: props.searchDataBooking.endDate,
+        startDate: dataDate && dataDate.startDate ? dataDate.startDate : props.searchDataBooking.startDate,
+        endDate: dataDate && dataDate.endDate ? dataDate.endDate : props.searchDataBooking.endDate,
         dataRooms: `[${idRooms}]`,
         guestRooms: `[${2}]`
       }
     });
-  }, [router]);
+  }, [router, props.searchDataBooking.startDate, props.searchDataBooking.endDate]);
 
 
   const formik = useFormik({
@@ -75,6 +86,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
       checkedSupportFacilities: []
     },
     onSubmit: (values) => {
+
       console.log(values)
       const dataFilter = {
         filterHargaAwal: values.hargaAwal,
@@ -96,7 +108,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
       // dispatch(doRequestGetListBooking(1, dataFilter.filterHargaAwal, dataFilter.filterHargaAkhir, bookingsFaci.data[0].hotel.address.city.city_name, bookingsFaci.data[0].hotel.address.city.provinces.prov_name, bookingsFaci.data[0].hotel.address.city.provinces.country.country_name, bookingsFaci.data[0].hotel.address.city.provinces.country.region.region_name, props.searchDataBooking?.startDate, props.searchDataBooking?.endDate, faciSupportArray))
       console.log(1, dataFilter.filterHargaAwal, dataFilter.filterHargaAkhir, props.searchDataBooking.cityName.length > 0 ? props.searchDataBooking.cityName : '', props.searchDataBooking.provName.length > 0 ? props.searchDataBooking.provName : '', props.searchDataBooking.countryName.length > 0 ? props.searchDataBooking.countryName : 'Indonesia', props.searchDataBooking.regionName.length > 0 ? props.searchDataBooking.regionName : 'Asia', props.searchDataBooking?.startDate, props.searchDataBooking?.endDate, FaciSupportFinal)
 
-
+      setLoadingFilter(true)
       dispatch(doRequestGetListBooking(1, dataFilter.filterHargaAwal, dataFilter.filterHargaAkhir, props.searchDataBooking.cityName.length > 0 ? props.searchDataBooking.cityName : '', props.searchDataBooking.provName.length > 0 ? props.searchDataBooking.provName : '', props.searchDataBooking.countryName.length > 0 ? props.searchDataBooking.countryName : 'Indonesia', props.searchDataBooking.regionName.length > 0 ? props.searchDataBooking.regionName : 'Asia', props.searchDataBooking?.startDate, props.searchDataBooking?.endDate, FaciSupportFinal))
     }
   })
@@ -104,15 +116,27 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
   useEffect(() => {
     dispatch(doRequestGetAllFacilitiesSupport())
   }, [])
-  console.log(props.dataListBooking)
+
+  if (props.dataListBooking.data[0] !== undefined && loadingFilter) {
+    setTimeout(() => {
+      setLoadingFilter(false)
+    }, 2000)
+  }
 
   return (
     <div className="self-stretch flex flex-col pt-[54px] px-[92px] pb-[58px] items-start justify-start text-left text-[16px] text-darkslategray-300 font-montserrat-semibold-14 yu_lg:self-stretch yu_lg:w-auto yu_lg:h-auto yu_lg:pl-3 yu_lg:pr-3 yu_lg:box-border">
+      <div className="self-stretch flex flex-row items-start justify-between text-[14px] font-body-txt-body-s-regular yu_lg:self-stretch yu_lg:w-auto yu_lg:h-auto">
+        <div className="relative font-semibold inline-block w-[408px] shrink-0 mb-4">
+          <span>Menampilkan {props.dataListBooking.data?.length}</span>
+          <span className="text-slamon"> tempat</span>
+        </div>
+      </div>
       <div className="self-stretch flex flex-row items-start justify-start yu_lg:self-stretch yu_lg:w-auto yu_lg:h-auto">
-        <div className="flex-1 flex flex-col items-start justify-start gap-[33px] yu_lg:flex-1 yu_lg:h-auto">
 
-          <form onSubmit={formik.handleSubmit} className="self-stretch rounded-2xl bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col py-8 px-6 items-start justify-start">
-            <div className="self-stretch flex flex-row items-start justify-start gap-[32px]">
+        <div className="flex-1 flex flex-row items-start justify-start gap-[33px] yu_lg:flex-1 yu_lg:h-auto">
+
+          <form onSubmit={formik.handleSubmit} className="self-stretch rounded-2xl bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex h-fit flex-col py-8 px-6 items-start justify-start">
+            <div className="self-stretch flex flex-col items-start justify-start gap-[32px]">
               <div className="self-stretch flex flex-col items-start justify-center text-[18px]">
                 <div className="relative font-semibold">Filter Booking</div>
               </div>
@@ -148,7 +172,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
                   </div>
                 </div>
               </div>
-              <div className="w-[273px] shrink-0 flex flex-col items-start justify-start gap-[16px] font-body-txt-body-s-regular">
+              <div className="w-[273px] hidden shrink-0 flex flex-col items-start justify-start gap-[16px] font-body-txt-body-s-regular">
                 <div className="self-stretch flex flex-row items-start justify-between">
                   <p className="m-0 flex-1 relative font-semibold">
                     Fasilitas Booking Utama
@@ -208,25 +232,19 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
           </form>
 
 
-
-          <div className="self-stretch flex flex-row items-start justify-between text-[14px] font-body-txt-body-s-regular yu_lg:self-stretch yu_lg:w-auto yu_lg:h-auto">
-            <div className="relative font-semibold inline-block w-[408px] shrink-0">
-              <span>Menampilkan {props.dataListBooking.data?.length}</span>
-              <span className="text-slamon"> tempat</span>
-            </div>
-            <div className="w-[584px] shrink-0 flex flex-row items-start justify-end gap-[4px] text-right">
-              <div className="relative font-semibold">
-                Urutkan berdasarkan Rekomendasi
-              </div>
-              <img
-                className="relative w-[18px] h-[18px] shrink-0 overflow-hidden"
-                alt=""
-                src="/chevron-down1.svg"
-              />
-            </div>
-          </div>
           <div className="self-stretch flex flex-col items-start justify-start text-[12px] yu_lg:self-stretch yu_lg:w-auto gap-8">
-            {props.dataListBooking.data && props.dataListBooking?.data?.map((item: any) => {
+
+            <ClipLoader
+              color={color}
+              loading={loadingFilter}
+              cssOverride={override}
+              size={150}
+              aria-label="Loading"
+              data-testid="loader"
+            />
+
+
+            {(props.dataListBooking.data && loadingFilter === false) && props.dataListBooking?.data?.map((item: any) => {
               return <div className="self-stretch shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-row items-start justify-start">
                 <div className="relative rounded-tl-xl rounded-tr-none rounded-br-none rounded-bl-xl w-[312px] h-[397px] overflow-hidden ">
                   {/* Ini tempat gambarnya */}
@@ -242,8 +260,8 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
 
                 <div className="flex-1 rounded-tl-none rounded-tr-xl rounded-br-xl rounded-bl-none bg-neutrals flex flex-col p-6 items-start justify-start gap-[24px] text-[12px] font-body-txt-body-s-regular">
                   <div className="self-stretch flex flex-row items-start justify-start gap-[24px]">
-                    <div className="w-[416px] shrink-0 flex flex-col items-start justify-start gap-[16px] max-w-[60%]">
-                      <b className="self-stretch relative">
+                    <div className="min-w-[416px] max-w-xl shrink-0 flex flex-col items-start justify-start gap-[16px] max-w-[60%]">
+                      <b className="self-stretch relative text-lg">
                         {item.hotel.hotel_name}
                       </b>
                       <div className="self-stretch flex flex-col items-start justify-start gap-[12px] text-[12px] text-black">
@@ -291,7 +309,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
                               currency: 'IDR',
                             }).format(item.faci_rate_price)}
                           </div>
-                          <div className="rounded-sm bg-slamon flex flex-row py-0.5 px-3 items-center justify-center text-5xs text-neutrals">
+                          <div className="rounded-sm bg-slamon flex flex-row py-0.5 px-3 items-center justify-center text-5xs text-neutrals w-fit">
                             <div className="relative font-medium">{item.faci_discount * 100}% Diskon</div>
                           </div>
                         </div>
@@ -308,7 +326,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
                       </div>
                     </div>
                     <div className="flex-1 flex flex-col items-end justify-start text-right text-[12px]">
-                      <p className="m-0 self-stretch relative font-bold inline-block opacity-[0.75] min-w-[10%]">
+                      <p className="m-0 self-stretch relative font-bold inline-block opacity-[0.75] min-w-[100px]">
                         {item.faci_memb_name} MEMBER
                       </p>
                     </div>
@@ -339,79 +357,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
             })}
 
           </div>
-          <div className="self-stretch flex flex-row pt-3 px-6 pb-4 items-center justify-center text-[14px] text-gray-700 font-text-[14px]-normal border-t-[1px] border-solid border-gray-200">
-            <div className="flex-1 shadow-[0px_1px_2px_rgba(16,_24,_40,_0.05)] flex flex-row items-start justify-start">
-              <button className="cursor-pointer py-2.5 px-4 bg-neutrals flex-1 rounded-tl-lg rounded-tr-none rounded-br-none rounded-bl-lg overflow-hidden flex flex-row items-center justify-center gap-[8px] border-[1px] border-solid border-gray-300">
-                <img
-                  className="relative w-5 h-5 shrink-0 overflow-hidden"
-                  alt=""
-                  src="/arrowleft.svg"
-                />
-                <div className="relative text-[14px] leading-[20px] font-medium font-text-[14px]-normal text-gray-800 text-left">
-                  Previous
-                </div>
-              </button>
-              <div className="flex-1 bg-gray-50 flex flex-col items-center justify-center text-gray-800">
-                <div className="self-stretch relative bg-gray-300 h-px shrink-0" />
-                <div className="flex flex-row py-[9px] px-2 items-center justify-center">
-                  <div className="relative leading-[20px] font-medium">1</div>
-                </div>
-                <div className="self-stretch relative bg-gray-300 h-px shrink-0" />
-              </div>
-              <div className="flex-1 bg-neutrals flex flex-col items-center justify-center">
-                <div className="self-stretch relative bg-gray-300 h-px shrink-0" />
-                <div className="flex flex-row py-[9px] px-2 items-center justify-center">
-                  <div className="relative leading-[20px] font-medium">2</div>
-                </div>
-                <div className="self-stretch relative bg-gray-300 h-px shrink-0" />
-              </div>
-              <div className="flex-1 bg-neutrals flex flex-col items-center justify-center">
-                <div className="self-stretch relative bg-gray-300 h-px shrink-0" />
-                <div className="flex flex-row py-[9px] px-2 items-center justify-center">
-                  <div className="relative leading-[20px] font-medium">3</div>
-                </div>
-                <div className="self-stretch relative bg-gray-300 h-px shrink-0" />
-              </div>
-              <div className="flex-1 bg-neutrals flex flex-col items-center justify-center">
-                <div className="self-stretch relative bg-gray-300 h-px shrink-0" />
-                <div className="flex flex-row py-[9px] px-2 items-center justify-center">
-                  <div className="relative leading-[20px] font-medium">...</div>
-                </div>
-                <div className="self-stretch relative bg-gray-300 h-px shrink-0" />
-              </div>
-              <div className="flex-1 bg-neutrals flex flex-col items-center justify-center">
-                <div className="self-stretch relative bg-gray-300 h-px shrink-0" />
-                <div className="flex flex-row py-[9px] px-2 items-center justify-center">
-                  <div className="relative leading-[20px] font-medium">8</div>
-                </div>
-                <div className="self-stretch relative bg-gray-300 h-px shrink-0" />
-              </div>
-              <div className="flex-1 bg-neutrals flex flex-col items-center justify-center">
-                <div className="self-stretch relative bg-gray-300 h-px shrink-0" />
-                <div className="flex flex-row py-[9px] px-2 items-center justify-center">
-                  <div className="relative leading-[20px] font-medium">9</div>
-                </div>
-                <div className="self-stretch relative bg-gray-300 h-px shrink-0" />
-              </div>
-              <div className="flex-1 bg-neutrals flex flex-col items-center justify-center">
-                <div className="self-stretch relative bg-gray-300 h-px shrink-0" />
-                <div className="flex flex-row py-[9px] px-2 items-center justify-center">
-                  <div className="relative leading-[20px] font-medium">10</div>
-                </div>
-                <div className="self-stretch relative bg-gray-300 h-px shrink-0" />
-              </div>
-              <button className="cursor-pointer py-2.5 px-4 bg-neutrals flex-1 rounded-tl-none rounded-tr-lg rounded-br-lg rounded-bl-none overflow-hidden flex flex-row items-center justify-center gap-[8px] border-[1px] border-solid border-gray-300">
-                <div className="relative text-[14px] leading-[20px] font-medium font-text-[14px]-normal text-gray-800 text-left">
-                  Next
-                </div>
-                <img
-                  className="relative w-5 h-5 shrink-0 overflow-hidden"
-                  alt=""
-                  src="/arrowright.svg"
-                />
-              </button>
-            </div>
-          </div>
+
         </div>
       </div>
     </div>
