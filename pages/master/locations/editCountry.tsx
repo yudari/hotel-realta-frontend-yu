@@ -5,10 +5,10 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function EditCountryMaster(props: any) {
-    const [countryData, setCountryData] = useState({
-        country_id: 0,
-        country_name: "",
-      });
+  const [countryData, setCountryData] = useState({
+    country_id: 0,
+    country_name: "",
+  });
   let { country } = useSelector((state: any) => state.countryReducer);
   type FormValues = {
     country_name: string;
@@ -25,10 +25,10 @@ export default function EditCountryMaster(props: any) {
 
   const handleEdit = async (data: any) => {
     const dataEdit = {
-        country_name: data.country.name,
-        country_region_id: Number(data.country_region_id),
-    }
-    dispatch(doUpdateCountry({ id: props.isEdit.id, dataEdit }));
+      country_name: data.country_name,
+      country_region_id: Number(data.country_region_id),
+    };
+    dispatch(doUpdateCountry({ id: props.isEdit.id, data: dataEdit }));
     props.closeModal();
   };
 
