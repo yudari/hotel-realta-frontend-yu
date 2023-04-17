@@ -50,6 +50,8 @@ import addressReducer from '../masterSchema/reducer/addressReducer'
 import bookingsTemporaryReducers from "../booking/reducer/bookingTemporary";
 import bookingDetailPembayaranReducers from "../booking/reducer/bookingDetailPembayaranReducers";
 
+
+
 const logger = createLogger()
 const saga = createSagaMiddleware()
 
@@ -105,11 +107,15 @@ const reducer = combineReducers({
 
 const store = configureStore({
   reducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-    serializableCheck: false,
-  }).concat(logger).concat(saga),
-});
+
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    })
+      .concat(logger)
+      .concat(saga),
+})
 
 saga.run(rootSaga)
 
-export default store
+saga.run(rootSaga);
