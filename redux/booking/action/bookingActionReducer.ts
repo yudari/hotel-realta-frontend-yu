@@ -88,3 +88,15 @@ export const doResponseGetOneDetailPembayaran = (payload: any) => {
   }
 }
 
+export const doRequestGetOneDetailPembayaran = (...payload: any) => {
+  return {
+    type: ActionTypesBooking.REQ_GET_ONE_DETAIL_PEMBAYARAN_BOOKING,
+    payload: { IdOrderDetail: payload[0], IdUser: payload[1], CheckIn: payload[2], CheckOut: payload[3], TotalGuest: payload[4], TotalRooms: payload[5] }
+  }
+}
+export const doResponseCreateBookingsTemporary = (payload: any) => {
+  return {
+    type: ActionTypesBooking.RES_CREATE_TEMPORARY_BORDE,
+    payload: payload
+  }
+}

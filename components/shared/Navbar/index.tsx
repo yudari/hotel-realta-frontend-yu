@@ -55,12 +55,12 @@ export default function Navbar({
                   {Number(user_role_id) === 1
                     ? "Guest"
                     : Number(user_role_id) === 2
-                    ? "Manager"
-                    : Number(user_role_id) === 3
-                    ? "Office Boy"
-                    : Number(user_role_id) === 4
-                    ? "Admin"
-                    : "User"}
+                      ? "Manager"
+                      : Number(user_role_id) === 3
+                        ? "Office Boy"
+                        : Number(user_role_id) === 4
+                          ? "Admin"
+                          : "User"}
                 </span>
               </div>
               <picture>

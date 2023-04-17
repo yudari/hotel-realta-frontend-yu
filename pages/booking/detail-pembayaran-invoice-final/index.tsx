@@ -89,10 +89,6 @@ const DetailPembayaranInvoiceFinal: NextPage = () => {
                 {Object.keys(dataDetailDiri).length > 0 && <SectionDetailDiri onComponentRef={componentRef} dataDetailDiri={dataDetailDiri} />}
 
                 {Object.keys(dataInvoice).length > 0 && <SectionInvoice onComponentRef={componentRef} onHandlePrint={handlePrint} dataInvoice={dataInvoice} />}
-
-
-
-
                 <SectionFooter />
 
             </div >

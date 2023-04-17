@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import ReactDatePicker from "react-datepicker";
 import apiMethodBooking from "@/api/booking/apiMethodBooking";
 import { useDispatch, useSelector } from "react-redux";
-import { doRequestCreateBookingTemporary, doRequestGetBookingByQuery } from "@/redux/booking/action/bookingActionReducer";
+import { doRequestGetBookingByQuery } from "@/redux/booking/action/bookingActionReducer";
 import Select from "react-tailwindcss-select";
 
 interface SectionDetailsOrderInterface {
@@ -313,8 +313,8 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
                 {props.dataBookings.data.data_rooms[0].hotel.hotel_rating_status} {props.dataBookings.data.data_rooms[0].hotel.hotel_reviews.length} reviews
               </div>
             </div>
-            <div className="rounded-sm bg-slamon shadow-[0px_1px_4px_rgba(0,_0,_0,_0.25)] max-w-[140px] flex flex-col py-1 px-3 box-border items-center justify-center text-5xs text-neutrals">
-              <div className="self-stretch relative font-medium w-full">
+            <div className="rounded-sm bg-slamon shadow-[0px_1px_4px_rgba(0,_0,_0,_0.25)] max-w-[160px] flex flex-col py-1 px-3 box-border items-center justify-center text-sm text-neutrals">
+              <div className="self-stretch relative font-semibold te w-full">
                 {props.dataBookings.data.data_rooms[0].faci_memb_name} MEMBER
               </div>
             </div>

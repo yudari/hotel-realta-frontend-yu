@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { Menu } from "@headlessui/react";
 import apiMethodBooking from "@/api/booking/apiMethodBooking";
+import Cookies from "js-cookie";
 
 type HeaderNavbarType = {
   vector?: string;
@@ -30,6 +31,7 @@ type HeaderNavbarType = {
 
   /** Action props */
   onFrameButtonClick?: () => void;
+  onFrameButtonClickRestaurant?: () => void;
 };
 
 const HeaderNavbar: NextPage<HeaderNavbarType> = ({
@@ -51,6 +53,7 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
   vectorLeft1,
   vectorLeft2,
   onFrameButtonClick,
+  onFrameButtonClickRestaurant,
   idboor
 }) => {
   const [users, setUsers] = useState<any>({})
@@ -98,6 +101,15 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
     router.push("/");
   }, [router]);
 
+  const onRegisterUserClick = useCallback(async (IdBoor: any) => {
+    router.push("/users/signupGuest");
+  }, [router]);
+
+
+  const onLoginUserClick = useCallback(async (IdBoor: any) => {
+    router.push("/users/loginGuest");
+  }, [router]);
+
   const handleMenu = (event: any) => {
     event.preventDefault();
     const menu = document.getElementById("user-menu");
@@ -143,37 +155,78 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
   };
 
   const handleMenuItemClick = () => {
-    setIsOpen(false);
-  };
 
-  useEffect(() => {
+    try {
 
-  }, [])
+      localStorage.removeItem("login");
+      localStorage.removeItem("token");
+      localStorage.removeItem("loginData");
+      Cookies.remove("loginData");
+      Cookies.remove("token");
+
+      if (
+        Number(usersDetail?.user_role_id) === 2 ||
+        Number(usersDetail?.user_role_id) === 3 ||
+        Number(usersDetail?.user_role_id) === 4
+      ) {
+        setIsOpen(false);
+        router.push("/users/loginEmployee");
+      } else {
+        setIsOpen(false);
+        router.push("/users/loginGuest");
+      }
+    } catch (e) {
+      return e;
+    }
+  }
 
 
-  console.log(usersDetail)
+  // };
+
+
+
+
   return (
     <div
-      className="self-stretch no-print bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col py-[12px] px-[92px] items-start justify-center text-left text-[18px] text-dimgray font-yeseva-one yu_md:pl-5 yu_md:pt-[21px] yu_md:pr-5 yu_md:box-border"
+      className="self-stretch no-print bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col py-[12px] px-[92px] items-start justify-center text-left text-[18px] text-dimgray text-fontFamily-body-txt-body-s-regular yu_md:pl-5 yu_md:pt-[21px] yu_md:pr-5 yu_md:box-border"
       style={headerLoggedInStyle}
     >
       <div className="self-stretch flex flex-row items-center justify-between yu_sm:flex-col yu_sm:gap-[32px]">
-        <button
-          className="cursor-pointer [border:none] p-0 bg-[transparent] w-[111px] h-10 shrink-0 flex flex-col items-start justify-center"
-          onClick={onFrameButtonClick}
-        >
-          <div className="w-[120px] flex flex-row items-center justify-start gap-[4px]">
-            <img
-              className="relative w-6 h-6 shrink-0 overflow-hidden"
-              alt=""
-              src="/ionbed.svg"
-            />
-            <div className="flex-1 relative text-[14px] font-semibold font-montserrat-semibold-14 text-darkslategray-300 text-left">
-              Cari Tempat
+        <div className="container-menu flex flex-start ">
+          <button
+            className="cursor-pointer [border:none] p-0 bg-[transparent] w-[111px] h-10 shrink-0 flex flex-col items-start justify-center"
+            onClick={onFrameButtonClick}
+          >
+            <div className="w-[120px] flex flex-row items-center justify-start gap-[8px]">
+              <img
+                className="relative w-6 h-6 shrink-0 overflow-hidden"
+                alt=""
+                src="/ionbed.svg"
+              />
+              <div className="flex-1 relative text-[14px] font-semibold font-montserrat-semibold-14 text-darkslategray-300 text-left">
+                Hotels
+              </div>
             </div>
-          </div>
 
-        </button>
+          </button>
+          <button
+            className="cursor-pointer [border:none] p-0 bg-[transparent] w-[111px] h-10 shrink-0 flex flex-col items-start justify-center"
+            onClick={onFrameButtonClickRestaurant}
+          >
+            <div className="w-[120px] flex flex-row items-center justify-start gap-[8px]">
+              <img
+                className="relative w-6 h-6 shrink-0 overflow-hidden"
+                alt="icon-food"
+                src="/icons-food.png"
+              />
+              <div className="flex-1 relative text-[14px] font-semibold font-montserrat-semibold-14 text-darkslategray-300 text-left">
+                Restaurants
+              </div>
+            </div>
+
+          </button>
+        </div>
+
         <div className="w-[190px] shrink-0 flex flex-col items-center justify-start yu_sm:order-[-1]">
           <div className="relative w-[34px] h-[34px] shrink-0 overflow-hidden">
             <img
@@ -267,7 +320,7 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
           </div>
           <div onClick={() => {
             onBannerHeaderClick(idboor)
-          }} className="w-[190px] cursor-pointer h-[33px] shrink-0 flex flex-col items-center justify-start gap-[2px]">
+          }} className="w-[230px] cursor-pointer h-[33px] text-fontFamily-montserrat-semibold-14 shrink-0 flex flex-col items-center justify-start gap-[2px]">
             <div className="relative">HOTEL REALTA</div>
             <div className="relative text-[8px] text-center font-body-txt-body-s-regular text-gray-800">
               EXPERIENCE ELEVATED LUXURY AT ITS FINEST
@@ -275,18 +328,18 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
           </div>
         </div>
 
-        {!users && <div className="w-[252px] shrink-0 flex flex-row items-center justify-between text-center text-[16px] text-darkslategray-300 font-body-txt-body-s-regular">
-          <div className="rounded bg-neutrals box-border w-[110px] h-10 shrink-0 flex flex-row py-2 px-7 items-center justify-center border-[1px] border-solid border-darkslategray-300 hover:mix-blend-normal hover:bg-darkslategray-300 hover:text-white hover:cursor-pointer">
+        {!usersDetail && <div className="w-[252px] shrink-0 flex flex-row items-center justify-between text-center text-[16px] text-darkslategray-300 font-body-txt-body-s-regular">
+          <div onClick={onRegisterUserClick} className="rounded bg-neutrals box-border w-[110px] h-10 shrink-0 flex flex-row py-2 px-7 items-center justify-center border-[1px] border-solid border-darkslategray-300 hover:mix-blend-normal hover:bg-darkslategray-300 hover:text-white hover:cursor-pointer">
             <div className="relative leading-[148%]">Daftar</div>
           </div>
-          <button className="cursor-pointer [border:none] py-2 px-7 bg-darkslategray-300 rounded w-[110px] h-10 shrink-0 flex flex-row box-border items-center justify-center hover:bg-gray-800 hover:cursor-pointer">
+          <button onClick={onLoginUserClick} className="cursor-pointer [border:none] py-2 px-7 bg-darkslategray-300 rounded w-[110px] h-10 shrink-0 flex flex-row box-border items-center justify-center hover:bg-darkslategray-200 hover:cursor-pointer">
             <div className="relative text-[16px] leading-[148%] font-body-txt-body-s-regular text-neutrals text-center">
               Login
             </div>
           </button>
         </div>}
 
-        {users && <div className="relative ml-3" ref={dropdownRef}>
+        {usersDetail && <div className="relative ml-3" ref={dropdownRef}>
           <div>
             <button
               type="button"
@@ -327,15 +380,15 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
                 My Profile
               </a>
 
-              <a
-                href="#"
+              <button
+
                 className="block px-4 py-2 text-[14px]  text-gray-700 hover:bg-darkslategray-300 hover:text-white"
                 role="menuitem"
                 id="user-menu-item-2"
                 onClick={handleMenuItemClick}
               >
                 Sign out
-              </a>
+              </button>
             </div>
           )}
         </div>}
@@ -346,4 +399,4 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
   );
 };
 
-export default HeaderNavbar;
+export default HeaderNavbar

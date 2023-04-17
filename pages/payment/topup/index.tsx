@@ -18,7 +18,7 @@ const TopUp = () => {
   const { payTrans, message, refresh } = useSelector(
     (state: any) => state.paymentTransactionReducers
   )
-  
+
   type FormValues = {
     patr_debet: number;
     patr_source_id: number;
@@ -29,6 +29,10 @@ const TopUp = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
+
+
+
+
 
   let { accounts } = useSelector(
     (state: any) => state.userAccountReducers
@@ -45,11 +49,13 @@ const TopUp = () => {
     const transferAmount = data.patr_debet;
     const senderAccount = data.patr_source_id;
     const recipientAccount = data.patr_target_id;
-  
+
+
     const confirmed = window.confirm(
       `Are you sure you want to Topup  ${transferAmount} from account ${senderAccount} to account ${recipientAccount}?`
     );
-  
+
+
     if (confirmed) {
       const dataAll = {
         debit: transferAmount,
@@ -93,6 +99,7 @@ const TopUp = () => {
   return (
     <section>
       <div className="flex justify-center">
+
 
         <article className="w-[28rem]">
           <h1
@@ -171,6 +178,7 @@ const TopUp = () => {
               />
             </div>
             <div className="flex items-center mt-12">
+
 
               <div className="mx-auto">
                 <button

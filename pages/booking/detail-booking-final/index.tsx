@@ -23,6 +23,7 @@ import { Rating } from '@smastrom/react-rating'
 
 import '@smastrom/react-rating/style.css'
 import ApiMethodHotel from "@/api/hotel/apiMethodHotel";
+import SectionFooter from "@/components/ComponentsYudha/section-footer";
 
 const override: CSSProperties = {
     display: "block",
@@ -57,6 +58,10 @@ const DetailBookingFinal: NextPage = (props) => {
     const dispatch = useDispatch();
     const onFrameButtonClick = useCallback(() => {
         router.push('/booking/list-booking-final')
+    }, []);
+
+    const onFrameButtonClickRestaurant = useCallback(() => {
+        router.push('/resto/restoMenuPhotos')
     }, []);
 
     const onStartModal = () => {
@@ -145,6 +150,7 @@ const DetailBookingFinal: NextPage = (props) => {
                     vector7="/vector24.svg"
                     vector8="/vector25.svg"
                     vector9="/vector26.svg"
+                    onFrameButtonClickRestaurant={onFrameButtonClickRestaurant}
                     onFrameButtonClick={onFrameButtonClick}
                 />
                 {loading ? <ClipLoader
@@ -181,7 +187,7 @@ const DetailBookingFinal: NextPage = (props) => {
                         </div>
                     </div>
                     <SectionHotelPolicy />
-                    <FooterContainer /></>}
+                    <SectionFooter /></>}
 
 
             </div>

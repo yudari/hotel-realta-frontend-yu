@@ -33,7 +33,7 @@ const HotelSubscribeSection: NextPage = () => {
   }, []);
 
   return (
-    <div className="self-stretch flex flex-col py-[42px] px-[92px] items-start justify-start text-left text-25xl text-neutrals font-body-txt-body-s-regular yu_lg:pl-5 yu_lg:pr-5 yu_lg:box-border">
+    <div className="self-stretch flex flex-col py-[42px] px-[92px] items-start justify-start text-left text-25xl text-neutrals yu_lg:pl-5 yu_lg:pr-5 yu_lg:box-border">
       <div
         className="self-stretch rounded-[18px] bg-steelblue shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] overflow-hidden flex flex-row py-0 px-6 items-end justify-start gap-[20px] [&.animate]:animate-[1s_ease_0s_1_normal_forwards_fade-in] opacity-[0] yu_md:flex-row yu_md:items-start yu_md:justify-start"
         data-animate-on-scroll
@@ -47,7 +47,7 @@ const HotelSubscribeSection: NextPage = () => {
               <b className="relative inline-block w-[206px] opacity-[0.8]">
                 The Hotels
               </b>
-              <p className="m-0 relative text-[16px] font-semibold inline-block w-[361px] opacity-[0.7] yu_sm:self-stretch yu_sm:w-auto">
+              <p className="m-0 relative text-[16px] font-semibold inline-block w-[400px] opacity-[0.7] yu_sm:self-stretch yu_sm:w-auto">
                 Temukan Inspirasi Liburanmu! Dapatkan Diskon, Tips Perjalanan,
                 dan Cerita Unik di Balik Layar Hanya di Booking Hotel Kami!
               </p>

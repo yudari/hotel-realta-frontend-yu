@@ -116,8 +116,9 @@ const SectionCardSearchBook: NextPage<SearchBookingInterfaceProps> = (props) => 
         checkOpen: new Date(startDateOpen.toISOString().substring(0, 10)).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', timeZone: 'Asia/Jakarta' }),
         checkClose: new Date(startDateClose.toISOString().substring(0, 10)).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', timeZone: 'Asia/Jakarta' })
       }
+
       console.log(dataAddressFinal)
-      dispatch(doRequestGetListBooking(1, 0, 100000000, dataAddressFinal.addressCityName, dataAddressFinal.addressProvName, dataAddressFinal.addressCountryName, 'Asia', dataAddressFinal.checkOpen, dataAddressFinal.checkClose, ['24-Hour Front Desk']))
+      dispatch(doRequestGetListBooking(1, 0, 100000000000000, dataAddressFinal.addressCityName, dataAddressFinal.addressProvName, dataAddressFinal.addressCountryName, 'Asia', dataAddressFinal.checkOpen, dataAddressFinal.checkClose, ['24-Hour Front Desk']))
       props.changeSearchData({
         page: 1,
         minSubTotal: 0,
