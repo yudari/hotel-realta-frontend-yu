@@ -8,7 +8,7 @@ import Carousel from 'react-gallery-carousel';
 import { useDispatch, useSelector } from "react-redux";
 import { ClipLoader } from "react-spinners";
 import secureLocalStorage from "react-secure-storage";
-
+import ReactPaginate from 'react-paginate';
 
 
 interface DataListBooking {
@@ -57,6 +57,12 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
 
   const [startDateFinal, setStartDateFinal] = useState(props.searchDataBooking.startDate)
   const [endDatFinal, setEndDateFinal] = useState(props.searchDataBooking.endDate)
+  const [itemOffset, setItemOffset] = useState(0);
+
+  const endOffset = itemOffset + 3;
+  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+  const currentItems = props.dataListBooking.data.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(props.dataListBooking.data.length / 3);
 
   const router = useRouter();
   const dispatch = useDispatch()
@@ -64,6 +70,14 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
     console.log(idRooms);
     let dataDate: any = secureLocalStorage.getItem('yu_date');
 
+    console.log({
+      idRooms: idRooms,
+      idHotel: idHotel,
+      startDate: dataDate && dataDate.startDate ? dataDate.startDate : props.searchDataBooking.startDate,
+      endDate: dataDate && dataDate.endDate ? dataDate.endDate : props.searchDataBooking.endDate,
+      dataRooms: `[${idRooms}]`,
+      guestRooms: `[${1}]`
+    })
     router.push({
       pathname: '/booking/detail-booking-final',
       query: {
@@ -72,10 +86,19 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
         startDate: dataDate && dataDate.startDate ? dataDate.startDate : props.searchDataBooking.startDate,
         endDate: dataDate && dataDate.endDate ? dataDate.endDate : props.searchDataBooking.endDate,
         dataRooms: `[${idRooms}]`,
-        guestRooms: `[${2}]`
+        guestRooms: `[${1}]`
       }
     });
   }, [router, props.searchDataBooking.startDate, props.searchDataBooking.endDate]);
+
+  const handlePageClick = (event: any) => {
+    const newOffset = (event.selected * 3) % props.dataListBooking.data.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
+
 
 
   const formik = useFormik({
@@ -244,7 +267,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
             />
 
 
-            {(props.dataListBooking.data && loadingFilter === false) && props.dataListBooking?.data?.map((item: any) => {
+            {(props.dataListBooking.data && loadingFilter === false) && currentItems.map((item: any) => {
               return <div className="self-stretch shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-row items-start justify-start">
                 <div className="relative rounded-tl-xl rounded-tr-none rounded-br-none rounded-bl-xl w-[312px] h-[397px] overflow-hidden ">
                   {/* Ini tempat gambarnya */}
@@ -356,6 +379,20 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
               </div>
             })}
 
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel="next >"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={3}
+              pageCount={pageCount}
+              previousLabel="< previous"
+              renderOnZeroPageCount={null}
+              containerClassName="pagination"
+              pageLinkClassName="page-num"
+              previousLinkClassName="page-num"
+              nextLinkClassName="page-num"
+              activeLinkClassName="active"
+            />
           </div>
 
         </div>

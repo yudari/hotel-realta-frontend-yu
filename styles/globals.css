@@ -143,6 +143,36 @@ body {
   border: 2px dashed black;
 }
 
+.pagination {
+  list-style:none;
+  display:  flex;
+  justify-content:center;
+  align-items:center;
+  margin-bottom:5rem;
+  font-size: 1.2rem;
+  gap:5px; 
+}
+
+.pagination .page-num {
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: 400;
+}
+.pagination .page-num:hover {
+  background-color: #13293d;
+  color: #fff;
+}
+
+.pagination .active {
+  background-color: #13293d;
+  color: #fff;
+}
+
+.react-datepicker-popper {
+  z-index: 9999 !important;
+}
+
 @media print {
   .component-to-print {
     display: block !important;
@@ -158,3 +188,4 @@ body {
     size: tabloid;
   }
 }
+

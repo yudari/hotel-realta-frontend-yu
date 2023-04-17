@@ -18,6 +18,7 @@ const override: CSSProperties = {
 };
 
 const ListBookingFinal: NextPage = () => {
+
     let startDateObj = new Date()
     let startDateStr = startDateObj.toISOString().substring(0, 10)
     let startDate = new Date(startDateStr)
@@ -47,6 +48,8 @@ const ListBookingFinal: NextPage = () => {
     let [loading, setLoading] = useState(true);
     let [loadingFilter, setLoadingFilter] = useState(false)
     let [color, setColor] = useState("#ffffff");
+
+
     const router = useRouter()
     const dispatch = useDispatch()
 
@@ -57,6 +60,7 @@ const ListBookingFinal: NextPage = () => {
     const onFrameButtonClickRestaurant = useCallback(() => {
         router.push("/resto/restoMenuPhotos");
     }, [router]);
+
 
 
 
