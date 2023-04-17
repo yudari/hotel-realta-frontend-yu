@@ -45,9 +45,9 @@ export default function Home() {
         />
         <JumbotronSection />
         <ExploreSection />
-        {/* <SectionLiburan />
+        <SectionLiburan />
         <HotelFavoritesSection />
-        <HotelSubscribeSection /> */}
+        <HotelSubscribeSection />
         <SectionFooter />
       </div>
     </>
