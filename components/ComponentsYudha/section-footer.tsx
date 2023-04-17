@@ -29,7 +29,7 @@ const SectionFooter: NextPage<SectionFooterType> = ({
               alt=""
               src="/hotelrealta1.svg"
             />
-            <div className="w-[190px] h-[33px] shrink-0 flex flex-col items-center justify-start gap-[2px]">
+            <div className="w-[300px] h-[33px] shrink-0 flex flex-col items-center justify-start gap-[2px]">
               <div className="relative">HOTEL REALTA</div>
               <div className="relative text-[8px] font-montserrat-semibold-14">
                 EXPERIENCE ELEVATED LUXURY AT ITS FINEST

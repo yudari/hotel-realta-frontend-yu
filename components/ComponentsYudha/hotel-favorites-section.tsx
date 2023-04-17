@@ -71,7 +71,7 @@ const HotelFavoritesSection: NextPage = () => {
                   </div>
                 </button>
               </div>
-              <p className="m-0 self-stretch relative text-[14px]">
+              <p className="m-0 self-stretch relative text-[14px] opacity-[0.7] font-medium">
                 Hotel Lendosis Perintis Kemerdekaan is a budget hotel located in
                 Palembang, Indonesia. It is 4 km from Ampera Bridge, and 4 km
                 from Palembang Indah Mall. OYO 90158 Hotel Lendosis Perintis

@@ -118,4 +118,4 @@ const store = configureStore({
 
 saga.run(rootSaga)
 
-saga.run(rootSaga);
+export default store

@@ -76,6 +76,14 @@ const DetailBookingPembayaranFina: NextPage = () => {
         router.push(`/booking/list-booking-final`)
     }, []);
 
+    const onFrameButtonClickRestaurant = useCallback(async (IdBoor: any) => {
+        secureLocalStorage.removeItem("yu_vo")
+        const removeBookingOrder = await apiMethodBooking.removeBookingOrders(IdBoor)
+        router.push("/resto/restoMenuPhotos");
+
+    }, []);
+
+
     const onFrameContainer4Click = useCallback(async (IdBoor: any) => {
         secureLocalStorage.removeItem("yu_vo")
         const removeBookingOrder = await apiMethodBooking.removeBookingOrders(IdBoor)
@@ -329,6 +337,9 @@ const DetailBookingPembayaranFina: NextPage = () => {
                     vector8="/vector25.svg"
                     vector9="/vector26.svg"
                     idboor={router.query.IdOrderDetail && router.query.IdOrderDetail}
+                    onFrameButtonClickRestaurant={() => {
+                        onFrameButtonClickRestaurant(router.query.IdOrderDetail)
+                    }}
                     onFrameButtonClick={() => {
                         onFrameButtonClick(router.query.IdOrderDetail)
                     }}
@@ -506,7 +517,7 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                         <div className="self-stretch rounded-[18px] bg-gainsboro-200 flex flex-row p-4 items-start justify-start text-[inherit] font-inherit">
                                             <div className="flex-1 flex flex-col items-start justify-start">
                                                 <b className="self-stretch relative">
-                                                    <ul className="m-0 pl-[21px]">Pembayaran</ul>
+                                                    <ul className="m-0">3. Pembayaran</ul>
                                                 </b>
                                             </div>
                                         </div>

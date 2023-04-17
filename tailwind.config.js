@@ -5,6 +5,7 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
+    "./components/ComponentsYudha/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-tailwindcss-select/dist/index.esm.js",
     // Or if using `src` directory:
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -70,7 +71,7 @@ module.exports = {
         fontFamily: {
           "body-txt-body-s-regular": "Poppins",
           "montserrat-semibold-14": "Montserrat",
-          "yeseva-one": "'Yeseva One'",
+          "yeseva-one": "Yeseva One",
           inherit: "inherit",
           "text-sm-normal": "Inter",
         },

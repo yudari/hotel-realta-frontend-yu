@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect, Fragment, useCallback } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -25,6 +25,8 @@ import {
 } from 'react-icons/ai'
 import { doAddOrdet } from '@/redux/restoSchema/action/actionOrdet'
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
+import HeaderNavbar from '@/components/ComponentsYudha/header-navbar'
 // ini adalah carousel
 
 const restoPhoto = () => {
@@ -32,6 +34,8 @@ const restoPhoto = () => {
   const { restoMenus = [], refresh } = useSelector(
     (state: any) => state.remeReducers
   )
+
+  const router = useRouter()
   // REDUCER
 
   const [searchTerm, setSearchTerm] = useState('')
@@ -185,8 +189,33 @@ const restoPhoto = () => {
   }
   // HANDLE CHECKOUT
 
+  const onFrameButtonClick = useCallback(() => {
+    router.push("/booking/list-booking-final");
+  }, [router]);
+
+  const onFrameButtonClickRestaurant = useCallback(() => {
+    router.push("/resto/restoMenuPhotos");
+  }, [router]);
+
+
+
   return (
-    <div className='bg-white'>
+    <div className=' bg-gray-100 '>
+
+      <HeaderNavbar
+        vector="/vector17.svg"
+        vector1="/vector18.svg"
+        vector2="/vector19.svg"
+        vector3="/vector20.svg"
+        vector4="/vector21.svg"
+        vector5="/vector22.svg"
+        vector6="/vector23.svg"
+        vector7="/vector24.svg"
+        vector8="/vector25.svg"
+        vector9="/vector26.svg"
+        onFrameButtonClickRestaurant={onFrameButtonClickRestaurant}
+        onFrameButtonClick={onFrameButtonClick}
+      />
       {/* Title */}
       <div className='pt-8  bg-white'>
         <h1 className='text-center text-2xl font-bold text-gray-800'>
@@ -265,11 +294,10 @@ const restoPhoto = () => {
                 </p>
                 <div className='mt-3 flex items-end justify-between '>
                   <button
-                    className={`flex items-center justify-center space-x-1.5 rounded-lg px-4 py-1.5 text-white duration-100 ${
-                      restoMenu.reme_status === 'empty'
-                        ? 'bg-gray-400 cursor-not-allowed'
-                        : 'bg-blue-500 hover:bg-blue-600'
-                    }`}
+                    className={`flex items-center justify-center space-x-1.5 rounded-lg px-4 py-1.5 text-white duration-100 ${restoMenu.reme_status === 'empty'
+                      ? 'bg-gray-400 cursor-not-allowed'
+                      : 'bg-blue-500 hover:bg-blue-600'
+                      }`}
                     onClick={() => handleAddToCart(restoMenu)}
                     disabled={restoMenu.reme_status === 'empty'}
                   >
@@ -299,18 +327,16 @@ const restoPhoto = () => {
                 </div>
                 <div>
                   <span
-                    className={`absolute insert-0 ${
-                      restoMenu.reme_status === 'empty'
-                        ? 'relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight'
-                        : 'relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight'
-                    }`}
+                    className={`absolute insert-0 ${restoMenu.reme_status === 'empty'
+                      ? 'relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight'
+                      : 'relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight'
+                      }`}
                   >
                     <span
-                      className={`absolute inset-0 ${
-                        restoMenu.reme_status === 'empty'
-                          ? 'bg-red-200'
-                          : 'bg-green-200'
-                      } opacity-50 rounded-full`}
+                      className={`absolute inset-0 ${restoMenu.reme_status === 'empty'
+                        ? 'bg-red-200'
+                        : 'bg-green-200'
+                        } opacity-50 rounded-full`}
                     />
                     <span className='relative'>{restoMenu.reme_status}</span>
                   </span>

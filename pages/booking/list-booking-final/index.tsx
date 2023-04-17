@@ -54,13 +54,27 @@ const ListBookingFinal: NextPage = () => {
         router.push("/booking/list-booking-final");
     }, [router]);
 
+    const onFrameButtonClickRestaurant = useCallback(() => {
+        router.push("/resto/restoMenuPhotos");
+    }, [router]);
+
+
+
     useEffect(() => {
-        console.log(bookings)
 
-        if (router.pathname === '/booking/list-booking-final') {
 
-            dispatch(doRequestGetListBooking(1, 0, 1000000000, '', '', 'Indonesia', 'Asia', searchData.startDate, searchData.endDate, ['24-Hour Front Desk']))
+        if (router.isReady) {
+            if (router.pathname === '/booking/list-booking-final') {
+                console.log(searchData.startDate, searchData.endDate)
+                if (Object.keys(router.query).length > 0) {
+                    dispatch(doRequestGetListBooking(1, 0, 1000000000, router.query.addressCityName ? router.query.addressCityName : '', router.query.addressProvName ? router.query.addressProvName : '', router.query.addressCountryName ? router.query.addressCountryName : '', 'Asia', router.query.checkIn, router.query.checkClose, ['24-Hour Front Desk']))
+                } else {
+                    dispatch(doRequestGetListBooking(1, 0, 1000000000, '', '', 'Indonesia', 'Asia', searchData.startDate, searchData.endDate, ['24-Hour Front Desk']))
+                }
+
+            }
         }
+
         // else (router.pathname === `/booking/list-booking-final?page=1&minSubtotal=0&maxSubTotal=900000&cityName=&provName=&countryName=Indonesia&regionName=Asia&startDate=${startDate}&endDate=${endDateFinal}&facilities_support_filter=[24-Hour Front Desk]`)
 
 
@@ -79,7 +93,7 @@ const ListBookingFinal: NextPage = () => {
             <Head>
                 <title>Halaman List Booking</title>
             </Head>
-            <div className="relative bg-gray-100 w-full overflow-hidden flex flex-col items-start justify-start">
+            <div className="relative bg-gray-100 w-full overflow-hidden flex flex-col items-start text-fontFamily-body-txt-body-s-regular justify-start">
                 <HeaderNavbar
                     vector="/vector17.svg"
                     vector1="/vector18.svg"
@@ -90,7 +104,7 @@ const ListBookingFinal: NextPage = () => {
                     vector6="/vector23.svg"
                     vector7="/vector24.svg"
                     vector8="/vector25.svg"
-                    vector9="/vector26.svg"
+                    vector9="/vector26.svg" onFrameButtonClickRestaurant={onFrameButtonClickRestaurant}
                     onFrameButtonClick={onFrameButtonClick}
                 />
                 {loading ? <ClipLoader
