@@ -44,9 +44,7 @@ const HotelFavoritesSection: NextPage = () => {
               Hotel Favorit yang Paling Disukai
             </h2>
             <p className="m-0 self-stretch relative text-[16px] yu_sm:text-center">
-              Rencanakan liburanmu dengan menginap di hotel favorit: nikmati
-              pengalaman menginap yang tak terlupakan dengan kenyamanan dan
-              fasilitas yang mengagumkan!
+              Plan Your Vacation by Staying at Your Favorite Hotel: Enjoy an Unforgettable Stay with Comfort and Amazing Facilities!
             </p>
           </div>
           <button className="cursor-pointer py-2 px-4 bg-[transparent] box-border h-10 flex flex-col items-center justify-center border-[1px] border-solid border-darkslategray-300  hover:bg-darkslategray-300  hover:cursor-pointer group">
@@ -60,28 +58,24 @@ const HotelFavoritesSection: NextPage = () => {
             <div className="self-stretch flex flex-col items-start justify-center gap-[24px]">
               <div className="self-stretch flex flex-row items-start justify-start gap-[16px] yu_mq720:flex-col">
                 <h3 className="m-0 flex-1 relative text-[inherit] font-bold font-inherit yu_lg:text-17xl yu_sm:text-[28px] yu_sm:text-left yu_mq720:flex-[unset] yu_mq720:self-stretch">
-                  Hotel Lendosis Perintis Kemerdekaan
+                  CODEX Good Sleep Samarinda
                 </h3>
                 <button className="cursor-pointer [border:none] p-2 bg-neutrals rounded-lg flex flex-col items-start justify-start gap-[4px] yu_sm:min-w-full">
                   <div className="relative text-[14px] font-body-txt-body-s-regular text-darkslategray-300 text-left">
                     From
                   </div>
                   <div className="relative text-[18px] font-semibold font-body-txt-body-s-regular text-darkslategray-300 text-left">
-                    Rp 220.000,00
+                    Rp 1.782.000,00
                   </div>
                 </button>
               </div>
               <p className="m-0 self-stretch relative text-[14px] opacity-[0.7] font-medium">
-                Hotel Lendosis Perintis Kemerdekaan is a budget hotel located in
-                Palembang, Indonesia. It is 4 km from Ampera Bridge, and 4 km
-                from Palembang Indah Mall. OYO 90158 Hotel Lendosis Perintis
-                Kemerdekaan has standardised amenities at the best value, and
-                offers a superior check-in experience assured.
+                CODEX Good Sleep Samarinda adalah hotel yang terjangkau dan nyaman yang terletak di Samarinda, Kalimantan Timur, Indonesia. Hotel ini menawarkan kamar-kamar yang fungsional dengan fasilitas seperti AC, TV, kamar mandi pribadi dengan perlengkapan mandi gratis, dan Wi-Fi gratis. Hotel ini juga menyediakan resepsionis 24 jam, parkir gratis, dan layanan kebersihan harian. Lokasinya yang strategis menjadikannya pilihan ideal bagi pelancong bisnis atau liburan di Samarinda.
               </p>
             </div>
             <button className="cursor-pointer py-3 px-[52px] bg-darkslategray-300 self-stretch rounded flex flex-row items-center justify-center border-[1px] border-solid group hover:bg-darkslategray-200 border-darkslategray-300">
               <div className="flex-1 relative text-[18px] leading-[132%] font-body-txt-body-s-regular text-neutrals text-center">
-                Lihat Detail
+                Lihat
               </div>
             </button>
           </div>

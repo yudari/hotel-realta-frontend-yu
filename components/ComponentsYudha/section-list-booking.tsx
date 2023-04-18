@@ -114,7 +114,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
       const dataFilter = {
         filterHargaAwal: values.hargaAwal,
         filterHargaAkhir: values.hargaAkhir,
-        filterFaciSupport: values.checkedSupportFacilities.length === 0 ? ['24-Hour Front Desk'] : ['24-Hour Front Desk', ...values.checkedSupportFacilities]
+        filterFaciSupport: values.checkedSupportFacilities.length === 0 ? ['24-Hour Front Desk'] : [...values.checkedSupportFacilities]
       }
 
       let FaciSupportFinal = dataFilter.filterFaciSupport.filter((data, index) => {
@@ -136,6 +136,11 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
     }
   })
 
+  const onBookNow = async (dataBookItem: any) => {
+
+    console.log(dataBookItem)
+  }
+
   useEffect(() => {
     dispatch(doRequestGetAllFacilitiesSupport())
   }, [])
@@ -150,7 +155,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
     <div className="self-stretch flex flex-col pt-[54px] px-[92px] pb-[58px] items-start justify-start text-left text-[16px] text-darkslategray-300 font-montserrat-semibold-14 yu_lg:self-stretch yu_lg:w-auto yu_lg:h-auto yu_lg:pl-3 yu_lg:pr-3 yu_lg:box-border">
       <div className="self-stretch flex flex-row items-start justify-between text-[14px] font-body-txt-body-s-regular yu_lg:self-stretch yu_lg:w-auto yu_lg:h-auto">
         <div className="relative font-semibold inline-block w-[408px] shrink-0 mb-4">
-          <span>Menampilkan {props.dataListBooking.data?.length}</span>
+          <span>Menampilkan  {props.dataListBooking.data?.length}</span>
           <span className="text-slamon"> tempat</span>
         </div>
       </div>
@@ -166,11 +171,11 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
               <div className="w-fit shrink-0 flex flex-col items-start justify-start ">
                 <div className="self-stretch flex flex-row items-start justify-between font-body-txt-body-s-regular">
                   <p className="m-0 flex-1 relative font-semibold">
-                    Harga Range
+                    Range Harga
                   </p>
                 </div>
                 <div className="input-price mt-2">
-                  <label htmlFor="input-group-1" className="block mb-2 text-[14px] font-medium text-gray-900 dark:text-white">Harga Awal</label>
+                  <label htmlFor="input-group-1" className="block mb-2 text-[14px] font-medium text-gray-900 dark:text-white">Harga Terendah</label>
                   <div className="relative mb-6">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                       <svg width="25" height="26" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -184,7 +189,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
 
 
                 <div className="input-price mt-2">
-                  <label htmlFor="input-group-1" className="block mb-2 text-[14px] font-medium text-gray-900 dark:text-white">Harga Akhir</label>
+                  <label htmlFor="input-group-1" className="block mb-2 text-[14px] font-medium text-gray-900 dark:text-white">Harga Tertinggi</label>
                   <div className="relative mb-6">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                       <svg width="25" height="26" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -271,7 +276,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
               return <div className="self-stretch shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-row items-start justify-start">
                 <div className="relative rounded-tl-xl rounded-tr-none rounded-br-none rounded-bl-xl w-[312px] h-[397px] overflow-hidden ">
                   {/* Ini tempat gambarnya */}
-                  <Carousel className="w-full h-full bg-gray-500" images={item.facility_photos.map((it: any) => {
+                  <Carousel hasMediaButton={false} hasTransition={true} shouldLazyLoad={true} canAutoPlay={true} autoPlayInterval={2000} isAutoPlaying={true} isLoop={true} className="w-full h-full bg-gray-500" images={item.facility_photos.map((it: any) => {
                     return {
                       src: it.fapho_url,
 
@@ -283,10 +288,11 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
 
                 <div className="flex-1 rounded-tl-none rounded-tr-xl rounded-br-xl rounded-bl-none bg-neutrals flex flex-col p-6 items-start justify-start gap-[24px] text-[12px] font-body-txt-body-s-regular">
                   <div className="self-stretch flex flex-row items-start justify-start gap-[24px]">
-                    <div className="min-w-[416px] max-w-xl shrink-0 flex flex-col items-start justify-start gap-[16px] max-w-[60%]">
+                    <div className="min-w-[416px]  shrink-0 flex flex-col items-start justify-start gap-[16px] ">
                       <b className="self-stretch relative text-lg">
                         {item.hotel.hotel_name}
                       </b>
+
                       <div className="self-stretch flex flex-col items-start justify-start gap-[12px] text-[12px] text-black">
                         <div className="self-stretch flex flex-row items-start justify-start gap-[2px] text-darkslategray-100">
                           <img
@@ -299,7 +305,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
                         <div className="self-stretch flex flex-row items-start justify-start gap-[32px]">
                           <div className="flex-1 flex flex-row items-start justify-start gap-[16px]">
                             {item.hotel.facilities_support.slice(0, showIconAll).map((faci_support: any) => {
-                              return <div className="flex-1 flex flex-row items-start justify-start gap-[4px]">
+                              return <div className="flex flex-row items-start justify-start gap-[2px]">
                                 <img
                                   className="relative w-4 h-4 shrink-0 overflow-hidden"
                                   alt={faci_support.fs_name}
@@ -309,7 +315,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
                               </div>
                             })}
                           </div>
-                          {item.hotel.facilities_support.length > 4 ? <div className="bg-neutrals w-[82px] shrink-0 flex flex-row py-0 px-3 box-border items-start justify-start text-slamon">
+                          {item.hotel.facilities_support.length > 4 ? <div className="bg-neutrals w-[82px] flex-wrap shrink-0 flex flex-row py-0 px-3 box-border items-start justify-start text-slamon">
                             <div className="relative font-medium cursor-pointer" onClick={() => {
                               setShowIconAll(item.hotel.facilities_support.length)
                             }}>
@@ -345,14 +351,14 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
                           <div className="relative font-medium">
                             {item.hotel.hotel_rating_status} {item.hotel.hotel_reviews_count} reviews
                           </div>
+                          <p className="m-0 self-stretch text-center rounded-sm px-1  justify-center bg-darkslategray-300 text-white  relative font-bold flex flex-row items-center opacity-[0.75] min-w-[100px]">
+                            {item.faci_memb_name} MEMBER
+                          </p>
                         </div>
+
                       </div>
                     </div>
-                    <div className="flex-1 flex flex-col items-end justify-start text-right text-[12px]">
-                      <p className="m-0 self-stretch relative font-bold inline-block opacity-[0.75] min-w-[100px]">
-                        {item.faci_memb_name} MEMBER
-                      </p>
-                    </div>
+
                   </div>
                   <div className="self-stretch relative bg-blackish-green h-[0.5px] shrink-0 opacity-[0.25]" />
                   <div className="self-stretch flex flex-row items-start justify-start gap-[16px]">
@@ -369,7 +375,9 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
                         Lihat Detail
                       </p>
                     </button>
-                    <button className="cursor-pointer [border:none] py-5 px-4 bg-darkslategray-300 flex-1 rounded flex flex-row items-center justify-center hover:mix-blend-normal hover:bg-gray-600 hover:text-darkorchid">
+                    <button onClick={() => {
+                      onBookNow(item)
+                    }} className="cursor-pointer [border:none] py-5 px-4 bg-darkslategray-300 flex-1 rounded flex flex-row items-center justify-center hover:mix-blend-normal hover:bg-gray-600 hover:text-darkorchid">
                       <p className="m-0 flex-1 relative text-[14px] font-semibold font-body-txt-body-s-regular text-neutrals text-center">
                         Book
                       </p>

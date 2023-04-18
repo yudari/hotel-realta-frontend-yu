@@ -15,17 +15,14 @@ const SectionHotelPolicy: NextPage = () => {
             <div className="self-stretch relative font-medium opacity-[0.75]">
               <ul className="m-0 pl-[27px] flex flex-col">
                 <li className="mb-0">
-                  a. Waktu check-in adalah pukul 14.00 dan waktu check-out adalah
-                  pukul 12.00.
+                  a.Waktu Check-in adalah jam 14:00 dan waktu Check-out adalah jam 12:00.
                 </li>
                 <li className="mb-0">
-                  b. Early check-in dan late check-out tergantung
-                  pada ketersediaan kamar dan dapat dikenakan biaya tambahan.
+                  b. Check-in awal dan check-out terlambat tergantung pada ketersediaan kamar dan dapat dikenakan biaya tambahan.
                 </li>
                 <li className="mb-0">
                   c.
-                  Diperlukan ID yang sah yang dikeluarkan oleh pemerintah dan
-                  kartu kredit pada saat check-in.
+                  Sebuah kartu identitas yang dikeluarkan oleh pemerintah dan kartu kredit yang valid diperlukan saat check-in.
                 </li>
 
               </ul>

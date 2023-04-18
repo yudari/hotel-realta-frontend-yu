@@ -87,7 +87,7 @@ const SectionRooms: NextPage<InterfaceSectionRooms> = (props) => {
                   </button>
                 </div>
               </div>
-            }) : <p className="text-[16px] text-darkslategray-100">Tidak Ada Ruangan Lain</p>}
+            }) : <p className="text-[16px] text-darkslategray-100">Tidak Ada Kamar Lain</p>}
           </div>
         </div>
       </div>

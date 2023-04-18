@@ -132,7 +132,7 @@ const DetailBookingFinal: NextPage = (props) => {
         };
     }, []);
 
-    console.log(bookings.data?.data_rooms)
+
     return (
         <>
             <Head>
@@ -165,7 +165,7 @@ const DetailBookingFinal: NextPage = (props) => {
 
                     <div className="self-stretch flex flex-col pt-[45px] px-[92px] pb-0 items-start justify-start">
 
-                        <Carousel responsive show={2.5} slide={2} transition={0.5} swiping className="w-full overflow-hidden flex flex-row items-start justify-start">
+                        <Carousel responsive show={3.5} slide={2} transition={0.5} swiping className="w-full overflow-hidden flex flex-row items-start justify-start">
 
                             {bookings && bookings?.data?.data_rooms[0]?.facility_photos?.map((img: any) => {
                                 return <img key={img.fapho_id}
