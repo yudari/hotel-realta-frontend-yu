@@ -366,7 +366,7 @@ const DetailBookingPembayaranFina: NextPage = () => {
                     aria-label="Loading"
                     data-testid="loader"
                 /> : <><SectionOrderSuccess
-                    confirmationMessage="Kembali"
+                    confirmationMessage="Back"
                     onFrameContainer4Click={() => {
                         onFrameContainer4Click(router.query.IdOrderDetail)
                     }}
@@ -379,11 +379,10 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                         <div className="self-stretch rounded-[18px] bg-gainsboro-200 flex flex-row p-4 items-start justify-start">
                                             <div className="flex-1 flex flex-col items-start justify-start gap-[8px]">
                                                 <b className="self-stretch relative">
-                                                    1. Masukkan Detail Informasi Anda
+                                                    1. Enter Your Information Details
                                                 </b>
                                                 <div className="self-stretch relative text-[14px]">
-                                                    Kami akan menggunakan rincian ini untuk berbagi
-                                                    informasi pemesanan Anda.
+                                                    We will use these details to share your booking information.
                                                 </div>
                                             </div>
                                         </div>
@@ -391,7 +390,7 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                             <div className="w-[398px] flex flex-col items-start justify-start gap-[12px]">
                                                 <div className="self-stretch flex flex-row items-start justify-start">
                                                     <div className="relative leading-[148%]">
-                                                        Nama Lengkap
+                                                        Full Name
                                                     </div>
                                                 </div>
                                                 <input type="text" id="name_user" name="nameUser" className="bg-gray-50 border border-gray-300 text-gray-900 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Yudha" required />
@@ -399,7 +398,7 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                             <div className="w-[398px] flex flex-col items-start justify-start gap-[6px]">
                                                 <div className="self-stretch flex flex-row items-start justify-start">
                                                     <div className="flex-1 relative  leading-[148%]">
-                                                        Nomor Handhone
+                                                        No. Handphone
                                                     </div>
                                                 </div>
 
@@ -438,7 +437,7 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                             </div>
                                             <button className="rounded bg-darkslategray-300 w-[398px] cursor-pointer hover:bg-darkslategray-100  flex flex-row py-2 px-4 box-border items-center justify-center text-center text-[14px] text-neutrals font-montserrat-regular-14">
                                                 <div className="flex-1 relative font-semibold">
-                                                    Cek Detail Informasi
+                                                    Check Booking Details
                                                 </div>
                                             </button>
                                         </form>
@@ -446,7 +445,7 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                     <div className="self-stretch rounded-[18px] bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col p-4 items-start justify-start gap-[16px]">
                                         <div className="self-stretch rounded-[18px] bg-gainsboro-200 flex flex-row p-4 items-start justify-start">
                                             <div className="flex-1 flex flex-col items-start justify-start">
-                                                <b className="relative">{`2.  Pilih Item `}</b>
+                                                <b className="relative">{`2.  Select item `}</b>
                                             </div>
                                         </div>
                                         <div className="self-stretch overflow-hidden flex flex-col items-start justify-start text-[14px] text-gray-500 font-text-[14px]-normal">
@@ -455,8 +454,7 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                                     <div className="self-stretch flex flex-row pt-5 px-6 pb-[19px] items-start justify-start">
                                                         <div className="flex-1 flex flex-col items-start justify-start">
                                                             <div className="self-stretch relative leading-[20px]">
-                                                                Anda bisa memilih pelayanan tambahan yang akan
-                                                                kami berikan kepada anda
+                                                                You can choose additional services that we will provide to you.anda
                                                             </div>
                                                         </div>
                                                     </div>
@@ -467,19 +465,19 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                                         <thead className="text-[10px] text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                                             <tr>
                                                                 <th scope="col" className="px-6 py-3">
-                                                                    Nama Item
+                                                                    Item Name
                                                                 </th>
                                                                 <th scope="col" className="px-6 py-3">
-                                                                    Harga
+                                                                    Price
                                                                 </th>
                                                                 <th scope="col" className="px-6 py-3">
-                                                                    Jumlah Item
+                                                                    Quantity
                                                                 </th>
                                                                 <th scope="col" className="px-6 py-3 text-center">
                                                                     Sub Total
                                                                 </th>
                                                                 <th scope="col" className="py-3  text-right">
-                                                                    <button onClick={() => setOpenItem(true)} type="button" className="text-white bg-darkslategray-300 hover:bg-darkslategray-100 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Tambah</button>
+                                                                    <button onClick={() => setOpenItem(true)} type="button" className="text-white bg-darkslategray-300 hover:bg-darkslategray-100 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add</button>
                                                                 </th>
                                                             </tr>
                                                         </thead>
@@ -519,7 +517,7 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                                         </div>
                                                         <button className="cursor-pointer [border:none] py-2 px-4 bg-darkslategray-300 rounded w-[118px] h-12 shrink-0 flex flex-row box-border items-center justify-center">
                                                             <div className="relative text-[14px] font-semibold font-montserrat-regular-14 text-neutrals text-left">
-                                                                Simpan
+                                                                Save
                                                             </div>
                                                         </button>
                                                     </div>
@@ -531,22 +529,22 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                         <div className="self-stretch rounded-[18px] bg-gainsboro-200 flex flex-row p-4 items-start justify-start text-[inherit] font-inherit">
                                             <div className="flex-1 flex flex-col items-start justify-start">
                                                 <b className="self-stretch relative">
-                                                    <ul className="m-0">3. Pembayaran</ul>
+                                                    <ul className="m-0">3. Payment</ul>
                                                 </b>
                                             </div>
                                         </div>
                                         <div className="self-stretch overflow-hidden flex flex-col items-start justify-start gap-[18px]">
                                             <div className="self-stretch flex flex-row items-start justify-start">
                                                 <div className="flex-1 relative leading-[148%] font-semibold">
-                                                    Pilih Pembayaran Anda
+                                                    Choose Your Payment Method
                                                 </div>
                                             </div>
                                             <div className="self-stretch flex flex-row items-start justify-start gap-[18px] text-grayscale-black">
 
                                                 <div className="flex-1 h-[146px] flex flex-col items-start justify-start gap-[6px] text-left text-[16px] text-grayscale-black font-body-txt-body-s-regular">
-                                                    <label htmlFor=" " className="block relative leading-[148%]">Tipe Pembayaran</label>
+                                                    <label htmlFor=" " className="block relative leading-[148%]">Payment Type</label>
                                                     <select id="tipePembayaran" className="bg-gray-50 w-fit border border-gray-300 text-gray-900 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={changeSelectInputMetodePembayaranUser}>
-                                                        <option selected>Pilih Tipe Pembayaran</option>
+                                                        <option selected>Select Payment Method</option>
                                                         {getAllPaymentMetodeUser && getAllPaymentMetodeUser.map((item: any, index: any) => (
                                                             <option key={index} value={JSON.stringify(item)}>{item?.entity_name}</option>
                                                         ))}
@@ -566,15 +564,15 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                         <div className="self-stretch overflow-hidden flex flex-col items-start justify-start gap-[18px]">
                                             <div className="self-stretch flex flex-row items-start justify-start">
                                                 <div className="flex-1 relative leading-[148%] font-semibold">
-                                                    Rekening dan Akun Realta
+                                                    Realta Accounts and Bank Accounts
                                                 </div>
                                             </div>
                                             <div className="self-stretch flex flex-row items-start justify-start gap-[18px] text-grayscale-black">
 
                                                 <div className="flex-1 h-[146px] flex flex-col items-start justify-start gap-[6px] text-left text-[16px] text-grayscale-black font-body-txt-body-s-regular">
-                                                    <label htmlFor=" " className="block relative leading-[148%]">Tipe Pembayaran</label>
+                                                    <label htmlFor=" " className="block relative leading-[148%]">Payment Method</label>
                                                     <select id="tipePembayaran" className="bg-gray-50 w-fit border border-gray-300 text-gray-900 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={changeSelectInputMetodePembayaranRealta} name="option_rekening_realta">
-                                                        <option selected>Pilih Tipe Pembayaran</option>
+                                                        <option selected>Select Payment Method</option>
                                                         {getAllPaymentMetodeRealta && getAllPaymentMetodeRealta?.map((item: any, index: any) => (
                                                             <option key={index} value={JSON.stringify(item)}>{item?.entity_name}</option>
                                                         ))}
@@ -596,7 +594,7 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                             <div className="self-stretch flex flex-row items-center justify-end">
                                                 <button type="submit" className="cursor-pointer [border:none] py-2 px-4 bg-darkslategray-300 rounded w-[118px] hover:bg-darkslategray-100 h-12 shrink-0 flex flex-row box-border items-center justify-center">
                                                     <div className="relative text-[14px] font-semibold font-montserrat-regular-14 text-neutrals text-left">
-                                                        Validasi
+                                                        Validation
                                                     </div>
                                                 </button>
                                             </div>
@@ -644,12 +642,12 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                         as="h3"
                                         className="text-lg font-semibold  text-darkslategray-300 "
                                     >
-                                        Tambah Extra Item Booking
+                                        Add Extra Booking Items
                                     </Dialog.Title>
                                     <div className="h-[1px] mt-2 bg-darkslategray-100"></div>
                                     <form onSubmit={submitExtraItems} className="mt-3">
                                         <div className="mb-6">
-                                            <label htmlFor="nama-item" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Item</label>
+                                            <label htmlFor="nama-item" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Item Name</label>
                                             <Select primaryColor="indigo"
                                                 value={selectedExtraItems}
                                                 onChange={handleExtraItems}
@@ -657,12 +655,13 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                             />
                                         </div>
                                         <div className="mb-6">
-                                            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga Per Item</label>
+                                            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price Per Item</label>
+
                                             <input type="input" id="input-harga" name="hargaItem" disabled value={selectedExtraItems?.value?.prit_price !== undefined ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(selectedExtraItems?.value?.prit_price) : new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(0)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                                         </div>
 
                                         <div className="mb-6">
-                                            <label htmlFor="jumlah-item" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jumlah Item</label>
+                                            <label htmlFor="jumlah-item" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quantity</label>
                                             <input type="input" id="input-quantity" name="jumlahItem" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                                         </div>
 
@@ -709,7 +708,7 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                         as="h3"
                                         className="text-2xl font-semibold  text-darkslategray-300 cursor-pointer text-center"
                                     >
-                                        Informasi Anda Sudah Terverifikasi
+                                        Your Information has been Verified
                                     </Dialog.Title>
 
                                     <div className="w-full flex flex-row justify-center mt-3">
@@ -804,7 +803,7 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                         as="h3"
                                         className="text-2xl font-semibold  text-darkslategray-300 cursor-pointer text-center"
                                     >
-                                        Rekening Berhasil Terverifikasi
+                                        Your Account Number has been Verified
                                     </Dialog.Title>
 
                                     <div className="w-full flex flex-row justify-center mt-3">

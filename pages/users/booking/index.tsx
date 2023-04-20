@@ -53,8 +53,7 @@ function MyBooking({ userData }: any) {
 
 
             <div className="w-full  p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-
-                <h3 className='font-semibold text-darkslategray-100'>Daftar History Booking</h3>
+                <h3 className='font-semibold text-darkslategray-100'>Booking History List</h3>
             </div>
 
             <div className="w-full mt-8 flex flex-col gap-10  p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">

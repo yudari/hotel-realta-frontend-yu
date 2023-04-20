@@ -251,8 +251,8 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
     <div className="self-stretch flex flex-col pt-[54px] px-[92px] pb-[58px] items-start justify-start text-left text-[16px] text-darkslategray-300 font-montserrat-semibold-14 yu_lg:self-stretch yu_lg:w-auto yu_lg:h-auto yu_lg:pl-3 yu_lg:pr-3 yu_lg:box-border">
       <div className="self-stretch flex flex-row items-start justify-between text-[14px] font-body-txt-body-s-regular w-full yu_lg:h-auto">
         <div className="relative font-semibold inline-block w-[408px] shrink-0 mb-4">
-          <span>Menampilkan  {props.dataListBooking.data?.length}</span>
-          <span className="text-slamon"> tempat</span>
+          <span>Showing  {props.dataListBooking.data?.length}</span>
+          <span className="text-slamon"> rooms</span>
         </div>
       </div>
       <div className="self-stretch flex flex-row items-start justify-start yu_lg:self-stretch yu_lg:w-auto yu_lg:h-auto">
@@ -267,11 +267,12 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
               <div className="w-fit shrink-0 flex flex-col items-start justify-start ">
                 <div className="self-stretch flex flex-row items-start justify-between font-body-txt-body-s-regular">
                   <p className="m-0 flex-1 relative font-semibold">
-                    Range Harga
+                    Price Range
                   </p>
                 </div>
                 <div className="input-price mt-2">
-                  <label htmlFor="input-group-1" className="block mb-2 text-[14px] font-medium text-gray-900 dark:text-white">Harga Terendah</label>
+                  <label htmlFor="input-group-1" className="block mb-2 text-[14px] font-medium text-gray-900 dark:text-white">Lowest Price.</label>
+
                   <div className="relative mb-6">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                       <svg width="25" height="26" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -285,7 +286,8 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
 
 
                 <div className="input-price mt-2">
-                  <label htmlFor="input-group-1" className="block mb-2 text-[14px] font-medium text-gray-900 dark:text-white">Harga Tertinggi</label>
+                  <label htmlFor="input-group-1" className="block mb-2 text-[14px] font-medium text-gray-900 dark:text-white">Highest Price</label>
+                  
                   <div className="relative mb-6">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                       <svg width="25" height="26" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -321,7 +323,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
                 <div className="self-stretch flex flex-col items-start justify-start gap-[16px]">
                   <div className="self-stretch flex flex-row items-start justify-between">
                     <p className="m-0 flex-1 relative font-semibold">
-                      Fasilitas Support
+                      Facilities Support
                     </p>
                   </div>
                   <div className="self-stretch flex flex-col items-start justify-start gap-[8px] text-[14px]">
@@ -342,7 +344,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
                   }
 
                 }}>
-                  Lihat Semua
+                  View All
                 </b>
               </div>
               <div className="flex-1 flex flex-col items-end justify-start">
@@ -467,7 +469,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
                             {new Intl.NumberFormat('id-ID', {
                               style: 'currency',
                               currency: 'IDR',
-                            }).format(item.faci_subtotal)}/malam
+                            }).format(item.faci_subtotal)}/night
                           </div>
                           <div className="relative [text-decoration:line-through] font-medium">
                             {new Intl.NumberFormat('id-ID', {
@@ -476,7 +478,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
                             }).format(item.faci_rate_price)}
                           </div>
                           <div className="rounded-sm bg-slamon flex flex-row py-0.5 px-3 items-center justify-center text-5xs text-neutrals w-fit">
-                            <div className="relative font-medium">{item.faci_discount * 100}% Diskon</div>
+                            <div className="relative font-medium">{item.faci_discount * 100}% Discount</div>
                           </div>
                         </div>
                         <div className="self-stretch flex flex-row items-center justify-start gap-[4px] text-blackish-green">
@@ -509,7 +511,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
                         className="m-0 flex-1 relative text-[14px] font-semibold font-body-txt-body-s-regular group-hover:text-white text-darkslategray-300 text-center"
                         id="text-button"
                       >
-                        Lihat Detail
+                        View Detail
                       </p>
                     </button>
                     <button onClick={() => {

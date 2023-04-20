@@ -9,7 +9,7 @@ const ContainerReviewsUsers: NextPage<ReviewUsersProps> = (props) => {
   console.log(props.dataReviews.hotel_reviews)
   return (
     <div className="self-stretch flex flex-col items-start justify-start gap-[24px] mt-6 text-left text-[14px] text-blackish-green font-body-txt-body-s-regular">
-      {props.dataReviews.hotel_reviews.map((data: any) => {
+      {props.dataReviews.hotel_reviews.slice().reverse().map((data: any) => {
         return <div className="self-stretch flex flex-row items-start justify-start gap-[16px]">
           <img
             className="relative w-5 h-5 shrink-0 overflow-hidden opacity-[0.75]"

@@ -57,7 +57,7 @@ const SectionRooms: NextPage<InterfaceSectionRooms> = (props) => {
       <div className="self-stretch flex flex-col items-start justify-start gap-[16px]">
         <div className="self-stretch relative bg-blackish-green h-[0.5px] shrink-0 opacity-[0.25]" />
         <div className="self-stretch flex flex-col items-start justify-start gap-[32px]">
-          <b className="self-stretch relative">Ruangan Lain</b>
+          <b className="self-stretch relative">Other Rooms</b>
           <div className="self-stretch flex flex-col items-start justify-start gap-[16px] text-[16px] text-darkslategray-100">
             {dataRooms.length > 0 ? dataRooms.map((data: any) => {
               return <div className="self-stretch flex flex-row items-center justify-between">
@@ -76,7 +76,7 @@ const SectionRooms: NextPage<InterfaceSectionRooms> = (props) => {
                     {new Intl.NumberFormat('id-ID', {
                       style: 'currency',
                       currency: 'IDR',
-                    }).format(data.faci_subtotal)}/malam
+                    }).format(data.faci_subtotal)}/night
                   </div>
                   <button onClick={() => {
                     onLihatDetail(data.faci_id, data.hotel.hotel_id, props.startDateFinal, props.endDateFinal, data.faci_id, 1)
@@ -87,7 +87,9 @@ const SectionRooms: NextPage<InterfaceSectionRooms> = (props) => {
                   </button>
                 </div>
               </div>
-            }) : <p className="text-[16px] text-darkslategray-100">Tidak Ada Kamar Lain</p>}
+
+            }) : <p className="text-[16px] text-darkslategray-100">No Other Rooms Available</p>}
+
           </div>
         </div>
       </div>

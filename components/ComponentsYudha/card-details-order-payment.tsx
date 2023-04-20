@@ -540,7 +540,7 @@ const CardDetailsOrderPayment: NextPage<CardDetailsOrderPaymentProps> = (props) 
             }`
           )
         }}
-          value={selectedKupon} placeholder="Pilih Kupon Anda"
+          value={selectedKupon} placeholder="Choose Your Coupon"
           onChange={handleChange}
           options={optionsKupon} primaryColor={"indigo"} />
         <div className="self-stretch rounded cursor-pointer bg-darkslategray-300 flex flex-row py-2.5 px-1.5 items-center justify-start gap-[16px] text-left text-neutrals">
@@ -554,21 +554,21 @@ const CardDetailsOrderPayment: NextPage<CardDetailsOrderPaymentProps> = (props) 
 
       </div>
       <div className="self-stretch flex flex-col items-start justify-start gap-[16px] text-[16px]">
-        <b className="relative font-body-txt-body-s-regular">Detail Harga</b>
+        <b className="relative font-body-txt-body-s-regular">Price Details</b>
         <div className="self-stretch flex flex-row items-start justify-between">
-          <div className="relative font-medium">Harga Ruangan</div>
+          <div className="relative font-medium">Room Price</div>
           <div className="relative font-semibold">{parseFloat(props.dataBookingBayar.data.boor_border_rooms_price.replace(/\$|,/g, "")).toLocaleString("id-ID", { style: "currency", currency: "IDR" })} x {props.dataBookingBayar.data.boor_border_hotel_rooms_total_rooms} = {props.dataBookingBayar.data.boor_border_rooms_price_total.toLocaleString("id-ID", { style: "currency", currency: "IDR" })}</div>
         </div>
         <div className="self-stretch flex flex-row items-start justify-between">
-          <div className="relative font-medium">Diskon {props.dataBookingBayar.data.boor_border_rooms_percent_discount}</div>
+          <div className="relative font-medium">Discount {props.dataBookingBayar.data.boor_border_rooms_percent_discount}</div>
           <div className="relative font-semibold">-{jumlahDiskon.toLocaleString("id-ID", { style: "currency", currency: "IDR" })}</div>
         </div>
         <div className="self-stretch flex flex-row items-start justify-between">
-          <div className="relative font-medium">Pajak {props.dataBookingBayar.data.boor_border_rooms_percent_tax}</div>
+          <div className="relative font-medium">Tax {props.dataBookingBayar.data.boor_border_rooms_percent_tax}</div>
           <div className="relative font-semibold">+{jumlahPajak.toLocaleString("id-ID", { style: "currency", currency: "IDR" })}</div>
         </div>
         <div className="self-stretch flex flex-row items-start justify-between">
-          <div className="relative font-medium">Kupon Diskon-{detailBonus.name_kupon}</div>
+          <div className="relative font-medium">Discount Coupons-{detailBonus.name_kupon}</div>
           <div className="relative font-semibold">-{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(detailBonus.subTotalDiscount)}</div>
         </div>
         <div className="self-stretch flex flex-row items-start justify-between">
