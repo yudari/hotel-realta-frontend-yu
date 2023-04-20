@@ -295,7 +295,7 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
 
   return (
     <div className="self-stretch body-txt-body-s-regular flex flex-col py-[42px] px-[92px] items-start justify-start text-left text-[18px] text-darkslategray-300 font-body-txt-body-s-regular">
-      <div className="rounded-t rounded-b-none w-[1232px] flex flex-row py-1 pr-4 pl-0 box-border items-start justify-start gap-[30px]">
+      <div className="rounded-t rounded-b-none w-full flex flex-row py-1 pr-4 pl-0 box-border items-start justify-start gap-[30px]">
         <div className="flex-1 flex flex-col items-start justify-start gap-[16px]">
           <div className="w-[498px] flex flex-row items-center justify-start text-lg">
             <b className="flex-1 relative">

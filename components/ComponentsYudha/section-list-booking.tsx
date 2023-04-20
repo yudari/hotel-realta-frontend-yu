@@ -11,7 +11,7 @@ import secureLocalStorage from "react-secure-storage";
 import ReactPaginate from 'react-paginate';
 import moment from 'moment'
 import apiMethodBooking from "@/api/booking/apiMethodBooking";
-
+import Select from "react-tailwindcss-select";
 interface DataListBooking {
   data: any[] // replace `any` with the type of data that `dataListBooking` contains
 }
@@ -40,6 +40,17 @@ const override: CSSProperties = {
   borderColor: "rgb(19 41 61 / var(--tw-bg-opacity))",
 };
 const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => {
+  const optionsAdult = [
+    { value: '1', label: "Adult 1" },
+    { value: '2', label: "Adult 2" },
+    { value: '3', label: "Adult 3" }
+  ];
+  const optionsKids = [
+    { value: '0', label: "Kids 0" },
+    { value: '1', label: "Kids 1" },
+    { value: '2', label: "Kids 2" }
+
+  ];
   const { faci_supports, message: fasuppmessage, refresh } = useSelector((state: any) => state.facilitiesSupportBookingReducers)
   const { bookings: bookingsFaci, message, status } = useSelector((state: any) => state.bookingReducers)
   const [showIconAll, setShowIconAll] = useState(4)
@@ -47,7 +58,8 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
   let [userLogin, setUserLogin] = useState<any>({})
   let startDateObj = new Date()
   let startDateStr = startDateObj.toISOString().substring(0, 10)
-
+  const [selectedAdults, setSelectedAdults] = useState<any>(optionsAdult[0])
+  const [selectedKids, setSelectedKids] = useState<any>(optionsKids[0])
   let startDate = new Date(startDateStr)
   let [color, setColor] = useState("#ffffff");
   let endDateObj = new Date()
@@ -139,6 +151,15 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
     }
   })
 
+  const handleChangeAdult = (values: any) => {
+    console.log('Value : ' + values)
+    setSelectedAdults(values)
+  }
+  const handleChangeKids = (values: any) => {
+    console.log(`Values : ${values}`)
+    setSelectedKids(values)
+  }
+
   const onBookNow = async (dataBookItem: any) => {
     const checkIn = moment(props.searchDataBooking?.startDate).format('MM/DD/YYYY')
     const checkOut = moment(props.searchDataBooking?.endDate).format('MM/DD/YYYY')
@@ -152,8 +173,8 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
     const dataInsertBookTemp = {
       borde_checkin: checkIn,
       borde_checkout: checkOut,
-      borde_adults: Number(1),
-      borde_kids: Number(0),
+      borde_adults: Number(selectedAdults.value),
+      borde_kids: Number(selectedKids.value),
       borde_price: dataBookItem.faci_rate_price,
       borde_extra: 0,
       borde_discount: Number(dataBookItem.faci_discount) * dataBookItem.faci_rate_price,
@@ -336,6 +357,47 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
 
 
           <div className="self-stretch flex flex-col items-start justify-start text-[12px] yu_lg:self-stretch yu_lg:w-auto gap-8">
+            <div className="flex flex-row items-start justify-start gap-[14px] text-neutrals">
+              <Select classNames={{
+
+                menuButton: ({ isDisabled }: any) => (
+                  `flex text-sm text-gray-500 border  leading-[132%] font-semibold text-sm cursor-pointer border-gray-300 rounded shadow-sm transition-all duration-300 focus:outline-none ${isDisabled
+                    ? "bg-gray-200"
+                    : "bg-darkslategray-200 text-white hover:bg-darkslategray-200"
+                  }`
+                ),
+                menu: "absolute z-10 w-full bg-white shadow-lg border  rounded py-1 mt-1.5 text-sm text-gray-700",
+                listItem: ({ isSelected }: any) => (
+                  `block transition duration-200 px-2 py-2 cursor-pointer select-none truncate rounded ${isSelected
+                    ? `text-white bg-blue-500`
+                    : `text-gray-500 hover:bg-darkslategray-200 hover:text-white`
+                  }`
+                )
+              }}
+                value={selectedAdults} placeholder="Jumlah Adult"
+                onChange={handleChangeAdult}
+                options={optionsAdult} primaryColor={"indigo"} />
+
+              <Select classNames={{
+
+                menuButton: ({ isDisabled }: any) => (
+                  `flex text-sm text-gray-500 border  leading-[132%] font-semibold text-sm cursor-pointer border-gray-300 rounded shadow-sm transition-all duration-300 focus:outline-none ${isDisabled
+                    ? "bg-gray-200"
+                    : "bg-darkslategray-200 text-white hover:bg-darkslategray-200"
+                  }`
+                ),
+                menu: "absolute z-10 w-full bg-white shadow-lg border  rounded py-1 mt-1.5 text-sm text-gray-700",
+                listItem: ({ isSelected }: any) => (
+                  `block transition duration-200 px-2 py-2 cursor-pointer select-none truncate rounded ${isSelected
+                    ? `text-white bg-blue-500`
+                    : `text-gray-500 hover:bg-darkslategray-200 hover:text-white`
+                  }`
+                )
+              }}
+                value={selectedKids} placeholder="Jumlah Kids"
+                onChange={handleChangeKids}
+                options={optionsKids} primaryColor={"indigo"} />
+            </div>
 
             <ClipLoader
               color={color}

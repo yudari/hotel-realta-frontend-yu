@@ -195,7 +195,7 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
       style={headerLoggedInStyle}
     >
       <div className="self-stretch flex flex-row items-center justify-between yu_sm:flex-col yu_sm:gap-[32px]">
-        <div className="container-menu flex flex-start ">
+        <div className="container-menu flex flex-start">
           <button
             className="cursor-pointer [border:none] p-0 bg-[transparent] w-[111px] h-10 shrink-0 flex flex-col items-start justify-center"
             onClick={onFrameButtonClick}
@@ -228,178 +228,179 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
             </div>
 
           </button>
-          <div className="w-[190px] shrink-0 flex flex-col items-center justify-start yu_sm:order-[-1]">
-            <div className="relative w-[34px] h-[34px] shrink-0 overflow-hidden">
-              <img
-                className="absolute h-[99.19%] w-[99.17%] top-[0.4%] right-[0.41%] bottom-[0.41%] left-[0.41%] max-w-full overflow-hidden max-h-full"
-                alt=""
-                src="/vector.svg"
-              />
-              <img
-                className="absolute h-[3.12%] w-[3.12%] top-[27.38%] right-[84.91%] bottom-[69.5%] left-[11.97%] max-w-full overflow-hidden max-h-full"
-                alt=""
-                src={vector}
-              />
-              <img
-                className="absolute h-[3.12%] w-[3.12%] top-[11.97%] right-[69.5%] bottom-[84.91%] left-[27.38%] max-w-full overflow-hidden max-h-full"
-                alt=""
-                src={vector1}
-              />
-              <img
-                className="absolute h-[3.12%] w-[3.12%] top-[11.97%] right-[27.38%] bottom-[84.91%] left-[69.5%] max-w-full overflow-hidden max-h-full"
-                alt=""
-                src="/vector3.svg"
-              />
-              <img
-                className="absolute h-[3.12%] w-[3.12%] top-[27.38%] right-[11.98%] bottom-[69.5%] left-[84.9%] max-w-full overflow-hidden max-h-full"
-                alt=""
-                src="/vector4.svg"
-              />
-              <img
-                className="absolute h-[3.12%] w-[3.12%] top-[69.5%] right-[11.98%] bottom-[27.38%] left-[84.9%] max-w-full overflow-hidden max-h-full"
-                alt=""
-                src="/vector5.svg"
-              />
-              <img
-                className="absolute h-[3.12%] w-[3.12%] top-[84.91%] right-[27.38%] bottom-[11.97%] left-[69.5%] max-w-full overflow-hidden max-h-full"
-                alt=""
-                src="/vector6.svg"
-              />
-              <img
-                className="absolute h-[3.12%] w-[3.12%] top-[84.91%] right-[69.5%] bottom-[11.97%] left-[27.38%] max-w-full overflow-hidden max-h-full"
-                alt=""
-                src={vector2}
-              />
-              <img
-                className="absolute h-[3.12%] w-[3.12%] top-[69.5%] right-[84.91%] bottom-[27.38%] left-[11.97%] max-w-full overflow-hidden max-h-full"
-                alt=""
-                src={vector3}
-              />
-              <img
-                className="absolute h-[7.67%] w-[3.6%] top-[46.16%] right-[0%] bottom-[46.17%] left-[96.4%] max-w-full overflow-hidden max-h-full"
-                alt=""
-                src={vector4}
-                style={vectorIconStyle}
-              />
-              <img
-                className="absolute h-[3.6%] w-[7.67%] top-[96.4%] right-[46.17%] bottom-[0%] left-[46.16%] max-w-full overflow-hidden max-h-full"
-                alt=""
-                src="/vector10.svg"
-              />
-              <img
-                className="absolute h-[7.67%] w-[3.6%] top-[46.16%] right-[96.4%] bottom-[46.17%] left-[0%] max-w-full overflow-hidden max-h-full"
-                alt=""
-                src="/vector11.svg"
-              />
-              <img
-                className="absolute h-[3.6%] w-[7.68%] top-[0%] right-[46.16%] bottom-[96.4%] left-[46.16%] max-w-full overflow-hidden max-h-full"
-                alt=""
-                src={vector5}
-              />
-              <img
-                className="absolute h-[4.3%] w-[4.3%] top-[15.19%] right-[80.49%] bottom-[80.51%] left-[15.2%] max-w-full overflow-hidden max-h-full"
-                alt=""
-                src={vector6}
-                style={vectorIcon1Style}
-              />
-              <img
-                className="absolute h-[4.3%] w-[4.3%] top-[15.19%] right-[15.2%] bottom-[80.51%] left-[80.49%] max-w-full overflow-hidden max-h-full"
-                alt=""
-                src={vector7}
-              />
-              <img
-                className="absolute h-[4.3%] w-[4.3%] top-[80.51%] right-[80.49%] bottom-[15.19%] left-[15.2%] max-w-full overflow-hidden max-h-full"
-                alt=""
-                src={vector8}
-                style={vectorIcon2Style}
-              />
-              <img
-                className="absolute h-[4.3%] w-[4.3%] top-[80.51%] right-[15.2%] bottom-[15.19%] left-[80.49%] max-w-full overflow-hidden max-h-full"
-                alt=""
-                src={vector9}
-              />
-            </div>
-            <div onClick={() => {
-              onBannerHeaderClick(idboor)
-            }} className="w-[190px] cursor-pointer h-[33px] shrink-0 flex flex-col items-center justify-start gap-[2px]">
-              <div className="relative">HOTEL REALTA</div>
-              <div className="relative text-[8px] text-center font-body-txt-body-s-regular text-gray-800">
-                EXPERIENCE ELEVATED LUXURY AT ITS FINEST
-              </div>
+        </div>
+        <div className="w-[190px] shrink-0 flex flex-col items-center justify-start yu_sm:order-[-1]">
+          <div className="relative w-[34px] h-[34px] shrink-0 overflow-hidden">
+            <img
+              className="absolute h-[99.19%] w-[99.17%] top-[0.4%] right-[0.41%] bottom-[0.41%] left-[0.41%] max-w-full overflow-hidden max-h-full"
+              alt=""
+              src="/vector.svg"
+            />
+            <img
+              className="absolute h-[3.12%] w-[3.12%] top-[27.38%] right-[84.91%] bottom-[69.5%] left-[11.97%] max-w-full overflow-hidden max-h-full"
+              alt=""
+              src={vector}
+            />
+            <img
+              className="absolute h-[3.12%] w-[3.12%] top-[11.97%] right-[69.5%] bottom-[84.91%] left-[27.38%] max-w-full overflow-hidden max-h-full"
+              alt=""
+              src={vector1}
+            />
+            <img
+              className="absolute h-[3.12%] w-[3.12%] top-[11.97%] right-[27.38%] bottom-[84.91%] left-[69.5%] max-w-full overflow-hidden max-h-full"
+              alt=""
+              src="/vector3.svg"
+            />
+            <img
+              className="absolute h-[3.12%] w-[3.12%] top-[27.38%] right-[11.98%] bottom-[69.5%] left-[84.9%] max-w-full overflow-hidden max-h-full"
+              alt=""
+              src="/vector4.svg"
+            />
+            <img
+              className="absolute h-[3.12%] w-[3.12%] top-[69.5%] right-[11.98%] bottom-[27.38%] left-[84.9%] max-w-full overflow-hidden max-h-full"
+              alt=""
+              src="/vector5.svg"
+            />
+            <img
+              className="absolute h-[3.12%] w-[3.12%] top-[84.91%] right-[27.38%] bottom-[11.97%] left-[69.5%] max-w-full overflow-hidden max-h-full"
+              alt=""
+              src="/vector6.svg"
+            />
+            <img
+              className="absolute h-[3.12%] w-[3.12%] top-[84.91%] right-[69.5%] bottom-[11.97%] left-[27.38%] max-w-full overflow-hidden max-h-full"
+              alt=""
+              src={vector2}
+            />
+            <img
+              className="absolute h-[3.12%] w-[3.12%] top-[69.5%] right-[84.91%] bottom-[27.38%] left-[11.97%] max-w-full overflow-hidden max-h-full"
+              alt=""
+              src={vector3}
+            />
+            <img
+              className="absolute h-[7.67%] w-[3.6%] top-[46.16%] right-[0%] bottom-[46.17%] left-[96.4%] max-w-full overflow-hidden max-h-full"
+              alt=""
+              src={vector4}
+              style={vectorIconStyle}
+            />
+            <img
+              className="absolute h-[3.6%] w-[7.67%] top-[96.4%] right-[46.17%] bottom-[0%] left-[46.16%] max-w-full overflow-hidden max-h-full"
+              alt=""
+              src="/vector10.svg"
+            />
+            <img
+              className="absolute h-[7.67%] w-[3.6%] top-[46.16%] right-[96.4%] bottom-[46.17%] left-[0%] max-w-full overflow-hidden max-h-full"
+              alt=""
+              src="/vector11.svg"
+            />
+            <img
+              className="absolute h-[3.6%] w-[7.68%] top-[0%] right-[46.16%] bottom-[96.4%] left-[46.16%] max-w-full overflow-hidden max-h-full"
+              alt=""
+              src={vector5}
+            />
+            <img
+              className="absolute h-[4.3%] w-[4.3%] top-[15.19%] right-[80.49%] bottom-[80.51%] left-[15.2%] max-w-full overflow-hidden max-h-full"
+              alt=""
+              src={vector6}
+              style={vectorIcon1Style}
+            />
+            <img
+              className="absolute h-[4.3%] w-[4.3%] top-[15.19%] right-[15.2%] bottom-[80.51%] left-[80.49%] max-w-full overflow-hidden max-h-full"
+              alt=""
+              src={vector7}
+            />
+            <img
+              className="absolute h-[4.3%] w-[4.3%] top-[80.51%] right-[80.49%] bottom-[15.19%] left-[15.2%] max-w-full overflow-hidden max-h-full"
+              alt=""
+              src={vector8}
+              style={vectorIcon2Style}
+            />
+            <img
+              className="absolute h-[4.3%] w-[4.3%] top-[80.51%] right-[15.2%] bottom-[15.19%] left-[80.49%] max-w-full overflow-hidden max-h-full"
+              alt=""
+              src={vector9}
+            />
+          </div>
+          <div onClick={() => {
+            onBannerHeaderClick(idboor)
+          }} className="w-[190px] cursor-pointer h-[33px] shrink-0 flex flex-col items-center justify-start gap-[2px]">
+            <div className="relative">HOTEL REALTA</div>
+            <div className="relative text-[8px] text-center font-body-txt-body-s-regular text-gray-800">
+              EXPERIENCE ELEVATED LUXURY AT ITS FINEST
             </div>
           </div>
+        </div>
 
-          {!usersDetail && <div className="w-[252px] shrink-0 flex flex-row items-center justify-between text-center text-[16px] text-darkslategray-300 font-body-txt-body-s-regular">
-            <div onClick={onRegisterUserClick} className="rounded bg-neutrals box-border w-[110px] h-10 shrink-0 flex flex-row py-2 px-7 items-center justify-center border-[1px] border-solid border-darkslategray-300 hover:mix-blend-normal hover:bg-darkslategray-300 hover:text-white hover:cursor-pointer">
-              <div className="relative leading-[148%]">Daftar</div>
+        {!usersDetail && <div className="w-[252px] shrink-0 flex flex-row items-center justify-between text-center text-[16px] text-darkslategray-300 font-body-txt-body-s-regular">
+          <div onClick={onRegisterUserClick} className="rounded bg-neutrals box-border w-[110px] h-10 shrink-0 flex flex-row py-2 px-7 items-center justify-center border-[1px] border-solid border-darkslategray-300 hover:mix-blend-normal hover:bg-darkslategray-300 hover:text-white hover:cursor-pointer">
+            <div className="relative leading-[148%]">Daftar</div>
+          </div>
+          <button onClick={onLoginUserClick} className="cursor-pointer [border:none] py-2 px-7 bg-darkslategray-300 rounded w-[110px] h-10 shrink-0 flex flex-row box-border items-center justify-center hover:bg-darkslategray-200 hover:cursor-pointer">
+            <div className="relative text-[16px] leading-[148%] font-body-txt-body-s-regular text-neutrals text-center">
+              Login
             </div>
-            <button onClick={onLoginUserClick} className="cursor-pointer [border:none] py-2 px-7 bg-darkslategray-300 rounded w-[110px] h-10 shrink-0 flex flex-row box-border items-center justify-center hover:bg-darkslategray-200 hover:cursor-pointer">
-              <div className="relative text-[16px] leading-[148%] font-body-txt-body-s-regular text-neutrals text-center">
-                Login
-              </div>
+          </button>
+        </div>}
+
+        {users && <div className="relative ml-3 " ref={dropdownRef}>
+          <div className="flex flex-row items-center gap-3">
+            <button
+              type="button"
+              className="flex rounded-full bg-gray-800 text-[14px] focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+              id="user-menu-button"
+              aria-expanded={isOpen}
+              aria-haspopup="true"
+              onClick={toggleDropdown}
+            >
+              <span className="sr-only">Open user menu</span>
+              <img
+                className="h-8 w-8 rounded-full"
+                src={`${process.env.BACKEND_URL}/image/users/${usersDetail && usersDetail.user_photo_profile ? usersDetail.user_photo_profile : 'dummy-1.png'}`}
+                alt=""
+              />
+
             </button>
-          </div>}
 
-          {users && <div className="relative ml-3" ref={dropdownRef}>
-            <div>
-              <button
-                type="button"
-                className="flex rounded-full bg-gray-800 text-[14px] focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                id="user-menu-button"
-                aria-expanded={isOpen}
-                aria-haspopup="true"
-                onClick={toggleDropdown}
+            <p className="text-darkslategray-300">{users.user_full_name}</p>
+          </div>
+          {isOpen && (
+            <div
+              className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="user-menu-button"
+
+            >
+              <Link
+
+                href={`/users/profile/${users.user_id}`}
+                className="block px-4 py-2 text-[14px] text-gray-700 hover:bg-darkslategray-300 hover:text-white"
+                role="menuitem"
+
+                id="user-menu-item-0"
+                onClick={() => {
+                  toMyProfile(users.user_id)
+                }}
               >
-                <span className="sr-only">Open user menu</span>
-                <img
-                  className="h-8 w-8 rounded-full"
-                  src={`${process.env.BACKEND_URL}/image/users/${usersDetail && usersDetail.user_photo_profile ? usersDetail.user_photo_profile : 'dummy-1.png'}`}
-                  alt=""
-                />
+                My Profile
+              </Link>
 
+              <button
+
+                className="block px-4 py-2 text-[14px] w-full text-left  text-gray-700 hover:bg-darkslategray-300 hover:text-white"
+                role="menuitem"
+                id="user-menu-item-2"
+                onClick={handleMenuItemClick}
+              >
+                Sign out
               </button>
             </div>
-            <p className="text-darkslategray-300">{users.user_full_name}</p>
-
-            {isOpen && (
-              <div
-                className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="user-menu-button"
-
-              >
-                <Link
-
-                  href={`/users/profile/${users.user_id}`}
-                  className="block px-4 py-2 text-[14px] text-gray-700 hover:bg-darkslategray-300 hover:text-white"
-                  role="menuitem"
-
-                  id="user-menu-item-0"
-                  onClick={() => {
-                    toMyProfile(users.user_id)
-                  }}
-                >
-                  My Profile
-                </Link>
-
-                <button
-
-                  className="block px-4 py-2 text-[14px]  text-gray-700 hover:bg-darkslategray-300 hover:text-white"
-                  role="menuitem"
-                  id="user-menu-item-2"
-                  onClick={handleMenuItemClick}
-                >
-                  Sign out
-                </button>
-              </div>
-            )}
-          </div>}
+          )}
+        </div>}
 
 
-        </div>
       </div>
     </div>
+
   );
 };
 
