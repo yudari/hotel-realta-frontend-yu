@@ -272,6 +272,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
                 </div>
                 <div className="input-price mt-2">
                   <label htmlFor="input-group-1" className="block mb-2 text-[14px] font-medium text-gray-900 dark:text-white">Lowest Price.</label>
+
                   <div className="relative mb-6">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                       <svg width="25" height="26" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -286,6 +287,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
 
                 <div className="input-price mt-2">
                   <label htmlFor="input-group-1" className="block mb-2 text-[14px] font-medium text-gray-900 dark:text-white">Highest Price</label>
+                  
                   <div className="relative mb-6">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                       <svg width="25" height="26" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">

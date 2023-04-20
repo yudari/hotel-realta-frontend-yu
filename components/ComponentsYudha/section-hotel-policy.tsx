@@ -23,7 +23,6 @@ const SectionHotelPolicy: NextPage = () => {
                 <li className="mb-0">
                   c. A government-issued identification card and a valid credit card are required upon check-in.
                 </li>
-
               </ul>
             </div>
           </div>
