@@ -15,7 +15,7 @@ const ContainerRating: NextPage<propsContainerRating> = (props) => {
           props.onOpenModalComment()
         }} className="cursor-pointer [border:none] py-3 px-4 bg-darkslategray-300 self-stretch rounded w-[180px] shrink-0 flex flex-row box-border items-center justify-center">
           <div className="relative text-[14px] font-semibold font-montserrat-semibold-14 text-neutrals text-left">
-            Berikan review anda
+            Leave your review
           </div>
         </button>
       </div>

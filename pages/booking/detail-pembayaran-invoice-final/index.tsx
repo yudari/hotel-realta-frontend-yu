@@ -77,7 +77,7 @@ const DetailPembayaranInvoiceFinal: NextPage = () => {
 
 
                 <SectionOrderSuccess
-                    confirmationMessage="Bagus pemesanan anda telah berhasil"
+                    confirmationMessage="Great, your booking has been successfully completed."
                 // onFrameContainer4Click={() => {
                 //     onFrameContainer4Click(dataDetailDiri.booking_order_id)
                 // }}

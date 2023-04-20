@@ -335,7 +335,7 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
           </div>
           <div className="self-stretch overflow-hidden flex flex-col pt-0 px-0 pb-[25px] items-start justify-start text-blackish-green">
             <div className="self-stretch flex flex-col items-start justify-start gap-[32px]">
-              <b className="self-stretch relative text-darkslategray-300">Fasilitas Support</b>
+              <b className="self-stretch relative text-darkslategray-300">Facilities Support</b>
               <div className="self-stretch flex flex-row items-start justify-between text-[16px] font-montserrat-semibold-14">
                 <div className="w-full  shrink-0 flex flex-row gap-4 justify-start ">
                   {props.dataBookings.data.data_rooms[0].hotel.facilities_support.map((dataFaciSupport: any) => {
@@ -541,7 +541,7 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
               </div>
               <div className="self-stretch flex flex-col items-start justify-start text-left">
                 <div className="self-stretch flex flex-row items-start justify-start">
-                  <div className="flex-1 relative">Termasuk Pajak</div>
+                  <div className="flex-1 relative">Include Tax</div>
                 </div>
               </div>
               <div className="self-stretch flex flex-col items-start justify-start text-left">
@@ -568,7 +568,7 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
                   <div className="flex flex-col items-start justify-start gap-[2px]">
                     <div className="relative leading-[132%]">Total Price</div>
                     <div className="relative leading-[132%]">
-                      (*termasuk pajak*)
+                      (*including tax*)
                     </div>
                   </div>
                   <div className="relative leading-[132%]">{new Intl.NumberFormat('id-ID', {
@@ -582,7 +582,7 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
                 onClick={onButtonLanjutBookingClick}
               >
                 <div className="flex-1 relative text-[14px] font-semibold font-montserrat-semibold-14 text-neutrals text-center">
-                  Lanjut Booking
+                  Continue
                 </div>
               </button>
             </div>
