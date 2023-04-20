@@ -38,11 +38,10 @@ const ContainerHeaderContent: NextPage = () => {
       data-animate-on-scroll
     >
       <b className="relative inline-block w-[736px] yu_sm:text-[28px] yu_mq720:text-[26px] yu_mq720:self-stretch yu_mq720:w-auto yu_mq720:min-w-[80%]">
-        Ingin Liburan yang Tak Terlupakan? Pesan Hotelmu Disini dan Rasakan
-        Kesenangan yang Sejati
+        Ingin Liburan yang Tak Terlupakan? Pesan Hotelmu Disini dan Rasakan Kesenangan yang Sejati
       </b>
       <p className="m-0 relative text-[20px] capitalize font-medium inline-block w-[499px] yu_md:self-stretch yu_md:w-auto yu_sm:hidden">
-        Temukan Tawaran Khusus untuk Booking Hotel Sesuai dengan Rencanamu
+        Temukan Tawaran Khusus Untuk Booking Hotel Sesuai Dengan Rencanamu.
       </p>
     </div>
   );

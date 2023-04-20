@@ -29,8 +29,8 @@ const listMenu = [
         title: 'Profile',
       },
       {
-        to: '/users/myBooking',
-        path: '/users/myBooking',
+        to: '/users/booking/',
+        path: '/users/booking/',
         title: 'My Booking',
       },
       {

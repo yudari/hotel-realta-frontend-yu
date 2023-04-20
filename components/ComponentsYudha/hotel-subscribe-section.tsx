@@ -61,7 +61,7 @@ const HotelSubscribeSection: NextPage = () => {
                         <input
                           className="border-none font-body-txt-body-s-regular text-[16px] bg-[transparent] outline-none flex-1 relative text-gray-400 text-left"
                           type="text"
-                          placeholder="Masukkan email anda"
+                          placeholder="Your email"
                         />
                       </div>
                     </div>

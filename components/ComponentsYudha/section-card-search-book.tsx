@@ -6,7 +6,7 @@ import { Formik, useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { doRequestGetListBooking } from "@/redux/booking/action/bookingActionReducer";
 import secureLocalStorage from "react-secure-storage";
-
+import moment from 'moment';
 type InputPickDateCheckOpenProps = {
   value: string;
   onClick: () => void;
@@ -71,9 +71,9 @@ const SectionCardSearchBook: NextPage<SearchBookingInterfaceProps> = (props) => 
         />
         <label
           htmlFor="floating_standard"
-          className="absolute text-[14px] text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          className="absolute text-[14px] text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
         >
-          Check Buka
+          Check In
         </label>
       </div>
     )
@@ -95,7 +95,7 @@ const SectionCardSearchBook: NextPage<SearchBookingInterfaceProps> = (props) => 
           htmlFor="floating_standard"
           className="absolute text-[14px] text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
         >
-          Check Close
+          Check Out
         </label>
       </div>
     )
@@ -113,11 +113,11 @@ const SectionCardSearchBook: NextPage<SearchBookingInterfaceProps> = (props) => 
         addressCityName: dataAddress[0] ? dataAddress[0] : '',
         addressProvName: dataAddress[1] ? dataAddress[1] : '',
         addressCountryName: dataAddress[2] ? dataAddress[2] : 'Indonesia',
-        checkOpen: new Date(startDateOpen.toISOString().substring(0, 10)).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', timeZone: 'Asia/Jakarta' }),
-        checkClose: new Date(startDateClose.toISOString().substring(0, 10)).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', timeZone: 'Asia/Jakarta' })
+        checkOpen: moment(startDateOpen).format('MM/DD/YYYY'),
+        checkClose: moment(startDateClose).format('MM/DD/YYYY')
       }
 
-      console.log(dataAddressFinal)
+
       dispatch(doRequestGetListBooking(1, 0, 100000000000000, dataAddressFinal.addressCityName, dataAddressFinal.addressProvName, dataAddressFinal.addressCountryName, 'Asia', dataAddressFinal.checkOpen, dataAddressFinal.checkClose, ['24-Hour Front Desk']))
       props.changeSearchData({
         page: 1,
@@ -159,10 +159,10 @@ const SectionCardSearchBook: NextPage<SearchBookingInterfaceProps> = (props) => 
         <div className="self-stretch flex flex-row items-center justify-center gap-[16px] text-[16px] yu_md:flex-col">
           <div className="relative z-0 w-full">
             <input type="text" name="destinationAddress" id="IdDestinationAddress" className="block py-2.5 px-0 w-full text-[14px] text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" value={formik.values.destinationAddress} onBlur={formik.handleBlur} onChange={formik.handleChange} />
-            <label htmlFor="address" className="absolute text-[14px] text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cari kota, provinsi, negara</label>
+            <label htmlFor="address" className="absolute text-[14px] text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cari Kota, Provinsi, Negara</label>
           </div>
 
-          <ReactDatePicker
+          <ReactDatePicker portalId="root-portal" popperClassName="react-datepicker-popper"
             selected={startDateOpen}
             onChange={(date: Date) => setStartDateOpen(date)}
             customInput={<InputPickDateCheckOpen value={startDateOpen.toDateString()} onClick={() => { }} />}
@@ -170,7 +170,7 @@ const SectionCardSearchBook: NextPage<SearchBookingInterfaceProps> = (props) => 
             popperPlacement="top-start"
           />
 
-          <ReactDatePicker
+          <ReactDatePicker portalId="root-portal" popperClassName="react-datepicker-popper"
             selected={startDateClose}
             onChange={(date: Date) => setStartDateClose(date)}
             customInput={<InputPickDateCheckClose value={startDateClose.toDateString()} onClick={() => { }} />}

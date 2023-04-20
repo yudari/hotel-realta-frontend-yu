@@ -18,6 +18,7 @@ const override: CSSProperties = {
 };
 
 const ListBookingFinal: NextPage = () => {
+
     let startDateObj = new Date()
     let startDateStr = startDateObj.toISOString().substring(0, 10)
     let startDate = new Date(startDateStr)
@@ -47,6 +48,8 @@ const ListBookingFinal: NextPage = () => {
     let [loading, setLoading] = useState(true);
     let [loadingFilter, setLoadingFilter] = useState(false)
     let [color, setColor] = useState("#ffffff");
+
+
     const router = useRouter()
     const dispatch = useDispatch()
 
@@ -60,8 +63,22 @@ const ListBookingFinal: NextPage = () => {
 
 
 
+
     useEffect(() => {
 
+
+
+        if (router.isReady) {
+            if (router.pathname === '/booking/list-booking-final') {
+                console.log(searchData.startDate, searchData.endDate)
+                if (Object.keys(router.query).length > 0) {
+                    dispatch(doRequestGetListBooking(1, 0, 1000000000, router.query.addressCityName ? router.query.addressCityName : '', router.query.addressProvName ? router.query.addressProvName : '', router.query.addressCountryName ? router.query.addressCountryName : '', 'Asia', router.query.checkIn, router.query.checkClose, ['24-Hour Front Desk']))
+                } else {
+                    dispatch(doRequestGetListBooking(1, 0, 1000000000, '', '', 'Indonesia', 'Asia', searchData.startDate, searchData.endDate, ['24-Hour Front Desk']))
+                }
+
+            }
+        }
 
         if (router.isReady) {
             if (router.pathname === '/booking/list-booking-final') {
@@ -94,6 +111,7 @@ const ListBookingFinal: NextPage = () => {
                 <title>Halaman List Booking</title>
             </Head>
             <div className="relative bg-gray-100 w-full overflow-hidden flex flex-col items-start text-fontFamily-body-txt-body-s-regular justify-start">
+
                 <HeaderNavbar
                     vector="/vector17.svg"
                     vector1="/vector18.svg"
@@ -105,6 +123,7 @@ const ListBookingFinal: NextPage = () => {
                     vector7="/vector24.svg"
                     vector8="/vector25.svg"
                     vector9="/vector26.svg" onFrameButtonClickRestaurant={onFrameButtonClickRestaurant}
+
                     onFrameButtonClick={onFrameButtonClick}
                 />
                 {loading ? <ClipLoader
@@ -117,7 +136,7 @@ const ListBookingFinal: NextPage = () => {
                 /> : <>  {bookings && <SectionCardSearchBook classNames={``} changeSearchData={setSearchData} />}
 
 
-                    {bookings && <SectionListBooking searchDataBooking={searchData} dataListBooking={bookings} loadingListBook={undefined} />
+                    {bookings && <SectionListBooking searchDataBooking={searchData} dataListBooking={bookings} loadingListBook={undefined} users={undefined} />
                     }
 
                     <SectionFooter />

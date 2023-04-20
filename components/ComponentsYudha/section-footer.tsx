@@ -78,7 +78,7 @@ const SectionFooter: NextPage<SectionFooterType> = ({
             </div>
           </div>
           <div className="flex-1 flex flex-col items-start justify-start gap-[16px] yu_sm:flex-[unset] yu_sm:self-stretch">
-            <b className="relative">About Us</b>
+            <b className="relative">Tentang Kita</b>
             <div className="self-stretch flex flex-col items-start justify-start text-[14px]">
               <div className="self-stretch relative leading-[175%] font-medium opacity-[0.7]">
                 Kami adalah platform booking hotel terpercaya yang menyediakan

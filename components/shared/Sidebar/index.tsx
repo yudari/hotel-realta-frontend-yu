@@ -27,9 +27,8 @@ export default function Sidebar({
 
   return (
     <div
-      className={`sm:none duration-175 ease-linear fixed !z-50 flex h-full overflow-auto flex-col bg-white pb-10 shadow-2xl shadow-white/5 transition-all dark:!bg-navy-800 dark:text-white md:!z-50 lg:!z-50 xl:!z-0 w-80 ${
-        showSidebar ? 'translate-x-0' : '-translate-x-full'
-      }`}
+      className={`sm:none duration-175 ease-linear fixed !z-50 flex h-full overflow-auto flex-col bg-white pb-10 shadow-2xl shadow-white/5 transition-all dark:!bg-navy-800 dark:text-white md:!z-50 lg:!z-50 xl:!z-0 w-80 ${showSidebar ? 'translate-x-0' : '-translate-x-full'
+        }`}
     >
       <span
         className='absolute top-4 right-4 block cursor-pointer xl:hidden'
@@ -61,11 +60,10 @@ export default function Sidebar({
                 <li key={index} onClick={() => showDropdown(index)}>
                   {menu.submenu ? (
                     <div
-                      className={`flex items-center p-4 text-base text-primary rounded-lg  group hover:bg-primary hover:text-white justify-between mt-2 ${
-                        router.pathname.startsWith(menu.path)
+                      className={`flex items-center p-4 text-base text-primary rounded-lg  group hover:bg-primary hover:text-white justify-between mt-2 ${router.pathname.startsWith(menu.path)
                           ? 'bg-primary text-white'
                           : 'hover:bg-bg-primary hover:text-white'
-                      }`}
+                        }`}
                     >
                       <div className='flex items-center'>
                         <Icon className='text-xl' />
@@ -76,22 +74,20 @@ export default function Sidebar({
 
                       {menu.submenu && (
                         <GoChevronRight
-                          className={`hover:bg-primary hover:text-white ${
-                            dropdown.status && dropdown.index === index
+                          className={`hover:bg-primary hover:text-white ${dropdown.status && dropdown.index === index
                               ? 'rotate-90'
                               : ''
-                          }`}
+                            }`}
                         />
                       )}
                     </div>
                   ) : (
                     <Link
                       href={menu.to}
-                      className={`flex items-center p-4 text-base text-primary rounded-lg group dark:text-white justify-between my-2 ${
-                        router.pathname.startsWith(menu.path)
+                      className={`flex items-center p-4 text-base text-primary rounded-lg group dark:text-white justify-between my-2 ${router.pathname.startsWith(menu.path)
                           ? 'bg-primary text-white'
                           : 'hover:bg-primary hover:text-white'
-                      }`}
+                        }`}
                     >
                       <div className='flex items-center'>
                         <Icon className='text-xl' />

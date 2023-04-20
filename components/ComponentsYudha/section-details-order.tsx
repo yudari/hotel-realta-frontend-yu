@@ -104,6 +104,14 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
       startCloseConverse.setDate(startCloseConverse.getDate())
       const startCloseConverseFinal = startCloseConverse.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', timeZone: 'Asia/Jakarta' })
 
+      console.log({
+        IdOrderDetail: dataResponseCreateBookingTempo?.data[0]?.border_boor_id,
+        IdUser: users.user_id,
+        CheckIn: startDateConverseFinal,
+        CheckOut: startCloseConverseFinal,
+        TotalGuest: totalGuest,
+        totalRooms: totalRooms
+      })
 
       router.push({
         pathname: '/booking/detail-booking-pembayaran-final',
@@ -287,7 +295,7 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
 
   return (
     <div className="self-stretch body-txt-body-s-regular flex flex-col py-[42px] px-[92px] items-start justify-start text-left text-[18px] text-darkslategray-300 font-body-txt-body-s-regular">
-      <div className="rounded-t rounded-b-none w-[1232px] flex flex-row py-1 pr-4 pl-0 box-border items-center justify-start gap-[30px]">
+      <div className="rounded-t rounded-b-none w-full flex flex-row py-1 pr-4 pl-0 box-border items-start justify-start gap-[30px]">
         <div className="flex-1 flex flex-col items-start justify-start gap-[16px]">
           <div className="w-[498px] flex flex-row items-center justify-start text-lg">
             <b className="flex-1 relative">
@@ -320,18 +328,18 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
             </div>
           </div>
           <div className="self-stretch overflow-hidden flex flex-col py-[25px] px-0 items-start justify-start gap-[10px]">
-            <b className="self-stretch relative">Deskripsi</b>
+            <b className="self-stretch relative">Description</b>
             <div className="self-stretch relative text-[16px] font-medium text-darkslategray-100 opacity-[0.75]">
               {props.dataBookings.data.data_rooms[0].hotel.hotel_description}
             </div>
           </div>
           <div className="self-stretch overflow-hidden flex flex-col pt-0 px-0 pb-[25px] items-start justify-start text-blackish-green">
             <div className="self-stretch flex flex-col items-start justify-start gap-[32px]">
-              <b className="self-stretch relative text-darkslategray-300">Fasilitas</b>
+              <b className="self-stretch relative text-darkslategray-300">Fasilitas Support</b>
               <div className="self-stretch flex flex-row items-start justify-between text-[16px] font-montserrat-semibold-14">
-                <div className="w-[229px]  shrink-0 flex flex-col items-start justify-start gap-[24px]">
+                <div className="w-full  shrink-0 flex flex-row gap-4 justify-start ">
                   {props.dataBookings.data.data_rooms[0].hotel.facilities_support.map((dataFaciSupport: any) => {
-                    return <div className="self-stretch flex flex-row items-center justify-start gap-[8px]">
+                    return <div className="self-stretch flex-wrap flex flex-row items-center justify-start gap-[8px]">
                       <img
                         className="relative w-6 h-6 shrink-0 overflow-hidden"
                         alt={dataFaciSupport.fs_name}
@@ -521,7 +529,7 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
               <div className="self-stretch flex flex-col items-start justify-start">
                 <div className="self-stretch flex flex-row items-start justify-between">
                   <div className="relative font-medium text-left">
-                    {props.dataBookings.data.total_price}/malam
+                    {props.dataBookings.data.total_price}/night
                   </div>
                   <div className="relative [text-decoration:line-through] font-medium inline-block w-[96.5px] shrink-0">
                     {props.dataBookings.data.total_price_real}
@@ -533,7 +541,7 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
               </div>
               <div className="self-stretch flex flex-col items-start justify-start text-left">
                 <div className="self-stretch flex flex-row items-start justify-start">
-                  <div className="flex-1 relative">Include Pajak</div>
+                  <div className="flex-1 relative">Termasuk Pajak</div>
                 </div>
               </div>
               <div className="self-stretch flex flex-col items-start justify-start text-left">

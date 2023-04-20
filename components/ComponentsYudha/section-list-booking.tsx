@@ -8,9 +8,10 @@ import Carousel from 'react-gallery-carousel';
 import { useDispatch, useSelector } from "react-redux";
 import { ClipLoader } from "react-spinners";
 import secureLocalStorage from "react-secure-storage";
-
-
-
+import ReactPaginate from 'react-paginate';
+import moment from 'moment'
+import apiMethodBooking from "@/api/booking/apiMethodBooking";
+import Select from "react-tailwindcss-select";
 interface DataListBooking {
   data: any[] // replace `any` with the type of data that `dataListBooking` contains
 }
@@ -31,7 +32,7 @@ interface PropsInterfaceListBookingProps {
   dataListBooking: DataListBooking;
   searchDataBooking: DataSearch;
   loadingListBook: any;
-
+  users: any
 }
 const override: CSSProperties = {
   display: "block",
@@ -39,12 +40,26 @@ const override: CSSProperties = {
   borderColor: "rgb(19 41 61 / var(--tw-bg-opacity))",
 };
 const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => {
+  const optionsAdult = [
+    { value: '1', label: "Adult 1" },
+    { value: '2', label: "Adult 2" },
+    { value: '3', label: "Adult 3" }
+  ];
+  const optionsKids = [
+    { value: '0', label: "Kids 0" },
+    { value: '1', label: "Kids 1" },
+    { value: '2', label: "Kids 2" }
+
+  ];
   const { faci_supports, message: fasuppmessage, refresh } = useSelector((state: any) => state.facilitiesSupportBookingReducers)
   const { bookings: bookingsFaci, message, status } = useSelector((state: any) => state.bookingReducers)
   const [showIconAll, setShowIconAll] = useState(4)
   const [showFaciSupportAll, setShowFaciSupportAll] = useState(4)
+  let [userLogin, setUserLogin] = useState<any>({})
   let startDateObj = new Date()
   let startDateStr = startDateObj.toISOString().substring(0, 10)
+  const [selectedAdults, setSelectedAdults] = useState<any>(optionsAdult[0])
+  const [selectedKids, setSelectedKids] = useState<any>(optionsKids[0])
   let startDate = new Date(startDateStr)
   let [color, setColor] = useState("#ffffff");
   let endDateObj = new Date()
@@ -57,6 +72,12 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
 
   const [startDateFinal, setStartDateFinal] = useState(props.searchDataBooking.startDate)
   const [endDatFinal, setEndDateFinal] = useState(props.searchDataBooking.endDate)
+  const [itemOffset, setItemOffset] = useState(0);
+
+  const endOffset = itemOffset + 3;
+  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+  const currentItems = props.dataListBooking.data.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(props.dataListBooking.data.length / 3);
 
   const router = useRouter();
   const dispatch = useDispatch()
@@ -64,6 +85,14 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
     console.log(idRooms);
     let dataDate: any = secureLocalStorage.getItem('yu_date');
 
+    console.log({
+      idRooms: idRooms,
+      idHotel: idHotel,
+      startDate: dataDate && dataDate.startDate ? dataDate.startDate : props.searchDataBooking.startDate,
+      endDate: dataDate && dataDate.endDate ? dataDate.endDate : props.searchDataBooking.endDate,
+      dataRooms: `[${idRooms}]`,
+      guestRooms: `[${1}]`
+    })
     router.push({
       pathname: '/booking/detail-booking-final',
       query: {
@@ -72,10 +101,19 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
         startDate: dataDate && dataDate.startDate ? dataDate.startDate : props.searchDataBooking.startDate,
         endDate: dataDate && dataDate.endDate ? dataDate.endDate : props.searchDataBooking.endDate,
         dataRooms: `[${idRooms}]`,
-        guestRooms: `[${2}]`
+        guestRooms: `[${1}]`
       }
     });
   }, [router, props.searchDataBooking.startDate, props.searchDataBooking.endDate]);
+
+  const handlePageClick = (event: any) => {
+    const newOffset = (event.selected * 3) % props.dataListBooking.data.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
+
 
 
   const formik = useFormik({
@@ -91,7 +129,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
       const dataFilter = {
         filterHargaAwal: values.hargaAwal,
         filterHargaAkhir: values.hargaAkhir,
-        filterFaciSupport: values.checkedSupportFacilities.length === 0 ? ['24-Hour Front Desk'] : ['24-Hour Front Desk', ...values.checkedSupportFacilities]
+        filterFaciSupport: values.checkedSupportFacilities.length === 0 ? ['24-Hour Front Desk'] : [...values.checkedSupportFacilities]
       }
 
       let FaciSupportFinal = dataFilter.filterFaciSupport.filter((data, index) => {
@@ -113,8 +151,94 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
     }
   })
 
+  const handleChangeAdult = (values: any) => {
+    console.log('Value : ' + values)
+    setSelectedAdults(values)
+  }
+  const handleChangeKids = (values: any) => {
+    console.log(`Values : ${values}`)
+    setSelectedKids(values)
+  }
+
+  const onBookNow = async (dataBookItem: any) => {
+    const checkIn = moment(props.searchDataBooking?.startDate).format('MM/DD/YYYY')
+    const checkOut = moment(props.searchDataBooking?.endDate).format('MM/DD/YYYY')
+    // const converseFaciRatePrice = parseInt(room.faci_rate_price.replace(/[^\d]/g, "").slice(0, -2))
+    // let priceDiscount = converseFaciRatePrice - Number(room.faci_discount) * converseFaciRatePrice;
+    // let subTotal = priceDiscount + Number(room.faci_tax_rate) * priceDiscount;
+    let priceDiscount = dataBookItem.faci_rate_price - Number(dataBookItem.faci_discount) * dataBookItem.faci_rate_price
+    let subTotal = priceDiscount + Number(dataBookItem.faci_tax_rate) * priceDiscount;
+    console.log(dataBookItem)
+
+    const dataInsertBookTemp = {
+      borde_checkin: checkIn,
+      borde_checkout: checkOut,
+      borde_adults: Number(selectedAdults.value),
+      borde_kids: Number(selectedKids.value),
+      borde_price: dataBookItem.faci_rate_price,
+      borde_extra: 0,
+      borde_discount: Number(dataBookItem.faci_discount) * dataBookItem.faci_rate_price,
+      borde_tax: Number(dataBookItem.faci_tax_rate) * dataBookItem.faci_rate_price,
+      borde_subtotal: subTotal,
+      borde_faci_id: dataBookItem.faci_id
+    }
+
+
+    if (Object.keys(userLogin).length > 0) {
+      const dataInsertTemporaryBooking: any = {
+        booking_orders: {
+          boor_hotel_id: dataBookItem.hotel.hotel_id,
+          boor_user_id: userLogin.user_id,
+          booking_order_detail: [dataInsertBookTemp]
+        }
+
+      }
+      try {
+        const dataCreateBookingTempo = await apiMethodBooking.createTempoBorde(dataInsertTemporaryBooking)
+        const dataResponseCreateBookingTempo = dataCreateBookingTempo.data
+
+        let totalGuest = 0;
+        let totalRooms = dataResponseCreateBookingTempo?.data?.length;
+
+        console.log(dataCreateBookingTempo)
+        dataResponseCreateBookingTempo?.data?.forEach((data: any) => {
+          totalGuest = totalGuest + Number(data?.borde_adults) + Number(data?.borde_kids)
+        })
+
+
+        console.log({
+          IdOrderDetail: dataResponseCreateBookingTempo?.data[0]?.border_boor_id,
+          IdUser: userLogin.user_id,
+          CheckIn: checkIn,
+          CheckOut: checkOut,
+          TotalGuest: totalGuest,
+          totalRooms: totalRooms
+        })
+
+        router.push({
+          pathname: '/booking/detail-booking-pembayaran-final',
+          query: {
+            IdOrderDetail: dataResponseCreateBookingTempo?.data[0]?.border_boor_id,
+            IdUser: userLogin.user_id,
+            CheckIn: checkIn,
+            CheckOut: checkOut,
+            TotalGuest: totalGuest,
+            totalRooms: totalRooms
+          }
+        })
+
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+  }
+
   useEffect(() => {
     dispatch(doRequestGetAllFacilitiesSupport())
+    const dataUser: any = JSON.parse(localStorage.getItem('loginData')!)
+    setUserLogin(dataUser)
   }, [])
 
   if (props.dataListBooking.data[0] !== undefined && loadingFilter) {
@@ -125,9 +249,9 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
 
   return (
     <div className="self-stretch flex flex-col pt-[54px] px-[92px] pb-[58px] items-start justify-start text-left text-[16px] text-darkslategray-300 font-montserrat-semibold-14 yu_lg:self-stretch yu_lg:w-auto yu_lg:h-auto yu_lg:pl-3 yu_lg:pr-3 yu_lg:box-border">
-      <div className="self-stretch flex flex-row items-start justify-between text-[14px] font-body-txt-body-s-regular yu_lg:self-stretch yu_lg:w-auto yu_lg:h-auto">
+      <div className="self-stretch flex flex-row items-start justify-between text-[14px] font-body-txt-body-s-regular w-full yu_lg:h-auto">
         <div className="relative font-semibold inline-block w-[408px] shrink-0 mb-4">
-          <span>Menampilkan {props.dataListBooking.data?.length}</span>
+          <span>Menampilkan  {props.dataListBooking.data?.length}</span>
           <span className="text-slamon"> tempat</span>
         </div>
       </div>
@@ -143,11 +267,11 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
               <div className="w-fit shrink-0 flex flex-col items-start justify-start ">
                 <div className="self-stretch flex flex-row items-start justify-between font-body-txt-body-s-regular">
                   <p className="m-0 flex-1 relative font-semibold">
-                    Harga Range
+                    Range Harga
                   </p>
                 </div>
                 <div className="input-price mt-2">
-                  <label htmlFor="input-group-1" className="block mb-2 text-[14px] font-medium text-gray-900 dark:text-white">Harga Awal</label>
+                  <label htmlFor="input-group-1" className="block mb-2 text-[14px] font-medium text-gray-900 dark:text-white">Harga Terendah</label>
                   <div className="relative mb-6">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                       <svg width="25" height="26" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -161,7 +285,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
 
 
                 <div className="input-price mt-2">
-                  <label htmlFor="input-group-1" className="block mb-2 text-[14px] font-medium text-gray-900 dark:text-white">Harga Akhir</label>
+                  <label htmlFor="input-group-1" className="block mb-2 text-[14px] font-medium text-gray-900 dark:text-white">Harga Tertinggi</label>
                   <div className="relative mb-6">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                       <svg width="25" height="26" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -233,6 +357,47 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
 
 
           <div className="self-stretch flex flex-col items-start justify-start text-[12px] yu_lg:self-stretch yu_lg:w-auto gap-8">
+            <div className="flex flex-row items-start justify-start gap-[14px] text-neutrals">
+              <Select classNames={{
+
+                menuButton: ({ isDisabled }: any) => (
+                  `flex text-sm text-gray-500 border  leading-[132%] font-semibold text-sm cursor-pointer border-gray-300 rounded shadow-sm transition-all duration-300 focus:outline-none ${isDisabled
+                    ? "bg-gray-200"
+                    : "bg-darkslategray-200 text-white hover:bg-darkslategray-200"
+                  }`
+                ),
+                menu: "absolute z-10 w-full bg-white shadow-lg border  rounded py-1 mt-1.5 text-sm text-gray-700",
+                listItem: ({ isSelected }: any) => (
+                  `block transition duration-200 px-2 py-2 cursor-pointer select-none truncate rounded ${isSelected
+                    ? `text-white bg-blue-500`
+                    : `text-gray-500 hover:bg-darkslategray-200 hover:text-white`
+                  }`
+                )
+              }}
+                value={selectedAdults} placeholder="Jumlah Adult"
+                onChange={handleChangeAdult}
+                options={optionsAdult} primaryColor={"indigo"} />
+
+              <Select classNames={{
+
+                menuButton: ({ isDisabled }: any) => (
+                  `flex text-sm text-gray-500 border  leading-[132%] font-semibold text-sm cursor-pointer border-gray-300 rounded shadow-sm transition-all duration-300 focus:outline-none ${isDisabled
+                    ? "bg-gray-200"
+                    : "bg-darkslategray-200 text-white hover:bg-darkslategray-200"
+                  }`
+                ),
+                menu: "absolute z-10 w-full bg-white shadow-lg border  rounded py-1 mt-1.5 text-sm text-gray-700",
+                listItem: ({ isSelected }: any) => (
+                  `block transition duration-200 px-2 py-2 cursor-pointer select-none truncate rounded ${isSelected
+                    ? `text-white bg-blue-500`
+                    : `text-gray-500 hover:bg-darkslategray-200 hover:text-white`
+                  }`
+                )
+              }}
+                value={selectedKids} placeholder="Jumlah Kids"
+                onChange={handleChangeKids}
+                options={optionsKids} primaryColor={"indigo"} />
+            </div>
 
             <ClipLoader
               color={color}
@@ -244,11 +409,11 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
             />
 
 
-            {(props.dataListBooking.data && loadingFilter === false) && props.dataListBooking?.data?.map((item: any) => {
+            {(props.dataListBooking.data && loadingFilter === false) && currentItems.map((item: any) => {
               return <div className="self-stretch shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-row items-start justify-start">
                 <div className="relative rounded-tl-xl rounded-tr-none rounded-br-none rounded-bl-xl w-[312px] h-[397px] overflow-hidden ">
                   {/* Ini tempat gambarnya */}
-                  <Carousel className="w-full h-full bg-gray-500" images={item.facility_photos.map((it: any) => {
+                  <Carousel hasMediaButton={false} hasTransition={true} shouldLazyLoad={true} canAutoPlay={true} autoPlayInterval={2000} isAutoPlaying={true} isLoop={true} className="w-full h-full bg-gray-500" images={item.facility_photos.map((it: any) => {
                     return {
                       src: it.fapho_url,
 
@@ -260,10 +425,11 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
 
                 <div className="flex-1 rounded-tl-none rounded-tr-xl rounded-br-xl rounded-bl-none bg-neutrals flex flex-col p-6 items-start justify-start gap-[24px] text-[12px] font-body-txt-body-s-regular">
                   <div className="self-stretch flex flex-row items-start justify-start gap-[24px]">
-                    <div className="min-w-[416px] max-w-xl shrink-0 flex flex-col items-start justify-start gap-[16px] max-w-[60%]">
+                    <div className="min-w-[416px]  shrink-0 flex flex-col items-start justify-start gap-[16px] ">
                       <b className="self-stretch relative text-lg">
                         {item.hotel.hotel_name}
                       </b>
+
                       <div className="self-stretch flex flex-col items-start justify-start gap-[12px] text-[12px] text-black">
                         <div className="self-stretch flex flex-row items-start justify-start gap-[2px] text-darkslategray-100">
                           <img
@@ -276,7 +442,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
                         <div className="self-stretch flex flex-row items-start justify-start gap-[32px]">
                           <div className="flex-1 flex flex-row items-start justify-start gap-[16px]">
                             {item.hotel.facilities_support.slice(0, showIconAll).map((faci_support: any) => {
-                              return <div className="flex-1 flex flex-row items-start justify-start gap-[4px]">
+                              return <div className="flex flex-row items-start justify-start gap-[2px]">
                                 <img
                                   className="relative w-4 h-4 shrink-0 overflow-hidden"
                                   alt={faci_support.fs_name}
@@ -286,7 +452,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
                               </div>
                             })}
                           </div>
-                          {item.hotel.facilities_support.length > 4 ? <div className="bg-neutrals w-[82px] shrink-0 flex flex-row py-0 px-3 box-border items-start justify-start text-slamon">
+                          {item.hotel.facilities_support.length > 4 ? <div className="bg-neutrals w-[82px] flex-wrap shrink-0 flex flex-row py-0 px-3 box-border items-start justify-start text-slamon">
                             <div className="relative font-medium cursor-pointer" onClick={() => {
                               setShowIconAll(item.hotel.facilities_support.length)
                             }}>
@@ -322,14 +488,14 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
                           <div className="relative font-medium">
                             {item.hotel.hotel_rating_status} {item.hotel.hotel_reviews_count} reviews
                           </div>
+                          <p className="m-0 self-stretch text-center rounded-sm px-1  justify-center bg-darkslategray-300 text-white  relative font-bold flex flex-row items-center opacity-[0.75] min-w-[100px]">
+                            {item.faci_memb_name} MEMBER
+                          </p>
                         </div>
+
                       </div>
                     </div>
-                    <div className="flex-1 flex flex-col items-end justify-start text-right text-[12px]">
-                      <p className="m-0 self-stretch relative font-bold inline-block opacity-[0.75] min-w-[100px]">
-                        {item.faci_memb_name} MEMBER
-                      </p>
-                    </div>
+
                   </div>
                   <div className="self-stretch relative bg-blackish-green h-[0.5px] shrink-0 opacity-[0.25]" />
                   <div className="self-stretch flex flex-row items-start justify-start gap-[16px]">
@@ -346,7 +512,9 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
                         Lihat Detail
                       </p>
                     </button>
-                    <button className="cursor-pointer [border:none] py-5 px-4 bg-darkslategray-300 flex-1 rounded flex flex-row items-center justify-center hover:mix-blend-normal hover:bg-gray-600 hover:text-darkorchid">
+                    <button onClick={() => {
+                      onBookNow(item)
+                    }} className="cursor-pointer [border:none] py-5 px-4 bg-darkslategray-300 flex-1 rounded flex flex-row items-center justify-center hover:mix-blend-normal hover:bg-gray-600 hover:text-darkorchid">
                       <p className="m-0 flex-1 relative text-[14px] font-semibold font-body-txt-body-s-regular text-neutrals text-center">
                         Book
                       </p>
@@ -356,6 +524,20 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
               </div>
             })}
 
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel="next >"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={3}
+              pageCount={pageCount}
+              previousLabel="< previous"
+              renderOnZeroPageCount={null}
+              containerClassName="pagination"
+              pageLinkClassName="page-num"
+              previousLinkClassName="page-num"
+              nextLinkClassName="page-num"
+              activeLinkClassName="active"
+            />
           </div>
 
         </div>

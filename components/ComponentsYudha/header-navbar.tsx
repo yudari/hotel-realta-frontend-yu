@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { Menu } from "@headlessui/react";
 import apiMethodBooking from "@/api/booking/apiMethodBooking";
+
+import Link from "next/link";
 import Cookies from "js-cookie";
 
 type HeaderNavbarType = {
@@ -32,6 +34,7 @@ type HeaderNavbarType = {
   /** Action props */
   onFrameButtonClick?: () => void;
   onFrameButtonClickRestaurant?: () => void;
+
 };
 
 const HeaderNavbar: NextPage<HeaderNavbarType> = ({
@@ -192,7 +195,7 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
       style={headerLoggedInStyle}
     >
       <div className="self-stretch flex flex-row items-center justify-between yu_sm:flex-col yu_sm:gap-[32px]">
-        <div className="container-menu flex flex-start ">
+        <div className="container-menu flex flex-start">
           <button
             className="cursor-pointer [border:none] p-0 bg-[transparent] w-[111px] h-10 shrink-0 flex flex-col items-start justify-center"
             onClick={onFrameButtonClick}
@@ -226,7 +229,6 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
 
           </button>
         </div>
-
         <div className="w-[190px] shrink-0 flex flex-col items-center justify-start yu_sm:order-[-1]">
           <div className="relative w-[34px] h-[34px] shrink-0 overflow-hidden">
             <img
@@ -320,7 +322,7 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
           </div>
           <div onClick={() => {
             onBannerHeaderClick(idboor)
-          }} className="w-[230px] cursor-pointer h-[33px] text-fontFamily-montserrat-semibold-14 shrink-0 flex flex-col items-center justify-start gap-[2px]">
+          }} className="w-[190px] cursor-pointer h-[33px] shrink-0 flex flex-col items-center justify-start gap-[2px]">
             <div className="relative">HOTEL REALTA</div>
             <div className="relative text-[8px] text-center font-body-txt-body-s-regular text-gray-800">
               EXPERIENCE ELEVATED LUXURY AT ITS FINEST
@@ -339,8 +341,8 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
           </button>
         </div>}
 
-        {usersDetail && <div className="relative ml-3" ref={dropdownRef}>
-          <div>
+        {users && <div className="relative ml-3 " ref={dropdownRef}>
+          <div className="flex flex-row items-center gap-3">
             <button
               type="button"
               className="flex rounded-full bg-gray-800 text-[14px] focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -357,8 +359,9 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
               />
 
             </button>
-          </div>
 
+            <p className="text-darkslategray-300">{users.user_full_name}</p>
+          </div>
           {isOpen && (
             <div
               className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
@@ -367,8 +370,9 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
               aria-labelledby="user-menu-button"
 
             >
-              <a
-                href="#"
+              <Link
+
+                href={`/users/profile/${users.user_id}`}
                 className="block px-4 py-2 text-[14px] text-gray-700 hover:bg-darkslategray-300 hover:text-white"
                 role="menuitem"
 
@@ -378,11 +382,11 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
                 }}
               >
                 My Profile
-              </a>
+              </Link>
 
               <button
 
-                className="block px-4 py-2 text-[14px]  text-gray-700 hover:bg-darkslategray-300 hover:text-white"
+                className="block px-4 py-2 text-[14px] w-full text-left  text-gray-700 hover:bg-darkslategray-300 hover:text-white"
                 role="menuitem"
                 id="user-menu-item-2"
                 onClick={handleMenuItemClick}
@@ -396,6 +400,7 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
 
       </div>
     </div>
+
   );
 };
 

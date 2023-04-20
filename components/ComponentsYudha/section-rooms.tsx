@@ -1,12 +1,21 @@
+import { doRequestGetBookingByQuery } from "@/redux/booking/action/bookingActionReducer";
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import secureLocalStorage from "react-secure-storage";
 
 
 interface InterfaceSectionRooms {
   dataOtherRooms: any;
+  startDateFinal: any;
+  endDateFinal: any;
 
 }
 
 const SectionRooms: NextPage<InterfaceSectionRooms> = (props) => {
+
+  const router = useRouter()
+  const dispatch = useDispatch()
   let dataRooms = props.dataOtherRooms.data.map((room: any) => {
     const priceRate = parseFloat(room.faci_rate_price.replace(/[$,]/g, ''));
 
@@ -17,6 +26,31 @@ const SectionRooms: NextPage<InterfaceSectionRooms> = (props) => {
       ...room, faci_subtotal: subTotal
     }
   })
+
+  const onLihatDetail = (idRooms: any, idHotel: any, startDate: any, endDate: any, dataRooms: any, guestRooms: any) => {
+    secureLocalStorage.setItem('yu_id_room', {
+      idRooms: idRooms,
+      idHotel: idHotel,
+      startDate: startDate,
+      endDate: endDate,
+      dataRooms: `[${dataRooms}]`,
+      guestRooms: `[${guestRooms}]`
+    })
+    // dispatch(doRequestGetBookingByQuery(idHotel, idRooms, startDate, endDate, dataRooms, guestRooms))
+
+    router.push({
+      pathname: `/booking/detail-booking-final`,
+      query: {
+        idRooms: idRooms,
+        idHotel: idHotel,
+        startDate: startDate,
+        endDate: endDate,
+        dataRooms: `[${dataRooms}]`,
+        guestRooms: `[${guestRooms}]`
+      }
+    })
+
+  }
   console.log(dataRooms)
   return (
     <div className="self-stretch flex flex-col py-0 px-[92px] items-start justify-start text-left text-[18px] text-darkslategray-300 font-body-txt-body-s-regular">
@@ -44,14 +78,16 @@ const SectionRooms: NextPage<InterfaceSectionRooms> = (props) => {
                       currency: 'IDR',
                     }).format(data.faci_subtotal)}/malam
                   </div>
-                  <button className="cursor-pointer py-3 px-9 bg-neutrals rounded flex flex-row items-center justify-center border-[1px] border-solid border-darkslategray-300">
-                    <div className="relative text-[14px] leading-[132%] font-semibold font-body-txt-body-s-regular text-darkslategray-300 text-center">
+                  <button onClick={() => {
+                    onLihatDetail(data.faci_id, data.hotel.hotel_id, props.startDateFinal, props.endDateFinal, data.faci_id, 1)
+                  }} className="cursor-pointer py-3 px-9 bg-neutrals rounded flex flex-row items-center justify-center border-[1px] border-solid border-darkslategray-300 group hover:bg-darkslategray-200">
+                    <div className="relative text-[14px] group-hover:text-white leading-[132%] font-semibold font-body-txt-body-s-regular text-darkslategray-300 text-center">
                       Lihat Dulu
                     </div>
                   </button>
                 </div>
               </div>
-            }) : <p className="text-[16px] text-darkslategray-100">Tidak Ada Ruangan Lain</p>}
+            }) : <p className="text-[16px] text-darkslategray-100">Tidak Ada Kamar Lain</p>}
           </div>
         </div>
       </div>

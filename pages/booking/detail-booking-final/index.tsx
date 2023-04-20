@@ -103,9 +103,9 @@ const DetailBookingFinal: NextPage = (props) => {
             secureLocalStorage.removeItem('yu_date')
             const dataUser = JSON.parse(localStorage.getItem('loginData')!)
             setUser(dataUser)
-            dispatch(doRequestGetBookingByQuery(router.query.idRooms, router.query.idHotel, router.query.startDate, router.query.endDate, router.query.dataRooms, router.query.guestRooms))
+            dispatch(doRequestGetBookingByQuery(router.query.idHotel, router.query.idRooms, router.query.startDate, router.query.endDate, router.query.dataRooms, router.query.guestRooms))
         }
-    }, [router.isReady, openModalComment]);
+    }, [router, openModalComment]);
 
     useEffect(() => {
         setTimeout(() => {
@@ -114,8 +114,8 @@ const DetailBookingFinal: NextPage = (props) => {
     }, [loading])
 
     useEffect(() => {
-        if (bookings.data?.data_rooms) {
-            dispatch(doRequestGetOtherRooms(bookings.data?.data_rooms[0].faci_id, bookings.data?.data_rooms[0].faci_name, bookings.data?.data_rooms[0]?.category_group?.cagro_id))
+        if (bookings.data?.data_rooms?.length > 0) {
+            dispatch(doRequestGetOtherRooms(bookings.data?.data_rooms[0]?.faci_id, bookings.data?.data_rooms[0]?.faci_name, bookings.data?.data_rooms[0]?.category_group?.cagro_id))
         }
     }, [bookings.data?.data_rooms])
 
@@ -165,7 +165,7 @@ const DetailBookingFinal: NextPage = (props) => {
 
                     <div className="self-stretch flex flex-col pt-[45px] px-[92px] pb-0 items-start justify-start">
 
-                        <Carousel responsive show={2.5} slide={2} transition={0.5} swiping className="w-full overflow-hidden flex flex-row items-start justify-start">
+                        <Carousel responsive show={3.5} slide={2} transition={0.5} swiping className="w-full overflow-hidden flex flex-row items-start justify-start">
 
                             {bookings && bookings?.data?.data_rooms[0]?.facility_photos?.map((img: any) => {
                                 return <img key={img.fapho_id}
@@ -179,11 +179,11 @@ const DetailBookingFinal: NextPage = (props) => {
                     </div>
                     {bookings && <SectionDetailsOrder startDateFinal={router.query.startDate} endDateFinal={router.query.endDate} dataBookings={bookings} />}
 
-                    <SectionRooms dataOtherRooms={otherRooms} />
+                    <SectionRooms startDateFinal={router.query.startDate} endDateFinal={router.query.endDate} dataOtherRooms={otherRooms} />
                     <div className="self-stretch flex flex-col pt-[26px] px-[92px] pb-0 items-start justify-start">
                         <div className="w-full flex flex-col items-start justify-start gap-[49px]">
-                            <ContainerRating onOpenModalComment={onStartModal} dataRatings={bookings.data.data_rooms[0].hotel} />
-                            <ContainerReviewsUsers dataReviews={bookings.data.data_rooms[0].hotel} />
+                            <ContainerRating onOpenModalComment={onStartModal} dataRatings={bookings.data?.data_rooms[0]?.hotel} />
+                            <ContainerReviewsUsers dataReviews={bookings.data?.data_rooms[0]?.hotel} />
                         </div>
                     </div>
                     <SectionHotelPolicy />

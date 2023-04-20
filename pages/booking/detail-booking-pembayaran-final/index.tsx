@@ -65,7 +65,9 @@ const DetailBookingPembayaranFina: NextPage = () => {
     const [openItem, setOpenItem] = useState(false)
     const [userDetailDiri, setUserDetailDiri] = useState<any>({})
     const [validasiUser, setValidasiUser] = useState<boolean>(false)
+    const [validasiUserSalah, setValidasiUserSalah] = useState<boolean>(false)
     const [validasiPayment, setValidasiPayment] = useState<boolean>(false)
+    const [validasiPaymentSalah, setValidasiPaymentSalah] = useState<boolean>(false)
     const [validasiPaymentDetails, setValidasiPaymentDetails] = useState<any>([])
     const cancelButtonRef = useRef(null)
 
@@ -178,12 +180,18 @@ const DetailBookingPembayaranFina: NextPage = () => {
         try {
             const dataResponse = await apiMethodBooking.getUserByIdentities(userDetail)
             const dataUser = dataResponse.data.data
-            const userEmailFinal = dataUser.find((item: any) => {
-                if (item.user_id === userLogin.user_id) {
-                    setValidasiUser(true)
-                    return item
-                }
-            })
+            if (dataUser.length > 0) {
+                const userEmailFinal = dataUser.find((item: any) => {
+                    if (item.user_id === userLogin.user_id) {
+                        setValidasiUser(true)
+                        return item
+                    }
+                })
+
+            } else {
+                setValidasiUserSalah(true)
+            }
+
             e.target.nameUser.value = ''
             setPhoneNumber('')
             e.target.emailUser.value = ''
@@ -271,14 +279,19 @@ const DetailBookingPembayaranFina: NextPage = () => {
         }
 
         try {
-            const dataUserPaymentDetails = await apiMethodBooking.getUserPaymentDetail(dataRekening.metodePembayaranUser, dataRekening.rekeningUser)
+            const dataUserPaymentDetails: any = await apiMethodBooking.getUserPaymentDetail(dataRekening.metodePembayaranUser, dataRekening.rekeningUser)
             const dataUserFinalPaymentDetails = dataUserPaymentDetails.data[0]
 
-            const dataRealtaPaymentDetails = await apiMethodBooking.getUserPaymentDetail(dataRekening.metodePembayaranRealta, dataRekening.rekeningRealta)
+            const dataRealtaPaymentDetails: any = await apiMethodBooking.getUserPaymentDetail(dataRekening.metodePembayaranRealta, dataRekening.rekeningRealta)
             const dataRealtaFinalPaymentDetails = dataRealtaPaymentDetails.data[0]
+            if (dataUserPaymentDetails && dataUserFinalPaymentDetails) {
+                setValidasiPaymentDetails([{ ...dataUserFinalPaymentDetails }, { ...dataRealtaFinalPaymentDetails }])
+                setValidasiPayment(true)
+            } else {
+                setValidasiPaymentSalah(true)
+            }
 
-            setValidasiPaymentDetails([{ ...dataUserFinalPaymentDetails }, { ...dataRealtaFinalPaymentDetails }])
-            setValidasiPayment(true)
+
 
         } catch (error) {
             console.log(error)
@@ -300,6 +313,7 @@ const DetailBookingPembayaranFina: NextPage = () => {
     useEffect(() => {
         if (router.isReady) {
             const userLogin = JSON.parse(localStorage.getItem("loginData") || "{}");
+            secureLocalStorage.removeItem('yu_date')
             setUserLogin(userLogin)
             getUserDetailDiri(userLogin?.user_id)
             dispatch(doRequestGetOneDetailPembayaran(router.query.IdOrderDetail, router.query.IdUser, router.query.CheckIn, router.query.CheckOut, router.query.TotalGuest, router.query.totalRooms))
@@ -318,7 +332,7 @@ const DetailBookingPembayaranFina: NextPage = () => {
 
 
 
-    console.log(router.query.IdOrderDetail)
+
     return (
         <>
             <Head>
@@ -644,7 +658,7 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                         </div>
                                         <div className="mb-6">
                                             <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga Per Item</label>
-                                            <input type="input" id="input-harga" name="hargaItem" disabled value={new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(selectedExtraItems?.value?.prit_price).length > 0 ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(selectedExtraItems?.value?.prit_price) : new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(0)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                                            <input type="input" id="input-harga" name="hargaItem" disabled value={selectedExtraItems?.value?.prit_price !== undefined ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(selectedExtraItems?.value?.prit_price) : new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(0)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                                         </div>
 
                                         <div className="mb-6">
@@ -711,6 +725,54 @@ const DetailBookingPembayaranFina: NextPage = () => {
                 </Dialog>
             </Transition>
 
+            {/* Modal Confirmation User Tidak Ada */}
+
+            <Transition appear show={validasiUserSalah} as={Fragment}>
+                <Dialog as="div" className="relative z-10 font-body-txt-body-s-regular" onClose={() => setValidasiUserSalah(false)}>
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95"
+                            >
+                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-2xl font-semibold  text-darkslategray-300 cursor-pointer text-center"
+                                    >
+                                        Maaf User Anda Tidak Terverifikasi
+                                    </Dialog.Title>
+
+                                    <div className="w-full flex flex-row justify-center mt-3">
+                                        <img src="/icons8-user-not-found-50.png" alt="" width={`50px`} height={`50px`} />
+                                    </div>
+
+
+
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
+
             {/* Modal Validasi Payment */}
             <Transition appear show={validasiPayment} as={Fragment}>
                 <Dialog as="div" className="relative z-10 font-body-txt-body-s-regular" onClose={() => setValidasiPayment(false)}>
@@ -747,6 +809,53 @@ const DetailBookingPembayaranFina: NextPage = () => {
 
                                     <div className="w-full flex flex-row justify-center mt-3">
                                         <img src="/icons8-verified-account-50.png" alt="" width={`50px`} height={`50px`} />
+                                    </div>
+
+
+
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
+
+            {/* Modal Validasi Payment Jika Salah*/}
+            <Transition appear show={validasiPaymentSalah} as={Fragment}>
+                <Dialog as="div" className="relative z-10 font-body-txt-body-s-regular" onClose={() => setValidasiPaymentSalah(false)}>
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95"
+                            >
+                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-2xl font-semibold  text-darkslategray-300 cursor-pointer text-center"
+                                    >
+                                        Rekening Anda Salah
+                                    </Dialog.Title>
+
+                                    <div className="w-full flex flex-row justify-center mt-3">
+                                        <img src="/icons8-wrong-pincode-50.png" alt="" width={`50px`} height={`50px`} />
                                     </div>
 
 

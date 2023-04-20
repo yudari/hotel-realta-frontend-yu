@@ -77,7 +77,7 @@ const SectionInvoice: NextPage<SectionDataInvoiceProps> = (props) => {
                   </div>
                   <div className="flex flex-col items-start justify-start gap-[10px]">
                     <div className="relative font-semibold">Status</div>
-                    <div className="relative font-semibold">{props.dataInvoice.user_booking_status_is_paid}</div>
+                    <div className="relative font-semibold">{props.dataInvoice?.user_booking_status_is_paid === 'P ' ? "Paid" : ''}</div>
                   </div>
                   <div className="flex flex-col items-start justify-start gap-[10px]">
                     <div className="relative font-semibold">Payment Type</div>
