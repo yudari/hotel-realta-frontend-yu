@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { Menu } from "@headlessui/react";
 import apiMethodBooking from "@/api/booking/apiMethodBooking";
 import Cookies from "js-cookie";
+import Link from "next/link";
 
 type HeaderNavbarType = {
   vector?: string;
@@ -227,7 +228,7 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
           </button>
         </div>
 
-        <div className="w-[190px] shrink-0 flex flex-col items-center justify-start yu_sm:order-[-1]">
+        <div className="w-[200px] shrink-0 flex flex-col items-center justify-start yu_sm:order-[-1]">
           <div className="relative w-[34px] h-[34px] shrink-0 overflow-hidden">
             <img
               className="absolute h-[99.19%] w-[99.17%] top-[0.4%] right-[0.41%] bottom-[0.41%] left-[0.41%] max-w-full overflow-hidden max-h-full"
@@ -320,7 +321,7 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
           </div>
           <div onClick={() => {
             onBannerHeaderClick(idboor)
-          }} className="w-[230px] cursor-pointer h-[33px] text-fontFamily-montserrat-semibold-14 shrink-0 flex flex-col items-center justify-start gap-[2px]">
+          }} className="w-full cursor-pointer h-[33px] text-fontFamily-montserrat-semibold-14 shrink-0 flex flex-col items-center justify-start gap-[2px]">
             <div className="relative">HOTEL REALTA</div>
             <div className="relative text-[8px] text-center font-body-txt-body-s-regular text-gray-800">
               EXPERIENCE ELEVATED LUXURY AT ITS FINEST
@@ -339,7 +340,7 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
           </button>
         </div>}
 
-        {usersDetail && <div className="relative ml-3" ref={dropdownRef}>
+        {usersDetail && <div className="relative ml-3 flex flex-row gap-2 items-center" ref={dropdownRef}>
           <div>
             <button
               type="button"
@@ -358,6 +359,7 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
 
             </button>
           </div>
+          <p className="text-darkslategray-300">{users.user_full_name}</p>
 
           {isOpen && (
             <div
@@ -367,8 +369,9 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
               aria-labelledby="user-menu-button"
 
             >
-              <a
-                href="#"
+              <Link
+
+                href={`/users/profile/${users.user_id}`}
                 className="block px-4 py-2 text-[14px] text-gray-700 hover:bg-darkslategray-300 hover:text-white"
                 role="menuitem"
 
@@ -378,11 +381,11 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
                 }}
               >
                 My Profile
-              </a>
+              </Link>
 
               <button
 
-                className="block px-4 py-2 text-[14px]  text-gray-700 hover:bg-darkslategray-300 hover:text-white"
+                className="block px-4 py-2 text-[14px] w-full text-left  text-gray-700 hover:bg-darkslategray-300 hover:text-white"
                 role="menuitem"
                 id="user-menu-item-2"
                 onClick={handleMenuItemClick}

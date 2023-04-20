@@ -6,7 +6,7 @@ import { Formik, useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { doRequestGetListBooking } from "@/redux/booking/action/bookingActionReducer";
 import secureLocalStorage from "react-secure-storage";
-
+import moment from 'moment';
 type InputPickDateCheckOpenProps = {
   value: string;
   onClick: () => void;
@@ -113,11 +113,11 @@ const SectionCardSearchBook: NextPage<SearchBookingInterfaceProps> = (props) => 
         addressCityName: dataAddress[0] ? dataAddress[0] : '',
         addressProvName: dataAddress[1] ? dataAddress[1] : '',
         addressCountryName: dataAddress[2] ? dataAddress[2] : 'Indonesia',
-        checkOpen: new Date(startDateOpen.toISOString().substring(0, 10)).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', timeZone: 'Asia/Jakarta' }),
-        checkClose: new Date(startDateClose.toISOString().substring(0, 10)).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', timeZone: 'Asia/Jakarta' })
+        checkOpen: moment(startDateOpen).format('MM/DD/YYYY'),
+        checkClose: moment(startDateClose).format('MM/DD/YYYY')
       }
 
-      console.log(dataAddressFinal)
+
       dispatch(doRequestGetListBooking(1, 0, 100000000000000, dataAddressFinal.addressCityName, dataAddressFinal.addressProvName, dataAddressFinal.addressCountryName, 'Asia', dataAddressFinal.checkOpen, dataAddressFinal.checkClose, ['24-Hour Front Desk']))
       props.changeSearchData({
         page: 1,

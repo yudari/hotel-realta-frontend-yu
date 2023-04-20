@@ -43,8 +43,8 @@ export const doRequestGetBookingByQuery = (...payload: any[]) => {
   return {
     type: ActionTypesBooking.REQ_GET_ONE_BOOKING,
     payload: {
-      idHotel: payload[0],
-      idRooms: payload[1],
+      idRooms: payload[0],
+      idHotel: payload[1],
       startDate: payload[2],
       endDate: payload[3],
       dataRooms: payload[4],

@@ -9,7 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { ClipLoader } from "react-spinners";
 import secureLocalStorage from "react-secure-storage";
 import ReactPaginate from 'react-paginate';
-
+import moment from 'moment'
+import apiMethodBooking from "@/api/booking/apiMethodBooking";
 
 interface DataListBooking {
   data: any[] // replace `any` with the type of data that `dataListBooking` contains
@@ -31,7 +32,7 @@ interface PropsInterfaceListBookingProps {
   dataListBooking: DataListBooking;
   searchDataBooking: DataSearch;
   loadingListBook: any;
-
+  users: any
 }
 const override: CSSProperties = {
   display: "block",
@@ -43,8 +44,10 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
   const { bookings: bookingsFaci, message, status } = useSelector((state: any) => state.bookingReducers)
   const [showIconAll, setShowIconAll] = useState(4)
   const [showFaciSupportAll, setShowFaciSupportAll] = useState(4)
+  let [userLogin, setUserLogin] = useState<any>({})
   let startDateObj = new Date()
   let startDateStr = startDateObj.toISOString().substring(0, 10)
+
   let startDate = new Date(startDateStr)
   let [color, setColor] = useState("#ffffff");
   let endDateObj = new Date()
@@ -137,12 +140,84 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
   })
 
   const onBookNow = async (dataBookItem: any) => {
-
+    const checkIn = moment(props.searchDataBooking?.startDate).format('MM/DD/YYYY')
+    const checkOut = moment(props.searchDataBooking?.endDate).format('MM/DD/YYYY')
+    // const converseFaciRatePrice = parseInt(room.faci_rate_price.replace(/[^\d]/g, "").slice(0, -2))
+    // let priceDiscount = converseFaciRatePrice - Number(room.faci_discount) * converseFaciRatePrice;
+    // let subTotal = priceDiscount + Number(room.faci_tax_rate) * priceDiscount;
+    let priceDiscount = dataBookItem.faci_rate_price - Number(dataBookItem.faci_discount) * dataBookItem.faci_rate_price
+    let subTotal = priceDiscount + Number(dataBookItem.faci_tax_rate) * priceDiscount;
     console.log(dataBookItem)
+
+    const dataInsertBookTemp = {
+      borde_checkin: checkIn,
+      borde_checkout: checkOut,
+      borde_adults: Number(1),
+      borde_kids: Number(0),
+      borde_price: dataBookItem.faci_rate_price,
+      borde_extra: 0,
+      borde_discount: Number(dataBookItem.faci_discount) * dataBookItem.faci_rate_price,
+      borde_tax: Number(dataBookItem.faci_tax_rate) * dataBookItem.faci_rate_price,
+      borde_subtotal: subTotal,
+      borde_faci_id: dataBookItem.faci_id
+    }
+
+
+    if (Object.keys(userLogin).length > 0) {
+      const dataInsertTemporaryBooking: any = {
+        booking_orders: {
+          boor_hotel_id: dataBookItem.hotel.hotel_id,
+          boor_user_id: userLogin.user_id,
+          booking_order_detail: [dataInsertBookTemp]
+        }
+
+      }
+      try {
+        const dataCreateBookingTempo = await apiMethodBooking.createTempoBorde(dataInsertTemporaryBooking)
+        const dataResponseCreateBookingTempo = dataCreateBookingTempo.data
+
+        let totalGuest = 0;
+        let totalRooms = dataResponseCreateBookingTempo?.data?.length;
+
+        console.log(dataCreateBookingTempo)
+        dataResponseCreateBookingTempo?.data?.forEach((data: any) => {
+          totalGuest = totalGuest + Number(data?.borde_adults) + Number(data?.borde_kids)
+        })
+
+
+        console.log({
+          IdOrderDetail: dataResponseCreateBookingTempo?.data[0]?.border_boor_id,
+          IdUser: userLogin.user_id,
+          CheckIn: checkIn,
+          CheckOut: checkOut,
+          TotalGuest: totalGuest,
+          totalRooms: totalRooms
+        })
+
+        router.push({
+          pathname: '/booking/detail-booking-pembayaran-final',
+          query: {
+            IdOrderDetail: dataResponseCreateBookingTempo?.data[0]?.border_boor_id,
+            IdUser: userLogin.user_id,
+            CheckIn: checkIn,
+            CheckOut: checkOut,
+            TotalGuest: totalGuest,
+            totalRooms: totalRooms
+          }
+        })
+
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
   }
 
   useEffect(() => {
     dispatch(doRequestGetAllFacilitiesSupport())
+    const dataUser: any = JSON.parse(localStorage.getItem('loginData')!)
+    setUserLogin(dataUser)
   }, [])
 
   if (props.dataListBooking.data[0] !== undefined && loadingFilter) {
@@ -153,7 +228,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
 
   return (
     <div className="self-stretch flex flex-col pt-[54px] px-[92px] pb-[58px] items-start justify-start text-left text-[16px] text-darkslategray-300 font-montserrat-semibold-14 yu_lg:self-stretch yu_lg:w-auto yu_lg:h-auto yu_lg:pl-3 yu_lg:pr-3 yu_lg:box-border">
-      <div className="self-stretch flex flex-row items-start justify-between text-[14px] font-body-txt-body-s-regular yu_lg:self-stretch yu_lg:w-auto yu_lg:h-auto">
+      <div className="self-stretch flex flex-row items-start justify-between text-[14px] font-body-txt-body-s-regular w-full yu_lg:h-auto">
         <div className="relative font-semibold inline-block w-[408px] shrink-0 mb-4">
           <span>Menampilkan  {props.dataListBooking.data?.length}</span>
           <span className="text-slamon"> tempat</span>

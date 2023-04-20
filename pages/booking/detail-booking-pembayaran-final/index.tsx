@@ -313,6 +313,7 @@ const DetailBookingPembayaranFina: NextPage = () => {
     useEffect(() => {
         if (router.isReady) {
             const userLogin = JSON.parse(localStorage.getItem("loginData") || "{}");
+            secureLocalStorage.removeItem('yu_date')
             setUserLogin(userLogin)
             getUserDetailDiri(userLogin?.user_id)
             dispatch(doRequestGetOneDetailPembayaran(router.query.IdOrderDetail, router.query.IdUser, router.query.CheckIn, router.query.CheckOut, router.query.TotalGuest, router.query.totalRooms))

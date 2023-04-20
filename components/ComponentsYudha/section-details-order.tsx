@@ -104,6 +104,14 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
       startCloseConverse.setDate(startCloseConverse.getDate())
       const startCloseConverseFinal = startCloseConverse.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', timeZone: 'Asia/Jakarta' })
 
+      console.log({
+        IdOrderDetail: dataResponseCreateBookingTempo?.data[0]?.border_boor_id,
+        IdUser: users.user_id,
+        CheckIn: startDateConverseFinal,
+        CheckOut: startCloseConverseFinal,
+        TotalGuest: totalGuest,
+        totalRooms: totalRooms
+      })
 
       router.push({
         pathname: '/booking/detail-booking-pembayaran-final',
@@ -219,8 +227,8 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
 
 
     const AllRoomsFinal = {
-      IdHotel: selectedRooms[0].hotel.hotel_id,
       IdRooms: selectedRooms[0].faci_id,
+      IdHotel: selectedRooms[0].hotel.hotel_id,
       startDate: startDateConverseFinal,
       endDate: startCloseConverseFinal,
       dataRooms: `[${selectedRooms.map((data: any) => data.faci_id).join(', ')}]`,
