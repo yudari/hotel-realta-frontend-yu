@@ -454,7 +454,7 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                                     <div className="self-stretch flex flex-row pt-5 px-6 pb-[19px] items-start justify-start">
                                                         <div className="flex-1 flex flex-col items-start justify-start">
                                                             <div className="self-stretch relative leading-[20px]">
-                                                                You can choose additional services that we will provide to you.anda
+                                                                You can choose additional services that we will provide to you.
                                                             </div>
                                                         </div>
                                                     </div>
@@ -536,15 +536,15 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                         <div className="self-stretch overflow-hidden flex flex-col items-start justify-start gap-[18px]">
                                             <div className="self-stretch flex flex-row items-start justify-start">
                                                 <div className="flex-1 relative leading-[148%] font-semibold">
-                                                    Choose Your Payment Method
+                                                    Choose Your Payment
                                                 </div>
                                             </div>
                                             <div className="self-stretch flex flex-row items-start justify-start gap-[18px] text-grayscale-black">
 
                                                 <div className="flex-1 h-[146px] flex flex-col items-start justify-start gap-[6px] text-left text-[16px] text-grayscale-black font-body-txt-body-s-regular">
-                                                    <label htmlFor=" " className="block relative leading-[148%]">Payment Type</label>
+                                                    <label htmlFor=" " className="block relative leading-[148%]">Choose Payment</label>
                                                     <select id="tipePembayaran" className="bg-gray-50 w-fit border border-gray-300 text-gray-900 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={changeSelectInputMetodePembayaranUser}>
-                                                        <option selected>Select Payment Method</option>
+                                                        <option selected>Select Payment</option>
                                                         {getAllPaymentMetodeUser && getAllPaymentMetodeUser.map((item: any, index: any) => (
                                                             <option key={index} value={JSON.stringify(item)}>{item?.entity_name}</option>
                                                         ))}
@@ -564,15 +564,15 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                         <div className="self-stretch overflow-hidden flex flex-col items-start justify-start gap-[18px]">
                                             <div className="self-stretch flex flex-row items-start justify-start">
                                                 <div className="flex-1 relative leading-[148%] font-semibold">
-                                                    Realta Accounts and Bank Accounts
+                                                    Realta Bank Accounts
                                                 </div>
                                             </div>
                                             <div className="self-stretch flex flex-row items-start justify-start gap-[18px] text-grayscale-black">
 
                                                 <div className="flex-1 h-[146px] flex flex-col items-start justify-start gap-[6px] text-left text-[16px] text-grayscale-black font-body-txt-body-s-regular">
-                                                    <label htmlFor=" " className="block relative leading-[148%]">Payment Method</label>
+                                                    <label htmlFor=" " className="block relative leading-[148%]">Choose Payment</label>
                                                     <select id="tipePembayaran" className="bg-gray-50 w-fit border border-gray-300 text-gray-900 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={changeSelectInputMetodePembayaranRealta} name="option_rekening_realta">
-                                                        <option selected>Select Payment Method</option>
+                                                        <option selected>Select Payment</option>
                                                         {getAllPaymentMetodeRealta && getAllPaymentMetodeRealta?.map((item: any, index: any) => (
                                                             <option key={index} value={JSON.stringify(item)}>{item?.entity_name}</option>
                                                         ))}
@@ -656,7 +656,6 @@ const DetailBookingPembayaranFina: NextPage = () => {
                                         </div>
                                         <div className="mb-6">
                                             <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price Per Item</label>
-
                                             <input type="input" id="input-harga" name="hargaItem" disabled value={selectedExtraItems?.value?.prit_price !== undefined ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(selectedExtraItems?.value?.prit_price) : new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(0)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                                         </div>
 

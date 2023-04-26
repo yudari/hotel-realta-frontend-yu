@@ -46,7 +46,7 @@ const SectionInvoice: NextPage<SectionDataInvoiceProps> = (props) => {
 
 
   return (
-    <div ref={props.onComponentRef} className="self-stretch flex flex-col py-10 px-[92px] print:px-[0px] items-start justify-start text-left text-[16px] text-darkslategray-300 font-body-txt-body-s-regular print:max-w-[1330px]">
+    <div ref={props.onComponentRef} className=" self-stretch flex flex-col py-10 px-[92px] print:px-[0px] items-start justify-start text-left text-[16px] text-darkslategray-300 font-body-txt-body-s-regular print:max-w-[1330px]">
       <div className="self-stretch flex flex-row items-start justify-start">
         <div className="flex-1 flex flex-col items-start justify-start">
           <div className="self-stretch flex flex-col items-start justify-start">

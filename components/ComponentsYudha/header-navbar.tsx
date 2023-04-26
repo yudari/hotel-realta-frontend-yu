@@ -341,7 +341,7 @@ const HeaderNavbar: NextPage<HeaderNavbarType> = ({
           </button>
         </div>}
 
-        {users && <div className="relative ml-3 " ref={dropdownRef}>
+        {usersDetail && <div className="relative ml-3 " ref={dropdownRef}>
           <div className="flex flex-row items-center gap-3">
             <button
               type="button"

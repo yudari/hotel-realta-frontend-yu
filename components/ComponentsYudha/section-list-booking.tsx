@@ -272,7 +272,6 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
                 </div>
                 <div className="input-price mt-2">
                   <label htmlFor="input-group-1" className="block mb-2 text-[14px] font-medium text-gray-900 dark:text-white">Lowest Price.</label>
-
                   <div className="relative mb-6">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                       <svg width="25" height="26" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -287,7 +286,6 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
 
                 <div className="input-price mt-2">
                   <label htmlFor="input-group-1" className="block mb-2 text-[14px] font-medium text-gray-900 dark:text-white">Highest Price</label>
-                  
                   <div className="relative mb-6">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                       <svg width="25" height="26" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -415,7 +413,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
               return <div className="self-stretch shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-row items-start justify-start">
                 <div className="relative rounded-tl-xl rounded-tr-none rounded-br-none rounded-bl-xl w-[312px] h-[397px] overflow-hidden ">
                   {/* Ini tempat gambarnya */}
-                  <Carousel hasMediaButton={false} hasTransition={true} shouldLazyLoad={true} canAutoPlay={true} autoPlayInterval={2000} isAutoPlaying={true} isLoop={true} className="w-full h-full bg-gray-500" images={item.facility_photos.map((it: any) => {
+                  <Carousel hasMediaButton={false} hasTransition={true} shouldLazyLoad={true} isLoop={true} className="w-full h-full bg-gray-500" images={item.facility_photos.map((it: any) => {
                     return {
                       src: it.fapho_url,
 
@@ -518,7 +516,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
                       onBookNow(item)
                     }} className="cursor-pointer [border:none] py-5 px-4 bg-darkslategray-300 flex-1 rounded flex flex-row items-center justify-center hover:mix-blend-normal hover:bg-gray-600 hover:text-darkorchid">
                       <p className="m-0 flex-1 relative text-[14px] font-semibold font-body-txt-body-s-regular text-neutrals text-center">
-                        Book
+                        Book Now
                       </p>
                     </button>
                   </div>

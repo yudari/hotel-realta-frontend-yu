@@ -185,7 +185,9 @@ body {
     display: none;
   }
   @page {
-    size: tabloid;
+    size: tabloid landscape;
+    
+    
   }
 }
 

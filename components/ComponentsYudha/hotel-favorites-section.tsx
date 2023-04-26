@@ -44,7 +44,7 @@ const HotelFavoritesSection: NextPage = () => {
               Hotel Favorit yang Paling Disukai
             </h2>
             <p className="m-0 self-stretch relative text-[16px] yu_sm:text-center">
-              Plan Your Vacation by Staying at Your Favorite Hotel: Enjoy an Unforgettable Stay with Comfort and Amazing Facilities!
+              Rencanakan Liburan Anda dengan Menginap di Hotel Favorit Anda: Nikmati Pengalaman Menginap yang Tak Terlupakan dengan Kenyamanan dan Fasilitas Menakjubkan!
             </p>
           </div>
           <button className="cursor-pointer py-2 px-4 bg-[transparent] box-border h-10 flex flex-col items-center justify-center border-[1px] border-solid border-darkslategray-300  hover:bg-darkslategray-300  hover:cursor-pointer group">
