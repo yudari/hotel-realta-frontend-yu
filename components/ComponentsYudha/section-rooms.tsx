@@ -82,7 +82,7 @@ const SectionRooms: NextPage<InterfaceSectionRooms> = (props) => {
                     onLihatDetail(data.faci_id, data.hotel.hotel_id, props.startDateFinal, props.endDateFinal, data.faci_id, 1)
                   }} className="cursor-pointer py-3 px-9 bg-neutrals rounded flex flex-row items-center justify-center border-[1px] border-solid border-darkslategray-300 group hover:bg-darkslategray-200">
                     <div className="relative text-[14px] group-hover:text-white leading-[132%] font-semibold font-body-txt-body-s-regular text-darkslategray-300 text-center">
-                      Lihat Dulu
+                      View Detail
                     </div>
                   </button>
                 </div>

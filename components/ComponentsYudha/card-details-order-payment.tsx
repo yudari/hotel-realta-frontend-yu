@@ -593,7 +593,7 @@ const CardDetailsOrderPayment: NextPage<CardDetailsOrderPaymentProps> = (props) 
           }}
         >
           <div className="flex-1 relative text-[14px] font-semibold font-montserrat-semibold-14 text-neutrals text-center">
-            Buat Pesanan Booking
+            Create Booking Order
           </div>
         </button>
       </div>
