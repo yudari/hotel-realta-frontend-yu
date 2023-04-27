@@ -3,6 +3,8 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
+// import 'react-toastify/dist/ReactToastify.css';
 
 export default function AddFintech(props: any) {
   type FormValues = {
@@ -24,6 +26,7 @@ export default function AddFintech(props: any) {
         fint_name: data.fint_name,
       }
       dispatch(doAddFintech(dataAll))
+      toast.success(`Successfully Added Fintech ${data.fint_name}`)
       props.closeModal()
     } catch (error) {
       console.error(error)
@@ -70,12 +73,13 @@ export default function AddFintech(props: any) {
                         <form onSubmit={handleSubmit(handleSave, handleError)}>
                           <div className='mb-4'>
                             <label className='block text-gray-700 font-bold mb-2'>
-                              Code
+                              Fintech Code
                             </label>
                             <input
                               className='shadow appearance-none border rounded w-full py-3 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:bg-blue-100'
                               id='name'
                               type='text'
+                              placeholder='Input Fintech Code'
                               {...register('fint_code', registerOptions.fint_code)}
                             />
                             {errors?.fint_code && (
@@ -93,6 +97,7 @@ export default function AddFintech(props: any) {
                               className='shadow appearance-none border rounded w-full py-3 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:bg-blue-100'
                               id='description'
                               type='text'
+                              placeholder='Input Fintech Name'
                               {...register(
                                 'fint_name',
                                 registerOptions.fint_name

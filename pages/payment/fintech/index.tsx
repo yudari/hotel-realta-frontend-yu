@@ -13,6 +13,8 @@ import {
 } from 'react-icons/bs'
 import EditFintech from './editFintech'
 import { AiOutlinePlus } from "react-icons/ai";
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function fintech() {
   let { fintechs, message, refresh } = useSelector(
@@ -44,10 +46,12 @@ export default function fintech() {
 
   const deleteOpen = async (id: number) => {
     const confirmed = window.confirm(
-      `Are you sure you want to delete the fintech data with ID ${id} ?`
+      `Are you sure you want to delete this fintech?`
     )
     if (confirmed) {
       dispatch(doDeleteFintech(id))
+      toast.success(`
+      Successfully Deleted`)
     }
   }
 
@@ -239,7 +243,7 @@ return(
           
       </div>
     </>
-    {/* <ToastContainer autoClose={5000} /> */}
+    <ToastContainer autoClose={5000} />
     {isOpen ? (
       <AddFintech isOpen={isOpen} closeModal={() => setOpen(false)} />
     ) : null}

@@ -11,6 +11,7 @@ export default function paymentTransaction(){
   const user_id = objLoginData.user_id
     let{ payTrans, message, refresh } = useSelector((state:any) => state.paymentTransactionReducers);
     
+  console.log("data tidak",payTrans)
     const dispatch = useDispatch()
     const [searchTerm, setSearchTerm] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
@@ -57,16 +58,17 @@ export default function paymentTransaction(){
     setCurrentPage(1) // reset currentPage only when search term changes
     handleGetData(searchTerm, currentPage, limit, type,user_id) // call handleGetData to fetch data again
   }
+  const totalData = payTrans ? payTrans : 0
+
+  let totalPages = Math.ceil(payTrans / limit)
+
 
   useEffect(() => {
     handleGetData(searchTerm, currentPage, limit, type,user_id)
-  }, [refresh, searchTerm, currentPage, limit, type,user_id])
+  }, [dispatch,refresh, searchTerm, currentPage, limit, type,user_id, totalPages])
 
   // Calculate total pages
-  const totalData = payTrans ? payTrans.length : 0
-
-  const totalPages = Math.ceil(payTrans.length / limit)
-
+ 
   // Pagination function
   const handlePageChange = (type: string) => {
     if (type === 'prev' && currentPage > 1) {
@@ -84,7 +86,7 @@ export default function paymentTransaction(){
     pageNumbers.push(i)
   }
 
-console.log(payTrans.data)
+
 return (
   <div className='bg-white'>
     <>
@@ -228,7 +230,7 @@ return (
                   &nbsp; &nbsp;
                   <button
                     className='text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-blue-900 font-semibold py-2 px-4 rounded-r'
-                    disabled={currentPage * limit >= payTrans.length}
+                    disabled={currentPage * limit >= payTrans}
                     onClick={() => setCurrentPage(currentPage + 1)}
                   >
                     Next

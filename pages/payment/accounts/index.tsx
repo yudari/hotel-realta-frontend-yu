@@ -13,6 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import AddUserAccount from "./addUserAccount";
 import EditUserAccount from "./editUserAccount";
 import { AiOutlinePlus } from "react-icons/ai";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function userAccount() {
   const loginData: any = localStorage.getItem("loginData");
@@ -46,10 +48,12 @@ export default function userAccount() {
 
   const deleteOpen = async (id: number) => {
     const confirmed = window.confirm(
-      `Are you sure you want to delete a user account with ID ${id} ?`
+      `Are you sure you want to delete this account?`
     );
     if (confirmed) {
       dispatch(doDeleteUserAcc(id));
+      toast.success(`
+      Successfully Deleted`)
     }
   };
 
@@ -212,7 +216,7 @@ export default function userAccount() {
           </div>
         </div>
       </>
-      {/* <ToastContainer autoClose={5000} /> */}
+      <ToastContainer autoClose={5000} />
       {isOpen ? (
         <AddUserAccount isOpen={isOpen} closeModal={() => setOpen(false)} />
       ) : null}

@@ -3,6 +3,8 @@ import { Dialog, Transition } from "@headlessui/react"
 import { Fragment, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch } from "react-redux"
+import { toast } from 'react-toastify'
+// import 'react-toastify/dist/ReactToastify.css';
 
 export default function EditFintech(props:any) {
     type FormValues = {
@@ -25,6 +27,7 @@ export default function EditFintech(props:any) {
             fint_name: data.fint_name,
         }
         dispatch(doUpdateFintech(props.isEdit.id, data))
+        toast.success(`Successfully Edited  Fintech ${data.fint_name}`)
         props.closeModal()
       } catch (error) {
         console.error(error)

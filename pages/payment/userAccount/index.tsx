@@ -13,6 +13,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import AddUserAccount from "./addUserAccount";
 import EditUserAccount from "./editUserAccount";
+import { toast } from "react-toastify";
 
 export default function userAccount() {
   let { accounts, message, refresh } = useSelector(
@@ -46,6 +47,8 @@ export default function userAccount() {
     );
     if (confirmed) {
       dispatch(doDeleteUserAcc(id));
+      toast.success(`
+      Successfully Deleted`)
     }
   };
 

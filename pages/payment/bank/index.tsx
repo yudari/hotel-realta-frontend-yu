@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import AddBank from "./addBank";
 import EditBank from "./editBank";
 import { AiOutlinePlus } from "react-icons/ai"
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function bank() {
   let { banks, message, refresh } = useSelector(
@@ -41,10 +43,12 @@ export default function bank() {
   
     const deleteOpen = async (id: number) => {
       const confirmed = window.confirm(
-        `Are you sure you want to delete the bank data with ID ${id} ?`
+        `Are you sure you want to delete the bank?`
       )
       if (confirmed) {
         dispatch(doDeleteBank(id))
+        toast.success(`
+      Successfully Deleted`)
       }
     }
     useEffect(() =>{
@@ -235,7 +239,7 @@ export default function bank() {
           
         </div>
       </>
-      {/* <ToastContainer autoClose={5000} /> */}
+      <ToastContainer autoClose={5000} />
       {isOpen ? (
         <AddBank isOpen={isOpen} closeModal={() => setOpen(false)} />
       ) : null}
