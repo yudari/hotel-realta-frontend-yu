@@ -13,11 +13,12 @@ import { ClipLoader } from "react-spinners";
 
 const override: CSSProperties = {
     display: "block",
-    margin: "0 auto",
+    margin: "20px auto",
     borderColor: "rgb(19 41 61 / var(--tw-bg-opacity))",
 };
 
 const ListBookingFinal: NextPage = () => {
+
     let startDateObj = new Date()
     let startDateStr = startDateObj.toISOString().substring(0, 10)
     let startDate = new Date(startDateStr)
@@ -35,17 +36,20 @@ const ListBookingFinal: NextPage = () => {
     const [searchData, setSearchData] = useState({
         page: 1,
         minSubTotal: 0,
-        maxSubTotal: 0,
+        maxSubTotal: 10000000000000000000000000,
         cityName: '',
         provName: '',
-        countryName: '',
-        regionName: '',
+        countryName: 'Indonesia',
+        regionName: 'Asia',
         startDate: startDateFinal,
         endDate: endDateFinal,
         facilities_support_filter: ['24-Hour Front Desk']
     })
     let [loading, setLoading] = useState(true);
+    let [loadingFilter, setLoadingFilter] = useState(false)
     let [color, setColor] = useState("#ffffff");
+
+
     const router = useRouter()
     const dispatch = useDispatch()
 
@@ -53,24 +57,52 @@ const ListBookingFinal: NextPage = () => {
         router.push("/booking/list-booking-final");
     }, [router]);
 
+    const onFrameButtonClickRestaurant = useCallback(() => {
+        router.push("/resto/restoMenuPhotos");
+    }, [router]);
+
+
+
+
     useEffect(() => {
-        console.log(startDateFinal)
 
-        if (router.pathname === '/booking/list-booking-final') {
 
-            dispatch(doRequestGetListBooking(1, 0, 1000000000, '', '', 'Indonesia', 'Asia', searchData.startDate, searchData.endDate, ['24-Hour Front Desk']))
+
+        if (router.isReady) {
+            if (router.pathname === '/booking/list-booking-final') {
+                console.log(searchData.startDate, searchData.endDate)
+                if (Object.keys(router.query).length > 0) {
+                    dispatch(doRequestGetListBooking(1, 0, 1000000000, router.query.addressCityName ? router.query.addressCityName : '', router.query.addressProvName ? router.query.addressProvName : '', router.query.addressCountryName ? router.query.addressCountryName : '', 'Asia', router.query.checkIn, router.query.checkClose, ['24-Hour Front Desk']))
+                } else {
+                    dispatch(doRequestGetListBooking(1, 0, 1000000000, '', '', 'Indonesia', 'Asia', searchData.startDate, searchData.endDate, ['24-Hour Front Desk']))
+                }
+
+            }
         }
+
+        if (router.isReady) {
+            if (router.pathname === '/booking/list-booking-final') {
+                console.log(searchData.startDate, searchData.endDate)
+                if (Object.keys(router.query).length > 0) {
+                    dispatch(doRequestGetListBooking(1, 0, 1000000000, router.query.addressCityName ? router.query.addressCityName : '', router.query.addressProvName ? router.query.addressProvName : '', router.query.addressCountryName ? router.query.addressCountryName : '', 'Asia', router.query.checkIn, router.query.checkClose, ['24-Hour Front Desk']))
+                } else {
+                    dispatch(doRequestGetListBooking(1, 0, 1000000000, '', '', 'Indonesia', 'Asia', searchData.startDate, searchData.endDate, ['24-Hour Front Desk']))
+                }
+
+            }
+        }
+
         // else (router.pathname === `/booking/list-booking-final?page=1&minSubtotal=0&maxSubTotal=900000&cityName=&provName=&countryName=Indonesia&regionName=Asia&startDate=${startDate}&endDate=${endDateFinal}&facilities_support_filter=[24-Hour Front Desk]`)
 
 
-    }, [dispatch])
+    }, [router.isReady])
 
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
         }, 2000)
     }, [loading])
-
+    console.log(searchData.endDate)
 
 
     return (
@@ -78,7 +110,8 @@ const ListBookingFinal: NextPage = () => {
             <Head>
                 <title>Halaman List Booking</title>
             </Head>
-            <div className="relative bg-gray-100 w-full overflow-hidden flex flex-col items-start justify-start">
+            <div className="relative bg-gray-100 w-full overflow-hidden flex flex-col items-start text-fontFamily-body-txt-body-s-regular justify-start">
+
                 <HeaderNavbar
                     vector="/vector17.svg"
                     vector1="/vector18.svg"
@@ -89,7 +122,8 @@ const ListBookingFinal: NextPage = () => {
                     vector6="/vector23.svg"
                     vector7="/vector24.svg"
                     vector8="/vector25.svg"
-                    vector9="/vector26.svg"
+                    vector9="/vector26.svg" onFrameButtonClickRestaurant={onFrameButtonClickRestaurant}
+
                     onFrameButtonClick={onFrameButtonClick}
                 />
                 {loading ? <ClipLoader
@@ -99,12 +133,13 @@ const ListBookingFinal: NextPage = () => {
                     size={150}
                     aria-label="Loading"
                     data-testid="loader"
-                /> : <>  {bookings && <SectionCardSearchBook changeSearchData={setSearchData} />}
+                /> : <>  {bookings && <SectionCardSearchBook classNames={``} changeSearchData={setSearchData} />}
 
-                    {bookings && <SectionListBooking searchDataBooking={searchData} dataListBooking={bookings} />
+
+                    {bookings && <SectionListBooking searchDataBooking={searchData} dataListBooking={bookings} loadingListBook={undefined} users={undefined} />
                     }
 
-                    <SectionFooter footerSectionSectionFooteHeight="338px" />
+                    <SectionFooter />
                 </>}
 
 

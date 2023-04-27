@@ -2,9 +2,9 @@ import type { NextPage } from "next";
 
 const SectionCardSearchBooking: NextPage = () => {
   return (
-    <div className="self-stretch rounded-2xl bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col py-8 px-[92px] items-end justify-center gap-[32px] text-left text-base text-darkslategray-300 font-montserrat-semibold-14">
-      <div className="self-stretch flex flex-row items-start justify-start gap-[16px] flex-wrap mq720:self-stretch mq720:w-auto mq720:h-auto mq720:flex-col">
-        <div className="flex-1 rounded-t rounded-b-none h-14 flex flex-col items-start justify-start mq720:flex-[unset] mq720:self-stretch">
+    <div className="self-stretch rounded-2xl bg-neutrals shadow-[0px_4px_16px_rgba(17,_34,_17,_0.05)] flex flex-col py-8 px-[92px] items-end justify-center gap-[32px] text-left text-[16px] text-darkslategray-300 font-montserrat-semibold-14">
+      <div className="self-stretch flex flex-row items-start justify-start gap-[16px] flex-wrap yu_mq720:self-stretch yu_mq720:w-auto yu_mq720:h-auto yu_mq720:flex-col">
+        <div className="flex-1 rounded-t rounded-b-none h-14 flex flex-col items-start justify-start yu_mq720:flex-[unset] yu_mq720:self-stretch">
           <div className="self-stretch rounded bg-neutrals flex flex-col items-start justify-start border-[1px] border-solid border-gray-300">
             <div className="self-stretch rounded-t rounded-b-none flex flex-row py-1 pr-4 pl-0 items-center justify-start">
               <div className="w-12 h-12 shrink-0 flex flex-col items-center justify-center">
@@ -24,21 +24,21 @@ const SectionCardSearchBooking: NextPage = () => {
                     DKI Jakarta, Jakarta Barat
                   </div>
                 </div>
-                <div className="my-0 mx-[!important] absolute top-[-16px] left-[-36px] bg-neutrals flex flex-row py-0 px-1 items-center justify-start z-[1] text-sm">
+                <div className="my-0 mx-[!important] absolute top-[-16px] left-[-36px] bg-neutrals flex flex-row py-0 px-1 items-center justify-start z-[1] text-[14px]">
                   <div className="relative">Enter Destination</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="flex-1 rounded-t rounded-b-none h-14 flex flex-col items-start justify-start mq720:flex-[unset] mq720:self-stretch">
+        <div className="flex-1 rounded-t rounded-b-none h-14 flex flex-col items-start justify-start yu_mq720:flex-[unset] yu_mq720:self-stretch">
           <div className="self-stretch rounded bg-neutrals flex flex-col items-start justify-start border-[1px] border-solid border-gray-300">
             <div className="self-stretch rounded-t rounded-b-none flex flex-row py-1 pr-0 pl-4 items-center justify-start">
               <div className="flex-1 flex flex-col items-start justify-center relative">
                 <div className="self-stretch flex flex-row items-center justify-start z-[0]">
                   <div className="flex-1 relative">Fri 12/2</div>
                 </div>
-                <div className="my-0 mx-[!important] absolute top-[-16px] left-[-4px] bg-neutrals flex flex-row py-0 px-1 items-center justify-start z-[1] text-sm">
+                <div className="my-0 mx-[!important] absolute top-[-16px] left-[-4px] bg-neutrals flex flex-row py-0 px-1 items-center justify-start z-[1] text-[14px]">
                   <div className="relative">Check Open</div>
                 </div>
               </div>
@@ -52,14 +52,14 @@ const SectionCardSearchBooking: NextPage = () => {
             </div>
           </div>
         </div>
-        <div className="flex-1 rounded-t rounded-b-none h-14 flex flex-col items-start justify-start mq720:flex-[unset] mq720:self-stretch">
+        <div className="flex-1 rounded-t rounded-b-none h-14 flex flex-col items-start justify-start yu_mq720:flex-[unset] yu_mq720:self-stretch">
           <div className="self-stretch rounded bg-neutrals flex flex-col items-start justify-start border-[1px] border-solid border-gray-300">
             <div className="self-stretch rounded-t rounded-b-none flex flex-row py-1 pr-0 pl-4 items-center justify-start">
               <div className="flex-1 flex flex-col items-start justify-center relative">
                 <div className="self-stretch flex flex-row items-center justify-start z-[0]">
                   <div className="flex-1 relative">Sun 12/4</div>
                 </div>
-                <div className="my-0 mx-[!important] absolute top-[-16px] left-[-4px] bg-neutrals flex flex-row py-0 px-1 items-center justify-start z-[1] text-sm">
+                <div className="my-0 mx-[!important] absolute top-[-16px] left-[-4px] bg-neutrals flex flex-row py-0 px-1 items-center justify-start z-[1] text-[14px]">
                   <div className="relative">Check Close</div>
                 </div>
               </div>
@@ -72,11 +72,11 @@ const SectionCardSearchBooking: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="self-stretch hidden flex-row pt-1 px-4 pb-0 items-start justify-start text-sm text-gray-400">
+          <div className="self-stretch hidden flex-row pt-1 px-4 pb-0 items-start justify-start text-[14px] text-gray-400">
             <div className="flex-1 relative">Supporting text</div>
           </div>
         </div>
-        <div className="flex-1 rounded-t rounded-b-none h-14 flex flex-col items-start justify-start mq720:flex-[unset] mq720:self-stretch">
+        <div className="flex-1 rounded-t rounded-b-none h-14 flex flex-col items-start justify-start yu_mq720:flex-[unset] yu_mq720:self-stretch">
           <div className="self-stretch rounded bg-neutrals flex flex-col items-start justify-start border-[1px] border-solid border-gray-300">
             <div className="self-stretch rounded-t rounded-b-none flex flex-row py-1 px-0 items-center justify-start">
               <div className="w-12 h-12 shrink-0 flex flex-col items-center justify-center">
@@ -94,7 +94,7 @@ const SectionCardSearchBooking: NextPage = () => {
                 <div className="self-stretch flex flex-row items-center justify-start z-[0]">
                   <div className="flex-1 relative">1 room, 2 guests</div>
                 </div>
-                <div className="my-0 mx-[!important] absolute top-[-16px] left-[-36px] bg-neutrals flex flex-row py-0 px-1 items-center justify-start z-[1] text-sm">
+                <div className="my-0 mx-[!important] absolute top-[-16px] left-[-36px] bg-neutrals flex flex-row py-0 px-1 items-center justify-start z-[1] text-[14px]">
                   <div className="relative">{`Rooms & Guests`}</div>
                 </div>
               </div>
@@ -107,7 +107,7 @@ const SectionCardSearchBooking: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="self-stretch hidden flex-row pt-1 px-4 pb-0 items-start justify-start text-sm text-gray-400">
+          <div className="self-stretch hidden flex-row pt-1 px-4 pb-0 items-start justify-start text-[14px] text-gray-400">
             <div className="flex-1 relative">Supporting text</div>
           </div>
         </div>
@@ -120,7 +120,7 @@ const SectionCardSearchBooking: NextPage = () => {
               alt=""
               src="/building.svg"
             />
-            <div className="relative text-sm font-medium font-montserrat-semibold-14 text-neutrals text-left">
+            <div className="relative text-[14px] font-medium font-montserrat-semibold-14 text-neutrals text-left">
               Show Places
             </div>
           </button>

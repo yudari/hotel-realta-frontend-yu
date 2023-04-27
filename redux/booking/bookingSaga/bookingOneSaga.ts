@@ -6,7 +6,7 @@ import { doResponseGetBookingyQuery, doResponseGetListBooking } from "../action/
 
 function* handleGetOneBooking(action: any): Generator {
     try {
-
+        console.log(action.payload)
         const result: any = yield call(
             apiMethodBooking.getBookingByQuery,
             action.payload

@@ -17,6 +17,11 @@ export default function Home() {
   const onFrameButtonClick = useCallback(() => {
     router.push("/booking/list-booking-final");
   }, [router]);
+
+  const onFrameButtonClickRestaurant = useCallback(() => {
+    router.push("/resto/restoMenuPhotos");
+  }, [router]);
+
   return (
     <>
       <Head>
@@ -29,7 +34,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="relative bg-neutrals w-full flex flex-col py-2.5 px-0 box-border items-start justify-start gap-[10px] lg:h-auto lg:gap-[22px]">
+      <div className="relative bg-neutrals w-full flex flex-col font-body-txt-body-s-regular px-0 box-border items-start justify-start lg:h-auto ">
         <HeaderNavbar
           vector="/vector17.svg"
           vector1="/vector18.svg"
@@ -42,6 +47,7 @@ export default function Home() {
           vector8="/vector25.svg"
           vector9="/vector26.svg"
           onFrameButtonClick={onFrameButtonClick}
+          onFrameButtonClickRestaurant={onFrameButtonClickRestaurant}
         />
         <JumbotronSection />
         <ExploreSection />

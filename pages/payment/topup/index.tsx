@@ -93,6 +93,8 @@ console.log(accounts)
           <h1
             style={{ fontSize: "1.5em" }}
             className="text-center font-semibold mb-8 text-xl"
+            style={{ fontSize: "1.5em" }}
+            className="text-center font-semibold mb-8 text-xl"
           >
             TOP UP
           </h1>

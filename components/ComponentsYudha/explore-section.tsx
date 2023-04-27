@@ -33,13 +33,13 @@ const ExploreSection: NextPage = () => {
   }, []);
 
   return (
-    <div className="self-stretch overflow-hidden flex flex-col pt-[170px] px-[92px] pb-[25px] items-start justify-start text-left text-13xl text-darkslategray-300 font-body-txt-body-s-regular md:h-auto md:pl-5 md:pt-[46px] md:pr-5 md:box-border">
+    <div className="self-stretch overflow-hidden flex flex-col pt-[170px] px-[92px] pb-[25px] items-start justify-start text-left text-[32px] text-darkslategray-300 font-body-txt-body-s-regular yu_md:h-auto yu_md:pl-5 yu_md:pt-[46px] yu_md:pr-5 yu_md:box-border">
       <div
-        className="self-stretch flex flex-col items-start justify-start gap-[32px] [&.animate]:animate-[1s_ease_0s_1_normal_forwards_shake-horizontal] opacity-[1] md:self-stretch md:w-auto md:h-auto"
+        className="self-stretch flex flex-col items-start justify-start gap-[32px] [&.animate]:animate-[1s_ease_0s_1_normal_forwards_shake-horizontal] opacity-[1] yu_md:self-stretch yu_md:w-auto yu_md:h-auto"
         data-animate-on-scroll
       >
         <b className="self-stretch relative">Explore Indonesia!</b>
-        <div className="self-stretch flex flex-row items-start justify-start gap-[12px] flex-wrap text-base font-montserrat-semibold-14 lg:self-stretch lg:w-auto lg:h-auto lg:flex-row lg:gap-[20px] lg:items-start lg:justify-start md:self-stretch md:w-auto md:flex-row md:gap-[20px] md:items-start md:justify-start sm:flex-row">
+        <div className="self-stretch flex flex-row items-start justify-start gap-[12px] flex-wrap text-[16px] font-montserrat-semibold-14 yu_lgself-stretch yu_lgw-auto yu_lgh-auto yu_lgflex-row yu_lggap-[20px] yu_lgitems-start yu_lgjustify-start yu_md:self-stretch yu_md:w-auto yu_md:flex-row yu_md:gap-[20px] yu_md:items-start yu_md:justify-start yu_sm:flex-row">
           <div className="w-[284px] shrink-0 flex flex-row items-center justify-start gap-[16px] min-w-[20%]">
             <img
               className="rounded-lg w-[90px] h-[90px] shrink-0 object-cover"
@@ -50,7 +50,7 @@ const ExploreSection: NextPage = () => {
               <div className="self-stretch relative font-semibold">
                 Kalimantan Timur
               </div>
-              <div className="self-stretch relative text-xs text-blackish-green opacity-[0.75]">
+              <div className="self-stretch relative text-[12px] text-blackish-green opacity-[0.75]">
                 325 hotel
               </div>
             </div>
@@ -63,7 +63,7 @@ const ExploreSection: NextPage = () => {
             />
             <div className="flex-1 flex flex-col items-start justify-center gap-[8px]">
               <div className="relative font-semibold">Bandung</div>
-              <div className="self-stretch relative text-xs text-blackish-green opacity-[0.75]">
+              <div className="self-stretch relative text-[12px] text-blackish-green opacity-[0.75]">
                 325 hotel
               </div>
             </div>
@@ -78,7 +78,7 @@ const ExploreSection: NextPage = () => {
               <div className="self-stretch relative font-semibold">
                 Kalimantan Barat
               </div>
-              <div className="self-stretch relative text-xs text-blackish-green opacity-[0.75]">
+              <div className="self-stretch relative text-[12px] text-blackish-green opacity-[0.75]">
                 325 hotel
               </div>
             </div>
@@ -93,7 +93,7 @@ const ExploreSection: NextPage = () => {
               <div className="self-stretch relative font-semibold">
                 Semarang
               </div>
-              <div className="self-stretch relative text-xs text-blackish-green opacity-[0.75]">
+              <div className="self-stretch relative text-[12px] text-blackish-green opacity-[0.75]">
                 325 hotel
               </div>
             </div>

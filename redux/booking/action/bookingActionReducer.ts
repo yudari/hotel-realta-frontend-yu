@@ -43,8 +43,8 @@ export const doRequestGetBookingByQuery = (...payload: any[]) => {
   return {
     type: ActionTypesBooking.REQ_GET_ONE_BOOKING,
     payload: {
-      idHotel: payload[0],
-      idRooms: payload[1],
+      idRooms: payload[0],
+      idHotel: payload[1],
       startDate: payload[2],
       endDate: payload[3],
       dataRooms: payload[4],
@@ -78,5 +78,25 @@ export const doResponseGetOtherRooms = (payload: any) => {
   return {
     type: ActionTypesBooking.RES_GET_OTHER_ROOMS,
     payload: payload,
+  }
+}
+
+export const doResponseGetOneDetailPembayaran = (payload: any) => {
+  return {
+    type: ActionTypesBooking.RES_GET_ONE_DETAIL_PEMBAYARAN_BOOKING,
+    payload: payload
+  }
+}
+
+export const doRequestGetOneDetailPembayaran = (...payload: any) => {
+  return {
+    type: ActionTypesBooking.REQ_GET_ONE_DETAIL_PEMBAYARAN_BOOKING,
+    payload: { IdOrderDetail: payload[0], IdUser: payload[1], CheckIn: payload[2], CheckOut: payload[3], TotalGuest: payload[4], TotalRooms: payload[5] }
+  }
+}
+export const doResponseCreateBookingsTemporary = (payload: any) => {
+  return {
+    type: ActionTypesBooking.RES_CREATE_TEMPORARY_BORDE,
+    payload: payload
   }
 }

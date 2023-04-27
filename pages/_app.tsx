@@ -18,7 +18,9 @@ const poppins = Poppins({
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const hasLayout =
-    router.pathname !== "/" &&
+    router.pathname !== '/' &&
+    !router.pathname.startsWith("/booking/detail-pembayaran-invoice-final") &&
+    !router.pathname.startsWith("/booking/detail-booking-pembayaran-final") &&
     !router.pathname.startsWith("/resto/restoMenuPhotos") &&
     !router.pathname.startsWith("/resto/orderMenu") &&
     !router.pathname.startsWith("/booking/detail-booking-final") &&
