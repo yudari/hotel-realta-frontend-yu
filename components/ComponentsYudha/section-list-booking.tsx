@@ -96,8 +96,8 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
     router.push({
       pathname: '/booking/detail-booking-final',
       query: {
-        idRooms: idRooms,
         idHotel: idHotel,
+        idRooms: idRooms,
         startDate: dataDate && dataDate.startDate ? dataDate.startDate : props.searchDataBooking.startDate,
         endDate: dataDate && dataDate.endDate ? dataDate.endDate : props.searchDataBooking.endDate,
         dataRooms: `[${idRooms}]`,
@@ -200,7 +200,7 @@ const SectionListBooking: NextPage<PropsInterfaceListBookingProps> = (props) => 
         let totalGuest = 0;
         let totalRooms = dataResponseCreateBookingTempo?.data?.length;
 
-        console.log(dataCreateBookingTempo)
+        console.log(dataResponseCreateBookingTempo)
         dataResponseCreateBookingTempo?.data?.forEach((data: any) => {
           totalGuest = totalGuest + Number(data?.borde_adults) + Number(data?.borde_kids)
         })

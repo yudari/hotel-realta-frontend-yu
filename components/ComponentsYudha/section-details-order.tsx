@@ -227,15 +227,15 @@ const SectionDetailsOrder: NextPage<SectionDetailsOrderInterface> = (props) => {
 
 
     const AllRoomsFinal = {
-      IdRooms: selectedRooms[0].faci_id,
       IdHotel: selectedRooms[0].hotel.hotel_id,
+      IdRooms: selectedRooms[0].faci_id,
       startDate: startDateConverseFinal,
       endDate: startCloseConverseFinal,
       dataRooms: `[${selectedRooms.map((data: any) => data.faci_id).join(', ')}]`,
       guestRooms: `[${selectedRooms.map((data: any) => data.faci_max_number).join(', ')}]`,
     }
     console.log(AllRoomsFinal)
-    dispatch(doRequestGetBookingByQuery(AllRoomsFinal.IdRooms, AllRoomsFinal.IdHotel, AllRoomsFinal.startDate, AllRoomsFinal.endDate, AllRoomsFinal.dataRooms, AllRoomsFinal.guestRooms))
+    dispatch(doRequestGetBookingByQuery(AllRoomsFinal.IdHotel, AllRoomsFinal.IdRooms, AllRoomsFinal.startDate, AllRoomsFinal.endDate, AllRoomsFinal.dataRooms, AllRoomsFinal.guestRooms))
 
     setIsOpen(false)
   }
