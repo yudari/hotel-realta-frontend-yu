@@ -6,6 +6,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function AddUserAccount(props: any) {
   let { bankFintech, message, refresh } = useSelector(
@@ -44,7 +45,8 @@ export default function AddUserAccount(props: any) {
         usac_expmonth: data.usac_expmonth,
         usac_expyear: data.usac_expyear,
       };
-      dispatch(doAddUserAcc(dataAll));
+      dispatch(doAddUserAcc(dataAll))
+      toast.success(`Successfully Added Your Account`)
       props.closeModal();
     } catch (error) {
       console.error(error);
@@ -168,6 +170,7 @@ export default function AddUserAccount(props: any) {
                           className="shadow appearance-none border rounded w-full py-3 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:bg-blue-100"
                           id="description"
                           type="number"
+                          placeholder="Input Your Account Number"
                           {...register(
                             "usac_account_number",
                             registerOptions.usac_account_number
@@ -188,6 +191,7 @@ export default function AddUserAccount(props: any) {
                           className="shadow appearance-none border rounded w-full py-3 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:bg-blue-100"
                           id="description"
                           type="text"
+                          placeholder="Input Saldo"
                           {...register(
                             "usac_saldo",
                             registerOptions.usac_saldo
@@ -208,6 +212,7 @@ export default function AddUserAccount(props: any) {
                           className="shadow appearance-none border rounded w-full py-3 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:bg-blue-100"
                           id="description"
                           type="text"
+                          placeholder="MM"
                           {...register(
                             "usac_expmonth",
                             registerOptions.usac_expmonth
@@ -228,6 +233,7 @@ export default function AddUserAccount(props: any) {
                           className="shadow appearance-none border rounded w-full py-3 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:bg-blue-100"
                           id="description"
                           type="text"
+                          placeholder="YYYY"
                           {...register(
                             "usac_expyear",
                             registerOptions.usac_expyear

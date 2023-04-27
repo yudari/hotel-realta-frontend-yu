@@ -3,6 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function EditUserAccount(props: any) {
   type FormValues = {
@@ -38,6 +39,7 @@ export default function EditUserAccount(props: any) {
         usac_expyear: data.usac_expyear,
       };
       dispatch(doUpadateUserAcc(props.isEdit.id, data));
+      toast.success(`Successfully Edited Your Account`)
       props.closeModal();
     } catch (error) {
       console.error(error);

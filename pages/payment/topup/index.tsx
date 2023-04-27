@@ -57,13 +57,7 @@ const TopUp = () => {
         targetId: recipientAccount,
       };
       dispatch(doTopup(dataAll));
-      Swal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: 'Top-up has been successfully completed!',
-        showConfirmButton: false,
-        timer: 5000 // pesan akan otomatis ditutup setelah 1,5 detik
-      });
+      
     }
   
   };

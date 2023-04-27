@@ -3,7 +3,7 @@ import { Dialog, Transition } from "@headlessui/react"
 import { Fragment, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch } from "react-redux"
-
+import { toast } from 'react-toastify'
 
 export default function AddBank(props:any) {
   type FormValues = {
@@ -25,6 +25,7 @@ export default function AddBank(props:any) {
         bank_name: data.bank_name,
       }
       dispatch(doAddBank(dataAll))
+      toast.success(`Successfully Added Bank ${data.bank_name}`)
       props.closeModal()
     } catch (error) {
       console.error(error)
@@ -72,12 +73,13 @@ export default function AddBank(props:any) {
                     <form onSubmit={handleSubmit(handleSave, handleError)}>
                       <div className='mb-4'>
                         <label className='block text-gray-700 font-bold mb-2'>
-                          Code
+                          Bank Code
                         </label>
                         <input
                           className='shadow appearance-none border rounded w-full py-3 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:bg-blue-100'
                           id='name'
                           type='text'
+                          placeholder='Input Bank Code'
                           {...register('bank_code', registerOptions.bank_code)}
                         />
                         {errors?.bank_code && (
@@ -95,6 +97,7 @@ export default function AddBank(props:any) {
                           className='shadow appearance-none border rounded w-full py-3 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:bg-blue-100'
                           id='description'
                           type='text'
+                          placeholder='Input Bank Name'
                           {...register(
                             'bank_name',
                             registerOptions.bank_name

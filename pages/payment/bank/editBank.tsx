@@ -3,6 +3,7 @@ import { Dialog, Transition } from "@headlessui/react"
 import { Fragment, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch } from "react-redux"
+import { toast } from 'react-toastify'
 
 export default function EditBank(props:any) {
     type FormValues = {
@@ -26,6 +27,7 @@ export default function EditBank(props:any) {
         }
        
         dispatch(doUpdateBank(props.isEdit.id, data))
+        toast.success(`Successfully Edited  Bank ${data.bank_name}`)
         props.closeModal()
       } catch (error) {
         console.error(error)
