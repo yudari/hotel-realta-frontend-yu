@@ -31,6 +31,7 @@ const TopUp = () => {
     formState: { errors },
   } = useForm<FormValues>();
 
+
   let { accounts  } = useSelector(
     (state: any) => state.userAccountReducers
   );
@@ -40,6 +41,7 @@ const TopUp = () => {
   const dispatch = useDispatch();
   const handleError = (errors: any) => {};
   const router = useRouter()
+  
 
   const handleSave = (data: any) => {
     const transferAmount = data.patr_debet;
@@ -91,8 +93,6 @@ console.log(accounts)
         
         <article className="w-[28rem]">
           <h1
-            style={{ fontSize: "1.5em" }}
-            className="text-center font-semibold mb-8 text-xl"
             style={{ fontSize: "1.5em" }}
             className="text-center font-semibold mb-8 text-xl"
           >
@@ -164,9 +164,11 @@ console.log(accounts)
               <input
                 type="number"
                 placeholder="Masukkan Nominal Transfer"
+                
                 {...register("patr_debet")}
               />
             </div>
+            
             <div className="flex items-center mt-12">
         <div className="mx-auto">
           <button
