@@ -38,7 +38,7 @@ export default function Sidebar({
       </span>
 
       <div className={`mx-5 mt-[50px] flex items-center`}>
-        <Link href='/dashboard'>
+        <Link href='/'>
           <Image
             src={Logo}
             alt='Hotel Realta Logo'
@@ -61,8 +61,8 @@ export default function Sidebar({
                   {menu.submenu ? (
                     <div
                       className={`flex items-center p-4 text-base text-primary rounded-lg  group hover:bg-primary hover:text-white justify-between mt-2 ${router.pathname.startsWith(menu.path)
-                          ? 'bg-primary text-white'
-                          : 'hover:bg-bg-primary hover:text-white'
+                        ? 'bg-primary text-white'
+                        : 'hover:bg-bg-primary hover:text-white'
                         }`}
                     >
                       <div className='flex items-center'>
@@ -75,8 +75,8 @@ export default function Sidebar({
                       {menu.submenu && (
                         <GoChevronRight
                           className={`hover:bg-primary hover:text-white ${dropdown.status && dropdown.index === index
-                              ? 'rotate-90'
-                              : ''
+                            ? 'rotate-90'
+                            : ''
                             }`}
                         />
                       )}
@@ -85,8 +85,8 @@ export default function Sidebar({
                     <Link
                       href={menu.to}
                       className={`flex items-center p-4 text-base text-primary rounded-lg group dark:text-white justify-between my-2 ${router.pathname.startsWith(menu.path)
-                          ? 'bg-primary text-white'
-                          : 'hover:bg-primary hover:text-white'
+                        ? 'bg-primary text-white'
+                        : 'hover:bg-primary hover:text-white'
                         }`}
                     >
                       <div className='flex items-center'>
