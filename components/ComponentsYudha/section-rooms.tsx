@@ -29,8 +29,8 @@ const SectionRooms: NextPage<InterfaceSectionRooms> = (props) => {
 
   const onLihatDetail = (idRooms: any, idHotel: any, startDate: any, endDate: any, dataRooms: any, guestRooms: any) => {
     secureLocalStorage.setItem('yu_id_room', {
-      idRooms: idRooms,
       idHotel: idHotel,
+      idRooms: idRooms,
       startDate: startDate,
       endDate: endDate,
       dataRooms: `[${dataRooms}]`,
@@ -41,8 +41,8 @@ const SectionRooms: NextPage<InterfaceSectionRooms> = (props) => {
     router.push({
       pathname: `/booking/detail-booking-final`,
       query: {
-        idRooms: idRooms,
         idHotel: idHotel,
+        idRooms: idRooms,
         startDate: startDate,
         endDate: endDate,
         dataRooms: `[${dataRooms}]`,
