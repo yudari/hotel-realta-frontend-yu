@@ -53,9 +53,9 @@ const HotelFavoritesSection: NextPage = () => {
             </div>
           </button>
         </div>
-        <div className="self-stretch flex flex-row items-start justify-start gap-[24px] text-21xl text-neutrals yu_lg:gap-[28px] yu_lg:flex-wrap yu_lg:justify-around yu_md:gap-[42px]">
-          <div className="flex-1 rounded-[18px] bg-steelblue flex flex-col p-6 box-border items-start justify-start gap-[30px] min-w-[50%] h-fit yu_lg:min-w-[70%] yu_md:min-w-[80%] yu_sm:min-w-full ">
-            <div className="self-stretch flex flex-col items-start justify-center gap-[24px]">
+        <div className="self-stretch flex  flex-row items-start justify-start gap-[24px] text-21xl text-neutrals yu_lg:gap-[28px] yu_lg:flex-wrap yu_lg:justify-around yu_md:gap-[42px]">
+          <div className="flex-1 h-full rounded-[18px] bg-steelblue flex flex-col p-6 box-border items-start justify-start gap-[30px] min-w-[50%]  yu_lg:min-w-[70%] yu_md:min-w-[80%] yu_sm:min-w-full ">
+            <div className="self-stretch  flex flex-col items-start justify-center gap-[24px]">
               <div className="self-stretch flex flex-row items-start justify-start gap-[16px] yu_mq720:flex-col">
                 <h3 className="m-0 flex-1 relative text-[inherit] font-bold font-inherit yu_lg:text-17xl yu_sm:text-[28px] yu_sm:text-left yu_mq720:flex-[unset] yu_mq720:self-stretch">
                   CODEX Good Sleep Samarinda
@@ -69,15 +69,16 @@ const HotelFavoritesSection: NextPage = () => {
                   </div>
                 </button>
               </div>
-              <p className="m-0 self-stretch relative text-[14px] opacity-[0.7] font-medium">
+              <p className="m-0 flex-1  self-stretch relative text-[14px] opacity-[0.7] font-medium">
                 CODEX Good Sleep Samarinda adalah hotel yang terjangkau dan nyaman yang terletak di Samarinda, Kalimantan Timur, Indonesia. Hotel ini menawarkan kamar-kamar yang fungsional dengan fasilitas seperti AC, TV, kamar mandi pribadi dengan perlengkapan mandi gratis, dan Wi-Fi gratis. Hotel ini juga menyediakan resepsionis 24 jam, parkir gratis, dan layanan kebersihan harian. Lokasinya yang strategis menjadikannya pilihan ideal bagi pelancong bisnis atau liburan di Samarinda.
               </p>
             </div>
-            <button className="cursor-pointer py-3 px-[52px] bg-darkslategray-300 self-stretch rounded flex flex-row items-center justify-center border-[1px] border-solid group hover:bg-darkslategray-200 border-darkslategray-300">
+            <button className="cursor-pointer py-3 px-[52px] bg-darkslategray-300 self-stretch rounded flex flex-row items-center justify-center border-[1px] border-solid group hover:bg-darkslategray-100">
               <div className="flex-1 relative text-[18px] leading-[132%] font-body-txt-body-s-regular text-neutrals text-center">
                 Lihat
               </div>
             </button>
+            <div className="h-16  w-full"></div>
           </div>
           <div className="flex-1 flex flex-col items-start justify-start gap-[24px] min-w-[30%] w-full">
             <div className="self-stretch flex flex-row items-start justify-start gap-[20px]">

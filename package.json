@@ -47,6 +47,7 @@
     "react-gallery-carousel": "^0.4.0",
     "react-hook-form": "^7.43.8",
     "react-icons": "^4.8.0",
+    "react-number-format": "^5.2.2",
     "react-paginate": "^8.1.5",
     "react-phone-input-2": "^2.15.1",
     "react-redux": "^8.0.5",

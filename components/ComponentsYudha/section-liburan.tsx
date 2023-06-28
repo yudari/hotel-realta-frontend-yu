@@ -61,8 +61,8 @@ const SectionLiburan: NextPage = () => {
             <div className="absolute inset-0 bg-black opacity-50 transition duration-300 hover:opacity-0"></div>
             <div className="absolute bottom-0 left-0 w-full h-full flex flex-col justify-end">
               <div className="py-3 px-4 bg-gray-900 bg-opacity-0 rounded-b-xl transition duration-300 hover:bg-opacity-90  cursor-pointer">
-                <h3 className="text-white text-[18px] font-semibold mb-1 transition duration-300 hover:text-gray-900">Samarinda</h3>
-                <span className="text-white text-[14px] font-medium transition duration-300 hover:text-gray-900">Rp 500.000,00</span>
+                <h3 className="text-white text-[18px] font-semibold mb-1 transition duration-300 hover:text-white">Samarinda</h3>
+                <span className="text-white text-[14px] font-medium transition duration-300 hover:text-white">Rp 500.000,00</span>
               </div>
             </div>
           </div>
@@ -72,7 +72,7 @@ const SectionLiburan: NextPage = () => {
             <div className="absolute bottom-0 left-0 w-full h-full flex flex-col justify-end">
               <div className="py-3 px-4 bg-gray-900 bg-opacity-0 rounded-b-xl transition duration-300 hover:bg-opacity-90  cursor-pointer">
                 <h3 className="text-white text-[18px] font-semibold mb-1 transition duration-300 ">Balikpapan</h3>
-                <span className="text-white text-[14px] font-medium transition duration-300 hover:text-gray-900">Rp 300.000,00</span>
+                <span className="text-white text-[14px] font-medium transition duration-300 ">Rp 300.000,00</span>
               </div>
             </div>
           </div>
@@ -81,8 +81,8 @@ const SectionLiburan: NextPage = () => {
             <div className="absolute inset-0 bg-black opacity-50 transition duration-300 hover:opacity-0"></div>
             <div className="absolute bottom-0 left-0 w-full h-full flex flex-col justify-end">
               <div className="py-3 px-4 bg-gray-900 bg-opacity-0 rounded-b-xl transition duration-300 hover:bg-opacity-90  cursor-pointer">
-                <h3 className="text-white text-[18px] font-semibold mb-1 transition duration-300 hover:text-gray-900">Yogyakarta</h3>
-                <span className="text-white text-[14px] font-medium transition duration-300 hover:text-gray-900">Rp 600.000,00</span>
+                <h3 className="text-white text-[18px] font-semibold mb-1 transition duration-300 ">Yogyakarta</h3>
+                <span className="text-white text-[14px] font-medium transition duration-300 ">Rp 600.000,00</span>
               </div>
             </div>
           </div>
@@ -91,8 +91,8 @@ const SectionLiburan: NextPage = () => {
             <div className="absolute inset-0 bg-black opacity-50 transition duration-300 hover:opacity-0"></div>
             <div className="absolute bottom-0 left-0 w-full h-full flex flex-col justify-end">
               <div className="py-3 px-4 bg-gray-900 bg-opacity-0 rounded-b-xl transition duration-300 hover:bg-opacity-90  cursor-pointer">
-                <h3 className="text-white text-[18px] font-semibold mb-1 transition duration-300 hover:text-gray-900">Semarang</h3>
-                <span className="text-white text-[14px] font-medium transition duration-300 hover:text-gray-900">Rp 400.000,00</span>
+                <h3 className="text-white text-[18px] font-semibold mb-1 transition duration-300 ">Semarang</h3>
+                <span className="text-white text-[14px] font-medium transition duration-300 ">Rp 400.000,00</span>
               </div>
             </div>
           </div>

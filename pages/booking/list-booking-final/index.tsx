@@ -67,19 +67,6 @@ const ListBookingFinal: NextPage = () => {
     useEffect(() => {
 
 
-
-        if (router.isReady) {
-            if (router.pathname === '/booking/list-booking-final') {
-                console.log(searchData.startDate, searchData.endDate)
-                if (Object.keys(router.query).length > 0) {
-                    dispatch(doRequestGetListBooking(1, 0, 1000000000, router.query.addressCityName ? router.query.addressCityName : '', router.query.addressProvName ? router.query.addressProvName : '', router.query.addressCountryName ? router.query.addressCountryName : '', 'Asia', router.query.checkIn, router.query.checkClose, ['24-Hour Front Desk']))
-                } else {
-                    dispatch(doRequestGetListBooking(1, 0, 1000000000, '', '', 'Indonesia', 'Asia', searchData.startDate, searchData.endDate, ['24-Hour Front Desk']))
-                }
-
-            }
-        }
-
         if (router.isReady) {
             if (router.pathname === '/booking/list-booking-final') {
                 console.log(searchData.startDate, searchData.endDate)
