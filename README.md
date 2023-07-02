@@ -1,105 +1,29 @@
 # Hotel Realta Backend
 
-List nama username **Github** di Trello untuk diundang sebagai collaborator di project ini.
+Untuk menggunakan backend ini ada beberapa daftar environment pendukung yang harus di setting : 
+1. Install Postgre dan PGAdmin dan pastikan pengaturan yang harus dimiliki pada saat menset database : 
+   - DATABASE PORT = 5432 // Contoh
+   - DATABASE HOST = localhost // contoh atau bisa bebas
+   - DATABASE NAME = HotelRealtaDB
+   - DATABASE USER = postgres
+   - DB_PASSWORD = root
+2. Selanjutnya buatlah file .env  : 
+   - PORT= 5000
+   - DB_PORT=5432 
+   - DB_HOST=localhost 
+   - DB_NAME=HotelRealtaDB 
+   - DB_USER= postgres   
+   - DB_PASSWORD= root
+   - SECRET_KEY=hotelrealtabackendbatch220230126
+3. Kemudian jalankan perintah berikut di terminal agar menggenerate tabel-tabel pada postgres menjadi sebuah model didalam project : 
+   - "db_resto": "stg -D postgres -o models/restoSchema -h localhost -p 5432 -d HotelRealtaDB -u postgres -x 12345 --indices --associations-file association.csv -s resto",
+   - "db_hotels": "stg -D postgres -o models/hotelSchema -h localhost -p 5432 -s hotel -d HotelRealtaDB -u postgres -x 123456 --indices",
+   - "db_master": "stg -D postgres -o models/masterSchema -h localhost -s master -p 5432 -d HotelRealtaDB -u postgres -x 123456 --indices ",
+   - "db_user": "stg -D postgres -o models/usersSchema -h localhost -p 5432 -s users -d HotelRealtaDB -u postgres -x 123456 --indices",
+   - "pgScript": "stg -D postgres -o models/masterSchema -h localhost -p 5432 -d HotelRealtaDB -s master -u postgres -x root --indices --associations-file association.csv --clean",
+   - "pg:generate-payment": "stg -D postgres -o models/paymentSchema -s payment -h localhost -p 5432 -d HotelRealtaDB -u postgres -x catecute07 --indices --associations-file ./association.csv ",
+   - "pg:generate-users": "stg -D postgres -o models/usersSchema -s users -h localhost -p 5432 -d HotelRealtaDB -u postgres -x catecute07 --indices --associations-file association.csv ",
+   - "pg:generate-booking": "stg -D postgres -o models/bookingSchema -s booking -h localhost -p 5432 -d HotelRealtaDB -u postgres -x catecute07 --indices --associations-file association.csv ",
+   - "pg:generate-resto": "stg -D postgres -o models/restoSchema -s resto -h localhost -p 5432 -d HotelRealtaDB -u postgres -x catecute07 --indices --associations-file association.csv ",
+   - "db_booking": "stg -D postgres -o models/bookingSchema -s booking --cm c -h localhost -p 5432 -d HotelRealtaDB -u postgres -x root --indices --associations-file association.csv --clean"
 
-## Clone Project
-
-Clone project ini dengan menggunakan perintah:
-
-```bash
-git clone https://github.com/juliansyahrifqi/hotel-realta-frontend.git
-```
-
-Setelah clone project ini, buka di VS Code.
-
-## Instalasi dan Jalankan Project
-
-```bash
-npm install
-
-npm run dev
-```
-
-## Buat Branch Baru
-
-Setelah itu buat branch baru dengan perintah
-
-```bash
-git checkout -b  namamodule_namakamu
-```
-
-**Contoh**: `
-
-```
-git checkout -b payment_rustam
-```
-
-Buat kodingan untuk frontend kalian.
-
-> Semua perubahan kode untuk masing-masing module di `commit` dan di `push` ke `branch` masing-masing (jangan ke `branch master`).
-> Setelah itu kalau ada keperluan untuk menyatukan project bisa melakukan `pull request` atau menghubungi Tama atau yang lain.
-
----
-
-## Aturan-aturan
-
-### Penamaan
-
-> **Jangan menggunakan nama yang kurang memberikan gambaran tentang variabel, nama method/function, isi file atau folder yang dikerjakan agar mudah dikenali atau dibaca oleh orang lain. Contoh:** `let terserah = 'terserah` atau `folderPunyaJajang`.
-
-1. Penamaan variabel menggunakan bahasa inggris dan menggunakan format **camelCase**.
-   Contoh: `const hotelName: string`
-
-2. Penamaan method/function menggunakan bahasa inggris dan menggunakan format **camelCase**.
-   Contoh: `const getAllUsers() {}`;
-
-3. Penamaan folder menggunakan nama bahasa inggris dan menggunakan format **camelCase**.
-   Contoh: `users` atau `humanResources`
-
-4.
-
-### Struktur Folder Models
-
-1. Struktur folder untuk redux:
-
-```
-redux/
-  ├── namaSchema (contoh: users)
-    ├── action
-      ├── actionType.ts
-      ├── namaAction (contoh: userProfileActionReducer.ts)
-    ├── namaSchemaSaga (contoh: usersSaga)
-      ├── index.ts
-      ├── namaSaga (contoh: userProfileSaga.ts)
-    ├── reducer
-      ├── namaReducer (contoh: userReducer)
-  ├── saga
-    ├── index.ts
-  ├── store
-    ├── index.ts
-```
-
-### Struktur Folder Api
-
-```
-api/
-  ├── namaSchema (contoh: users)
-    ├── namaApiMethod (contoh: apiMethodUsers)
-```
-
-### Struktur Folder Pages
-
-Folder `pages` disesuaikan dengan url di mockup
-Contoh: Mockup URL: /users/signpEmployee
-
-Maka struktur foldernya adalah:
-
-```
-pages/
-  ├── nama_module (contoh: users)
-    ├── signupEmployee
-```
-
-### Penggunaan File .env
-
-Untuk file `.env` bisa buat file dengan nama `.env` dan bisa copy isinya dari file `.env.example`
