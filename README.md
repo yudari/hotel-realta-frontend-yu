@@ -26,4 +26,7 @@ Untuk menggunakan backend ini ada beberapa daftar environment pendukung yang har
    - "pg:generate-booking": "stg -D postgres -o models/bookingSchema -s booking -h localhost -p 5432 -d HotelRealtaDB -u postgres -x catecute07 --indices --associations-file association.csv ",
    - "pg:generate-resto": "stg -D postgres -o models/restoSchema -s resto -h localhost -p 5432 -d HotelRealtaDB -u postgres -x catecute07 --indices --associations-file association.csv ",
    - "db_booking": "stg -D postgres -o models/bookingSchema -s booking --cm c -h localhost -p 5432 -d HotelRealtaDB -u postgres -x root --indices --associations-file association.csv --clean"
-
+4. Jalankan npm install pada terminal, kemudian setelah package telah terinstall kedalam node_modules.
+5. npm start:dev -> perintah untuk menjalankan project development, npm start:prod -> untuk production
+6. ketik http://localhost:5000/ kedalam search bar browser
+7. selesai
