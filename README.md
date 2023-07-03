@@ -39,7 +39,8 @@ Aplikasi Hotel Realta adalah aplikasi yang dimana pengguna dapat melakukan booki
 ![hotel-realta-14](https://github.com/yudari/hotel-realta-frontend-yu/assets/43470163/6a72a919-2ede-4b3d-9f0b-0eb9ab4b52eb)
 
 ## Getting Started
-1. Pertama nyalakan server rest apinya : https://github.com/yudari/realta-hotel-backend-yu (http://localhost:5000). Kemudian buat file .env dan isi file tersebut dengan variable Konstan seperti berikut : -  - BACKEND_URL=http://localhost:5000  
+1. Pertama nyalakan server rest apinya : https://github.com/yudari/realta-hotel-backend-yu (http://localhost:5000). Kemudian buat file .env dan isi file tersebut dengan variable Konstan seperti berikut :
+- BACKEND_URL=http://localhost:5000  
 - SECURE_LOCAL_STORAGE_HASH_KEY='codex21012023'
 
 2. jalankan perintah npm install
