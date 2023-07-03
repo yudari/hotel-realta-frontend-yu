@@ -1,6 +1,6 @@
 # Hotel Realta Backend
 
-Untuk menggunakan backend ini ada beberapa daftar environment pendukung yang harus di setting : 
+Untuk menggunakan RestAPI ini ada beberapa daftar environment pendukung yang harus di setting : 
 1. Install Postgre dan PGAdmin dan pastikan pengaturan yang harus dimiliki pada saat menset database : 
    - DATABASE PORT = 5432 // Contoh
    - DATABASE HOST = localhost // contoh atau bisa bebas
